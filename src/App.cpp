@@ -9,6 +9,7 @@
  */
 
 #include "Exception.hpp"
+#include "Observer.hpp"
 #include "App.hpp"
 
 App::App(int ac, char** av)

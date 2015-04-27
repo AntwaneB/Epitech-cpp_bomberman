@@ -26,7 +26,9 @@ OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o) $(MOC_SRCS:%.cpp=$(OBJS_DIR)/%.o)
 INCS_DIR	  =  inc
 INCS		  =  Exception.hpp \
 		     App.hpp \
-		     Config.hpp
+		     Config.hpp \
+		     Observer.hpp \
+		     IEntity.hpp
 
 LGDL_DIR	  =  libgdl
 
