@@ -26,9 +26,13 @@ INCS_DIR	  =  inc
 INCS		  =  Exception.hpp \
 		     App.hpp
 
+LGDL_DIR	  =  libgdl
+
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
 CXXFLAGS	  += -I./inc
+CXXFLAGS	  += -lpthread
+CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs -lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g
@@ -40,6 +44,7 @@ CXXFLAGS	  += -g
 
 $(NAME):		$(OBJS)
 			$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
+			export LD_LIBRARY_PATH=$(LGDL_DIR)/libs
 
 all:			$(NAME)
 
