@@ -20,7 +20,7 @@ enum Event
 class Observer
 {
 public:
-	virtual ~Observer();
+	virtual ~Observer() {};
 
 	virtual void onNotify(IEntity const & entity, Event event) = 0;
 

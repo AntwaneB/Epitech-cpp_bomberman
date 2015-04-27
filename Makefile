@@ -18,7 +18,9 @@ MKDIR		  =  mkdir -p
 SRCS_DIR	  =  src
 SRCS		  =  main.cpp \
 		     App.cpp \
-		     Config.cpp
+		     Config.cpp \
+		     \
+		     Character.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o) $(MOC_SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -28,7 +30,9 @@ INCS		  =  Exception.hpp \
 		     App.hpp \
 		     Config.hpp \
 		     Observer.hpp \
-		     IEntity.hpp
+		     IEntity.hpp \
+		     \
+		     Character.hpp
 
 LGDL_DIR	  =  libgdl
 

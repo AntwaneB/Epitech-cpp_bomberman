@@ -11,7 +11,7 @@
 class IEntity
 {
 public:
-	virtual ~IEntity();
+	virtual ~IEntity() {};
 
 private:
 };
