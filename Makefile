@@ -20,7 +20,9 @@ SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
 		     \
-		     Character.cpp
+		     Character.cpp \
+		     BonusItem.cpp \
+		     Map.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o) $(MOC_SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -32,7 +34,9 @@ INCS		  =  Exception.hpp \
 		     Observer.hpp \
 		     IEntity.hpp \
 		     \
-		     Character.hpp
+		     Character.hpp \
+		     BonusItem.hpp \
+		     Map.hpp
 
 LGDL_DIR	  =  libgdl
 

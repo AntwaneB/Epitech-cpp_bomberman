@@ -11,7 +11,8 @@ Character::Character()
 {
 }
 
-Character::~Character() {
+Character::~Character()
+{
 }
 
 void Character::onNotify(const IEntity& entity, Event event)
@@ -19,3 +20,4 @@ void Character::onNotify(const IEntity& entity, Event event)
 	(void)entity;
 	(void)event;
 }
+
