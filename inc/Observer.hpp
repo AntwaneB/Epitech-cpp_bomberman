@@ -22,6 +22,7 @@ class Observer
 public:
 	virtual ~Observer() {};
 
+protected:
 	virtual void onNotify(IEntity const & entity, Event event) = 0;
 
 private:
