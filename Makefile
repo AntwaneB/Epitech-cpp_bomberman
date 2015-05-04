@@ -20,6 +20,7 @@ SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
 		     \
+		     Level.cpp \
 		     Character.cpp \
 		     BonusItem.cpp \
 		     Map.cpp
@@ -34,6 +35,7 @@ INCS		  =  Exception.hpp \
 		     Observer.hpp \
 		     IEntity.hpp \
 		     \
+		     Level.cpp \
 		     Character.hpp \
 		     BonusItem.hpp \
 		     Map.hpp
