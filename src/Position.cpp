@@ -23,7 +23,8 @@ Position::Position(const Position& orig)
 {
 }
 
-Position&	Position::operator=(const Position& orig)
+Position&
+Position::operator=(const Position& orig)
 {
 	if (this != &orig)
 	{
@@ -40,93 +41,107 @@ Position::~Position()
 {
 }
 
-void Position::setZ(int z)
+void
+Position::setZ(int z)
 {
 	this->_z = z;
 	this->_isSet = true;
 }
 
-void Position::incZ(int inc)
+void
+Position::incZ(int inc)
 {
 	if (!_isSet)
 		throw PositionException("Increasing unset position.");
 	this->_z += inc;
 }
 
-void Position::decZ(int dec)
+void
+Position::decZ(int dec)
 {
 	if (!_isSet)
 		throw PositionException("Decreasing unset position.");
 	this->_z -= dec;
 }
 
-int Position::getZ() const
+int
+Position::getZ() const
 {
 	if (!_isSet)
 		throw PositionException("Getting unset position.");
 	return _z;
 }
 
-void Position::setY(int y)
+void
+Position::setY(int y)
 {
 	this->_y = y;
 	this->_isSet = true;
 }
 
-void Position::incY(int inc)
+void
+Position::incY(int inc)
 {
 	if (!_isSet)
 		throw PositionException("Increasing unset position.");
 	this->_y += inc;
 }
 
-void Position::decY(int dec)
+void
+Position::decY(int dec)
 {
 	if (!_isSet)
 		throw PositionException("Decreasing unset position.");
 	this->_y -= dec;
 }
 
-int Position::getY() const
+int
+Position::getY() const
 {
 	if (!_isSet)
 		throw PositionException("Getting unset position.");
 	return _y;
 }
 
-void Position::setX(int x)
+void
+Position::setX(int x)
 {
 	this->_x = x;
 	this->_isSet = true;
 }
 
-void Position::incX(int inc)
+void
+Position::incX(int inc)
 {
 	if (!_isSet)
 		throw PositionException("Increasing unset position.");
 	this->_x += inc;
 }
 
-void Position::decX(int dec)
+void
+Position::decX(int dec)
 {
 	if (!_isSet)
 		throw PositionException("Decreasing unset position.");
 	this->_x -= dec;
 }
 
-int Position::getX() const
+int
+Position::getX() const
 {
 	if (!_isSet)
 		throw PositionException("Getting unset position.");
 	return _x;
 }
 
-bool	Position::isSet() const
+bool
+Position::isSet() const
 {
 	return (_isSet);
 }
 
-bool	Position::operator==(Position const & o) const
+bool
+Position::operator==(Position const & o) const
 {
 	return (o._x == _x && o._y == _y && o._z == _z);
 }

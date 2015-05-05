@@ -25,7 +25,8 @@ Map::~Map()
 
 }
 
-void 	Map::checkArg()
+void
+Map::checkArg()
 {
 	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
 		throw MapException("Map to little");
@@ -35,7 +36,8 @@ void 	Map::checkArg()
 		this->_width += 1;
 }
 
-void	Map::generateMap()
+void
+Map::generateMap()
 {
 	int i;
 	int j;
@@ -56,12 +58,14 @@ void	Map::generateMap()
 	this->checkPositionPlayer();
 }
 
-void Map::checkPositionPlayer()
+void
+Map::checkPositionPlayer()
 {
 
 }
 
-void Map::delimitMap()
+void
+Map::delimitMap()
 {
 	int i;
 
@@ -77,7 +81,8 @@ void Map::delimitMap()
 	}
 }
 
-void Map::oneOnTwo()
+void
+Map::oneOnTwo()
 {
 	bool i;
 
@@ -96,7 +101,8 @@ void Map::oneOnTwo()
 	}
 }
 
-void Map::displayMap()
+void
+Map::displayMap()
 {
 	for (int i = 0; i < this->_height; i++)
 	{
@@ -106,7 +112,8 @@ void Map::displayMap()
 	}
 }
 
-void Map::placeDestrBlock()
+void
+Map::placeDestrBlock()
 {
 	int x = 0;
 	int y = 0;
@@ -124,12 +131,14 @@ void Map::placeDestrBlock()
 }
 
 
-int  **Map::getMap()
+int**
+Map::getMap()
 {
 	return (this->_map);
 }
 
-void Map::onNotify(const Subject& entity, Event event)
+void
+Map::onNotify(const Subject& entity, Event event)
 {
 	(void)entity;
 	(void)event;

@@ -8,9 +8,12 @@
  ** Updated on February 6, 2015, 10:53 AM Antoine Buchser
  */
 
+#include <iostream>
 #include "Map.hpp"
 #include "Exception.hpp"
 #include "App.hpp"
+#include "Menu.hpp"
+#include "Level.hpp"
 
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
@@ -18,6 +21,15 @@ App::App(int ac, char** av)
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n" \
 										 "./bomberman");
+
+	_actions[LEVEL_GENERATED] = &App::runLevel;
+	_actions[EXIT_TRIGGERED] = &App::exit;
+}
+
+bool
+App::validateArgs() const
+{
+	return (true);
 }
 
 App::~App()
@@ -27,14 +39,46 @@ App::~App()
 	}
 }
 
-bool	App::validateArgs() const
+void
+App::onNotify(Subject * entity, Event event)
 {
-	return (true);
+	auto it = _actions.find(event);
+
+	if (it != _actions.end())
+	{
+		(this->*(it->second))(entity);
+	}
+	else
+	{
+		// On throw
+	}
 }
 
-int	App::run()
+void
+App::runLevel(Subject* entity)
 {
-	Map map(42, 42);
+	Level* level = dynamic_cast<Level*>(entity);
+
+	std::cout << "App::runLevel()" << std::endl;
+
+	delete level;
+}
+
+void
+App::exit(Subject* entity __attribute__((unused)))
+{
+
+}
+
+int
+App::run()
+{
+	Menu* mainMenu = new Menu;
+	mainMenu->addObserver(this);
+
+	mainMenu->run();
+
+	delete mainMenu;
 
 	return (0);
 }

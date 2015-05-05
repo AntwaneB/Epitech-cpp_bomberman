@@ -11,16 +11,23 @@
 #ifndef APP_HPP
 #define	APP_HPP
 
-class App
+#include "Observer.hpp"
+#include "Menu.hpp"
+
+class App : public Observer, public EventHandler<App>
 {
 public:
 	App(int, char**);
 	~App();
 
 	int	run(void);
+	void	onNotify(Subject * entity, Event event);
 
 private:
 	bool	validateArgs(void) const;
+
+	void	exit(Subject * entity);
+	void	runLevel(Subject * entity);
 
 private:
 	int			_ac;

@@ -10,14 +10,14 @@
 
 #include "Observer.hpp"
 
-class Level : public Observer
+class Level : public Subject, public Observer
 {
 public:
 	Level();
 	Level(const Level& orig);
 	virtual ~Level();
 
-	virtual void onNotify(Subject const & entity, Event event);
+	virtual void onNotify(Subject * entity, Event event);
 
 private:
 

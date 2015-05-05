@@ -20,6 +20,7 @@ SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
 		     \
+		     Menu.cpp \
 		     Level.cpp \
 		     Character.cpp \
 		     Map.cpp
@@ -33,6 +34,7 @@ INCS		  =  Exception.hpp \
 		     Config.hpp \
 		     Observer.hpp \
 		     \
+		     Menu.hpp \
 		     Level.hpp \
 		     Character.hpp \
 		     Map.hpp
