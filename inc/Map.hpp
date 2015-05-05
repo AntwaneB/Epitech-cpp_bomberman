@@ -12,10 +12,15 @@
 #include <iostream>
 #include "IEntity.hpp"
 #include "Observer.hpp"
+#include "Exception.hpp"
 
 #define EMPTY 0;
 #define	SOLID 1;
 #define DESTR 2;
+
+
+#define MAP_MIN_X 10
+#define MAP_MIN_Y 10
 
 class Map : public IEntity, public Observer, public Subject
 {
@@ -29,6 +34,8 @@ public:
 protected:
 	void	generatemap();
 	void 	displaymap();
+	void 	oneOnTwo();
+	void 	checkArg();
 	int 	**getmap();
 
 private:
@@ -36,6 +43,7 @@ private:
 	int **_map;
 	int _height;
 	int _width;
+	int _nbrBrick;
 
 };
 

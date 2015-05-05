@@ -39,4 +39,11 @@ public:
 	virtual ~ArgumentsException() throw() {}
 };
 
+class MapException : public Exception
+{
+public:
+	MapException(const std::string &s): Exception("Map Error : " + s) {}
+	virtual ~MapException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */
