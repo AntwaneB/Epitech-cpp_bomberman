@@ -14,7 +14,6 @@
 #include <ctime>
 #include "Character.hpp"
 #include "Position.hpp"
-#include "IEntity.hpp"
 #include "Observer.hpp"
 #include "Exception.hpp"
 
@@ -26,13 +25,13 @@
 #define MAP_MIN_X 10
 #define MAP_MIN_Y 10
 
-class Map : public IEntity, public Observer, public Subject
+class Map : public Subject, public Observer
 {
 public:
 	Map(size_t, size_t);
 	Map(std::string const & mapFile);
 	virtual ~Map();
-	virtual void onNotify(IEntity const & entity, Event event);
+	virtual void onNotify(Subject const & entity, Event event);
 
 protected:
 	void	generateMap();

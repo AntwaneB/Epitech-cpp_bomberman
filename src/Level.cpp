@@ -15,3 +15,8 @@ Level::~Level()
 {
 }
 
+void Level::onNotify(Subject const & entity, Event event)
+{
+	(void)entity;
+	(void)event;
+}

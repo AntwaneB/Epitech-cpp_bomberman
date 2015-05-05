@@ -8,9 +8,11 @@
 #ifndef OBSERVER_HPP
 #define	OBSERVER_HPP
 
+class Observer;
+class Subject;
+
 #include <list>
 #include <algorithm>
-#include "IEntity.hpp"
 
 enum Event
 {
@@ -22,7 +24,7 @@ class Observer
 public:
 	virtual ~Observer() {};
 
-	virtual void onNotify(IEntity const & entity, Event event) = 0;
+	virtual void onNotify(Subject const & entity, Event event) = 0;
 
 private:
 };
@@ -48,11 +50,11 @@ public:
 	}
 
 protected:
-	void notify(IEntity const & entity, Event event)
+	void notify(Subject const & entity, Event event)
 	{
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
 		{
-/*			(*it)->onNotify(entity, event);*/
+			(*it)->onNotify(entity, event);
 		}
 	}
 

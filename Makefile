@@ -22,22 +22,19 @@ SRCS		  =  main.cpp \
 		     \
 		     Level.cpp \
 		     Character.cpp \
-		     BonusItem.cpp \
 		     Map.cpp
 
 OBJS_DIR	  =  obj
-OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o) $(MOC_SRCS:%.cpp=$(OBJS_DIR)/%.o)
+OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
 
 INCS_DIR	  =  inc
 INCS		  =  Exception.hpp \
 		     App.hpp \
 		     Config.hpp \
 		     Observer.hpp \
-		     IEntity.hpp \
 		     \
 		     Level.hpp \
 		     Character.hpp \
-		     BonusItem.hpp \
 		     Map.hpp
 
 LGDL_DIR	  =  libgdl

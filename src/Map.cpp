@@ -7,22 +7,6 @@
 
 #include "Map.hpp"
 
-/*int main(int ac, char **av)
-{
-	(void) ac;
-	(void) av;
-	try
-	{
-		Position p(1, 1, 15);
-		Map m(atoi(av[1]), atoi(av[2]));
-	}
-	catch (Exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-
-}
-*/
 Map::Map(size_t width, size_t height): _width(width), _height(height)
 {
 	std::cout << "Loading..." << std::endl;
@@ -113,7 +97,7 @@ void Map::oneOnTwo()
 }
 
 void Map::displayMap()
-{	
+{
 	for (int i = 0; i < this->_height; i++)
 	{
 		for (int j = 0; j < this->_width; j++)
@@ -145,7 +129,7 @@ int  **Map::getMap()
 	return (this->_map);
 }
 
-void Map::onNotify(const IEntity& entity, Event event)
+void Map::onNotify(const Subject& entity, Event event)
 {
 	(void)entity;
 	(void)event;
