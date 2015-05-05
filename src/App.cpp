@@ -8,6 +8,7 @@
  ** Updated on February 6, 2015, 10:53 AM Antoine Buchser
  */
 
+#include "Map.hpp"
 #include "Exception.hpp"
 #include "App.hpp"
 
@@ -33,6 +34,7 @@ bool	App::validateArgs() const
 
 int	App::run()
 {
+	Map map(42, 42);
 
 	return (0);
 }
