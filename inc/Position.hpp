@@ -4,16 +4,16 @@
 class Position
 {
 public:
-	Position(int x, int y, int z);
+	Position(double x, double y, double z);
 	~Position();
-	int getX() const;
-	int getY() const;
-	int getZ() const;
+	double getX() const;
+	double getY() const;
+	double getZ() const;
 
 private:
-	int _x;
-	int _y;
-	int _z;
+	double _x;
+	double _y;
+	double _z;
 	/* data */
 };
 
