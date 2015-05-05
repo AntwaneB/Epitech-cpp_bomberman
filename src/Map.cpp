@@ -52,7 +52,15 @@ void Map::delimitMap()
 	int i;
 
 	for (i = 0; i < this->_width; i++)
+	{
 		this->_map[0][i] = SOLID;
+		this->_map[i][0] = SOLID;
+	}
+	for (i = 0; i < this->_height; i++)
+	{
+		this->_map[this->height][i] = SOLID;
+		this->_map[i][this->height] = SOLID;
+	}
 }
 
 void Map::displaymap()
