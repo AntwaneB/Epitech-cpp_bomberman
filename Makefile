@@ -35,7 +35,7 @@ INCS		  =  Exception.hpp \
 		     Observer.hpp \
 		     IEntity.hpp \
 		     \
-		     Level.cpp \
+		     Level.hpp \
 		     Character.hpp \
 		     BonusItem.hpp \
 		     Map.hpp
