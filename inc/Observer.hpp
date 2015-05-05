@@ -52,7 +52,7 @@ protected:
 	{
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
 		{
-			(*it)->onNotify(entity, event);
+/*			(*it)->onNotify(entity, event);*/
 		}
 	}
 

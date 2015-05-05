@@ -10,12 +10,19 @@
 
 #include <string>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "IEntity.hpp"
 #include "Observer.hpp"
+#include "Exception.hpp"
 
-#define EMPTY 0;
-#define	SOLID 1;
-#define DESTR 2;
+#define EMPTY 0
+#define	SOLID 1
+#define DESTR 2
+
+
+#define MAP_MIN_X 10
+#define MAP_MIN_Y 10
 
 class Map : public IEntity, public Observer, public Subject
 {
@@ -27,15 +34,19 @@ public:
 	virtual void onNotify(IEntity const & entity, Event event);
 
 protected:
-	void	generatemap();
-	void 	displaymap();
-	int 	**getmap();
+	void	generateMap();
+	void 	displayMap();
+	int 	**getMap();
 
 private:
 	void 	delimitMap();
-	int **_map;
-	int _height;
-	int _width;
+	void 	placeDestrBlock();
+	void 	oneOnTwo();
+	void 	checkArg();
+	int 	**_map;
+	int 	_height;
+	int 	_width;
+	int 	_nbrBrick;
 
 };
 

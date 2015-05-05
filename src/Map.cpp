@@ -7,22 +7,29 @@
 
 #include "Map.hpp"
 
-int main()
+int main(int ac, char **argv)
 {
-	Map m(20, 20);
+	try
+	{
+		Map m(atoi(argv[1]), atoi(argv[2]));
+	}
+	catch (Exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 
 }
 
 Map::Map(size_t width, size_t height): _width(width), _height(height)
 {
 	std::cout << "Loading..." << std::endl;
-	this->generatemap();
-	this->displaymap();
+	this->generateMap();
+	this->displayMap();
 }
 
 Map::Map(std::string const & mapFile)
 {
-	this->generatemap();
+	this->generateMap();
 }
 
 Map::~Map()
@@ -30,12 +37,23 @@ Map::~Map()
 
 }
 
-void	Map::generatemap()
+void 	Map::checkArg()
+{
+	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
+		throw MapException("Map to little");
+	if (!(this->_height % 2))
+		this->_height += 1;
+	if (!(this->_width % 2))
+		this->_width += 1;
+}
+
+void	Map::generateMap()
 {
 	int i;
 	int j;
 
-	i = 0;
+	this->checkArg();
+	_nbrBrick = (this->_height * this->_width) * 0.3;
 	this->_map = new int *[_height];
 	for (i = 0; i < this->_width; i++)
 		this->_map[i] = new int[this->_width];
@@ -45,6 +63,8 @@ void	Map::generatemap()
 			this->_map[i][j] = 0;
 	}
 	this->delimitMap();
+	this->oneOnTwo();
+	this->placeDestrBlock();
 }
 
 void Map::delimitMap()
@@ -52,10 +72,37 @@ void Map::delimitMap()
 	int i;
 
 	for (i = 0; i < this->_width; i++)
+	{
 		this->_map[0][i] = SOLID;
+		this->_map[i][0] = SOLID;
+	}
+	for (i = 0; i < this->_height; i++)
+	{
+		this->_map[this->_height - 1][i] = SOLID;
+		this->_map[i][this->_height - 1] = SOLID;
+	}
 }
 
-void Map::displaymap()
+void Map::oneOnTwo()
+{
+	bool i;
+
+	for (int j = 1; j < this->_height - 1; j++)
+	{
+		if (j % 2)
+		{
+			i = false;
+			for (int k = 1; k < this->_width - 1; k++)
+			{
+				if (i)
+					this->_map[j][k] = SOLID;
+				i = !i;
+			}
+		}
+	}
+}
+
+void Map::displayMap()
 {	
 	for (int i = 0; i < this->_height; i++)
 	{
@@ -65,7 +112,28 @@ void Map::displaymap()
 	}
 }
 
-int  **Map::getmap()
+void Map::placeDestrBlock()
+{
+	int i;
+	int x = 0;
+	int y = 0;
+
+	i = 0;
+	srand(time(NULL));
+	while (i < this->_nbrBrick)
+	{
+		while (this->_map[y][x] != EMPTY)
+		{
+			x = rand() % this->_width;
+			y = rand() % this->_height;
+		}
+		this->_map[y][x] = DESTR;
+		i = i + 1;
+	}
+}
+
+
+int  **Map::getMap()
 {
 	return (this->_map);
 }
