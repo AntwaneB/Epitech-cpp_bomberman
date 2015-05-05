@@ -7,11 +7,14 @@
 
 #include "Map.hpp"
 
-int main(int ac, char **argv)
+/*int main(int ac, char **av)
 {
+	(void) ac;
+	(void) av;
 	try
 	{
-		Map m(atoi(argv[1]), atoi(argv[2]));
+		Position p(1, 1, 15);
+		Map m(atoi(av[1]), atoi(av[2]));
 	}
 	catch (Exception &e)
 	{
@@ -19,7 +22,7 @@ int main(int ac, char **argv)
 	}
 
 }
-
+*/
 Map::Map(size_t width, size_t height): _width(width), _height(height)
 {
 	std::cout << "Loading..." << std::endl;
@@ -29,6 +32,7 @@ Map::Map(size_t width, size_t height): _width(width), _height(height)
 
 Map::Map(std::string const & mapFile)
 {
+	(void) mapFile;
 	this->generateMap();
 }
 
@@ -65,6 +69,12 @@ void	Map::generateMap()
 	this->delimitMap();
 	this->oneOnTwo();
 	this->placeDestrBlock();
+	this->checkPositionPlayer();
+}
+
+void Map::checkPositionPlayer()
+{
+
 }
 
 void Map::delimitMap()
@@ -114,13 +124,11 @@ void Map::displayMap()
 
 void Map::placeDestrBlock()
 {
-	int i;
 	int x = 0;
 	int y = 0;
 
-	i = 0;
 	srand(time(NULL));
-	while (i < this->_nbrBrick)
+	while (this->_nbrBrick > 0)
 	{
 		while (this->_map[y][x] != EMPTY)
 		{
@@ -128,7 +136,6 @@ void Map::placeDestrBlock()
 			y = rand() % this->_height;
 		}
 		this->_map[y][x] = DESTR;
-		i = i + 1;
 	}
 }
 
