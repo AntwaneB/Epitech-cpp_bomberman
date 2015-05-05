@@ -23,13 +23,13 @@ int main(int ac, char **argv)
 Map::Map(size_t width, size_t height): _width(width), _height(height)
 {
 	std::cout << "Loading..." << std::endl;
-	this->generatemap();
-	this->displaymap();
+	this->generateMap();
+	this->displayMap();
 }
 
 Map::Map(std::string const & mapFile)
 {
-	this->generatemap();
+	this->generateMap();
 }
 
 Map::~Map()
@@ -47,7 +47,7 @@ void 	Map::checkArg()
 		this->_width += 1;
 }
 
-void	Map::generatemap()
+void	Map::generateMap()
 {
 	int i;
 	int j;
@@ -64,6 +64,7 @@ void	Map::generatemap()
 	}
 	this->delimitMap();
 	this->oneOnTwo();
+	this->placeDestrBlock();
 }
 
 void Map::delimitMap()
@@ -101,7 +102,7 @@ void Map::oneOnTwo()
 	}
 }
 
-void Map::displaymap()
+void Map::displayMap()
 {	
 	for (int i = 0; i < this->_height; i++)
 	{
@@ -111,7 +112,28 @@ void Map::displaymap()
 	}
 }
 
-int  **Map::getmap()
+void Map::placeDestrBlock()
+{
+	int i;
+	int x = 0;
+	int y = 0;
+
+	i = 0;
+	srand(time(NULL));
+	while (i < this->_nbrBrick)
+	{
+		while (this->_map[y][x] != EMPTY)
+		{
+			x = rand() % this->_width;
+			y = rand() % this->_height;
+		}
+		this->_map[y][x] = DESTR;
+		i = i + 1;
+	}
+}
+
+
+int  **Map::getMap()
 {
 	return (this->_map);
 }
