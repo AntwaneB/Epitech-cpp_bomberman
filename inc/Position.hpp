@@ -20,6 +20,7 @@ public:
 	virtual ~Position();
 
 	bool	operator==(Position const & o) const;
+	bool	operator<(Position const & o) const;
 
    void	setZ(int z);
    void	incZ(int inc = 1);

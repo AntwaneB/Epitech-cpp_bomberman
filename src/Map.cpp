@@ -125,7 +125,6 @@ void Map::placeDestrBlock()
 	}
 }
 
-
 int** Map::getMap()
 {
 	return (this->_map);
