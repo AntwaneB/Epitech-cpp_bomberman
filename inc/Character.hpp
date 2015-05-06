@@ -8,19 +8,20 @@
 #ifndef CHARACTER_HPP
 #define	CHARACTER_HPP
 
-#include "IEntity.hpp"
 #include "Observer.hpp"
+#include "Position.hpp"
 
-class Character : public IEntity, public Observer, public Subject
+class Character : public Subject, public Observer
 {
 public:
-	Character();
+	Character(size_t nth, size_t x, size_t y, size_t z = 0);
 	virtual ~Character();
 
-	virtual void onNotify(IEntity const & entity, Event event);
+	virtual void onNotify(Subject* entity, Event event);
 
 private:
-
+	size_t	_nth;
+	Position	_position;
 };
 
 #endif	/* CHARACTER_HPP */

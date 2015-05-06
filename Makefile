@@ -20,31 +20,48 @@ SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
 		     \
+		     Menu.cpp \
+		     Level.cpp \
 		     Character.cpp \
-		     BonusItem.cpp \
-		     Map.cpp
+		     Map.cpp \
+		     Position.cpp \
+		     Item.cpp \
+		     \
+		     Graphics/Display.cpp \
+		     Graphics/Map.cpp \
+		     \
+		     misc/pugixml.cpp
 
 OBJS_DIR	  =  obj
-OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o) $(MOC_SRCS:%.cpp=$(OBJS_DIR)/%.o)
+OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
 
 INCS_DIR	  =  inc
 INCS		  =  Exception.hpp \
 		     App.hpp \
 		     Config.hpp \
 		     Observer.hpp \
-		     IEntity.hpp \
 		     \
+		     Menu.hpp \
+		     Level.hpp \
 		     Character.hpp \
-		     BonusItem.hpp \
-		     Map.hpp
+		     Map.hpp \
+		     Position.hpp \
+		     Item.hh \
+		     \
+		     Graphics/Display.hh \
+		     Graphics/Map.hh \
+		     \
+		     misc/pugiconfig.hpp \
+		     misc/pugixml.hpp
 
 LGDL_DIR	  =  libgdl
 
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
-CXXFLAGS	  += -I./inc
+CXXFLAGS	  += -I$(INCS_DIR) -I$(INCS_DIR)/misc
+CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
 CXXFLAGS	  += -lpthread
-CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs -lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2
+CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g
@@ -62,6 +79,8 @@ all:			$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.cpp $(DEPS)
 		        @$(MKDIR) $(OBJS_DIR)
+			@$(MKDIR) $(OBJS_DIR)/Graphics
+			@$(MKDIR) $(OBJS_DIR)/misc
 			$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 ################

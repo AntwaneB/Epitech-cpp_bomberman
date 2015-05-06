@@ -47,4 +47,17 @@ public:
 	virtual ~ConfigException() throw() {}
 };
 
+class MapException : public Exception
+{
+public:
+	MapException(const std::string &s): Exception("Map Error : " + s) {}
+	virtual ~MapException() throw() {}
+};
+
+class PositionException : public Exception
+{
+public:
+	PositionException(const std::string &s): Exception("PositPosition Error : " + s) {}
+	virtual ~PositionException() throw() {}
+};
 #endif	/* EXCEPTION_HPP */
