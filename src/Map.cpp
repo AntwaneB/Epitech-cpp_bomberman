@@ -59,7 +59,23 @@ void Map::generateMap()
 
 void Map::checkPositionPlayer()
 {
+	int x;
+	int y;
 
+	for (std::map<Position *, int>::iterator it = this->_m.begin(); it != this->_m.end(); it++)
+	{
+		x = it->first->getX();
+		y = it->first->getY();
+		this->_map[y][x] = 8;
+		if (x + 1 < this->_width)
+			this->_map[y][x + 1] = EMPTY;
+		if (x - 1 > 1)
+			this->_map[y][x - 1] = EMPTY;
+		if (y + 1 < this->_height)
+			this->_map[y + 1][x] = EMPTY;
+		if (y - 1 > 1)
+			this->_map[y - 1][x] = EMPTY;
+	}
 }
 
 void Map::delimitMap()
@@ -82,9 +98,9 @@ void Map::oneOnTwo()
 {
 	bool i;
 
-	for (int j = 1; j < this->_height - 1; j++)
+	for (int j = 2; j < this->_height - 1; j++)
 	{
-		if (j % 2)
+		if (!(j % 2))
 		{
 			i = false;
 			for (int k = 1; k < this->_width - 1; k++)

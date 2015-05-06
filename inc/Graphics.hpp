@@ -20,6 +20,9 @@ namespace Graphics
 	public:
 		Map();
 		virtual ~Map();
+		virtual bool	initialize();
+		virtual bool	update();
+		virtual bool	draw();
 	};
 
 	class Character
