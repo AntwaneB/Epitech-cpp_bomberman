@@ -16,7 +16,7 @@ Character::~Character()
 }
 
 void
-Character::onNotify(const Subject& entity, Event event)
+Character::onNotify(Subject* entity, Event event)
 {
 	(void)entity;
 	(void)event;

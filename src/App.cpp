@@ -50,10 +50,6 @@ App::onNotify(Subject * entity, Event event)
 	{
 		(this->*(it->second))(entity);
 	}
-	else
-	{
-		// On throw
-	}
 }
 
 void
@@ -75,12 +71,13 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
-/*	Menu* mainMenu = new Menu;
+	Menu* mainMenu = new Menu;
 	mainMenu->addObserver(this);
 
 	mainMenu->run();
 
-	delete mainMenu;*/
+	delete mainMenu;
+
 	std::map<Position *, int> mymap;
 	try
 	{

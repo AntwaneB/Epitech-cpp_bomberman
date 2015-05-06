@@ -16,7 +16,7 @@ public:
 	Character();
 	virtual ~Character();
 
-	virtual void onNotify(Subject const & entity, Event event);
+	virtual void onNotify(Subject* entity, Event event);
 
 private:
 
