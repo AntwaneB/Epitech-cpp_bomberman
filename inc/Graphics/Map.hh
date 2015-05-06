@@ -13,6 +13,7 @@
 
 namespace Graphics
 {
+
 	class Map : public gdl::Game
 	{
 	public:
@@ -20,12 +21,6 @@ namespace Graphics
 		virtual ~Map();
 	};
 
-	class Character
-	{
-	public:
-		Character();
-		virtual ~Character();
-	};
 };
 
 

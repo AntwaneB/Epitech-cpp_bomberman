@@ -27,7 +27,10 @@ SRCS		  =  main.cpp \
 		     Position.cpp \
 		     Item.cpp \
 		     \
-		     Graphics/Map.cpp
+		     Graphics/Display.cpp \
+		     Graphics/Map.cpp \
+		     \
+		     misc/pugixml.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -45,13 +48,17 @@ INCS		  =  Exception.hpp \
 		     Position.hpp \
 		     Item.hh \
 		     \
-		     Graphics/Map.hh
+		     Graphics/Display.hh \
+		     Graphics/Map.hh \
+		     \
+		     misc/pugiconfig.hpp \
+		     misc/pugixml.hpp
 
 LGDL_DIR	  =  libgdl
 
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
-CXXFLAGS	  += -I./inc
+CXXFLAGS	  += -I$(INCS_DIR) -I$(INCS_DIR)/misc
 CXXFLAGS	  += -lpthread
 CXXFLAGS	  +=  -ldl -lSDL2 -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs -lgdl_gl -lGL -lGLEW -lrt -lfbxsdk
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
@@ -70,8 +77,9 @@ $(NAME):		$(OBJS)
 all:			$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.cpp $(DEPS)
-			@$(MKDIR) $(OBJS_DIR)/Graphics
 		        @$(MKDIR) $(OBJS_DIR)
+			@$(MKDIR) $(OBJS_DIR)/Graphics
+			@$(MKDIR) $(OBJS_DIR)/misc
 			$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 ################
