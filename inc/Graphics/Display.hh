@@ -9,6 +9,8 @@
 #define	DISPLAY_HH
 
 #include "Observer.hpp"
+#include "SdlContext.hh"
+#include "Game.hh"
 
 class Display : public EventHandler<Display>, public Observer, public Subject
 {
@@ -19,7 +21,7 @@ public:
 	virtual void onNotify(Subject* entity, Event event);
 
 private:
-
+	gdl::SdlContext	_context;
 };
 
 #endif	/* DISPLAY_HH */

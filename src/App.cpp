@@ -27,6 +27,10 @@ App::App(int ac, char** av)
 
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
+	Display a;
+	while (42)
+	{
+	}
 }
 
 bool
