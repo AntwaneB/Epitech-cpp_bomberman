@@ -11,16 +11,16 @@
 Level::Level(size_t width, size_t height, size_t charactersCount)
 	: _map(width, height), _charactersCount(charactersCount)
 {
-	for (size_t i = 0; i < charactersCount; i++)
-	{
-		_map.pushCharacter(this->pushCharacter());
-	}
-
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
 	_actions[CHARACTER_DIED] = &Level::characterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
 	_actions[ITEM_MOVED] = &Level::itemMoved;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
+
+	for (size_t i = 0; i < charactersCount; i++)
+	{
+		_map.pushCharacter(this->pushCharacter());
+	}
 }
 
 Level::~Level()
