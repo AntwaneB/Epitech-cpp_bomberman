@@ -28,8 +28,8 @@
 class Map : public Subject, public Observer
 {
 public:
-	Map(size_t, size_t);
-	Map(std::string const & mapFile);
+	Map(size_t, size_t, std::map<Position *, int> const &);
+	Map(std::string const & mapFile, std::map<Position *, int> const &);
 	virtual ~Map();
 	virtual void onNotify(Subject const & entity, Event event);
 
@@ -48,6 +48,7 @@ private:
 	int 	_width;
 	int 	_height;
 	int 	_nbrBrick;
+	std::map<Position *, int> _m;
 
 };
 

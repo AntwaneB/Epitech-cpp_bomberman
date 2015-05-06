@@ -7,16 +7,36 @@
 
 #include "Map.hpp"
 
-Map::Map(size_t width, size_t height): _width(width), _height(height)
+/*int main(int ac, char **av)
 {
-	std::cout << "Loading..." << std::endl;
+	(void) ac;
+	(void) av;
+	std::map<Position *, int> mymap;
+	try
+	{
+		Position *p = new Position(1, 1, 15);
+		Position *p2 = new Position(1, 5, 15);
+		mymap.insert (std::pair<Position *,int>(p,100));
+		mymap.insert (std::pair<Position *, int>(p, 100));
+		Map m(atoi(av[1]), atoi(av[2]), mymap);
+	}
+	catch (Exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+}*/
+
+Map::Map(size_t width, size_t height, std::map<Position *, int> const &map):
+	_width(width), _height(height), _m(map)
+{
 	this->generateMap();
 	this->displayMap();
 }
 
-Map::Map(std::string const & mapFile)
+Map::Map(std::string const & mapFile, std::map<Position *, int> const &mymap)
 {
 	(void) mapFile;
+	(void) mymap;
 	this->generateMap();
 }
 
@@ -25,8 +45,7 @@ Map::~Map()
 
 }
 
-void
-Map::checkArg()
+void Map::checkArg()
 {
 	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
 		throw MapException("Map to little");
@@ -36,8 +55,7 @@ Map::checkArg()
 		this->_width += 1;
 }
 
-void
-Map::generateMap()
+void Map::generateMap()
 {
 	int i;
 	int j;
@@ -58,14 +76,12 @@ Map::generateMap()
 	this->checkPositionPlayer();
 }
 
-void
-Map::checkPositionPlayer()
+void Map::checkPositionPlayer()
 {
 
 }
 
-void
-Map::delimitMap()
+void Map::delimitMap()
 {
 	int i;
 
@@ -81,8 +97,7 @@ Map::delimitMap()
 	}
 }
 
-void
-Map::oneOnTwo()
+void Map::oneOnTwo()
 {
 	bool i;
 
@@ -101,8 +116,7 @@ Map::oneOnTwo()
 	}
 }
 
-void
-Map::displayMap()
+void Map::displayMap()
 {
 	for (int i = 0; i < this->_height; i++)
 	{
@@ -112,8 +126,7 @@ Map::displayMap()
 	}
 }
 
-void
-Map::placeDestrBlock()
+void Map::placeDestrBlock()
 {
 	int x = 0;
 	int y = 0;
@@ -127,18 +140,17 @@ Map::placeDestrBlock()
 			y = rand() % this->_height;
 		}
 		this->_map[y][x] = DESTR;
+		_nbrBrick -= 1;
 	}
 }
 
 
-int**
-Map::getMap()
+int** Map::getMap()
 {
 	return (this->_map);
 }
 
-void
-Map::onNotify(const Subject& entity, Event event)
+void Map::onNotify(const Subject& entity, Event event)
 {
 	(void)entity;
 	(void)event;
