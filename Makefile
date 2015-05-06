@@ -24,7 +24,8 @@ SRCS		  =  main.cpp \
 		     Level.cpp \
 		     Character.cpp \
 		     Map.cpp \
-		     Graphics_Map.cpp
+		     \
+		     Graphics/Map.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
