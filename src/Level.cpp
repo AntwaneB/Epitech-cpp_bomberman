@@ -45,10 +45,9 @@ Level::pushCharacter()
 	size_t charY = _map.height() / charsPerCol * (nth / charsPerLine);
 
 	Character*	character = new Character(nth, charX, charY);
+	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
-
-	this->notify(character, CHARACTER_SPAWNED);
 
 	return (character);
 }

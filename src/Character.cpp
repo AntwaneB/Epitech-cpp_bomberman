@@ -10,6 +10,7 @@
 Character::Character(size_t nth, size_t x, size_t y, size_t z)
 	: _nth(nth), _position(x, y, z)
 {
+	this->notify(this, CHARACTER_SPAWNED);
 }
 
 Character::~Character()
