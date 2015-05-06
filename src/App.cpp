@@ -9,11 +9,9 @@
  */
 
 #include <iostream>
-#include "Graphics/Display.hh"
 #include "Map.hpp"
 #include "Exception.hpp"
 #include "App.hpp"
-#include "Menu.hpp"
 #include "Level.hpp"
 #include "App.hpp"
 #include "Map.hpp"
@@ -27,10 +25,6 @@ App::App(int ac, char** av)
 
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
-	Display a;
-	while (42)
-	{
-	}
 }
 
 bool
@@ -60,11 +54,16 @@ App::onNotify(Subject * entity, Event event)
 void
 App::runLevel(Subject* entity)
 {
-	Level* level = dynamic_cast<Level*>(entity);
-
 	std::cout << "App::runLevel()" << std::endl;
 
-	delete level;
+	Level* level = dynamic_cast<Level*>(entity);
+
+	level->addObserver(this);
+	level->addObserver(_display);
+
+	_display->addObserver(level);
+
+	level->run();
 }
 
 void
@@ -76,28 +75,17 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
+	_display = new Display;
+	this->addObserver(_display);
+
 	Menu* mainMenu = new Menu;
 	mainMenu->addObserver(this);
+	mainMenu->addObserver(_display);
 
 	mainMenu->run();
 
 	delete mainMenu;
-
-	/*
-	std::map<Position *, int> mymap;
-	try
-	{
-		Position *p = new Position(1, 1, 15);
-		Position *p2 = new Position(9, 15, 15);
-		mymap.insert (std::pair<Position *,int>(p,100));
-		mymap.insert (std::pair<Position *, int>(p2, 100));
-		Map m(atoi(_av[1]), atoi(_av[2]), mymap);
-	}
-	catch (Exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-	*/
+	delete _display;
 
 	return (0);
 }

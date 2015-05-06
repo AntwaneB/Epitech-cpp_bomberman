@@ -32,7 +32,39 @@ Map::~Map()
 
 }
 
-void Map::generateMap(const std::string &file)
+void
+Map::onNotify(Subject * entity, Event event)
+{
+	(void)entity;
+	(void)event;
+}
+
+size_t
+Map::width() const
+{
+	return (_width);
+}
+
+size_t
+Map::height() const
+{
+	return (_height);
+}
+
+std::vector<std::vector<int> >
+Map::getMap()
+{
+	return (this->_map);
+}
+
+void
+Map::pushCharacter(Character* character)
+{
+	(void)character;
+}
+
+void
+Map::generateMap(const std::string &file)
 {
 	(void) file;
 /*	pugi::xml_document doc;
@@ -45,7 +77,8 @@ void Map::generateMap(const std::string &file)
 	}*/
 }
 
-void Map::generateMap()
+void
+Map::generateMap()
 {
 	int y;
 	int x;
@@ -72,7 +105,8 @@ void Map::generateMap()
 	this->checkPositionPlayer();
 }
 
-void Map::checkPositionPlayer()
+void
+Map::checkPositionPlayer()
 {
 	int x;
 	int y;
@@ -93,7 +127,8 @@ void Map::checkPositionPlayer()
 	}
 }
 
-void Map::delimitMap()
+void
+Map::delimitMap()
 {
 	int i;
 
@@ -109,7 +144,8 @@ void Map::delimitMap()
 	}
 }
 
-void Map::oneOnTwo()
+void
+Map::oneOnTwo()
 {
 	bool i;
 
@@ -128,7 +164,8 @@ void Map::oneOnTwo()
 	}
 }
 
-void Map::displayMap()
+void
+Map::displayMap()
 {
 	for (std::vector<std::vector<int> >::const_iterator it = this->_map.begin(); it != this->_map.end(); it++)
 	{
@@ -138,7 +175,8 @@ void Map::displayMap()
 	}
 }
 
-void Map::placeDestrBlock()
+void
+Map::placeDestrBlock()
 {
 	int x = 0;
 	int y = 0;
@@ -155,15 +193,3 @@ void Map::placeDestrBlock()
 		_nbrBrick -= 1;
 	}
 }
-
-std::vector<std::vector<int> > Map::getMap()
-{
-	return (this->_map);
-}
-
-void Map::onNotify(Subject * entity, Event event)
-{
-	(void)entity;
-	(void)event;
-}
-

@@ -21,6 +21,10 @@ public:
 	virtual void onNotify(Subject* entity, Event event);
 
 private:
+	void	runMenu();
+	void	runLevel();
+
+private:
 	gdl::SdlContext	_context;
 };
 

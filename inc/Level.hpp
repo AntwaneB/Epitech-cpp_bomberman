@@ -22,10 +22,17 @@ public:
 
 	virtual void onNotify(Subject * entity, Event event);
 
+	void	run();
+
+private:
+	Character*	pushCharacter();
+
 private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
 	std::map<Position, std::list<Item*> >			_items;
+
+	size_t													_charactersCount;
 };
 
 #endif	/* LEVEL_HPP */
