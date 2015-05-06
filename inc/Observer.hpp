@@ -63,7 +63,6 @@ class Subject
 public:
 	virtual ~Subject()
 	{
-		notify(this, OBSERVER_DELETED);
 	}
 
 	void addObserver(Observer* observer)
