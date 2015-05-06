@@ -8,6 +8,8 @@
 #ifndef POSITION_HPP
 #define	POSITION_HPP
 
+#include <iostream>
+
 enum Direction { UP, DOWN, LEFT, RIGHT };
 
 class Position
@@ -25,15 +27,15 @@ public:
    void	setZ(int z);
    void	incZ(int inc = 1);
    void	decZ(int dec = 1);
-   int	getZ() const;
+   int	z() const;
    void	setY(int y);
    void	incY(int inc = 1);
    void	decY(int dec = 1);
-   int	getY() const;
+   int	y() const;
    void	setX(int x);
    void	incX(int inc = 1);
    void	decX(int dec = 1);
-   int	getX() const;
+   int	x() const;
 	bool	isSet() const;
 
 private:
@@ -42,6 +44,8 @@ private:
 	int	_z;
 	bool	_isSet;
 };
+
+std::ostream& operator<<(std::ostream&, const Position &);
 
 #endif	/* POSITION_HPP */
 

@@ -71,7 +71,7 @@ Position::decZ(int dec)
 }
 
 int
-Position::getZ() const
+Position::z() const
 {
 	if (!_isSet)
 		throw PositionException("Getting unset position.");
@@ -102,7 +102,7 @@ Position::decY(int dec)
 }
 
 int
-Position::getY() const
+Position::y() const
 {
 	if (!_isSet)
 		throw PositionException("Getting unset position.");
@@ -133,7 +133,7 @@ Position::decX(int dec)
 }
 
 int
-Position::getX() const
+Position::x() const
 {
 	if (!_isSet)
 		throw PositionException("Getting unset position.");
@@ -150,4 +150,12 @@ bool
 Position::operator==(Position const & o) const
 {
 	return (o._x == _x && o._y == _y && o._z == _z);
+}
+
+std::ostream&
+operator<<(std::ostream& os, const Position & position)
+{
+	os << "[" << position.x() << "/" << position.y() << "/" << position.z() << "]";
+
+	return (os);
 }

@@ -36,15 +36,26 @@ Level::run()
 Character*
 Level::pushCharacter()
 {
-	size_t charsPerLine = ceil(sqrt(_charactersCount));
-	size_t charsPerCol = floor(sqrt(_charactersCount));
+	size_t blocksPerLine = _map.width() > _map.height() ? ceil(sqrt(_charactersCount)) : floor(sqrt(_charactersCount));
+	size_t lines = _map.width() > _map.height() ? floor(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
 
-	size_t nth = _characters.size() + 0;
+	size_t blockWidth = _map.width() / blocksPerLine;
+	size_t blockHeight = _map.height() / lines;
 
-	size_t charX = _map.width() / charsPerLine * (nth % charsPerLine - 1);
-	size_t charY = _map.height() / charsPerCol * (nth / charsPerLine);
+	size_t nth = _characters.size();
 
-	Character*	character = new Character(nth, charX, charY);
+	size_t charX = (nth % blocksPerLine) * blockWidth + blockWidth / 2;
+	size_t charY = (nth / blocksPerLine) * blockHeight + blockHeight / 2;
+
+	/*
+	int charX = (_map.width() / (charsPerLine - 1)) * (nth % charsPerLine);
+	int charY = (_map.height() / (charsPerCol - 1)) * (nth / charsPerLine);
+
+	std::cout << "(" << _map.width() << " / " << charsPerLine - 1 << ") * (" << nth << " % " << charsPerLine << ") = " << charX << std::endl;
+	std::cout << "(" << _map.height() << " / " << charsPerCol - 1 << ") * (" << nth << " / " << charsPerLine << ") = " << charY << std::endl;
+	*/
+
+	Character*	character = new Character(nth + 1, charX, charY);
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);

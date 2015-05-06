@@ -10,7 +10,7 @@
 Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
 {
-	this->generateMap();
+	//this->generateMap();
 }
 
 Map::Map(size_t width, size_t height, std::map<Position, std::list<Character *> > const &map):
@@ -113,8 +113,8 @@ Map::checkPositionPlayer()
 
 	for (std::map<Position, std::list<Character* > >::iterator it = this->_m.begin(); it != this->_m.end(); it++)
 	{
-		x = it->first.getX();
-		y = it->first.getY();
+		x = it->first.x();
+		y = it->first.y();
 		this->_map[y][x] = 8;
 		if (x + 1 < this->_width)
 			this->_map[y][x + 1] = EMPTY;
