@@ -20,10 +20,22 @@ Character::~Character()
 {
 }
 
-void
-Character::onNotify(Subject* entity, Event event)
+Position
+Character::position() const
 {
-	(void)entity;
-	(void)event;
+	return (_position);
 }
 
+Position
+Character::prevPosition() const
+{
+	return (_prevPosition);
+}
+
+void
+Character::move()
+{
+	_prevPosition = _position;
+
+	// move
+}

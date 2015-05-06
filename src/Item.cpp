@@ -15,3 +15,14 @@ Item::~Item()
 {
 }
 
+Position
+Item::position() const
+{
+	return (_position);
+}
+
+Position
+Item::prevPosition() const
+{
+	return (_prevPosition);
+}

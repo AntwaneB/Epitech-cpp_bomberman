@@ -5,6 +5,7 @@
  * Created on May 4, 2015, 2:34 PM
  */
 
+#include "Exception.hpp"
 #include "Level.hpp"
 
 Level::Level(size_t width, size_t height, size_t charactersCount)
@@ -14,17 +15,16 @@ Level::Level(size_t width, size_t height, size_t charactersCount)
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+
+	_actions[CHARACTER_MOVED] = &Level::characterMoved;
+	_actions[CHARACTER_DIED] = &Level::characterDied;
+	_actions[ITEM_DROPPED] = &Level::itemDropped;
+	_actions[ITEM_MOVED] = &Level::itemMoved;
+	_actions[BOMB_EXPLODED] = &Level::bombExploded;
 }
 
 Level::~Level()
 {
-}
-
-void
-Level::onNotify(Subject * entity, Event event)
-{
-	(void)entity;
-	(void)event;
 }
 
 void
@@ -47,18 +47,77 @@ Level::pushCharacter()
 	size_t charX = (nth % blocksPerLine) * blockWidth + blockWidth / 2;
 	size_t charY = (nth / blocksPerLine) * blockHeight + blockHeight / 2;
 
-	/*
-	int charX = (_map.width() / (charsPerLine - 1)) * (nth % charsPerLine);
-	int charY = (_map.height() / (charsPerCol - 1)) * (nth / charsPerLine);
-
-	std::cout << "(" << _map.width() << " / " << charsPerLine - 1 << ") * (" << nth << " % " << charsPerLine << ") = " << charX << std::endl;
-	std::cout << "(" << _map.height() << " / " << charsPerCol - 1 << ") * (" << nth << " / " << charsPerLine << ") = " << charY << std::endl;
-	*/
-
 	Character*	character = new Character(nth + 1, charX, charY);
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
 
 	return (character);
+}
+
+void
+Level::characterMoved(Subject* entity)
+{
+	if (dynamic_cast<Character*>(entity))
+	{
+		Character* character = dynamic_cast<Character*>(entity);
+
+		_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+		_characters[character->position()].push_back(character);
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
+}
+
+void
+Level::characterDied(Subject* entity)
+{
+	if (dynamic_cast<Character*>(entity))
+	{
+		Character* character = dynamic_cast<Character*>(entity);
+
+		_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
+}
+
+void
+Level::itemDropped(Subject* entity)
+{
+	if (dynamic_cast<Item*>(entity))
+	{
+		Item* item = dynamic_cast<Item*>(entity);
+
+		(void)item;
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
+}
+
+void
+Level::itemMoved(Subject* entity)
+{
+	if (dynamic_cast<Item*>(entity))
+	{
+		Item* item = dynamic_cast<Item*>(entity);
+
+		_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), (item)));
+		_items[item->position()].push_back(item);
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
+}
+
+void
+Level::bombExploded(Subject* entity)
+{
+	if (dynamic_cast<Bomb*>(entity))
+	{
+		Bomb* bomb = dynamic_cast<Bomb*>(entity);
+
+		(void)bomb;
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
 }

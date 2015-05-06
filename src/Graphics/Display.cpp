@@ -15,11 +15,3 @@ Display::Display()
 Display::~Display()
 {
 }
-
-void
-Display::onNotify(Subject* entity, Event event)
-{
-	(void)entity;
-	(void)event;
-}
-

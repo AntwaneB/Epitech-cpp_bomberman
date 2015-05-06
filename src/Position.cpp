@@ -36,7 +36,6 @@ Position::operator=(const Position& orig)
 	return (*this);
 }
 
-
 Position::~Position()
 {
 }

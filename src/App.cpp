@@ -41,21 +41,8 @@ App::~App()
 }
 
 void
-App::onNotify(Subject * entity, Event event)
-{
-	auto it = _actions.find(event);
-
-	if (it != _actions.end())
-	{
-		(this->*(it->second))(entity);
-	}
-}
-
-void
 App::runLevel(Subject* entity)
 {
-	std::cout << "App::runLevel()" << std::endl;
-
 	Level* level = dynamic_cast<Level*>(entity);
 
 	level->addObserver(this);
