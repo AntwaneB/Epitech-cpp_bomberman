@@ -85,7 +85,7 @@ App::run()
 	try
 	{
 		Position *p = new Position(1, 1, 15);
-		Position *p2 = new Position(1, 5, 15);
+		Position *p2 = new Position(9, 15, 15);
 		mymap.insert (std::pair<Position *,int>(p,100));
 		mymap.insert (std::pair<Position *, int>(p2, 100));
 		Map m(atoi(_av[1]), atoi(_av[2]), mymap);
