@@ -7,8 +7,13 @@
 
 #include "Level.hpp"
 
-Level::Level()
+Level::Level(size_t width, size_t height, size_t charactersCount)
+	: _map(width, height)
 {
+	for (size_t i = 0; i < charactersCount; i++)
+	{
+		
+	}
 }
 
 Level::~Level()

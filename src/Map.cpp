@@ -7,6 +7,11 @@
 
 #include "Map.hpp"
 
+Map::Map(size_t width, size_t height):
+	_width(width), _height(height)
+{
+}
+
 Map::Map(size_t width, size_t height, std::map<Position *, int> const &map):
 	_width(width), _height(height), _m(map)
 {

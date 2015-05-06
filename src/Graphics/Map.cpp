@@ -1,4 +1,4 @@
-#include "Graphics.hpp"
+#include "Graphics/Map.hh"
 
 Graphics::Map::Map()
 {

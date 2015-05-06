@@ -25,6 +25,7 @@ SRCS		  =  main.cpp \
 		     Character.cpp \
 		     Map.cpp \
 		     Position.cpp \
+		     Item.cpp \
 		     \
 		     Graphics/Map.cpp
 
@@ -42,7 +43,9 @@ INCS		  =  Exception.hpp \
 		     Character.hpp \
 		     Map.hpp \
 		     Position.hpp \
-		     Graphics.hpp
+		     Item.hh \
+		     \
+		     Graphics/Map.hh
 
 LGDL_DIR	  =  libgdl
 
@@ -50,7 +53,7 @@ DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
 CXXFLAGS	  += -I./inc
 CXXFLAGS	  += -lpthread
-CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs -lgdl_gl -lGL -lGLEW -ldl -lrt -lfbxsdk -lSDL2
+CXXFLAGS	  +=  -ldl -lSDL2 -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs -lgdl_gl -lGL -lGLEW -lrt -lfbxsdk
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g
@@ -67,7 +70,7 @@ $(NAME):		$(OBJS)
 all:			$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.cpp $(DEPS)
-				@$(MKDIR) $(OBJS_DIR)/Graphics
+			@$(MKDIR) $(OBJS_DIR)/Graphics
 		        @$(MKDIR) $(OBJS_DIR)
 			$(CXX) $(CXXFLAGS) -c -o $@ $<
 

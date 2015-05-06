@@ -19,7 +19,7 @@
 
 
 #define EMPTY 0
-#define	SOLID 1
+#define SOLID 1
 #define DESTR 2
 
 #define MAP_MIN_X 10
@@ -28,6 +28,7 @@
 class Map : public Subject, public Observer
 {
 public:
+	Map(size_t, size_t);
 	Map(size_t, size_t, std::map<Position *, int> const &);
 	Map(std::string const & mapFile, std::map<Position *, int> const &);
 	virtual ~Map();
