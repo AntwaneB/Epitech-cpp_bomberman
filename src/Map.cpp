@@ -10,20 +10,21 @@
 Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
 {
+	this->generateMap();
 }
 
-Map::Map(size_t width, size_t height, std::map<Position *, int> const &map):
+Map::Map(size_t width, size_t height, std::map<Position, std::list<Character *> > const &map):
 	_width(width), _height(height), _m(map)
 {
 	this->generateMap();
 	this->displayMap();
 }
 
-Map::Map(std::string const & mapFile, std::map<Position *, int> const &mymap)
+Map::Map(std::string const & mapFile, std::map<Position, std::list<Character* > > const &mymap)
 {
 	(void) mapFile;
 	(void) mymap;
-	this->generateMap();
+	this->generateMap(mapFile);
 }
 
 Map::~Map()
@@ -31,30 +32,39 @@ Map::~Map()
 
 }
 
-void Map::checkArg()
+void Map::generateMap(const std::string &file)
 {
-	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
-		throw MapException("Map to little");
-	if (!(this->_height % 2))
-		this->_height += 1;
-	if (!(this->_width % 2))
-		this->_width += 1;
+	(void) file;
+/*	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(file.c_str());
+
+	if (result)
+	{
+		this->_width = std::stoi(doc.child("map").attribute("width").value());
+		this->_height = std::stoi(doc.child("map").attribute("height").value());
+	}*/
 }
 
 void Map::generateMap()
 {
-	int i;
-	int j;
+	int y;
+	int x;
 
-	this->checkArg();
+	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
+		throw MapException("Map to little");
 	_nbrBrick = (this->_height * this->_width) * 0.3;
-	this->_map = new int *[_height];
-	for (i = 0; i < this->_width; i++)
-		this->_map[i] = new int[this->_width];
-	for (i = 0; i < this->_height; i++)
+	y = 0;
+	this->_map.resize(this->_height);
+	for (std::vector<std::vector<int> >::const_iterator it = this->_map.begin(); it != this->_map.end(); it++)
 	{
-		for (j = 0; j < this->_width; j++)
-			this->_map[i][j] = 0;
+		x = 0;
+		this->_map[y].resize(this->_width);
+		for (std::vector<int>::const_iterator it2 = it->begin(); it2 != it->end(); it2++)
+		{
+			this->_map[y][x] = 0;
+			x++;
+		}
+		y++;
 	}
 	this->delimitMap();
 	this->oneOnTwo();
@@ -67,10 +77,10 @@ void Map::checkPositionPlayer()
 	int x;
 	int y;
 
-	for (std::map<Position *, int>::iterator it = this->_m.begin(); it != this->_m.end(); it++)
+	for (std::map<Position, std::list<Character* > >::iterator it = this->_m.begin(); it != this->_m.end(); it++)
 	{
-		x = it->first->getX();
-		y = it->first->getY();
+		x = it->first.getX();
+		y = it->first.getY();
 		this->_map[y][x] = 8;
 		if (x + 1 < this->_width)
 			this->_map[y][x + 1] = EMPTY;
@@ -120,10 +130,10 @@ void Map::oneOnTwo()
 
 void Map::displayMap()
 {
-	for (int i = 0; i < this->_height; i++)
+	for (std::vector<std::vector<int> >::const_iterator it = this->_map.begin(); it != this->_map.end(); it++)
 	{
-		for (int j = 0; j < this->_width; j++)
-			std::cout << this->_map[i][j];
+		for (std::vector<int>::const_iterator it2 = it->begin(); it2 != it->end(); it2++)
+			std::cout << *it2;
 		std::cout << std::endl;
 	}
 }
@@ -146,7 +156,7 @@ void Map::placeDestrBlock()
 	}
 }
 
-int** Map::getMap()
+std::vector<std::vector<int> > Map::getMap()
 {
 	return (this->_map);
 }
