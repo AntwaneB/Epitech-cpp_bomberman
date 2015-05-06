@@ -41,6 +41,12 @@ Position::~Position()
 {
 }
 
+bool
+Position::operator<(const Position & o) const
+{
+	return ((_y < o._y) || (_y == o._y && _x < o._x));
+}
+
 void
 Position::setZ(int z)
 {
