@@ -67,6 +67,7 @@ $(NAME):		$(OBJS)
 all:			$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.cpp $(DEPS)
+				@$(MKDIR) $(OBJS_DIR)/Graphics
 		        @$(MKDIR) $(OBJS_DIR)
 			$(CXX) $(CXXFLAGS) -c -o $@ $<
 
