@@ -14,6 +14,8 @@
 #include "App.hpp"
 #include "Menu.hpp"
 #include "Level.hpp"
+#include "App.hpp"
+#include "Map.hpp"
 
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
@@ -73,12 +75,25 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
-	Menu* mainMenu = new Menu;
+/*	Menu* mainMenu = new Menu;
 	mainMenu->addObserver(this);
 
 	mainMenu->run();
 
-	delete mainMenu;
+	delete mainMenu;*/
+	std::map<Position *, int> mymap;
+	try
+	{
+		Position *p = new Position(1, 1, 15);
+		Position *p2 = new Position(1, 5, 15);
+		mymap.insert (std::pair<Position *,int>(p,100));
+		mymap.insert (std::pair<Position *, int>(p2, 100));
+		Map m(atoi(_av[1]), atoi(_av[2]), mymap);
+	}
+	catch (Exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 
 	return (0);
 }

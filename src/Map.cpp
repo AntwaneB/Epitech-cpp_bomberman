@@ -7,25 +7,6 @@
 
 #include "Map.hpp"
 
-/*int main(int ac, char **av)
-{
-	(void) ac;
-	(void) av;
-	std::map<Position *, int> mymap;
-	try
-	{
-		Position *p = new Position(1, 1, 15);
-		Position *p2 = new Position(1, 5, 15);
-		mymap.insert (std::pair<Position *,int>(p,100));
-		mymap.insert (std::pair<Position *, int>(p, 100));
-		Map m(atoi(av[1]), atoi(av[2]), mymap);
-	}
-	catch (Exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-}*/
-
 Map::Map(size_t width, size_t height, std::map<Position *, int> const &map):
 	_width(width), _height(height), _m(map)
 {
