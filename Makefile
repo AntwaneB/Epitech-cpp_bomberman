@@ -51,9 +51,12 @@ LGDL_DIR	  =  libgdl
 
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
+
+#CXXFLAGS	  += -ldl -lSDL2 -lgdl_gl -lGL -lGLEW -lrt -lfbxsdk
+CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
 CXXFLAGS	  += -I./inc
 CXXFLAGS	  += -lpthread
-CXXFLAGS	  +=  -ldl -lSDL2 -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs -lgdl_gl -lGL -lGLEW -lrt -lfbxsdk
+CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g

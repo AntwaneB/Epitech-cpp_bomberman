@@ -18,6 +18,8 @@ namespace Graphics
 	public:
 		Map();
 		virtual ~Map();
+	private:
+		gdl::SdlContext	_context;		
 	};
 
 	class Character
