@@ -24,7 +24,8 @@ SRCS		  =  main.cpp \
 		     Level.cpp \
 		     Character.cpp \
 		     Map.cpp \
-		     Position.cpp
+		     Position.cpp \
+		     Graphics_Map.cpp \
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -39,7 +40,8 @@ INCS		  =  Exception.hpp \
 		     Level.hpp \
 		     Character.hpp \
 		     Map.hpp \
-		     Position.hpp
+		     Position.hpp \
+		     Graphics.hpp
 
 LGDL_DIR	  =  libgdl
 
