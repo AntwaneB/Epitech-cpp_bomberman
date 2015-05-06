@@ -78,6 +78,7 @@ App::run()
 
 	delete mainMenu;
 
+	/*
 	std::map<Position *, int> mymap;
 	try
 	{
@@ -91,6 +92,7 @@ App::run()
 	{
 		std::cerr << e.what() << std::endl;
 	}
-
+	*/
+	
 	return (0);
 }
