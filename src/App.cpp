@@ -9,7 +9,7 @@
  */
 
 #include <iostream>
-#include "Graphics/Map.hh"
+#include "Graphics/Display.hh"
 #include "Map.hpp"
 #include "Exception.hpp"
 #include "App.hpp"
@@ -78,8 +78,6 @@ App::run()
 	mainMenu->run();
 
 	delete mainMenu;
-
-	Graphics::Map map;
 
 	/*
 	std::map<Position *, int> mymap;
