@@ -31,7 +31,8 @@ public:
 	Map(size_t, size_t, std::map<Position *, int> const &);
 	Map(std::string const & mapFile, std::map<Position *, int> const &);
 	virtual ~Map();
-	virtual void onNotify(Subject const & entity, Event event);
+
+	virtual void onNotify(Subject * entity, Event event);
 
 protected:
 	void	generateMap();

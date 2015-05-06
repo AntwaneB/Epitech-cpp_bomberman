@@ -130,7 +130,7 @@ int** Map::getMap()
 	return (this->_map);
 }
 
-void Map::onNotify(Subject const & entity, Event event)
+void Map::onNotify(Subject * entity, Event event)
 {
 	(void)entity;
 	(void)event;
