@@ -9,6 +9,7 @@
  */
 
 #include <iostream>
+#include "Graphics/Map.hh"
 #include "Map.hpp"
 #include "Exception.hpp"
 #include "App.hpp"
@@ -78,6 +79,8 @@ App::run()
 
 	delete mainMenu;
 
+	Graphics::Map map;
+
 	/*
 	std::map<Position *, int> mymap;
 	try
@@ -93,6 +96,6 @@ App::run()
 		std::cerr << e.what() << std::endl;
 	}
 	*/
-	
+
 	return (0);
 }
