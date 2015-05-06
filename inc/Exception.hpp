@@ -39,4 +39,12 @@ public:
 	virtual ~ArgumentsException() throw() {}
 };
 
+class ConfigException : public Exception
+{
+public:
+	ConfigException(std::string const & s) : Exception(s) {}
+
+	virtual ~ConfigException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */
