@@ -7,16 +7,17 @@
 
 #include "Map.hpp"
 
-Map::Map(size_t width, size_t height): _width(width), _height(height)
+Map::Map(size_t width, size_t height, std::map<Position *, int> const &map):
+	_width(width), _height(height), _m(map)
 {
-	std::cout << "Loading..." << std::endl;
 	this->generateMap();
 	this->displayMap();
 }
 
-Map::Map(std::string const & mapFile)
+Map::Map(std::string const & mapFile, std::map<Position *, int> const &mymap)
 {
 	(void) mapFile;
+	(void) mymap;
 	this->generateMap();
 }
 
@@ -25,8 +26,7 @@ Map::~Map()
 
 }
 
-void
-Map::checkArg()
+void Map::checkArg()
 {
 	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
 		throw MapException("Map to little");
@@ -36,8 +36,7 @@ Map::checkArg()
 		this->_width += 1;
 }
 
-void
-Map::generateMap()
+void Map::generateMap()
 {
 	int i;
 	int j;
@@ -58,14 +57,28 @@ Map::generateMap()
 	this->checkPositionPlayer();
 }
 
-void
-Map::checkPositionPlayer()
+void Map::checkPositionPlayer()
 {
+	int x;
+	int y;
 
+	for (std::map<Position *, int>::iterator it = this->_m.begin(); it != this->_m.end(); it++)
+	{
+		x = it->first->getX();
+		y = it->first->getY();
+		this->_map[y][x] = 8;
+		if (x + 1 < this->_width)
+			this->_map[y][x + 1] = EMPTY;
+		if (x - 1 > 1)
+			this->_map[y][x - 1] = EMPTY;
+		if (y + 1 < this->_height)
+			this->_map[y + 1][x] = EMPTY;
+		if (y - 1 > 1)
+			this->_map[y - 1][x] = EMPTY;
+	}
 }
 
-void
-Map::delimitMap()
+void Map::delimitMap()
 {
 	int i;
 
@@ -81,14 +94,13 @@ Map::delimitMap()
 	}
 }
 
-void
-Map::oneOnTwo()
+void Map::oneOnTwo()
 {
 	bool i;
 
-	for (int j = 1; j < this->_height - 1; j++)
+	for (int j = 2; j < this->_height - 1; j++)
 	{
-		if (j % 2)
+		if (!(j % 2))
 		{
 			i = false;
 			for (int k = 1; k < this->_width - 1; k++)
@@ -101,8 +113,7 @@ Map::oneOnTwo()
 	}
 }
 
-void
-Map::displayMap()
+void Map::displayMap()
 {
 	for (int i = 0; i < this->_height; i++)
 	{
@@ -112,8 +123,7 @@ Map::displayMap()
 	}
 }
 
-void
-Map::placeDestrBlock()
+void Map::placeDestrBlock()
 {
 	int x = 0;
 	int y = 0;
@@ -127,18 +137,16 @@ Map::placeDestrBlock()
 			y = rand() % this->_height;
 		}
 		this->_map[y][x] = DESTR;
+		_nbrBrick -= 1;
 	}
 }
 
-
-int**
-Map::getMap()
+int** Map::getMap()
 {
 	return (this->_map);
 }
 
-void
-Map::onNotify(const Subject& entity, Event event)
+void Map::onNotify(Subject * entity, Event event)
 {
 	(void)entity;
 	(void)event;

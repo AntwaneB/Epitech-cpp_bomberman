@@ -24,6 +24,7 @@ SRCS		  =  main.cpp \
 		     Level.cpp \
 		     Character.cpp \
 		     Map.cpp \
+		     Position.cpp \
 		     \
 		     Graphics/Map.cpp
 
@@ -40,6 +41,7 @@ INCS		  =  Exception.hpp \
 		     Level.hpp \
 		     Character.hpp \
 		     Map.hpp \
+		     Position.hpp \
 		     Graphics.hpp
 
 LGDL_DIR	  =  libgdl
