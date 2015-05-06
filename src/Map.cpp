@@ -82,9 +82,9 @@ void Map::oneOnTwo()
 {
 	bool i;
 
-	for (int j = 1; j < this->_height - 1; j++)
+	for (int j = 2; j < this->_height - 1; j++)
 	{
-		if (j % 2)
+		if (!(j % 2))
 		{
 			i = false;
 			for (int k = 1; k < this->_width - 1; k++)
