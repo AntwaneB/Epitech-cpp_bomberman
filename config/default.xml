@@ -9,10 +9,18 @@
 		<param name="collision">true</param>
 		<param name="bombs">
 			<param name="available">true</param>
-			<param name="max_amount">1</param>
-			<param name="max_range">2</param>
+			<param name="amount">1</param>
+			<param name="range">2</param>
 			<param name="duration_modifier">1</param>
 		</param>
+	</entity>
+
+	<entity name="bomb">
+		<param name="visible">true</param>
+		<param name="destructible">false</param>
+		<param name="collision">false</param>
+		<param name="range">2</param>
+		<param name="duration">4</param>
 	</entity>
 
 	<entity name="bonus_item">

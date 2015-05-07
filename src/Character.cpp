@@ -15,7 +15,7 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 	: _nth(nth), _position(x, y, z), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
-	_actions[BOMB_EXPLODED] = &Character::bombExploded;
+	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
 
 	_attributes = g_settings["entities"]["character"];
 
@@ -70,11 +70,14 @@ Character::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
-	// We have to check if the character didn't got hit
-
 	auto it = std::find(_bombs.begin(), _bombs.end(), bomb);
 	if (it != _bombs.end())
 		_bombs.erase(it);
+
+	if (bomb->hasHit(_position))
+	{ // The character got hit by the bomb
+		this->notify(this, CHARACTER_DIED);
+	}
 }
 
 Position
@@ -102,10 +105,12 @@ Character::move(Character::Action action)
 void
 Character::dropBomb()
 {
-	Bomb* bomb = new Bomb(); // We have to set it's position and the character it's related to
+	Bomb* bomb = new Bomb(_position,
+								 _attributes["bomb"]["range"],
+								 static_cast<double>(g_settings["bomb"]["duration"]) * static_cast<double>(_attributes["bomb"]["duration_modifier"]),
+								 this);
 
 	_bombs.push_back(bomb);
-	bomb->addObserver(this);
 
 	this->notify(bomb, BOMB_DROPPED);
 }

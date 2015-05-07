@@ -131,6 +131,10 @@ Level::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
+	// We have to set the hitbox for the bomb
+
 	_items[bomb->position()].erase(std::find(_items[bomb->position()].begin(), _items[bomb->position()].end(), bomb));
 	_clock.removeObserver(bomb);
+
+	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }

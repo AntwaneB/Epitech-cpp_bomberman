@@ -14,13 +14,13 @@
 class Item : public EventHandler<Item>, public Subject
 {
 public:
-	Item();
-	virtual ~Item();
+	Item(Position const &);
+	virtual ~Item() = 0;
 
 	Position	position() const;
 	Position	prevPosition() const;
 
-private:
+protected:
 	Position	_position;
 	Position	_prevPosition;
 };
