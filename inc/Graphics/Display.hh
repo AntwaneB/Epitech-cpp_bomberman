@@ -21,9 +21,6 @@ public:
 private:
 	void	runMenu();
 	void	runLevel();
-
-private:
-	gdl::SdlContext	_context;
 };
 
 #endif	/* DISPLAY_HH */

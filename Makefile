@@ -29,6 +29,8 @@ SRCS		  =  main.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Map.cpp \
+		     Graphics/Object.cpp \
+		     Graphics/Cube.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -51,6 +53,8 @@ INCS		  =  Exception.hpp \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Map.hh \
+		     Graphics/Object.hh \
+		     Graphics/Cube.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp

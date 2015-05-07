@@ -13,8 +13,8 @@
 #include "Exception.hpp"
 #include "App.hpp"
 #include "Level.hpp"
-#include "App.hpp"
 #include "Map.hpp"
+#include "Graphics/Map.hh"
 
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
@@ -24,6 +24,10 @@ App::App(int ac, char** av)
 
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n./bomberman");
+	Graphics::Map engine;
+	engine.initialize();
+	while (engine.update() == true)
+		engine.draw();
 }
 
 bool
