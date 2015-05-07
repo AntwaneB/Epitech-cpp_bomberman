@@ -7,32 +7,26 @@ Graphics::Map::Map()
 
 Graphics::Map::~Map()
 {
-// N'oublions pas de supprimer les objets une fois le programme termine!
 for (size_t i = 0; i < _objects.size(); ++i)
-delete _objects[i];
+	delete _objects[i];
 }
 
 bool Graphics::Map::initialize()
 {
-	if (!_context.start(800, 600, "My bomberman!")) // on cree une fenetre
-return false;
-// On active le test de profondeur d'OpenGL pour que les pixels que l'oeil ne voit pas ne
+if (!_context.start(800, 600, "My bomberman!"))
+	return false;
 glEnable(GL_DEPTH_TEST);
-// On cree un shader, petit programme permettant de dessiner nos objets a l'ecran
-if (!_shader.load("../../libgdl/Shaders/basic.fp", GL_FRAGMENT_SHADER) || !_shader.load("../../libgdl/Shaders/basic.vp", GL_VERTEX_SHADER) // le vertex
-|| !_shader.build()) // il faut ensuite compiler son shader
-return false;
-// On place ensuite la camera (sa projection ainsi que sa transformation)
+if (!_shader.load("./LibBomberman_linux_x64/Shaders/basic.fp", GL_FRAGMENT_SHADER) || !_shader.load("./LibBomberman_linux_x64/Shaders/basic.vp", GL_VERTEX_SHADER) // le vertex
+|| !_shader.build())
+	return false;
 glm::mat4 projection;
 glm::mat4 transformation;
-// La projection de la camera correspond a la maniere dont les objets vont etre dessine a
 _shader.bind();
 _shader.setUniform("view", transformation);
 _shader.setUniform("projection", projection);
-// On va ensuite creer un cube que l'on va ajouter a la liste d'objets
 Object *cube = new Cube();
 if (cube->initialize() == false)
-return (false);
+	return (false);
 _objects.push_back(cube);
 return true;
 }
@@ -40,7 +34,7 @@ return true;
 bool Graphics::Map::update()
 {
 if (_input.getKey(SDLK_ESCAPE) || _input.getInput(SDL_QUIT))
-return false;
+	return false;
 // Mise a jour des inputs et de l'horloge de jeu
 _context.updateClock(_clock);
 _context.updateInputs(_input);
