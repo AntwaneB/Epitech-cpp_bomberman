@@ -11,15 +11,13 @@
 #include "Observer.hpp"
 #include "Level.hpp"
 
-class Menu : public Subject, public Observer
+class Menu : public Subject, public EventHandler<Menu>
 {
 public:
 	Menu();
 	virtual ~Menu();
 
 	void	run();
-
-	void	onNotify(Subject* entity, Event event);
 
 private:
 

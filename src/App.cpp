@@ -23,8 +23,7 @@ App::App(int ac, char** av)
 	_actions[EXIT_TRIGGERED] = &App::exit;
 
 	if (!this->validateArgs())
-		throw ArgumentsException("usage:\n" \
-										 "./bomberman");
+		throw ArgumentsException("usage:\n./bomberman");
 }
 
 bool

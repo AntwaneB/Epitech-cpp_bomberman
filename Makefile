@@ -1,5 +1,5 @@
 ##
-## Makefile for monlongserpent in /home/buchse_a/Projects/
+## Makefile for onfaittoutpéter in /home/buchse_a/Projects/
 ##
 ## Made by Antoine Buchser
 ## Login   <buchse_a@epitech.net>
