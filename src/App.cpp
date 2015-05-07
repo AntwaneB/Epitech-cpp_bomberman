@@ -64,6 +64,7 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
+	std::cout << "Bingo" << std::endl;
 /*	Menu* mainMenu = new Menu;
 	_display = new Display;
 	this->addObserver(_display);

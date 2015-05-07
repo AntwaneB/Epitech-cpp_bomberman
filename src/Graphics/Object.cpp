@@ -2,7 +2,7 @@
 
 Graphics::Object::Object()
 {
-	
+
 }
 
 Graphics::Object::~Object()
