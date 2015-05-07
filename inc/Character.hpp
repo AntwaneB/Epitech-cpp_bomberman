@@ -11,17 +11,22 @@
 #include "Observer.hpp"
 #include "Position.hpp"
 
-class Character : public Subject, public Observer
+class Character : public EventHandler<Character>, public Subject
 {
 public:
 	Character(size_t nth, size_t x, size_t y, size_t z = 0);
 	virtual ~Character();
 
-	virtual void onNotify(Subject* entity, Event event);
+	Position	position() const;
+	Position	prevPosition() const;
+
+private:
+	void move();
 
 private:
 	size_t	_nth;
 	Position	_position;
+	Position	_prevPosition;
 };
 
 #endif	/* CHARACTER_HPP */

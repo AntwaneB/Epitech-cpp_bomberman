@@ -57,7 +57,16 @@ public:
 class PositionException : public Exception
 {
 public:
-	PositionException(const std::string &s): Exception("PositPosition Error : " + s) {}
+	PositionException(const std::string &s): Exception("Position Error : " + s) {}
 	virtual ~PositionException() throw() {}
 };
+
+class EventException : public Exception
+{
+public:
+	EventException(std::string const & s) : Exception(s) {}
+
+	virtual ~EventException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */

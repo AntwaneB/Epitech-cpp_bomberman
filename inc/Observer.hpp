@@ -45,6 +45,7 @@ enum Event
 	CHARACTER_PICKUP_ITEM,
 
 	ITEM_DROPPED,
+	ITEM_MOVED,
 	BOMB_EXPLODED,
 };
 
@@ -96,10 +97,23 @@ private:
 };
 
 template <typename T>
-class EventHandler
+class EventHandler : public Observer
 {
 public:
 	virtual ~EventHandler() {}
+
+	virtual void onNotify(Subject * entity, Event event)
+	{
+		if (dynamic_cast<T*>(this))
+		{
+			auto it = _actions.find(event);
+
+			if (it != _actions.end())
+			{
+				(dynamic_cast<T*>(this)->*(it->second))(entity);
+			}
+		}
+	}
 
 protected:
 	std::map<const Event, void (T::*)(Subject *)>	_actions;

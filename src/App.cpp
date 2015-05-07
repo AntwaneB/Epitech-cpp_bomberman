@@ -19,12 +19,11 @@
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
 {
-	if (!this->validateArgs())
-		throw ArgumentsException("usage:\n" \
-										 "./bomberman");
-
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
+
+	if (!this->validateArgs())
+		throw ArgumentsException("usage:\n./bomberman");
 }
 
 bool
@@ -41,29 +40,21 @@ App::~App()
 }
 
 void
-App::onNotify(Subject * entity, Event event)
-{
-	auto it = _actions.find(event);
-
-	if (it != _actions.end())
-	{
-		(this->*(it->second))(entity);
-	}
-}
-
-void
 App::runLevel(Subject* entity)
 {
-	std::cout << "App::runLevel()" << std::endl;
+	if (dynamic_cast<Level*>(entity))
+	{
+		Level* level = dynamic_cast<Level*>(entity);
 
-	Level* level = dynamic_cast<Level*>(entity);
+		level->addObserver(this);
+		level->addObserver(_display);
 
-	level->addObserver(this);
-	level->addObserver(_display);
+		_display->addObserver(level);
 
-	_display->addObserver(level);
-
-	level->run();
+		level->run();
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
 }
 
 void

@@ -1,5 +1,5 @@
 ##
-## Makefile for monlongserpent in /home/buchse_a/Projects/
+## Makefile for onfaittoutpéter in /home/buchse_a/Projects/
 ##
 ## Made by Antoine Buchser
 ## Login   <buchse_a@epitech.net>
@@ -19,13 +19,13 @@ SRCS_DIR	  =  src
 SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
-		     \
 		     Menu.cpp \
 		     Level.cpp \
 		     Character.cpp \
 		     Map.cpp \
 		     Position.cpp \
 		     Item.cpp \
+		     Bomb.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Map.cpp \
@@ -40,13 +40,14 @@ INCS		  =  Exception.hpp \
 		     App.hpp \
 		     Config.hpp \
 		     Observer.hpp \
-		     \
 		     Menu.hpp \
 		     Level.hpp \
 		     Character.hpp \
+		     IA.hpp \
 		     Map.hpp \
 		     Position.hpp \
 		     Item.hh \
+		     Bomb.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Map.hh \
