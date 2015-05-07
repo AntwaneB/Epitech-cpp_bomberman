@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "Exception.hpp"
+#include "Character.hpp"
 #include "App.hpp"
 #include "Level.hpp"
 #include "Config.hpp"
@@ -69,11 +70,11 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
+	Menu* mainMenu = new Menu;
 	_display = new Display;
 	this->addObserver(_display);
 
 	Menu* mainMenu = new Menu;
-	mainMenu->addObserver(this);
 	mainMenu->addObserver(_display);
 
 	mainMenu->run();
