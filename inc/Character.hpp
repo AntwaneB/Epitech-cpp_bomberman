@@ -10,6 +10,7 @@
 
 #include "Observer.hpp"
 #include "Position.hpp"
+#include "Config.hpp"
 
 class Character : public EventHandler<Character>, public Subject
 {
@@ -27,6 +28,7 @@ private:
 	size_t	_nth;
 	Position	_position;
 	Position	_prevPosition;
+	Config	_attributes;
 };
 
 #endif	/* CHARACTER_HPP */

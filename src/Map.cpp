@@ -10,7 +10,8 @@
 Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
 {
-	//this->generateMap();
+//	this->generateMap();
+//	this->displayMap();
 }
 
 Map::Map(size_t width, size_t height, std::map<Position, std::list<Character *> > const &map):
