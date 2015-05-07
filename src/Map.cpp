@@ -6,6 +6,7 @@
  */
 
 #include "Map.hpp"
+#include "pugixml.hpp"
 
 Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
@@ -35,14 +36,16 @@ Map::~Map()
 void Map::generateMap(const std::string &file)
 {
 	(void) file;
-/*	pugi::xml_document doc;
+	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(file.c_str());
 
 	if (result)
 	{
 		this->_width = std::stoi(doc.child("map").attribute("width").value());
 		this->_height = std::stoi(doc.child("map").attribute("height").value());
-	}*/
+		std::cout << this->_height << std::endl;
+		std::cout << this->_width << std::endl;
+	}
 }
 
 void Map::generateMap()

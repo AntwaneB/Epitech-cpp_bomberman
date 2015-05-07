@@ -27,10 +27,10 @@ App::App(int ac, char** av)
 
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
-	Display a;
-	while (42)
+/*	Display a;*/
+/*	while (42)
 	{
-	}
+	}*/
 }
 
 bool
@@ -76,28 +76,31 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
-	Menu* mainMenu = new Menu;
+/*	Menu* mainMenu = new Menu;
 	mainMenu->addObserver(this);
 
 	mainMenu->run();
 
-	delete mainMenu;
+	delete mainMenu;*/
 
-	/*
-	std::map<Position *, int> mymap;
+	// operations.insert(std::map<std::string, void (Parser::*)
+	// (std::vector<std::string> const &)>::value_type("push", &Parser::push));
+
+	std::map<Position, std::list<Character *> > mymap;
 	try
 	{
-		Position *p = new Position(1, 1, 15);
-		Position *p2 = new Position(9, 15, 15);
-		mymap.insert (std::pair<Position *,int>(p,100));
-		mymap.insert (std::pair<Position *, int>(p2, 100));
-		Map m(atoi(_av[1]), atoi(_av[2]), mymap);
+		std::list<Character *> my_list;
+		Position p(1, 1, 15);
+		Character *c = new Character();
+		my_list.push_back(c);
+		mymap.insert (std::map<Position, std::list<Character *> >::value_type(p, my_list));
+		Map m("maps/default.xml", mymap);
+/*		Map m(atoi(_av[1]), atoi(_av[2]), mymap);*/
 	}
 	catch (Exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	*/
 
 	return (0);
 }
