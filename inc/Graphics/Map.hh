@@ -10,6 +10,16 @@
 
 #include "SdlContext.hh"
 #include "Game.hh"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "BasicShader.hh"
+#include "Clock.hh"
+#include "Input.hh"
+#include "Graphics/Object.hh"
+#include "Graphics/Cube.hh"
+#include "Geometry.hh"
+#include "Texture.hh"
+#include <vector>
 
 namespace Graphics
 {
@@ -19,7 +29,16 @@ namespace Graphics
 	public:
 		Map();
 		virtual ~Map();
-	private:		
+		virtual bool initialize();
+		virtual bool update();
+		virtual void draw();
+
+	protected:
+		gdl::SdlContext _context;
+		gdl::Clock _clock;
+		gdl::Input _input;
+		gdl::BasicShader _shader;
+		std::vector<Object*> _objects;
 	};
 
 };

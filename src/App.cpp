@@ -14,18 +14,14 @@
 #include "Character.hpp"
 #include "App.hpp"
 #include "Level.hpp"
-#include "App.hpp"
 #include "Map.hpp"
+#include "Graphics/Map.hh"
 
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
 {
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
-/*	Display a;*/
-/*	while (42)
-	{
-	}*/
 }
 
 bool
