@@ -10,6 +10,7 @@
 
 #include <map>
 #include "Observer.hpp"
+#include "Clock.hpp"
 #include "Map.hpp"
 #include "Character.hpp"
 #include "Item.hh"
@@ -21,7 +22,8 @@ public:
 	Level(size_t width, size_t height, size_t charactersCount);
 	virtual ~Level();
 
-	void	run();
+	void		run();
+	Clock&	clock();
 
 private:
 	Character*	pushCharacter();
@@ -32,6 +34,8 @@ private:
 	void	itemMoved(Subject* entity);
 	void	bombExploded(Subject* entity);
 
+	void	tick(Subject* entity);
+
 private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
@@ -39,6 +43,7 @@ private:
 	std::map<Position, std::list<Item*> >			_items;
 
 	size_t													_charactersCount;
+	Clock														_clock;
 };
 
 #endif	/* LEVEL_HPP */

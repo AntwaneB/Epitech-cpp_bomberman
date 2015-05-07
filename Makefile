@@ -19,6 +19,8 @@ SRCS_DIR	  =  src
 SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
+		     Clock.cpp \
+		     \
 		     Menu.cpp \
 		     Level.cpp \
 		     Character.cpp \
@@ -38,9 +40,12 @@ OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
 
 INCS_DIR	  =  inc
-INCS		  =  Exception.hpp \
+INCS		  =  global.hh \
+		     Exception.hpp \
 		     App.hpp \
 		     Config.hpp \
+		     Clock.hpp \
+		     \
 		     Observer.hpp \
 		     Menu.hpp \
 		     Level.hpp \

@@ -9,12 +9,13 @@
  */
 
 #include <iostream>
-#include "Map.hpp"
 #include "Exception.hpp"
 #include "App.hpp"
 #include "Level.hpp"
-#include "Map.hpp"
-#include "Graphics/Map.hh"
+#include "Config.hpp"
+#include "Graphics/Display.hh"
+
+Config g_settings;
 
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
@@ -24,6 +25,8 @@ App::App(int ac, char** av)
 
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n./bomberman");
+
+	g_settings.importFile("config/default.xml");
 }
 
 bool

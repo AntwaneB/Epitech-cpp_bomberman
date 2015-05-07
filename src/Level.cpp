@@ -11,11 +11,14 @@
 Level::Level(size_t width, size_t height, size_t charactersCount)
 	: _map(width, height), _charactersCount(charactersCount)
 {
+	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
 	_actions[CHARACTER_DIED] = &Level::characterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
 	_actions[ITEM_MOVED] = &Level::itemMoved;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
+
+	_clock.addObserver(this);
 
 	for (size_t i = 0; i < charactersCount; i++)
 	{
@@ -27,10 +30,36 @@ Level::~Level()
 {
 }
 
+Clock&
+Level::clock()
+{
+	return (_clock);
+}
+
 void
 Level::run()
 {
 	this->notify(this, LEVEL_STARTED);
+
+	_clock.restart();
+	_clock.resetSec();
+	_clock.run();
+}
+
+void
+Level::tick(Subject* entity)
+{
+	if (dynamic_cast<Clock*>(entity))
+	{
+		Clock* clock = dynamic_cast<Clock*>(entity);
+		if (clock == &_clock)
+		{
+
+			this->notify(this, LEVEL_UPDATED);
+		}
+	}
+	else
+		throw EventException("Event thrown on not-matching entity");
 }
 
 Character*
@@ -51,6 +80,8 @@ Level::pushCharacter()
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
+
+	_clock.addObserver(character);
 
 	return (character);
 }
@@ -77,6 +108,7 @@ Level::characterDied(Subject* entity)
 		Character* character = dynamic_cast<Character*>(entity);
 
 		_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+		_clock.removeObserver(character);
 	}
 	else
 		throw EventException("Event thrown on not-matching entity");
@@ -89,7 +121,7 @@ Level::itemDropped(Subject* entity)
 	{
 		Item* item = dynamic_cast<Item*>(entity);
 
-		(void)item;
+		_clock.addObserver(item);
 	}
 	else
 		throw EventException("Event thrown on not-matching entity");
@@ -116,7 +148,7 @@ Level::bombExploded(Subject* entity)
 	{
 		Bomb* bomb = dynamic_cast<Bomb*>(entity);
 
-		(void)bomb;
+		_clock.removeObserver(bomb);
 	}
 	else
 		throw EventException("Event thrown on not-matching entity");

@@ -8,9 +8,10 @@
 #ifndef ITEM_HH
 #define	ITEM_HH
 
+#include "Observer.hpp"
 #include "Position.hpp"
 
-class Item
+class Item : public EventHandler<Item>
 {
 public:
 	Item();

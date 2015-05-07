@@ -24,6 +24,8 @@ public:
 private:
 	void move();
 
+	void tick(Subject* entity);
+
 private:
 	size_t	_nth;
 	Position	_position;
