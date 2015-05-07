@@ -2,10 +2,10 @@
 
 set -e
 
-export LD_LIBRARY_PATH=$(LGDL_DIR)/libs
+export LD_LIBRARY_PATH=ligdl/libs
 
-make
+make -s
 
-
+./bomberman
 
 set +e
