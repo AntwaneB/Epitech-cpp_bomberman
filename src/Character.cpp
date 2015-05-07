@@ -70,6 +70,8 @@ Character::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
+	// We have to check if the character didn't got hit
+
 	auto it = std::find(_bombs.begin(), _bombs.end(), bomb);
 	if (it != _bombs.end())
 		_bombs.erase(it);
