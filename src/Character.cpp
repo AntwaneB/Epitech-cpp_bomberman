@@ -70,7 +70,9 @@ Character::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
-	_bombs.erase(std::find(_bombs.begin(), _bombs.end(), bomb));
+	auto it = std::find(_bombs.begin(), _bombs.end(), bomb);
+	if (it != _bombs.end())
+		_bombs.erase(it);
 }
 
 Position
