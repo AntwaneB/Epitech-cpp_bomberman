@@ -12,12 +12,20 @@ Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
 {
 	this->generateMap();
+	this->delimitMap();
+	this->oneOnTwo();
+	this->placeDestrBlock();
+	this->displayMap();
 }
 
 Map::Map(size_t width, size_t height, std::map<Position, std::list<Character *> > const &map):
 	_width(width), _height(height), _m(map)
 {
 	this->generateMap();
+	this->delimitMap();
+	this->oneOnTwo();
+	this->placeDestrBlock();
+	this->checkPositionPlayer();
 	this->displayMap();
 }
 
@@ -26,6 +34,7 @@ Map::Map(std::string const & mapFile, std::map<Position, std::list<Character* > 
 	(void) mapFile;
 	(void) mymap;
 	this->generateMap(mapFile);
+	this->displayMap();
 }
 
 Map::~Map()
@@ -33,22 +42,80 @@ Map::~Map()
 
 }
 
-void Map::generateMap(const std::string &file)
+void
+Map::onNotify(Subject * entity, Event event)
 {
-	(void) file;
+	(void)entity;
+	(void)event;
+}
+
+size_t
+Map::width() const
+{
+	return (_width);
+}
+
+size_t
+Map::height() const
+{
+	return (_height);
+}
+
+std::vector<std::vector<int> >
+Map::getMap()
+{
+	return (this->_map);
+}
+
+void
+Map::pushCharacter(Character* character)
+{
+	(void)character;
+}
+
+void
+Map::generateMap(const std::string &file)
+{
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(file.c_str());
+	int y;
+	int x;
 
 	if (result)
 	{
-		this->_width = std::stoi(doc.child("map").attribute("width").value());
-		this->_height = std::stoi(doc.child("map").attribute("height").value());
+		this->_width = doc.child("map").attribute("width").as_int();
+		this->_height = doc.child("map").attribute("height").as_int();
 		std::cout << this->_height << std::endl;
 		std::cout << this->_width << std::endl;
+
+		y = 0;
+		this->_map.resize(this->_height);
+		for (pugi::xml_node row = doc.child("map").child("row"); row; row = row.next_sibling("row"))
+		{
+			x = 0;
+			this->_map[y].resize(this->_width);
+			for (pugi::xml_node block = row.child("case"); block; block = block.next_sibling("case"))
+			{
+				std::string entity = block.attribute("entity").value();
+				if (entity == "wall")
+					this->_map[y][x] = SOLID;
+				else if (entity == "floor")
+					this->_map[y][x] = EMPTY;
+				else if (entity == "block")
+					this->_map[y][x] = DESTR;
+				else
+					throw MapException("XML : incorrect file");
+				x++;
+			}
+			y++;
+		}
 	}
+	else
+		throw MapException("Can't open the file");
 }
 
-void Map::generateMap()
+void
+Map::generateMap()
 {
 	int y;
 	int x;
@@ -69,50 +136,53 @@ void Map::generateMap()
 		}
 		y++;
 	}
-	this->delimitMap();
-	this->oneOnTwo();
-	this->placeDestrBlock();
-	this->checkPositionPlayer();
 }
 
-void Map::checkPositionPlayer()
+void
+Map::checkPositionPlayer()
 {
 	int x;
 	int y;
 
 	for (std::map<Position, std::list<Character* > >::iterator it = this->_m.begin(); it != this->_m.end(); it++)
 	{
-		x = it->first.getX();
-		y = it->first.getY();
+		x = it->first.x();
+		y = it->first.y();
 		this->_map[y][x] = 8;
 		if (x + 1 < this->_width)
-			this->_map[y][x + 1] = EMPTY;
+			if (this->_map[y][x + 1] != SOLID)
+				this->_map[y][x + 1] = EMPTY;
 		if (x - 1 > 1)
-			this->_map[y][x - 1] = EMPTY;
+			if (this->_map[y][x - 1] != SOLID)
+				this->_map[y][x - 1] = EMPTY;
 		if (y + 1 < this->_height)
-			this->_map[y + 1][x] = EMPTY;
+			if (this->_map[y + 1][x] != SOLID)
+				this->_map[y + 1][x] = EMPTY;
 		if (y - 1 > 1)
-			this->_map[y - 1][x] = EMPTY;
+			if (this->_map[y - 1][x] != SOLID)
+				this->_map[y - 1][x] = EMPTY;
 	}
 }
 
-void Map::delimitMap()
+void
+Map::delimitMap()
 {
 	int i;
 
 	for (i = 0; i < this->_width; i++)
 	{
 		this->_map[0][i] = SOLID;
-		this->_map[i][0] = SOLID;
+		this->_map[this->_height - 1][i] = SOLID;
 	}
 	for (i = 0; i < this->_height; i++)
 	{
-		this->_map[this->_height - 1][i] = SOLID;
-		this->_map[i][this->_height - 1] = SOLID;
+		this->_map[i][0] = SOLID;
+		this->_map[i][this->_width - 1] = SOLID;
 	}
 }
 
-void Map::oneOnTwo()
+void
+Map::oneOnTwo()
 {
 	bool i;
 
@@ -131,7 +201,8 @@ void Map::oneOnTwo()
 	}
 }
 
-void Map::displayMap()
+void
+Map::displayMap()
 {
 	for (std::vector<std::vector<int> >::const_iterator it = this->_map.begin(); it != this->_map.end(); it++)
 	{
@@ -141,7 +212,8 @@ void Map::displayMap()
 	}
 }
 
-void Map::placeDestrBlock()
+void
+Map::placeDestrBlock()
 {
 	int x = 0;
 	int y = 0;
@@ -158,15 +230,3 @@ void Map::placeDestrBlock()
 		_nbrBrick -= 1;
 	}
 }
-
-std::vector<std::vector<int> > Map::getMap()
-{
-	return (this->_map);
-}
-
-void Map::onNotify(Subject * entity, Event event)
-{
-	(void)entity;
-	(void)event;
-}
-

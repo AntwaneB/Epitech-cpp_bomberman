@@ -8,24 +8,37 @@
 #ifndef LEVEL_HPP
 #define	LEVEL_HPP
 
+#include <map>
 #include "Observer.hpp"
 #include "Map.hpp"
 #include "Character.hpp"
 #include "Item.hh"
-#include <map>
+#include "Bomb.hh"
 
-class Level : public Subject, public Observer
+class Level : public EventHandler<Level>, public Subject
 {
 public:
 	Level(size_t width, size_t height, size_t charactersCount);
 	virtual ~Level();
 
-	virtual void onNotify(Subject * entity, Event event);
+	void	run();
+
+private:
+	Character*	pushCharacter();
+
+	void	characterMoved(Subject* entity);
+	void	characterDied(Subject* entity);
+	void	itemDropped(Subject* entity);
+	void	itemMoved(Subject* entity);
+	void	bombExploded(Subject* entity);
 
 private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
+	std::map<Position, std::list<Bomb*> >			_bombs;
 	std::map<Position, std::list<Item*> >			_items;
+
+	size_t													_charactersCount;
 };
 
 #endif	/* LEVEL_HPP */

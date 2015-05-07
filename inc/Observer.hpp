@@ -22,11 +22,30 @@ enum Event
 	LEVEL_GENERATED,
 	EXIT_TRIGGERED,
 
-	CHARACTER_MOVED,
+	KEY_PRESSED_P1_UP,
+	KEY_PRESSED_P1_DOWN,
+	KEY_PRESSED_P1_LEFT,
+	KEY_PRESSED_P1_RIGHT,
+	KEY_PRESSED_P1_SPACE,
+	KEY_PRESSED_P1_ESC,
+	KEY_PRESSED_P1_PAUSE,
+	KEY_PRESSED_P2_UP,
+	KEY_PRESSED_P2_DOWN,
+	KEY_PRESSED_P2_LEFT,
+	KEY_PRESSED_P2_RIGHT,
+	KEY_PRESSED_P2_SPACE,
+	KEY_PRESSED_P2_ESC,
+	KEY_PRESSED_P2_PAUSE,
+
+	LEVEL_STARTED,
+
+	CHARACTER_SPAWNED,
 	CHARACTER_DIED,
+	CHARACTER_MOVED,
 	CHARACTER_PICKUP_ITEM,
 
 	ITEM_DROPPED,
+	ITEM_MOVED,
 	BOMB_EXPLODED,
 };
 
@@ -45,7 +64,6 @@ class Subject
 public:
 	virtual ~Subject()
 	{
-		notify(this, OBSERVER_DELETED);
 	}
 
 	void addObserver(Observer* observer)
@@ -79,10 +97,23 @@ private:
 };
 
 template <typename T>
-class EventHandler
+class EventHandler : public Observer
 {
 public:
 	virtual ~EventHandler() {}
+
+	virtual void onNotify(Subject * entity, Event event)
+	{
+		if (dynamic_cast<T*>(this))
+		{
+			auto it = _actions.find(event);
+
+			if (it != _actions.end())
+			{
+				(dynamic_cast<T*>(this)->*(it->second))(entity);
+			}
+		}
+	}
 
 protected:
 	std::map<const Event, void (T::*)(Subject *)>	_actions;

@@ -17,6 +17,8 @@
 #include <iostream>
 #include <stdexcept>
 #include "Config.hpp"
+#include "pugixml.hpp"
+#include "Exception.hpp"
 
 Config::Config()
 {
@@ -29,9 +31,7 @@ Config::~Config()
 Config::Param&	Config::operator [](const std::string& key)
 {
 	if (_params.find(key) == _params.end())
-	{
 		_params.insert(std::map<std::string, Param>::value_type(key, Param("")));
-	}
 
 	return (_params.find(key)->second);
 }
@@ -215,4 +215,92 @@ Config::Param::operator std::string (void) const
 		throw std::runtime_error("Current index is not a valid value");
 
 	return (_value);
+}
+
+std::map<std::string, Config::Param>::iterator	Config::Param::find(const std::string & key)
+{
+	return (_map.find(key));
+}
+
+std::map<std::string, Config::Param>::iterator	Config::Param::end(void)
+{
+	return (_map.end());
+}
+
+void	Config::Param::insert(std::map<std::string, Param>::value_type insert)
+{
+	_map.insert(insert);
+}
+
+const std::string	Config::Param::toXML(void) const
+{
+	std::string	res;
+
+	res = "";
+	if (_status == Status::VALUE)
+		res = _value;
+	else
+		for(std::map<std::string, Param>::const_iterator it = _map.begin(); it != _map.end(); it++)
+		{
+			res = res + "<" + it->first + ">";
+			res = res + it->second.toXML();
+			res = res + "</" + it->first + ">";
+		}
+	return (res);
+}
+
+const std::string	Config::toXML(void) const
+{
+	return (_params.toXML());
+}
+
+std::ostream&	operator << (std::ostream& os, const Config& cnf)
+{
+	os << cnf.toXML();
+
+	return (os);
+}
+
+Config::Param	Config::fillParams(pugi::xml_node node, Config::Param params, int depth)
+{
+	std::string	key;
+	std::string	subKey;
+
+	if (node != NULL)
+	{
+		if (node.attribute("name"))
+			key = std::string(node.attribute("name").value());
+		else
+			key = std::string(node.name());
+		if (!std::string(node.child_value()).size())
+			for (pugi::xml_node subNode = node.first_child(); subNode != node.last_child().next_sibling(); subNode = subNode.next_sibling())
+			{
+				if (subNode.attribute("name"))
+					subKey = std::string(subNode.attribute("name").value());
+				else
+					subKey = subNode.name();
+				params[key] = this->fillParams(subNode, params[key], depth + 1);
+			}
+		else
+			params[key] = node.child_value();
+	}
+	return (params);
+}
+
+void	Config::importFile(std::string const & filename)
+{
+	pugi::xml_document	file;
+
+	pugi::xml_parse_result	result = file.load_file(filename.c_str());
+	if (!result)
+		throw ConfigException("Invalid file.");
+	_params = fillParams(file.first_child(), _params, 0);
+}
+
+void	Config::exportFile(std::string const & filename)
+{
+	pugi::xml_document	file;
+
+	file.load_string(_params.toXML().c_str());
+	file.save_file(filename.c_str());
 }

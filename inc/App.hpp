@@ -13,15 +13,15 @@
 
 #include "Observer.hpp"
 #include "Menu.hpp"
+#include "Graphics/Display.hh"
 
-class App : public Observer, public EventHandler<App>
+class App : public EventHandler<App>, public Subject
 {
 public:
 	App(int, char**);
 	~App();
 
 	int	run(void);
-	void	onNotify(Subject * entity, Event event);
 
 private:
 	bool	validateArgs(void) const;
@@ -32,6 +32,8 @@ private:
 private:
 	int			_ac;
 	char**		_av;
+
+	Display*		_display;
 };
 
 #endif /* !APP_HPP */

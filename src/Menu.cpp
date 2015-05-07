@@ -17,14 +17,7 @@ Menu::~Menu()
 }
 
 void
-Menu::onNotify(Subject* entity, Event event)
-{
-	(void)entity;
-	(void)event;
-}
-
-void
 Menu::run()
 {
-	this->notify(new Level(10, 10, 4), LEVEL_GENERATED);
+	this->notify(new Level(100, 60, 6), LEVEL_GENERATED);
 }

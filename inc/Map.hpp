@@ -18,7 +18,6 @@
 #include "Observer.hpp"
 #include "Exception.hpp"
 
-
 #define EMPTY 0
 #define SOLID 1
 #define DESTR 2
@@ -36,23 +35,29 @@ public:
 
 	virtual void onNotify(Subject * entity, Event event);
 
-protected:
+	void	pushCharacter(Character*);
+
+	size_t	width() const;
+	size_t	height() const;
+
 	void	generateMap();
 	void 	generateMap(const std::string &);
-	void 	displayMap();
+
 	std::vector<std::vector<int> > getMap();
 
 private:
+	void 	displayMap();
 	void 	delimitMap();
 	void 	placeDestrBlock();
 	void 	oneOnTwo();
 	void 	checkPositionPlayer();
+
+private:
 	int 	_width;
 	int 	_height;
 	int 	_nbrBrick;
 	std::vector<std::vector<int> > _map;
 	std::map<Position, std::list<Character*> > _m;
-
 };
 
 #endif	/* MAP_HPP */

@@ -12,13 +12,15 @@
 #include "SdlContext.hh"
 #include "Game.hh"
 
-class Display : public EventHandler<Display>, public Observer, public Subject
+class Display : public EventHandler<Display>, public Subject
 {
 public:
 	Display();
 	virtual ~Display();
 
-	virtual void onNotify(Subject* entity, Event event);
+private:
+	void	runMenu();
+	void	runLevel();
 
 private:
 	gdl::SdlContext	_context;

@@ -9,17 +9,9 @@
 
 Display::Display()
 {
-	_context.start(500, 500, "LOL");
+//	_context.start(500, 500, "LOL");
 }
 
 Display::~Display()
 {
 }
-
-void
-Display::onNotify(Subject* entity, Event event)
-{
-	(void)entity;
-	(void)event;
-}
-
