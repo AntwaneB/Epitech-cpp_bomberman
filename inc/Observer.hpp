@@ -49,6 +49,7 @@ enum Event
 
 	ITEM_DROPPED,
 	ITEM_MOVED,
+	BOMB_DROPPED,
 	BOMB_EXPLODED,
 };
 

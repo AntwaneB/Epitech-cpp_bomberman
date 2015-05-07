@@ -15,24 +15,9 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 	: _nth(nth), _position(x, y, z), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
+	_actions[BOMB_EXPLODED] = &Character::bombExploded;
 
 	_attributes = g_settings["entities"]["character"];
-
-	if (_nth == 6)
-	{
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-	}
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
@@ -80,6 +65,14 @@ Character::tick(Subject* entity)
 	}
 }
 
+void
+Character::bombExploded(Subject* entity)
+{
+	Bomb* bomb = safe_cast<Bomb*>(entity);
+
+	_bombs.erase(std::find(_bombs.begin(), _bombs.end(), bomb));
+}
+
 Position
 Character::position() const
 {
@@ -95,11 +88,10 @@ Character::prevPosition() const
 void
 Character::move(Character::Action action)
 {
-	(void)action;
+	(void)action; // We have to make the character to actually move
 
 	_prevPosition = _position;
 
-	std::cout << "Character " << _nth << " is moving" << std::endl;
 	this->notify(this, CHARACTER_MOVED);
 }
 
@@ -109,7 +101,7 @@ Character::dropBomb()
 	Bomb* bomb = new Bomb(); // We have to set it's position and the character it's related to
 
 	_bombs.push_back(bomb);
+	bomb->addObserver(this);
 
-	std::cout << "Character " << _nth << " is dropping a bomb" << std::endl;
-	this->notify(bomb, ITEM_DROPPED);
+	this->notify(bomb, BOMB_DROPPED);
 }

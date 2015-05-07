@@ -32,6 +32,7 @@ private:
 	void	characterDied(Subject* entity);
 	void	itemDropped(Subject* entity);
 	void	itemMoved(Subject* entity);
+	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 
 	void	tick(Subject* entity);

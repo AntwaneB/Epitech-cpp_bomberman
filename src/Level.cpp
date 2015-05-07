@@ -87,7 +87,7 @@ Level::characterMoved(Subject* entity)
 {
 	Character* character = safe_cast<Character*>(entity);
 
-	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), character));
 	_characters[character->position()].push_back(character);
 }
 
@@ -96,7 +96,7 @@ Level::characterDied(Subject* entity)
 {
 	Character* character = safe_cast<Character*>(entity);
 
-	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), character));
 	_clock.removeObserver(character);
 }
 
@@ -113,8 +113,17 @@ Level::itemMoved(Subject* entity)
 {
 	Item* item = safe_cast<Item*>(entity);
 
-	_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), (item)));
+	_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), item));
 	_items[item->position()].push_back(item);
+}
+
+void
+Level::bombDropped(Subject* entity)
+{
+	Bomb* bomb = safe_cast<Bomb*>(entity);
+
+	_bombs[bomb->position()].push_back(bomb);
+	_clock.addObserver(bomb);
 }
 
 void
@@ -122,5 +131,6 @@ Level::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
+	_items[bomb->position()].erase(std::find(_items[bomb->position()].begin(), _items[bomb->position()].end(), bomb));
 	_clock.removeObserver(bomb);
 }
