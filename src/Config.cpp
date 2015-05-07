@@ -232,29 +232,33 @@ void	Config::Param::insert(std::map<std::string, Param>::value_type insert)
 	_map.insert(insert);
 }
 
-void	Config::Param::show(void) const
+const std::string	Config::Param::toXML(void) const
 {
 	std::string	res;
 
+	res = "";
 	if (_status == Status::VALUE)
 		res = _value;
 	else
 		for(std::map<std::string, Param>::const_iterator it = _map.begin(); it != _map.end(); it++)
-			it->second.subShow(it->first);
+		{
+			res = res + "<" + it->first + ">";
+			res = res + it->second.toXML();
+			res = res + "</" + it->first + ">";
+		}
+	return (res);
 }
 
-void	Config::Param::subShow(const std::string origin) const
+const std::string	Config::toXML(void) const
 {
-	if (_status == Status::VALUE)
-		std::cout << origin << "=" << _value << std::endl;
-	else
-		for(std::map<std::string, Param>::const_iterator it = _map.begin(); it != _map.end(); it++)
-			it->second.subShow(origin + (origin.size() ? ">" : "") + it->first);
+	return (_params.toXML());
 }
 
-void	Config::show(void) const
+std::ostream&	operator << (std::ostream& os, const Config& cnf)
 {
-	_params.show();
+	os << cnf.toXML();
+
+	return (os);
 }
 
 Config::Param	Config::fillParams(pugi::xml_node node, Config::Param params, int depth)
@@ -290,6 +294,13 @@ void	Config::importFile(std::string const & filename)
 	pugi::xml_parse_result	result = file.load_file(filename.c_str());
 	if (!result)
 		throw ConfigException("Invalid file.");
-	_params = fillParams(file, _params, 0);
+	_params = fillParams(file.first_child(), _params, 0);
 }
 
+void	Config::exportFile(std::string const & filename)
+{
+	pugi::xml_document	file;
+
+	file.load_string(_params.toXML().c_str());
+	file.save_file(filename.c_str());
+}

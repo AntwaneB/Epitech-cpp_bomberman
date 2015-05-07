@@ -19,6 +19,7 @@
 
 #include <string>
 #include <map>
+#include <ostream>
 #include "pugixml.hpp"
 
 class Config
@@ -60,10 +61,9 @@ public:
 		std::map<std::string, Param>::iterator	end(void);
 		void									insert(std::map<std::string, Param>::value_type);
 
-		void	show(void) const;
+		const std::string	toXML(void) const;
 
 	private:
-		void	subShow(const std::string) const;
 
 	private:
 		Param::Status						_status;
@@ -78,10 +78,10 @@ public:
 	Config::Param&	operator [] (std::string const &);
 	Config::Param&	operator [] (const char[]);
 
-	void	importFile(std::string const &);
-//	void	exportFile(std::string const &);
+	const std::string	toXML(void) const;
 
-	void	show(void) const;
+	void	importFile(std::string const &);
+	void	exportFile(std::string const &);
 
 private:
 	Config::Param	fillParams(pugi::xml_node, Config::Param, int);
@@ -89,5 +89,7 @@ private:
 private:
 	Config::Param	_params;
 };
+
+std::ostream&	operator << (std::ostream &, const Config &);
 
 #endif	/* CONFIG_HPP */
