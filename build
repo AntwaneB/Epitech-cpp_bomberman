@@ -6,6 +6,8 @@ export LD_LIBRARY_PATH=libgdl/libs
 
 make
 
+echo ""; echo "";
+
 ./bomberman
 
 set +e

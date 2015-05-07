@@ -43,6 +43,10 @@ public:
 		operator double () const;
 		operator float () const;
 		operator std::string () const;
+		operator unsigned char () const;
+		operator unsigned short () const;
+		operator unsigned int () const;
+		operator unsigned long () const;
 
 		Param& operator = (bool);
 		Param& operator = (char);
@@ -54,12 +58,61 @@ public:
 		Param& operator = (std::string const &);
 		Param& operator = (const char[]);
 
+		bool operator == (bool);
+		bool operator == (char);
+		bool operator == (short);
+		bool operator == (int);
+		bool operator == (long);
+		bool operator == (double);
+		bool operator == (float);
+		bool operator == (std::string const &);
+		bool operator == (const char[]);
+		bool operator != (bool);
+		bool operator != (char);
+		bool operator != (short);
+		bool operator != (int);
+		bool operator != (long);
+		bool operator != (double);
+		bool operator != (float);
+		bool operator != (std::string const &);
+		bool operator != (const char[]);
+		bool operator <= (bool);
+		bool operator <= (char);
+		bool operator <= (short);
+		bool operator <= (int);
+		bool operator <= (long);
+		bool operator <= (double);
+		bool operator <= (float);
+		bool operator < (bool);
+		bool operator < (char);
+		bool operator < (short);
+		bool operator < (int);
+		bool operator < (long);
+		bool operator < (double);
+		bool operator < (float);
+		bool operator >= (bool);
+		bool operator >= (char);
+		bool operator >= (short);
+		bool operator >= (int);
+		bool operator >= (long);
+		bool operator >= (double);
+		bool operator >= (float);
+		bool operator >= (std::string const &);
+		bool operator >= (const char[]);
+		bool operator > (bool);
+		bool operator > (char);
+		bool operator > (short);
+		bool operator > (int);
+		bool operator > (long);
+		bool operator > (double);
+		bool operator > (float);
+
 		Param& operator [] (std::string const &);
 		Param& operator [] (const char[]);
 
 		std::map<std::string, Param>::iterator	find(const std::string &);
 		std::map<std::string, Param>::iterator	end(void);
-		void									insert(std::map<std::string, Param>::value_type);
+		void												insert(std::map<std::string, Param>::value_type);
 
 		const std::string	toXML(void) const;
 

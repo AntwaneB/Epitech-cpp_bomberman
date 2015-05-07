@@ -9,7 +9,6 @@
 
 Display::Display()
 {
-//	_context.start(500, 500, "LOL");
 }
 
 Display::~Display()

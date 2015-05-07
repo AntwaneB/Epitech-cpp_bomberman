@@ -69,6 +69,7 @@ App::run()
 	this->addObserver(_display);
 
 	Menu* mainMenu = new Menu;
+	mainMenu->addObserver(this);
 	mainMenu->addObserver(_display);
 
 	mainMenu->run();

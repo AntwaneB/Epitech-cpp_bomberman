@@ -25,6 +25,7 @@ public:
 	void			restart(void);
 	void			resetSec(void);
 	seconds_t	seconds() const;
+	seconds_t	deciseconds() const;
 	void			stop();
 
 private:

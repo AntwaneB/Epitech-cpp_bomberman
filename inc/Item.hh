@@ -11,7 +11,7 @@
 #include "Observer.hpp"
 #include "Position.hpp"
 
-class Item : public EventHandler<Item>
+class Item : public EventHandler<Item>, public Subject
 {
 public:
 	Item();

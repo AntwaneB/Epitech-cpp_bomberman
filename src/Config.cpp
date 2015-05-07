@@ -225,6 +225,39 @@ Config::Param::operator std::string (void) const
 	return (_value);
 }
 
+
+Config::Param::operator unsigned char (void) const
+{
+	if (_status == Config::Param::MAP)
+		throw std::runtime_error("Current index is not a valid value");
+
+	return (std::stoi(_value));
+}
+
+Config::Param::operator unsigned short (void) const
+{
+	if (_status == Config::Param::MAP)
+		throw std::runtime_error("Current index is not a valid value");
+
+	return (std::stoi(_value));
+}
+
+Config::Param::operator unsigned int (void) const
+{
+	if (_status == Config::Param::MAP)
+		throw std::runtime_error("Current index is not a valid value");
+
+	return (std::stoi(_value));
+}
+
+Config::Param::operator unsigned long (void) const
+{
+	if (_status == Config::Param::MAP)
+		throw std::runtime_error("Current index is not a valid value");
+
+	return (std::stol(_value));
+}
+
 std::map<std::string, Config::Param>::iterator	Config::Param::find(const std::string & key)
 {
 	return (_map.find(key));
@@ -256,6 +289,53 @@ const std::string	Config::Param::toXML(void) const
 		}
 	return (res);
 }
+
+bool Config::Param::operator == (bool o) { return (static_cast<bool>(*this) == o); }
+bool Config::Param::operator == (char o) { return (static_cast<char>(*this) == o); }
+bool Config::Param::operator == (short o) { return (static_cast<short>(*this) == o); }
+bool Config::Param::operator == (int o) { return (static_cast<int>(*this) == o); }
+bool Config::Param::operator == (long o) { return (static_cast<long>(*this) == o); }
+bool Config::Param::operator == (double o) { return (static_cast<double>(*this) == o); }
+bool Config::Param::operator == (float o) { return (static_cast<float>(*this) == o); }
+bool Config::Param::operator == (std::string const & o) { return (static_cast<std::string>(*this) == o); }
+bool Config::Param::operator == (const char o[]) { return (static_cast<std::string>(*this) == std::string(o)); }
+bool Config::Param::operator != (bool o) { return (static_cast<bool>(*this) != o); }
+bool Config::Param::operator != (char o) { return (static_cast<char>(*this) != o); }
+bool Config::Param::operator != (short o) { return (static_cast<short>(*this) != o); }
+bool Config::Param::operator != (int o) { return (static_cast<int>(*this) != o); }
+bool Config::Param::operator != (long o) { return (static_cast<long>(*this) != o); }
+bool Config::Param::operator != (double o) { return (static_cast<double>(*this) != o); }
+bool Config::Param::operator != (float o) { return (static_cast<float>(*this) != o); }
+bool Config::Param::operator != (std::string const & o) { return (static_cast<std::string>(*this) != o); }
+bool Config::Param::operator != (const char o[]) { return (static_cast<std::string>(*this) != std::string(o)); }
+bool Config::Param::operator <= (bool o) { return (static_cast<bool>(*this) <= o); }
+bool Config::Param::operator <= (char o) { return (static_cast<char>(*this) <= o); }
+bool Config::Param::operator <= (short o) { return (static_cast<short>(*this) <= o); }
+bool Config::Param::operator <= (int o) { return (static_cast<int>(*this) <= o); }
+bool Config::Param::operator <= (long o) { return (static_cast<long>(*this) <= o); }
+bool Config::Param::operator <= (double o) { return (static_cast<double>(*this) <= o); }
+bool Config::Param::operator <= (float o) { return (static_cast<float>(*this) <= o); }
+bool Config::Param::operator < (bool o) { return (static_cast<bool>(*this) < o); }
+bool Config::Param::operator < (char o) { return (static_cast<char>(*this) < o); }
+bool Config::Param::operator < (short o) { return (static_cast<short>(*this) < o); }
+bool Config::Param::operator < (int o) { return (static_cast<int>(*this) < o); }
+bool Config::Param::operator < (long o) { return (static_cast<long>(*this) < o); }
+bool Config::Param::operator < (double o) { return (static_cast<double>(*this) < o); }
+bool Config::Param::operator < (float o) { return (static_cast<float>(*this) < o); }
+bool Config::Param::operator >= (bool o) { return (static_cast<bool>(*this) >= o); }
+bool Config::Param::operator >= (char o) { return (static_cast<char>(*this) >= o); }
+bool Config::Param::operator >= (short o) { return (static_cast<short>(*this) >= o); }
+bool Config::Param::operator >= (int o) { return (static_cast<int>(*this) >= o); }
+bool Config::Param::operator >= (long o) { return (static_cast<long>(*this) >= o); }
+bool Config::Param::operator >= (double o) { return (static_cast<double>(*this) >= o); }
+bool Config::Param::operator >= (float o) { return (static_cast<float>(*this) >= o); }
+bool Config::Param::operator > (bool o) { return (static_cast<bool>(*this) > o); }
+bool Config::Param::operator > (char o) { return (static_cast<char>(*this) > o); }
+bool Config::Param::operator > (short o) { return (static_cast<short>(*this) > o); }
+bool Config::Param::operator > (int o) { return (static_cast<int>(*this) > o); }
+bool Config::Param::operator > (long o) { return (static_cast<long>(*this) > o); }
+bool Config::Param::operator > (double o) { return (static_cast<double>(*this) > o); }
+bool Config::Param::operator > (float o) { return (static_cast<float>(*this) > o); }
 
 const std::string	Config::toXML(void) const
 {

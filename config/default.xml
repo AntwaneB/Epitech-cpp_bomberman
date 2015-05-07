@@ -3,13 +3,14 @@
 <entities>
 	<entity name="character">
 		<param name="visible">true</param>
-		<param name="speed">30</param>
+		<param name="speed">120</param>
+		<param name="can_move">true</param>
 		<param name="destructible">true</param>
 		<param name="collision">true</param>
 		<param name="bombs">
 			<param name="available">true</param>
-			<param name="default_amount">1</param>
-			<param name="default_range">2</param>
+			<param name="max_amount">1</param>
+			<param name="max_range">2</param>
 			<param name="duration_modifier">1</param>
 		</param>
 	</entity>
