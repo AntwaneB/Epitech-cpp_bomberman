@@ -14,6 +14,7 @@ class Subject;
 #include <list>
 #include <map>
 #include <algorithm>
+#include <exception>
 
 enum Event
 {
@@ -102,6 +103,17 @@ template <typename T>
 class EventHandler : public Observer
 {
 public:
+	class CastException : public std::exception
+	{
+	public:
+		CastException(std::string const & s) : _message(s) {}
+		virtual ~CastException() throw() {}
+		virtual const char*	what() const throw() { return (_message.c_str()); }
+	protected:
+		std::string	_message;
+	};
+
+public:
 	virtual ~EventHandler() {}
 
 	virtual void onNotify(Subject * entity, Event event)
@@ -115,6 +127,16 @@ public:
 				(dynamic_cast<T*>(this)->*(it->second))(entity);
 			}
 		}
+	}
+
+protected:
+	template <typename U>
+	U safe_cast(Subject* entity)
+	{
+		if (dynamic_cast<U>(entity))
+			return (dynamic_cast<U>(entity));
+		else
+			throw EventHandler::CastException("Event thrown on not-matching entity");
 	}
 
 protected:

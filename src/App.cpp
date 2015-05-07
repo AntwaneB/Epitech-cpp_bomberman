@@ -46,19 +46,14 @@ App::~App()
 void
 App::runLevel(Subject* entity)
 {
-	if (dynamic_cast<Level*>(entity))
-	{
-		Level* level = dynamic_cast<Level*>(entity);
+	Level* level = safe_cast<Level*>(entity);
 
-		level->addObserver(this);
-		level->addObserver(_display);
+	level->addObserver(this);
+	level->addObserver(_display);
 
-		_display->addObserver(level);
+	_display->addObserver(level);
 
-		level->run();
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	level->run();
 }
 
 void
@@ -70,7 +65,6 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
-	Menu* mainMenu = new Menu;
 	_display = new Display;
 	this->addObserver(_display);
 

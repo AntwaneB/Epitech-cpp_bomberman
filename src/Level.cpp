@@ -49,17 +49,13 @@ Level::run()
 void
 Level::tick(Subject* entity)
 {
-	if (dynamic_cast<Clock*>(entity))
+	Clock* clock = safe_cast<Clock*>(entity);
+	if (clock == &_clock)
 	{
-		Clock* clock = dynamic_cast<Clock*>(entity);
-		if (clock == &_clock)
-		{
 
-			this->notify(this, LEVEL_UPDATED);
-		}
+
+		this->notify(this, LEVEL_UPDATED);
 	}
-	else
-		throw EventException("Event thrown on not-matching entity");
 }
 
 Character*
@@ -89,67 +85,42 @@ Level::pushCharacter()
 void
 Level::characterMoved(Subject* entity)
 {
-	if (dynamic_cast<Character*>(entity))
-	{
-		Character* character = dynamic_cast<Character*>(entity);
+	Character* character = safe_cast<Character*>(entity);
 
-		_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
-		_characters[character->position()].push_back(character);
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+	_characters[character->position()].push_back(character);
 }
 
 void
 Level::characterDied(Subject* entity)
 {
-	if (dynamic_cast<Character*>(entity))
-	{
-		Character* character = dynamic_cast<Character*>(entity);
+	Character* character = safe_cast<Character*>(entity);
 
-		_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
-		_clock.removeObserver(character);
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), (character)));
+	_clock.removeObserver(character);
 }
 
 void
 Level::itemDropped(Subject* entity)
 {
-	if (dynamic_cast<Item*>(entity))
-	{
-		Item* item = dynamic_cast<Item*>(entity);
+	Item* item = safe_cast<Item*>(entity);
 
-		_clock.addObserver(item);
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	_clock.addObserver(item);
 }
 
 void
 Level::itemMoved(Subject* entity)
 {
-	if (dynamic_cast<Item*>(entity))
-	{
-		Item* item = dynamic_cast<Item*>(entity);
+	Item* item = safe_cast<Item*>(entity);
 
-		_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), (item)));
-		_items[item->position()].push_back(item);
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), (item)));
+	_items[item->position()].push_back(item);
 }
 
 void
 Level::bombExploded(Subject* entity)
 {
-	if (dynamic_cast<Bomb*>(entity))
-	{
-		Bomb* bomb = dynamic_cast<Bomb*>(entity);
+	Bomb* bomb = safe_cast<Bomb*>(entity);
 
-		_clock.removeObserver(bomb);
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	_clock.removeObserver(bomb);
 }

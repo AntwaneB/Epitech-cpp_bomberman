@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include "global.hh"
 #include "Character.hpp"
 #include "Exception.hpp"
 #include "Clock.hpp"
@@ -14,6 +15,8 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 	: _nth(nth), _position(x, y, z)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
+
+	_attributes = g_settings["entities"]["character"];
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
@@ -25,14 +28,9 @@ Character::~Character()
 void
 Character::tick(Subject* entity)
 {
-	if (dynamic_cast<Clock*>(entity))
-	{
-		Clock* clock = dynamic_cast<Clock*>(entity);
+	Clock* clock = safe_cast<Clock*>(entity);
 
-		(void)clock;
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	(void)clock;
 }
 
 Position

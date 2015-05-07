@@ -24,6 +24,14 @@ Config::Config()
 {
 }
 
+Config&
+Config::operator=(Config::Param const & o)
+{
+	_params = o;
+
+	return (*this);
+}
+
 Config::~Config()
 {
 }

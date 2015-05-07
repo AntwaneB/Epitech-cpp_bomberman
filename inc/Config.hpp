@@ -73,6 +73,7 @@ public:
 
 public:
 	Config();
+	Config& operator=(Config::Param const &);
 	virtual ~Config();
 
 	Config::Param&	operator [] (std::string const &);
