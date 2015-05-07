@@ -28,9 +28,9 @@ SRCS		  =  main.cpp \
 		     Bomb.cpp \
 		     \
 		     Graphics/Display.cpp \
-		     Graphics/Map.cpp \
 		     Graphics/Object.cpp \
 		     Graphics/Cube.cpp \
+		     Graphics/Map.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -52,21 +52,20 @@ INCS		  =  Exception.hpp \
 		     Bomb.hh \
 		     \
 		     Graphics/Display.hh \
-		     Graphics/Map.hh \
 		     Graphics/Object.hh \
 		     Graphics/Cube.hh \
+		     Graphics/Map.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp
 
-LGDL_DIR	  =  LibBomberman_linux_x64
+LGDL_DIR	  =  libgdl
 
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
 CXXFLAGS	  += -I$(INCS_DIR) -I$(INCS_DIR)/misc
-CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
-CXXFLAGS	  += -lpthread
 CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs
+CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g
@@ -78,7 +77,6 @@ CXXFLAGS	  += -g
 
 $(NAME):		$(OBJS)
 			$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
-			export LD_LIBRARY_PATH=$(LGDL_DIR)/libs
 
 all:			$(NAME)
 

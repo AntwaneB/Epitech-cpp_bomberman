@@ -2,7 +2,7 @@
 
 Graphics::Map::Map()
 {
-	
+
 }
 
 Graphics::Map::~Map()
