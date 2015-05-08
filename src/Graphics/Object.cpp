@@ -10,6 +10,13 @@ Graphics::Object::~Object()
 
 }
 
+void Graphics::Object::position(int x, int y, int z)
+{
+	_position[0] = x;
+	_position[2] = y;
+	_position[1] = z;
+}
+
 bool Graphics::Object::initialize()
 {
 	return (true);

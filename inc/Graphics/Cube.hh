@@ -15,6 +15,7 @@ namespace Graphics
 	{
 		public:
 			Cube();
+			Cube(int, int, int);
 			virtual ~Cube();
 			virtual bool initialize();
 			virtual void update(gdl::Clock const &clock, gdl::Input &input);

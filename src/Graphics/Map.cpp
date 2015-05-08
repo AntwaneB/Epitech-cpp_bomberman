@@ -27,10 +27,16 @@ transformation = glm::lookAt(glm::vec3(0, 10, -30), glm::vec3(0, 0, 0), glm::vec
 _shader.bind();
 _shader.setUniform("view", transformation);
 _shader.setUniform("projection", projection);
-Object *cube = new Cube();
+for (int y = 0; y <= 15; y++)
+{
+for (int x = 0; x <= 15; x++)
+{	
+Object *cube = new Cube(x, y, 0);
 if (cube->initialize() == false)
 	return (false);
 _objects.push_back(cube);
+}
+}
 return true;
 }
 
