@@ -2,9 +2,16 @@
 
 set -e
 
+echo -n "Project line count : "
+cat `find ./ -path ./libgdl -prune -o -path ./_Ressources -prune -o -type f ! -name "pugi*" -iname "*.cpp" -o ! -name "pugi*" -iname "*.h*"` 2> /dev/null | wc -l
+
+echo ""
+
 export LD_LIBRARY_PATH=libgdl/libs
 
-make -s
+make
+
+echo "";
 
 ./bomberman
 

@@ -11,6 +11,7 @@
 #ifndef APP_HPP
 #define	APP_HPP
 
+#include "global.hh"
 #include "Observer.hpp"
 #include "Menu.hpp"
 #include "Graphics/Display.hh"

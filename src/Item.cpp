@@ -7,7 +7,8 @@
 
 #include "Item.hh"
 
-Item::Item()
+Item::Item(Position const & position)
+	: _position(position), _prevPosition(position)
 {
 }
 

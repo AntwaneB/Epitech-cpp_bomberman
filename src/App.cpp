@@ -9,12 +9,15 @@
  */
 
 #include <iostream>
-#include "Map.hpp"
 #include "Exception.hpp"
+#include "Character.hpp"
 #include "App.hpp"
 #include "Level.hpp"
-#include "Map.hpp"
+#include "Config.hpp"
+#include "Graphics/Display.hh"
 #include "Graphics/Map.hh"
+
+Config g_settings;
 
 App::App(int ac, char** av)
 	: _ac(ac), _av(av)
@@ -24,10 +27,11 @@ App::App(int ac, char** av)
 
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n./bomberman");
-	Graphics::Map engine;
+	/*Graphics::Map engine;
 	engine.initialize();
 	while (engine.update() == true)
-		engine.draw();
+		engine.draw();*/
+	g_settings.importFile("config/default.xml");
 }
 
 bool
@@ -46,19 +50,14 @@ App::~App()
 void
 App::runLevel(Subject* entity)
 {
-	if (dynamic_cast<Level*>(entity))
-	{
-		Level* level = dynamic_cast<Level*>(entity);
+	Level* level = safe_cast<Level*>(entity);
 
-		level->addObserver(this);
-		level->addObserver(_display);
+	level->addObserver(this);
+	level->addObserver(_display);
 
-		_display->addObserver(level);
+	_display->addObserver(level);
 
-		level->run();
-	}
-	else
-		throw EventException("Event thrown on not-matching entity");
+	level->run();
 }
 
 void
