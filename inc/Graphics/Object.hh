@@ -23,6 +23,7 @@ namespace Graphics
 		void translate(glm::vec3 const &v);
 		void rotate(glm::vec3 const& axis, float angle);
 		void scale(glm::vec3 const& scale);
+		void position(int, int, int);
 		glm::mat4 getTransformation();
 
 	protected:
