@@ -26,6 +26,9 @@ public:
 	void	setHitbox(std::vector<Position> const &);
 	bool	hasHit(Position const &) const;
 
+	size_t	range() const;
+	Position	position() const;
+
 private:
 	Config				_attributes;
 	size_t				_range;

@@ -44,6 +44,7 @@ public:
 	void 	generateMap(const std::string &);
 
 	std::vector<std::vector<int> > getMap();
+	int	at(Position const &) const;
 
 private:
 	void 	displayMap();

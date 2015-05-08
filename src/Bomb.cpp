@@ -29,3 +29,16 @@ Bomb::setHitbox(std::vector<Position> const & hitbox)
 {
 	_hitbox = hitbox;
 }
+
+size_t
+Bomb::range() const
+{
+	return (_range);
+}
+
+Position
+Bomb::position() const
+{
+	return (_position);
+}
+

@@ -131,7 +131,45 @@ Level::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
-	// We have to set the hitbox for the bomb
+	/* Setting hitbox for the bomb */
+	std::vector<Position> hitbox;
+	size_t	range = bomb->range();
+
+	Position explosion = bomb->position();
+	for (size_t i = 0; i < range; i++)
+	{
+		explosion.decY();
+		if (_map.at(explosion) == SOLID)
+			break;
+		hitbox.push_back(explosion);
+	}
+	explosion = bomb->position();
+	for (size_t i = 0; i < range; i++)
+	{
+		explosion.incY();
+		if (_map.at(explosion) == SOLID)
+			break;
+		hitbox.push_back(explosion);
+	}
+	explosion = bomb->position();
+	for (size_t i = 0; i < range; i++)
+	{
+		explosion.decX();
+		if (_map.at(explosion) == SOLID)
+			break;
+		hitbox.push_back(explosion);
+	}
+	explosion = bomb->position();
+	for (size_t i = 0; i < range; i++)
+	{
+		explosion.incX();
+		if (_map.at(explosion) == SOLID)
+			break;
+		hitbox.push_back(explosion);
+	}
+	hitbox.push_back(bomb->position());
+	bomb->setHitbox(hitbox);
+
 
 	_items[bomb->position()].erase(std::find(_items[bomb->position()].begin(), _items[bomb->position()].end(), bomb));
 	_clock.removeObserver(bomb);

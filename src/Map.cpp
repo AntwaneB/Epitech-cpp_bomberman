@@ -61,6 +61,12 @@ Map::height() const
 	return (_height);
 }
 
+int
+Map::at(const Position& position) const
+{
+	return (this->_map[position.y()][position.x()]);
+}
+
 std::vector<std::vector<int> >
 Map::getMap()
 {
