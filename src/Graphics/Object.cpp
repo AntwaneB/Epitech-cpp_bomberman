@@ -1,6 +1,6 @@
 #include "Graphics/Object.hh"
-
-Graphics::Object::Object()
+ 
+Graphics::Object::Object() : _position(0, 0, 0), _rotation(0, 0, 0), _scale(1, 1, 1) 
 {
 
 }
@@ -17,8 +17,8 @@ bool Graphics::Object::initialize()
 
 void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 {
-	(void)clock;
 	(void)input;
+	(void)clock;
 }
 
 void Graphics::Object::translate(glm::vec3 const &v)
