@@ -12,15 +12,30 @@
 #include "SdlContext.hh"
 #include "Game.hh"
 
-class Display : public EventHandler<Display>, public Subject
-{
-public:
-	Display();
-	virtual ~Display();
+#include "Graphics/Level.hh"
+#include "Graphics/Menu.hh"
 
-private:
-	void	runMenu();
-	void	runLevel();
-};
+namespace Graphics
+{
+
+	class Display : public EventHandler<Display>, public Subject
+	{
+	public:
+		Display();
+		virtual ~Display();
+
+	private:
+		void	runMenu(Subject* entity);
+		void	updateMenu(Subject* entity);
+
+		void	runLevel(Subject* entity);
+		void	updateLevel(Subject* entity);
+
+	private:
+		Graphics::Level*	_level;
+		Graphics::Menu*	_menu;
+	};
+
+}
 
 #endif	/* DISPLAY_HH */

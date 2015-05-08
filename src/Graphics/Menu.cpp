@@ -5,13 +5,13 @@
  * Created on May 6, 2015, 9:20 PM
  */
 
-#include "Menu.hh"
+#include "Graphics/Menu.hh"
 
-Menu::Menu()
+Graphics::Menu::Menu()
 {
 }
 
-Menu::~Menu()
+Graphics::Menu::~Menu()
 {
 }
 

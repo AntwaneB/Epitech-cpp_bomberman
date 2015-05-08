@@ -30,6 +30,8 @@ SRCS		  =  main.cpp \
 		     Bomb.cpp \
 		     \
 		     Graphics/Display.cpp \
+		     Graphics/Level.cpp \
+		     Graphics/Menu.cpp \
 		     Graphics/Object.cpp \
 		     Graphics/Cube.cpp \
 		     Graphics/Map.cpp \
@@ -57,6 +59,8 @@ INCS		  =  global.hh \
 		     Bomb.hh \
 		     \
 		     Graphics/Display.hh \
+		     Graphics/Level.hh \
+		     Graphics/Menu.hh \
 		     Graphics/Object.hh \
 		     Graphics/Cube.hh \
 		     Graphics/Map.hh \

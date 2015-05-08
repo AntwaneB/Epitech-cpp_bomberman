@@ -34,7 +34,7 @@ private:
 	int			_ac;
 	char**		_av;
 
-	Display*		_display;
+	Graphics::Display*		_display;
 };
 
 #endif /* !APP_HPP */

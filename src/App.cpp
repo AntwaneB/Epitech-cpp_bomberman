@@ -27,10 +27,7 @@ App::App(int ac, char** av)
 
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n./bomberman");
-	/*Graphics::Map engine;
-	engine.initialize();
-	while (engine.update() == true)
-		engine.draw();*/
+
 	g_settings.importFile("config/default.xml");
 }
 
@@ -69,7 +66,7 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
-	_display = new Display;
+	_display = new Graphics::Display;
 	this->addObserver(_display);
 
 	Menu* mainMenu = new Menu;
