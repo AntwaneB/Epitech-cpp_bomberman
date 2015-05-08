@@ -36,6 +36,12 @@ Level::clock()
 	return (_clock);
 }
 
+Map
+Level::map() const
+{
+	return (_map);
+}
+
 void
 Level::run()
 {

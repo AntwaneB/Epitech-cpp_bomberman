@@ -24,6 +24,7 @@ public:
 
 	void		run();
 	Clock&	clock();
+	Map		map() const;
 
 private:
 	Character*	pushCharacter();
