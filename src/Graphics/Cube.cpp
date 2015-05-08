@@ -6,7 +6,7 @@ Graphics::Cube::Cube()
 
 }
 
-Graphics::Cube::Cube(int x, int y, int z)
+Graphics::Cube::Cube(int x, int y, int z, int type) : _type(type)
 {
 	position(x, y, z);
 }
@@ -18,9 +18,16 @@ Graphics::Cube::~Cube()
 
 bool Graphics::Cube::initialize()
 {
+std::string path;
 _speed = 10.0f;
 // On charge la texture qui sera affichee sur chaque face du cube
-if(_texture.load("./libgdl/assets/wood.tga") == false)
+if (_type == 0)
+	path = "./libgdl/assets/dirt.tga";
+else if (_type == 1)
+	path = "./libgdl/assets/sol.tga";
+else
+	path = "./libgdl/assets/wood.tga";
+if(_texture.load(path) == false)
 {
 	std::cout << "false texture" << std::endl;
 	return (false);

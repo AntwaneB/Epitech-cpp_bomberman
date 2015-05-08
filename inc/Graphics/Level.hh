@@ -11,6 +11,17 @@
 #include "Game.hh"
 #include "Observer.hpp"
 #include "Level.hpp"
+#include "SdlContext.hh"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "BasicShader.hh"
+#include "Clock.hh"
+#include "Input.hh"
+#include "Graphics/Object.hh"
+#include "Graphics/Cube.hh"
+#include "Geometry.hh"
+#include "Texture.hh"
+#include <vector>
 
 namespace Graphics
 {
@@ -25,8 +36,13 @@ namespace Graphics
 		virtual bool update();
 		virtual void draw();
 
-	private:
+	protected:
 		const ::Level*	_level;
+		gdl::SdlContext _context;
+		gdl::Clock _clock;
+		gdl::Input _input;
+		gdl::BasicShader _shader;
+		std::vector<Object*> _objects;
 	};
 
 }

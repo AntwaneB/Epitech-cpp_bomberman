@@ -7,6 +7,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include <ostream>
+#include <string>
 
 namespace Graphics
 {
@@ -15,7 +16,7 @@ namespace Graphics
 	{
 		public:
 			Cube();
-			Cube(int, int, int);
+			Cube(int, int, int, int);
 			virtual ~Cube();
 			virtual bool initialize();
 			virtual void update(gdl::Clock const &clock, gdl::Input &input);
@@ -24,6 +25,7 @@ namespace Graphics
 			gdl::Texture _texture;
 			gdl::Geometry _geometry;
 			float _speed;
+			int _type;
 	};
 };
 

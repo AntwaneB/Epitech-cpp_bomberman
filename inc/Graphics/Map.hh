@@ -33,12 +33,6 @@ namespace Graphics
 		virtual bool update();
 		virtual void draw();
 
-	protected:
-		gdl::SdlContext _context;
-		gdl::Clock _clock;
-		gdl::Input _input;
-		gdl::BasicShader _shader;
-		std::vector<Object*> _objects;
 	};
 
 };
