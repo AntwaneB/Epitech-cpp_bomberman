@@ -22,7 +22,7 @@ std::string path;
 _speed = 10.0f;
 // On charge la texture qui sera affichee sur chaque face du cube
 if (_type == 0)
-	path = "./libgdl/assets/dirt.tga";
+	path = "./libgdl/assets/sand.tga";
 else if (_type == 1)
 	path = "./libgdl/assets/sol.tga";
 else
