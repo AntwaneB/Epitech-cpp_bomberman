@@ -15,6 +15,7 @@
 #include "Level.hpp"
 #include "Config.hpp"
 #include "Graphics/Display.hh"
+#include "Graphics/Map.hh"
 
 Config g_settings;
 
@@ -26,7 +27,10 @@ App::App(int ac, char** av)
 
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n./bomberman");
-
+	/*Graphics::Map engine;
+	engine.initialize();
+	while (engine.update() == true)
+		engine.draw();*/
 	g_settings.importFile("config/default.xml");
 }
 

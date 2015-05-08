@@ -1,4 +1,5 @@
 #include "Graphics/Cube.hh"
+#include <iostream>
 
 Graphics::Cube::Cube()
 {
@@ -14,7 +15,11 @@ bool Graphics::Cube::initialize()
 {
 _speed = 10.0f;
 // On charge la texture qui sera affichee sur chaque face du cube
-_texture.load("./assets/texture.tga");
+if(_texture.load("./libgdl/assets/marvin.fbm/Main_texture_diffuse2.tga") == false)
+{
+	std::cout << "false texture" << std::endl;
+	return (false);
+}
 // on set la color d'une premiere face
 _geometry.setColor(glm::vec4(1, 0, 0, 1));
 // tout les pushVertex qui suivent seront de cette couleur
