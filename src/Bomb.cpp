@@ -60,14 +60,12 @@ Bomb::tick(Subject* entity)
 		seconds_t elapsed = clock->seconds() - _spawnTime;
 		if (elapsed > _duration)
 		{
-			std::cout << "Da bomb has explodead" << std::endl;
 			_progress = 100;
 			this->notify(this, BOMB_EXPLODED);
 		}
 		else
 		{
-			_progress = (elapsed / _spawnTime) * 100;
-			std::cout << "Da bomb is tickin' : " << (int)(_progress) << "%" << std::endl;
+			_progress = (elapsed / _duration) * 100;
 		}
 	}
 }
