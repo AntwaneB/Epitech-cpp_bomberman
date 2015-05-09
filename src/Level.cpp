@@ -121,3 +121,11 @@ Level::bombExploded(Subject* entity)
 	else
 		throw EventException("Event thrown on not-matching entity");
 }
+
+void
+Level::exportFile(const std::string & filename) const
+{
+	Config	cfg;
+
+	cfg.exportFile(filename);
+}

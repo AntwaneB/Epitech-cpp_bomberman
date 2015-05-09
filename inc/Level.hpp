@@ -23,6 +23,8 @@ public:
 
 	void	run();
 
+	void	exportFile(const std::string &) const;
+
 private:
 	Character*	pushCharacter();
 
@@ -31,6 +33,8 @@ private:
 	void	itemDropped(Subject* entity);
 	void	itemMoved(Subject* entity);
 	void	bombExploded(Subject* entity);
+
+	void	charactersToConfig(Config);
 
 private:
 	Map														_map;

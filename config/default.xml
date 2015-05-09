@@ -10,7 +10,7 @@
   </tileset>
 
   <available_entities>
-		<entity type="wall">
+		<entity name="wall">
 			<param name="collision">1</param>
 			<param name="color">0xffffff</param>
 			<param name="spriteX">0</param>
@@ -18,14 +18,14 @@
 			<param name="visible">1</param>
 		</entity>
 
-		<entity type="floor">
+		<entity name="floor">
 			<param name="spriteX">7</param>
 			<param name="spriteY">0</param>
 			<param name="collision">0</param>
 			<param name="visible">1</param>
 		</entity>
 
-		<entity type="food_0">
+		<entity name="food_0">
 			<param name="spriteX">2</param>
 			<param name="spriteY">1</param>
 			<param name="color">0x00ff00</param>
@@ -35,7 +35,7 @@
 			<param name="segmentAmount">1</param>
 		</entity>
 
-		<entity type="food_1">
+		<entity name="food_1">
 			<param name="spriteX">6</param>
 			<param name="spriteY">1</param>
 			<param name="color">0x0000ff</param>
@@ -46,7 +46,7 @@
 			<param name="speedModifier">1.8</param>
 		</entity>
 
-		<entity type="food_2">
+		<entity name="food_2">
 			<param name="spriteX">5</param>
 			<param name="spriteY">1</param>
 			<param name="color">0xffff00</param>
@@ -57,7 +57,7 @@
 			<param name="invertControls">1</param>
 		</entity>
 
-		<entity type="food_3">
+		<entity name="food_3">
 			<param name="spriteX">4</param>
 			<param name="spriteY">1</param>
 			<param name="color">0xff0000</param>
@@ -67,7 +67,7 @@
 			<param name="segmentAmount">-2</param>
 		</entity>
 
-		<entity type="player">
+		<entity name="player">
 			<param name="spriteX">1</param>
 			<param name="spriteY">0</param>
 			<param name="color">0xff0000</param>
@@ -77,7 +77,7 @@
 			<param name="base_size">4</param>
 		</entity>
 
-		<entity type="player_head">
+		<entity name="player_head">
 			<param name="spriteX_left">6</param>
 			<param name="spriteY_left">0</param>
 			<param name="spriteX_right">5</param>
