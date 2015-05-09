@@ -18,7 +18,6 @@ Bomb::Bomb(Position const & position, size_t range, double duration, const Chara
 
 Bomb::~Bomb()
 {
-	std::cout << "Bomb has been deleted" << std::endl;
 }
 
 bool
@@ -62,6 +61,7 @@ Bomb::tick(Subject* entity)
 		{
 			_progress = 100;
 			this->notify(this, BOMB_EXPLODED);
+			delete this;
 		}
 		else
 		{
