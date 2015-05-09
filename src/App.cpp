@@ -20,10 +20,13 @@
 Config g_settings;
 
 App::App(int ac, char** av)
-	: _ac(ac), _av(av)
+	: _ac(ac)
 {
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
+
+	for (int i = 0; i < _ac; i++)
+		_av.push_back(av[i]);
 
 	if (!this->validateArgs())
 		throw ArgumentsException("usage:\n./bomberman");
@@ -50,9 +53,12 @@ App::runLevel(Subject* entity)
 	Level* level = safe_cast<Level*>(entity);
 
 	level->addObserver(this);
-	level->addObserver(_display);
 
-	_display->addObserver(level);
+	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+	{
+		level->addObserver(_display);
+		_display->addObserver(level);
+	}
 
 	level->run();
 }
@@ -66,17 +72,22 @@ App::exit(Subject* entity __attribute__((unused)))
 int
 App::run()
 {
-	_display = new Graphics::Display;
-	this->addObserver(_display);
+	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+	{
+		_display = new Graphics::Display;
+		this->addObserver(_display);
+	}
 
 	Menu* mainMenu = new Menu;
 	mainMenu->addObserver(this);
-	mainMenu->addObserver(_display);
+	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+		mainMenu->addObserver(_display);
 
 	mainMenu->run();
 
 	delete mainMenu;
-	delete _display;
+	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+		delete _display;
 
 	return (0);
 }

@@ -13,6 +13,14 @@ make
 
 echo "";
 
-./bomberman
+if [ $# = 0 ]; then
+
+	./bomberman
+
+elif [ $1 = "--gui" ]; then
+
+	./bomberman --gui
+
+fi
 
 set +e
