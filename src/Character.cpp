@@ -19,6 +19,19 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 
 	_attributes = g_settings["entities"]["character"];
 
+	if (_nth == 4)
+	{
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_RIGHT);
+		_queuedActions.push(Character::DROP_BOMB);
+		_queuedActions.push(Character::MOVE_LEFT);
+		_queuedActions.push(Character::MOVE_UP);
+		_queuedActions.push(Character::MOVE_UP);
+		_queuedActions.push(Character::MOVE_UP);
+	}
+
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
@@ -56,7 +69,7 @@ Character::tick(Subject* entity)
 			_queuedActions.pop();
 
 			if (_attributes["bombs"]["available"] == true
-				&& _bombs.size() < static_cast<size_t>(_attributes["bombs"]["max_amount"]))
+				&& _bombs.size() < static_cast<size_t>(_attributes["bombs"]["amount"]))
 			{
 				this->dropBomb();
 			}
@@ -105,10 +118,11 @@ Character::move(Character::Action action)
 void
 Character::dropBomb()
 {
-	Bomb* bomb = new Bomb(_position,
-								 _attributes["bomb"]["range"],
-								 static_cast<double>(g_settings["bomb"]["duration"]) * static_cast<double>(_attributes["bomb"]["duration_modifier"]),
-								 this);
+	size_t range = _attributes["bombs"]["range"];
+	double duration = g_settings["entities"]["bomb"]["duration"];
+	double duration_modifier = _attributes["bombs"]["duration_modifier"];
+
+	Bomb* bomb = new Bomb(_position, range, duration * duration_modifier, this);
 
 	_bombs.push_back(bomb);
 

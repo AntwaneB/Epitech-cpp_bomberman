@@ -15,7 +15,8 @@ echo "";
 
 if [ $# = 0 ]; then
 
-	./bomberman
+	valgrind ./bomberman
+	#./bomberman
 
 elif [ $1 = "--gui" ]; then
 

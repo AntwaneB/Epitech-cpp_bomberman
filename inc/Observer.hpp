@@ -11,6 +11,7 @@
 class Observer;
 class Subject;
 
+#include <iostream>
 #include <list>
 #include <map>
 #include <algorithm>
@@ -84,7 +85,8 @@ public:
 		std::list<Observer*>::iterator it = std::find(_observers.begin(), _observers.end(), observer);
 		if (it != _observers.end())
 		{
-			_observers.erase(it);
+			*it = NULL;
+			//_observers.erase(it);
 		}
 	}
 
@@ -93,7 +95,8 @@ protected:
 	{
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
 		{
-			(*it)->onNotify(entity, event);
+			if (*it != NULL)
+				(*it)->onNotify(entity, event);
 		}
 	}
 

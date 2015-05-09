@@ -14,6 +14,7 @@
 #include "Map.hpp"
 #include "Character.hpp"
 #include "Item.hh"
+#include "BonusItem.hh"
 #include "Bomb.hh"
 
 class Level : public EventHandler<Level>, public Subject

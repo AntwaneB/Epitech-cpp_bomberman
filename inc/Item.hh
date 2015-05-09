@@ -10,8 +10,9 @@
 
 #include "Observer.hpp"
 #include "Position.hpp"
+#include "Clock.hpp"
 
-class Item : public EventHandler<Item>, public Subject
+class Item
 {
 public:
 	Item(Position const &);
@@ -20,9 +21,15 @@ public:
 	Position	position() const;
 	Position	prevPosition() const;
 
+private:
+	virtual void tick(Subject*) = 0;
+
 protected:
-	Position	_position;
-	Position	_prevPosition;
+	Position		_position;
+	Position		_prevPosition;
+
+	bool			_clockInit;
+	seconds_t	_spawnTime;
 };
 
 #endif	/* ITEM_HH */

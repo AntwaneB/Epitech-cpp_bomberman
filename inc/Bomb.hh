@@ -17,7 +17,7 @@ class Character;
 #include "Character.hpp"
 #include <vector>
 
-class Bomb : public Item
+class Bomb : public Item, public EventHandler<Bomb>, public Subject
 {
 public:
 	Bomb(Position const &, size_t, double, const Character*);
@@ -30,12 +30,16 @@ public:
 	Position	position() const;
 
 private:
+	virtual void tick(Subject*);
+
+private:
 	Config				_attributes;
 	size_t				_range;
 	double				_duration;
 	const Character*	_owner;
 
 	std::vector<Position>	_hitbox;
+	char							_progress;
 };
 
 #endif	/* BOMB_HH */

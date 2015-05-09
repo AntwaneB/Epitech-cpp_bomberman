@@ -8,7 +8,7 @@
 #include "Item.hh"
 
 Item::Item(Position const & position)
-	: _position(position), _prevPosition(position)
+	: _position(position), _prevPosition(position), _clockInit(false)
 {
 }
 
