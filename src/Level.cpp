@@ -43,6 +43,12 @@ Level::map() const
 	return (_map);
 }
 
+size_t
+Level::charactersCount() const
+{
+	return (_characters.size());
+}
+
 void
 Level::run()
 {

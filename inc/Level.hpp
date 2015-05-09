@@ -26,6 +26,7 @@ public:
 	void		run();
 	Clock&	clock();
 	Map		map() const;
+	size_t	charactersCount() const;
 
 private:
 	Character*	pushCharacter();
