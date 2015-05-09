@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<config>
 
+<<<<<<< HEAD
   <tileset>
     <param name="filename">assets/spritessnake.png</param>
     <param name="block_width">32</param>
@@ -93,3 +93,64 @@
   </available_entities>
 
 </config>
+=======
+<entities>
+	<entity name="character">
+		<param name="visible">true</param>
+		<param name="speed">120</param>
+		<param name="can_move">true</param>
+		<param name="destructible">true</param>
+		<param name="collision">true</param>
+		<param name="bombs">
+			<param name="available">true</param>
+			<param name="amount">1</param>
+			<param name="range">2</param>
+			<param name="duration_modifier">1</param>
+		</param>
+	</entity>
+
+	<entity name="bomb">
+		<param name="visible">true</param>
+		<param name="destructible">false</param>
+		<param name="collision">false</param>
+		<param name="range">2</param>
+		<param name="duration">4</param>
+	</entity>
+
+	<entity name="bonus_item">
+		<param name="types_count">3</param>
+		<param name="visible">true</param>
+		<param name="destructible">false</param>
+		<param name="collision">false</param>
+
+		<item name="range_increase">
+			<param name="range_modifier">1</param>
+		</item>
+		<item name="speed_increase">
+			<param name="speed_modifier">5</param>
+		</item>
+		<item name="bomb_amount_increase">
+			<param name="bomb_amount_modifier">1</param>
+		</item>
+	</entity>
+
+	<entity type="wall">
+		<param name="visible">true</param>
+		<param name="collision">true</param>
+		<param name="destructible">false</param>
+	</entity>
+
+	<entity type="box">
+		<param name="visible">true</param>
+		<param name="collision">true</param>
+		<param name="destructible">true</param>
+	</entity>
+
+	<entity type="floor">
+		<param name="visible">true</param>
+		<param name="collision">false</param>
+		<param name="destructible">false</param>
+	</entity>
+
+</entities>
+>>>>>>> f3b58b18552a71f668f90d1b94d88d1ed32f93b2

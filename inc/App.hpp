@@ -11,6 +11,7 @@
 #ifndef APP_HPP
 #define	APP_HPP
 
+#include "global.hh"
 #include "Observer.hpp"
 #include "Menu.hpp"
 #include "Graphics/Display.hh"
@@ -30,10 +31,10 @@ private:
 	void	runLevel(Subject * entity);
 
 private:
-	int			_ac;
-	char**		_av;
+	int								_ac;
+	std::vector<std::string>	_av;
 
-	Display*		_display;
+	Graphics::Display*			_display;
 };
 
 #endif /* !APP_HPP */

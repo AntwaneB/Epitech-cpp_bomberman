@@ -8,16 +8,34 @@
 #ifndef BOMB_HH
 #define	BOMB_HH
 
+class Bomb;
+class Character;
+
 #include "Item.hh"
+#include "Position.hpp"
+#include "Config.hpp"
+#include "Character.hpp"
+#include <vector>
 
 class Bomb : public Item
 {
 public:
-	Bomb();
+	Bomb(Position const &, size_t, double, const Character*);
 	virtual ~Bomb();
 
-private:
+	void	setHitbox(std::vector<Position> const &);
+	bool	hasHit(Position const &) const;
 
+	size_t	range() const;
+	Position	position() const;
+
+private:
+	Config				_attributes;
+	size_t				_range;
+	double				_duration;
+	const Character*	_owner;
+
+	std::vector<Position>	_hitbox;
 };
 
 #endif	/* BOMB_HH */

@@ -40,13 +40,14 @@ public:
 	size_t	width() const;
 	size_t	height() const;
 
-protected:
 	void	generateMap();
 	void 	generateMap(const std::string &);
-	void 	displayMap();
+
 	std::vector<std::vector<int> > getMap();
+	int	at(Position const &) const;
 
 private:
+	void 	displayMap();
 	void 	delimitMap();
 	void 	placeDestrBlock();
 	void 	oneOnTwo();

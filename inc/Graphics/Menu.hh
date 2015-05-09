@@ -8,14 +8,19 @@
 #ifndef MENU_HH
 #define	MENU_HH
 
-class Menu
+namespace Graphics
 {
-public:
-	Menu();
-	virtual ~Menu();
 
-private:
+	class Menu
+	{
+	public:
+		Menu();
+		virtual ~Menu();
 
-};
+	private:
+
+	};
+
+}
 
 #endif	/* MENU_HH */

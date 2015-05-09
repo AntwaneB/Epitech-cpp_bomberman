@@ -19,6 +19,8 @@ SRCS_DIR	  =  src
 SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
+		     Clock.cpp \
+		     \
 		     Menu.cpp \
 		     Level.cpp \
 		     Character.cpp \
@@ -28,6 +30,10 @@ SRCS		  =  main.cpp \
 		     Bomb.cpp \
 		     \
 		     Graphics/Display.cpp \
+		     Graphics/Level.cpp \
+		     Graphics/Menu.cpp \
+		     Graphics/Object.cpp \
+		     Graphics/Cube.cpp \
 		     Graphics/Map.cpp \
 		     \
 		     misc/pugixml.cpp
@@ -36,9 +42,12 @@ OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
 
 INCS_DIR	  =  inc
-INCS		  =  Exception.hpp \
+INCS		  =  global.hh \
+		     Exception.hpp \
 		     App.hpp \
 		     Config.hpp \
+		     Clock.hpp \
+		     \
 		     Observer.hpp \
 		     Menu.hpp \
 		     Level.hpp \
@@ -50,6 +59,10 @@ INCS		  =  Exception.hpp \
 		     Bomb.hh \
 		     \
 		     Graphics/Display.hh \
+		     Graphics/Level.hh \
+		     Graphics/Menu.hh \
+		     Graphics/Object.hh \
+		     Graphics/Cube.hh \
 		     Graphics/Map.hh \
 		     \
 		     misc/pugiconfig.hpp \
@@ -60,9 +73,8 @@ LGDL_DIR	  =  libgdl
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
 CXXFLAGS	  += -I$(INCS_DIR) -I$(INCS_DIR)/misc
-CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
-CXXFLAGS	  += -lpthread
 CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs
+CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g
@@ -74,7 +86,6 @@ CXXFLAGS	  += -g
 
 $(NAME):		$(OBJS)
 			$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
-			export LD_LIBRARY_PATH=$(LGDL_DIR)/libs
 
 all:			$(NAME)
 
