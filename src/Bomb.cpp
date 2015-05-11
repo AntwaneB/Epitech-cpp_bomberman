@@ -9,8 +9,10 @@
 #include "Bomb.hh"
 
 Bomb::Bomb(Position const & position, size_t range, double duration, const Character* owner)
-	: Item(position), _range(range), _duration(duration), _owner(owner)
+	: Item(position), _range(range), _duration(duration), _owner(owner), _progress(0)
 {
+	_actions[CLOCK_TICK] = &Bomb::tick;
+
 	_attributes = g_settings["entities"]["bomb"];
 }
 
@@ -42,3 +44,28 @@ Bomb::position() const
 	return (_position);
 }
 
+void
+Bomb::tick(Subject* entity)
+{
+	Clock* clock = safe_cast<Clock*>(entity);
+
+	if (!_clockInit)
+	{
+		_spawnTime = clock->seconds();
+		_clockInit = true;
+	}
+	else
+	{
+		seconds_t elapsed = clock->seconds() - _spawnTime;
+		if (elapsed > _duration)
+		{
+			_progress = 100;
+			this->notify(this, BOMB_EXPLODED);
+			delete this;
+		}
+		else
+		{
+			_progress = (elapsed / _duration) * 100;
+		}
+	}
+}

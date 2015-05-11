@@ -14,6 +14,7 @@
 #include "Map.hpp"
 #include "Character.hpp"
 #include "Item.hh"
+#include "BonusItem.hh"
 #include "Bomb.hh"
 
 class Level : public EventHandler<Level>, public Subject
@@ -25,6 +26,7 @@ public:
 	void		run();
 	Clock&	clock();
 	Map		map() const;
+	size_t	charactersCount() const;
 
 	void	exportFile(const std::string &) const;
 

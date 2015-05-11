@@ -28,6 +28,7 @@ SRCS		  =  main.cpp \
 		     Position.cpp \
 		     Item.cpp \
 		     Bomb.cpp \
+		     BonusItem.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Level.cpp \
@@ -57,6 +58,7 @@ INCS		  =  global.hh \
 		     Position.hpp \
 		     Item.hh \
 		     Bomb.hh \
+		     BonusItem.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \
