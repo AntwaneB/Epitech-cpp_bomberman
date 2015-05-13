@@ -409,10 +409,11 @@ void	Config::importFile(std::string const & filename)
 {
 	pugi::xml_document	file;
 
+
 	pugi::xml_parse_result	result = file.load_file(filename.c_str());
 	if (!result)
 		throw ConfigException("Invalid file.");
-	_params = fillParams(file.first_child(), _params, 0);
+	_params = fillParams(file.first_child().first_child(), _params, 0);
 }
 
 void	Config::exportFile(std::string const & filename)
