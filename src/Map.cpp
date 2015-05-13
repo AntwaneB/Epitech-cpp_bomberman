@@ -18,6 +18,16 @@ Map::Map(size_t width, size_t height):
 	this->setBorders();
 	this->setSolid();
 
+	for (size_t y = 0; y < _height; y++)
+	{
+		for (size_t x = 0; x < _width; x++)
+		{
+			if (_map[y][x]->visible())
+			{
+
+			}
+		}
+	}
 	/*
 	this->generateMap();
 	this->delimitMap();

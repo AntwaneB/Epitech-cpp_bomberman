@@ -50,7 +50,7 @@
 		</item>
 	</entity>
 
-	<entity name="blocks">
+	<category name="blocks">
 		<block name="wall">
 			<param name="visible">true</param>
 			<param name="collision">true</param>
@@ -81,6 +81,6 @@
 			<param name="block_bombs">false</param>
 			<param name="texture">./libgdl/assets/sand.tga</param>
 		</block>
-	</entity>
+	</category>
 
 </entities>
