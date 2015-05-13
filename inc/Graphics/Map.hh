@@ -19,6 +19,7 @@
 #include "Graphics/Level.hh"
 #include "Graphics/Cube.hh"
 #include "Graphics/Ground.hh"
+#include "Graphics/Marvin.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include <vector>
