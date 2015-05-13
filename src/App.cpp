@@ -32,7 +32,6 @@ App::App(int ac, char** av)
 		throw ArgumentsException("usage:\n./bomberman");
 
 	g_settings.importFile("config/default.xml");
-	std::cout << std::string(g_settings["entities"]["bomb"]["duration"]) << std::endl;
 }
 
 bool

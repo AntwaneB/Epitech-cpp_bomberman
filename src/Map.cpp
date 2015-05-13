@@ -18,16 +18,6 @@ Map::Map(size_t width, size_t height):
 	this->setBorders();
 	this->setSolid();
 
-	for (size_t y = 0; y < _height; y++)
-	{
-		for (size_t x = 0; x < _width; x++)
-		{
-			if (_map[y][x]->visible())
-			{
-
-			}
-		}
-	}
 	/*
 	this->generateMap();
 	this->delimitMap();
@@ -112,6 +102,10 @@ Map::setBorders()
 		_map[0][x] = new Block(Position(x, 0), g_settings["maps"]["default_blocks"]["wall"]);
 		_map[_height - 1][x] = new Block(Position(x, _height - 1), g_settings["maps"]["default_blocks"]["wall"]);
 	}
+
+	for (size_t y = 1; y < _height - 1; ++y)
+		for (size_t x = 1; x < _width - 1; ++x)
+			_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["box"]);
 }
 
 void

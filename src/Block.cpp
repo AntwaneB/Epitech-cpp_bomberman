@@ -16,11 +16,17 @@ Block::Block(Position const & position, std::string const & type)
 	_actions[MAP_BOMB_EXPLODED] = &Block::bombExploded;
 
 	_attributes = g_settings["entities"]["blocks"][_type];
+	std::cout << "coucou" << std::endl;
 	_visible = g_settings["entities"]["blocks"][_type]["visible"];
+	std::cout << "coucou2" << std::endl;
 	_destructible = g_settings["entities"]["blocks"][_type]["destructible"];
+	std::cout << "coucou3" << std::endl;
 	_solid = g_settings["entities"]["blocks"][_type]["collision"];
+	std::cout << "coucou4" << std::endl;
 	_blockBombs = g_settings["entities"]["blocks"][_type]["block_bombs"];
+	std::cout << "coucou5" << std::endl;
 	_texture = static_cast<std::string>(g_settings["entities"]["blocks"][_type]["texture"]);
+	std::cout << "coucou6" << std::endl;
 }
 
 Block::~Block()
