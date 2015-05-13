@@ -1,20 +1,13 @@
 #include "Graphics/Object.hh"
- 
-Graphics::Object::Object() : _position(0, 0, 0), _rotation(0, 0, 0), _scale(1, 1, 1) 
-{
 
+Graphics::Object::Object(Position const & position)
+	: _position(position), _rotation(0, 0, 0), _scale(1, 1, 1)
+{
 }
 
 Graphics::Object::~Object()
 {
 
-}
-
-void Graphics::Object::position(int x, int y, int z)
-{
-	_position[0] = x;
-	_position[2] = y;
-	_position[1] = z;
 }
 
 bool Graphics::Object::initialize()
@@ -30,7 +23,7 @@ void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 
 void Graphics::Object::translate(glm::vec3 const &v)
 {
-	_position += v;
+	_position += Position(v[0], v[2], v[1]);
 }
 
 void Graphics::Object::rotate(glm::vec3 const& axis, float angle)
@@ -45,11 +38,16 @@ void Graphics::Object::scale(glm::vec3 const& scale)
 
 glm::mat4 Graphics::Object::getTransformation()
 {
+	glm::vec3 position;
+	position[0] = _position.x();
+	position[1] = _position.z();
+	position[2] = _position.y();
+
 	glm::mat4 transform(1);
 	transform = glm::rotate(transform, _rotation.x, glm::vec3(1, 0, 0));
 	transform = glm::rotate(transform, _rotation.y, glm::vec3(0, 1, 0));
 	transform = glm::rotate(transform, _rotation.z, glm::vec3(0, 0, 1));
-	transform = glm::translate(transform, _position);
+	transform = glm::translate(transform, position);
 	transform = glm::scale(transform, _scale);
 	return (transform);
 }

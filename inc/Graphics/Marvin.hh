@@ -12,18 +12,20 @@
 
 namespace Graphics
 {
-  class Marvin : public Object
-  {
-    public:
+	class Marvin : public Object
+	{
+   public:
       Marvin();
       virtual ~Marvin();
+
       virtual bool  initialize();
       virtual void  update(gdl::Clock const &clock, gdl::Input &input);
       virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
-    private:
+
+	private:
       gdl::Texture    _texture;
       gdl::Model    _model;
-  };
+	};
 };
 
-#endif 
+#endif

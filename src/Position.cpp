@@ -46,6 +46,26 @@ Position::operator<(const Position & o) const
 	return ((_y < o._y) || (_y == o._y && _x < o._x));
 }
 
+Position&
+Position::operator+=(const Position & o)
+{
+	_x += o._x;
+	_y += o._y;
+	_z += o._z;
+
+	return (*this);
+}
+
+Position&
+Position::operator-=(const Position & o)
+{
+	_x -= o._x;
+	_y -= o._y;
+	_z -= o._z;
+
+	return (*this);
+}
+
 void
 Position::setZ(int z)
 {

@@ -1,14 +1,9 @@
 #include "Graphics/Ground.hh"
 #include <iostream>
 
-Graphics::Ground::Ground()
+Graphics::Ground::Ground(Position const & position)
+	: Object(position), _width((position.x() * 2) + 1), _height((position.y() * 2) + 1)
 {
-
-}
-
-Graphics::Ground::Ground(double x, double y, double z, int type) : _type(type), _width((x * 2) + 1), _height((y * 2) + 1)
-{
-	position(x, y, z);
 }
 
 Graphics::Ground::~Ground()
@@ -18,10 +13,8 @@ Graphics::Ground::~Ground()
 
 bool Graphics::Ground::initialize()
 {
-	std::string path;
 	_speed = 10.0f;
-	if (_type == 0)
-		path = "./libgdl/assets/sand.tga";
+	std::string path = "./libgdl/assets/sand.tga";
 	if(_texture.load(path) == false)
 	{
 		std::cout << "false texture" << std::endl;

@@ -25,6 +25,9 @@ public:
 	bool	operator==(Position const & o) const;
 	bool	operator<(Position const & o) const;
 
+	Position&	operator+=(Position const & o);
+	Position&	operator-=(Position const & o);
+
 	void	setZ(int z);
 	void	incZ(int inc = 1);
 	void	decZ(int dec = 1);

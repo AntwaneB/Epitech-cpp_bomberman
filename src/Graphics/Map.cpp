@@ -12,7 +12,7 @@ Graphics::Map::~Map()
 
 bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, size_t height, size_t width, std::vector<std::vector<Block*> > map)
 {
-	Object *ground = new Ground((width - 1) / 2, (height - 1) / 2, 0.4, 0);
+	Object *ground = new Ground(Position((width - 1) / 2, (height - 1) / 2, 0.4));
 	if (ground->initialize() == false)
 		return (false);
 	objects->push_back(ground);

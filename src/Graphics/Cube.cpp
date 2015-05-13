@@ -2,7 +2,7 @@
 #include <iostream>
 
 Graphics::Cube::Cube(Position const & position, Block const * block)
-	: _position(position), _block(block)
+	: Object(position), _block(block)
 {
 }
 
