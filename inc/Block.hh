@@ -10,6 +10,7 @@
 
 #include "Observer.hpp"
 #include "Position.hpp"
+#include "Config.hpp"
 
 class Block : public EventHandler<Block>, public Subject
 {
@@ -21,6 +22,8 @@ public:
 	bool		destructible() const;
 	bool		visible() const;
 	bool		solid() const;
+	bool		blockBombs() const;
+	std::string	texture() const;
 
 private:
 	void tick(Subject* entity);

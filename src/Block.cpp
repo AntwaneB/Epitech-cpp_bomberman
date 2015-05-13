@@ -11,9 +11,9 @@ Block::Block(Position const & position, std::string const & type)
 	: _position(position), _type(type), _elapsedTime(0)
 {
 	_actions[CLOCK_TICK] = &Block::tick;
-	_actions[LEVEL_BOMB_EXPLODED] = &Block::bombExploded;
+	_actions[MAP_BOMB_EXPLODED] = &Block::bombExploded;
 
-	_attributes = g_settings["entities"][_type];
+	_attributes = g_settings["entities"]["blocks"][_type];
 }
 
 Block::~Block()
@@ -42,6 +42,18 @@ bool
 Block::solid() const
 {
 	return (_attributes["collision"]);
+}
+
+bool
+Block::blockBombs() const
+{
+	return (_attributes["block_bombs"]);
+}
+
+std::string
+Block::texture() const
+{
+	return (_attributes["texture"]);
 }
 
 void

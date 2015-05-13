@@ -27,8 +27,10 @@ public:
 	Clock&			clock();
 
 	Map const &		map() const;
-	std::map<Position, std::list<Character*> > const & characters() const;
 	size_t			charactersCount() const;
+	std::map<Position, std::list<Character*> > const & characters() const;
+	std::map<Position, std::list<Bomb*> > const & bombs() const;
+	std::map<Position, std::list<Item*> > const & items() const;
 
 private:
 	Character*	pushCharacter();

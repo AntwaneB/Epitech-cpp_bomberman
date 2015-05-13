@@ -16,48 +16,49 @@
 #include "Character.hpp"
 #include "Position.hpp"
 #include "Observer.hpp"
+#include "Block.hh"
 #include "Exception.hpp"
 
 #define EMPTY 0
 #define SOLID 1
 #define DESTR 2
 
-#define MAP_MIN_X 10
-#define MAP_MIN_Y 10
-
-class Map : public Subject, public Observer
+class Map :  public EventHandler<Map>, public Subject
 {
 public:
 	Map(size_t, size_t);
-	Map(size_t, size_t, std::map<Position, std::list<Character* > > const &);
 	Map(std::string const & mapFile, std::map<Position, std::list<Character* > > const &);
 	virtual ~Map();
-
-	virtual void onNotify(Subject * entity, Event event);
 
 	void	pushCharacter(Character*);
 
 	size_t	width() const;
 	size_t	height() const;
-
-	void	generateMap();
-	void 	generateMap(const std::string &);
-
-	std::vector<std::vector<int> > getMap() const;
-	int	at(Position const &) const;
+	std::vector<std::vector<Block*> > map() const;
+	Block*	at(Position const &) const;
 
 private:
+	void	initMap();
+	void	setBorders();
+	void	setSolid();
+
+private:
+	void	bombExploded(Subject*);
+/*
+	void	generateMap();
+	void 	generateMap(const std::string &);
 	void 	displayMap();
 	void 	delimitMap();
 	void 	placeDestrBlock();
 	void 	oneOnTwo();
 	void 	checkPositionPlayer();
+*/
 
 private:
-	int 	_width;
-	int 	_height;
+	size_t	_width;
+	size_t	_height;
 	int 	_nbrBrick;
-	std::vector<std::vector<int> > _map;
+	std::vector<std::vector<Block*> > _map;
 	std::map<Position, std::list<Character*> > _m;
 };
 

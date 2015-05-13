@@ -21,6 +21,9 @@ Level::Level(size_t width, size_t height, size_t charactersCount)
 
 	_clock.addObserver(this);
 
+	this->addObserver(&_map);
+	_map.addObserver(this);
+
 	for (size_t i = 0; i < charactersCount; i++)
 	{
 		_map.pushCharacter(this->pushCharacter());
@@ -158,7 +161,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.decY();
-		if (_map.at(explosion) == SOLID)
+		if (_map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}
@@ -166,7 +169,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.incY();
-		if (_map.at(explosion) == SOLID)
+		if (_map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}
@@ -174,7 +177,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.decX();
-		if (_map.at(explosion) == SOLID)
+		if (_map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}
@@ -182,7 +185,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.incX();
-		if (_map.at(explosion) == SOLID)
+		if (_map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}

@@ -1,14 +1,9 @@
 #include "Graphics/Cube.hh"
 #include <iostream>
 
-Graphics::Cube::Cube()
+Graphics::Cube::Cube(Position const & position, Block const * block)
+	: _position(position), _block(block)
 {
-
-}
-
-Graphics::Cube::Cube(int x, int y, int z, int type) : _type(type)
-{
-	position(x, y, z);
 }
 
 Graphics::Cube::~Cube()
@@ -18,15 +13,9 @@ Graphics::Cube::~Cube()
 
 bool Graphics::Cube::initialize()
 {
-	std::string path;
 	_speed = 10.0f;
-	if (_type == 0)
-		path = "./libgdl/assets/sand.tga";
-	else if (_type == 1)
-		path = "./libgdl/assets/rock.tga";
-	else
-		path = "./libgdl/assets/wood.tga";
-	if(_texture.load(path) == false)
+
+	if(_texture.load(_block->texture()) == false)
 	{
 		std::cout << "false texture" << std::endl;
 		return (false);

@@ -28,8 +28,8 @@ Graphics::Level::initialize()
 		return false;
 	glEnable(GL_DEPTH_TEST);
 	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
-	|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
-	|| !_shader.build())
+		|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
+		|| !_shader.build())
 		return false;
 	glm::mat4 projection;
 	glm::mat4 transformation;
@@ -39,7 +39,7 @@ Graphics::Level::initialize()
 	_shader.bind();
 	_shader.setUniform("view", transformation);
 	_shader.setUniform("projection", projection);
-	_map.initialize(&_objects, _level->map().height(), _level->map().width(), _level->map().getMap());
+	_map.initialize(&_objects, _level->map().height(), _level->map().width(), _level->map().map());
 	return (true);
 }
 

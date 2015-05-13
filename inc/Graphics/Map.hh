@@ -33,7 +33,7 @@ namespace Graphics
 	public:
 		Map();
 		virtual ~Map();
-		virtual bool initialize(std::vector<Object*> *, unsigned int, unsigned int, std::vector<std::vector<int> >);
+		virtual bool initialize(std::vector<Object*> *, size_t, size_t, std::vector<std::vector<Block*> >);
 		virtual bool update();
 		virtual void draw();
 	};

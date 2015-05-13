@@ -10,7 +10,7 @@ Graphics::Map::~Map()
 
 }
 
-bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, unsigned int height, unsigned int width, std::vector<std::vector<int> > map)
+bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, size_t height, size_t width, std::vector<std::vector<Block*> > map)
 {
 	Object *ground = new Ground((width - 1) / 2, (height - 1) / 2, 0.4, 0);
 	if (ground->initialize() == false)
@@ -46,7 +46,7 @@ bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, unsigne
 				objects->push_back(cube);
 			}
 		}
-	}	
+	}
 	return (true);
 }
 

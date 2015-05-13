@@ -7,46 +7,38 @@
 
 #include "Map.hpp"
 #include "pugixml.hpp"
+#include "global.hh"
 
 Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
 {
-	this->generateMap();
-	this->delimitMap();
-	this->oneOnTwo();
-	this->placeDestrBlock();
-	this->displayMap();
-}
+	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
 
-Map::Map(size_t width, size_t height, std::map<Position, std::list<Character *> > const &map):
-	_width(width), _height(height), _m(map)
-{
+	this->initMap();
+	this->setBorders();
+	this->setSolid();
+
+	/*
 	this->generateMap();
 	this->delimitMap();
 	this->oneOnTwo();
 	this->placeDestrBlock();
-	this->checkPositionPlayer();
 	this->displayMap();
+	*/
 }
 
 Map::Map(std::string const & mapFile, std::map<Position, std::list<Character* > > const &mymap)
 {
 	(void) mapFile;
 	(void) mymap;
+/*
 	this->generateMap(mapFile);
 	this->displayMap();
+*/
 }
 
 Map::~Map()
 {
-
-}
-
-void
-Map::onNotify(Subject * entity, Event event)
-{
-	(void)entity;
-	(void)event;
 }
 
 size_t
@@ -61,14 +53,14 @@ Map::height() const
 	return (_height);
 }
 
-int
+Block*
 Map::at(const Position& position) const
 {
 	return (this->_map[position.y()][position.x()]);
 }
 
-std::vector<std::vector<int> >
-Map::getMap() const
+std::vector<std::vector<Block*> >
+Map::map() const
 {
 	return (this->_map);
 }
@@ -80,35 +72,87 @@ Map::pushCharacter(Character* character)
 }
 
 void
+Map::initMap()
+{
+	_map.resize(_height);
+	for (auto it = _map.begin(); it != _map.end(); ++it)
+	{
+		it->resize(_width);
+	}
+}
+
+void
+Map::setBorders()
+{
+	for (size_t y = 0; y < _height; ++y)
+	{
+		_map[y][0] = new Block(Position(0, y), g_settings["maps"]["default_blocks"]["wall"]);
+		_map[y][_width - 1] = new Block(Position(_width - 1, y), g_settings["maps"]["default_blocks"]["wall"]);
+	}
+	for (size_t x = 0; x < _width; ++x)
+	{
+		_map[0][x] = new Block(Position(x, 0), g_settings["maps"]["default_blocks"]["wall"]);
+		_map[_height - 1][x] = new Block(Position(x, _height - 1), g_settings["maps"]["default_blocks"]["wall"]);
+	}
+}
+
+void
+Map::setSolid()
+{
+
+}
+
+/*
+void
+Map::generateMap()
+{
+	if (_height < g_settings["maps"]["min_height"] || _width < g_settings["maps"]["min_width"])
+		throw MapException("Map too small");
+
+	_nbrBrick = (_height * _width) * 0.3;
+	int y = 0;
+	_map.resize(_height);
+	for (std::vector<std::vector<Block*> >::const_iterator it = _map.begin(); it != _map.end(); it++)
+	{
+		_map[y].resize(_width);
+
+		int x = 0;
+		for (std::vector<int>::const_iterator it2 = it->begin(); it2 != it->end(); it2++)
+		{
+			_map[y][x] = 0;
+			x++;
+		}
+		y++;
+	}
+}
+
+void
 Map::generateMap(const std::string &file)
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(file.c_str());
-	int y;
-	int x;
-
 	if (result)
 	{
-		this->_width = doc.child("map").attribute("width").as_int();
-		this->_height = doc.child("map").attribute("height").as_int();
-		std::cout << this->_height << std::endl;
-		std::cout << this->_width << std::endl;
+		_width = doc.child("map").attribute("width").as_int();
+		_height = doc.child("map").attribute("height").as_int();
+		std::cout << _height << std::endl;
+		std::cout << _width << std::endl;
 
-		y = 0;
-		this->_map.resize(this->_height);
+		int y = 0;
+		_map.resize(_height);
 		for (pugi::xml_node row = doc.child("map").child("row"); row; row = row.next_sibling("row"))
 		{
-			x = 0;
-			this->_map[y].resize(this->_width);
+			int x = 0;
+			_map[y].resize(_width);
 			for (pugi::xml_node block = row.child("case"); block; block = block.next_sibling("case"))
 			{
 				std::string entity = block.attribute("entity").value();
 				if (entity == "wall")
-					this->_map[y][x] = SOLID;
+					_map[y][x] = SOLID;
 				else if (entity == "floor")
-					this->_map[y][x] = EMPTY;
+					_map[y][x] = EMPTY;
 				else if (entity == "block")
-					this->_map[y][x] = DESTR;
+					_map[y][x] = DESTR;
 				else
 					throw MapException("XML : incorrect file");
 				x++;
@@ -121,30 +165,6 @@ Map::generateMap(const std::string &file)
 }
 
 void
-Map::generateMap()
-{
-	int y;
-	int x;
-
-	if (this->_height < MAP_MIN_Y || this->_width < MAP_MIN_X)
-		throw MapException("Map to little");
-	_nbrBrick = (this->_height * this->_width) * 0.3;
-	y = 0;
-	this->_map.resize(this->_height);
-	for (std::vector<std::vector<int> >::const_iterator it = this->_map.begin(); it != this->_map.end(); it++)
-	{
-		x = 0;
-		this->_map[y].resize(this->_width);
-		for (std::vector<int>::const_iterator it2 = it->begin(); it2 != it->end(); it2++)
-		{
-			this->_map[y][x] = 0;
-			x++;
-		}
-		y++;
-	}
-}
-
-void
 Map::checkPositionPlayer()
 {
 	int x;
@@ -154,19 +174,19 @@ Map::checkPositionPlayer()
 	{
 		x = it->first.x();
 		y = it->first.y();
-		this->_map[y][x] = 8;
-		if (x + 1 < this->_width)
-			if (this->_map[y][x + 1] != SOLID)
-				this->_map[y][x + 1] = EMPTY;
+		_map[y][x] = 8;
+		if (x + 1 < _width)
+			if (_map[y][x + 1] != SOLID)
+				_map[y][x + 1] = EMPTY;
 		if (x - 1 > 1)
-			if (this->_map[y][x - 1] != SOLID)
-				this->_map[y][x - 1] = EMPTY;
-		if (y + 1 < this->_height)
-			if (this->_map[y + 1][x] != SOLID)
-				this->_map[y + 1][x] = EMPTY;
+			if (_map[y][x - 1] != SOLID)
+				_map[y][x - 1] = EMPTY;
+		if (y + 1 < _height)
+			if (_map[y + 1][x] != SOLID)
+				_map[y + 1][x] = EMPTY;
 		if (y - 1 > 1)
-			if (this->_map[y - 1][x] != SOLID)
-				this->_map[y - 1][x] = EMPTY;
+			if (_map[y - 1][x] != SOLID)
+				_map[y - 1][x] = EMPTY;
 	}
 }
 
@@ -236,3 +256,4 @@ Map::placeDestrBlock()
 		_nbrBrick -= 1;
 	}
 }
+*/
