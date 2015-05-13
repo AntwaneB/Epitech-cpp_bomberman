@@ -23,7 +23,9 @@ void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 
 void Graphics::Object::translate(glm::vec3 const &v)
 {
-	_position += Position(v[0], v[2], v[1]);
+	std::cout << _position << std::endl;
+	_position = _position + Position(v[0], v[2], v[1]);
+	std::cout << _position << std::endl << std::endl;
 }
 
 void Graphics::Object::rotate(glm::vec3 const& axis, float angle)
@@ -49,5 +51,6 @@ glm::mat4 Graphics::Object::getTransformation()
 	transform = glm::rotate(transform, _rotation.z, glm::vec3(0, 0, 1));
 	transform = glm::translate(transform, position);
 	transform = glm::scale(transform, _scale);
+
 	return (transform);
 }

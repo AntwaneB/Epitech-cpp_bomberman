@@ -25,9 +25,6 @@ public:
 	bool	operator==(Position const & o) const;
 	bool	operator<(Position const & o) const;
 
-	Position&	operator+=(Position const & o);
-	Position&	operator-=(Position const & o);
-
 	void	setZ(int z);
 	void	incZ(int inc = 1);
 	void	decZ(int dec = 1);
@@ -52,6 +49,10 @@ private:
 };
 
 std::ostream& operator<<(std::ostream&, const Position &);
+Position operator+(const Position &, const Position &);
+void operator+=(Position &, const Position &);
+Position operator-(const Position &, const Position &);
+void operator-=(Position &, const Position &);
 
 #endif	/* POSITION_HPP */
 

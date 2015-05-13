@@ -46,26 +46,6 @@ Position::operator<(const Position & o) const
 	return ((_y < o._y) || (_y == o._y && _x < o._x));
 }
 
-Position&
-Position::operator+=(const Position & o)
-{
-	_x += o._x;
-	_y += o._y;
-	_z += o._z;
-
-	return (*this);
-}
-
-Position&
-Position::operator-=(const Position & o)
-{
-	_x -= o._x;
-	_y -= o._y;
-	_z -= o._z;
-
-	return (*this);
-}
-
 void
 Position::setZ(int z)
 {
@@ -186,4 +166,29 @@ Position::toConfig(Config & cfg) const
 	cfg["y"] = _y;
 	cfg["z"] = _z;
 	cfg["isSet"] = _isSet;
+}
+
+Position operator+(const Position & pos1, const Position & pos2)
+{
+	std::cout << "putaind e merde" << std::endl;
+	return (Position(pos1.x() + pos2.x(), pos1.y() + pos2.y(), pos1.z() + pos2.z()));
+}
+
+void operator+=(Position & pos1, const Position & pos2)
+{
+	pos1.incX(pos2.x());
+	pos1.incY(pos2.y());
+	pos1.incZ(pos2.z());
+}
+
+Position operator-(const Position & pos1, const Position & pos2)
+{
+	return (Position(pos1.x() - pos2.x(), pos1.y() - pos2.y(), pos1.z() - pos2.z()));
+}
+
+void operator-=(Position & pos1, const Position & pos2)
+{
+	pos1.decX(pos2.x());
+	pos1.decY(pos2.y());
+	pos1.decZ(pos2.z());
 }

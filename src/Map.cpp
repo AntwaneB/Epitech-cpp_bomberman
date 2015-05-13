@@ -105,7 +105,7 @@ Map::setBorders()
 
 	for (size_t y = 1; y < _height - 1; ++y)
 		for (size_t x = 1; x < _width - 1; ++x)
-			_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["box"]);
+			_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["void"]);
 }
 
 void
