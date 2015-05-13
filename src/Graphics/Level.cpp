@@ -68,3 +68,4 @@ Graphics::Level::draw()
 	_objects[i]->draw(_shader, _clock);
 	_context.flush();
 }
+

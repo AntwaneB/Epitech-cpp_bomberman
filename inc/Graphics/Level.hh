@@ -22,6 +22,7 @@
 #include "Graphics/Cube.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
+#include "Config.hpp"
 #include <vector>
 
 namespace Graphics
