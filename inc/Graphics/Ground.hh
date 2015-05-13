@@ -26,6 +26,8 @@ namespace Graphics
 			gdl::Geometry _geometry;
 			float _speed;
 			int _type;
+			int _width;
+			int _height;
 	};
 };
 

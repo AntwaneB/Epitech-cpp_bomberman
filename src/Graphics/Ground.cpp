@@ -6,7 +6,7 @@ Graphics::Ground::Ground()
 
 }
 
-Graphics::Ground::Ground(double x, double y, double z, int type) : _type(type)
+Graphics::Ground::Ground(double x, double y, double z, int type) : _type(type), _width((x * 2) + 1), _height((y * 2) + 1)
 {
 	position(x, y, z);
 }
@@ -27,50 +27,50 @@ bool Graphics::Ground::initialize()
 		std::cout << "false texture" << std::endl;
 		return (false);
 	}
-	_geometry.pushVertex(glm::vec3(7.5, -0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(7.5, 0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, 0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, -0.1, 7.5));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.5, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.5, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, 0.5 * _height));
 	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
 	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-	_geometry.pushVertex(glm::vec3(7.5, -0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(7.5, 0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, 0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, -0.1, -7.5));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.5, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.5, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, -0.5 * _height));
 	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
 	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-	_geometry.pushVertex(glm::vec3(7.5, -0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(7.5, 0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(7.5, 0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(7.5, -0.1, 7.5));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.5, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.5, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, 0.5 * _height));
 	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
 	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-	_geometry.pushVertex(glm::vec3(-7.5, -0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, 0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, 0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, -0.1, -7.5));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.5, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.5, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, -0.5 * _height));
 	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
 	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-	_geometry.pushVertex(glm::vec3(7.5, 0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(7.5, 0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, 0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, 0.1, 7.5));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.5, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.5, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, 0.5 * _height));
 	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
 	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
-	_geometry.pushVertex(glm::vec3(7.5, -0.1, -7.5));
-	_geometry.pushVertex(glm::vec3(7.5, -0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, -0.1, 7.5));
-	_geometry.pushVertex(glm::vec3(-7.5, -0.1, -7.5));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, -0.5 * _height));
+	_geometry.pushVertex(glm::vec3(0.5 * _width, 0.4, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, 0.5 * _height));
+	_geometry.pushVertex(glm::vec3(-0.5 * _width, 0.4, -0.5 * _height));
 	_geometry.pushUv(glm::vec2(0.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 0.0f));
 	_geometry.pushUv(glm::vec2(1.0f, 1.0f));
