@@ -3,7 +3,7 @@
 Graphics::Marvin::Marvin()
 {
   scale(glm::vec3(0.0025, 0.0025, 0.0025));
-  translate(glm::vec3(0.5, 0, 0.5));
+  translate(glm::vec3(0.5, 0.5, 0.5));
 }
 
 Graphics::Marvin::~Marvin()

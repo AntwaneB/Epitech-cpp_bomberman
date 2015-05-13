@@ -20,6 +20,7 @@
 #include "Graphics/Cube.hh"
 #include "Graphics/Ground.hh"
 #include "Graphics/Marvin.hh"
+#include "Graphics/Bomb.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include <vector>
