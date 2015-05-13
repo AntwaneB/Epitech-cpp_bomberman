@@ -68,7 +68,7 @@ Map::at(const Position& position) const
 }
 
 std::vector<std::vector<int> >
-Map::getMap()
+Map::getMap() const
 {
 	return (this->_map);
 }

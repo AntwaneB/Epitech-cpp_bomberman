@@ -27,41 +27,19 @@ Graphics::Level::initialize()
 	if (!_context.start(1920, 1080, "My bomberman!"))
 		return false;
 	glEnable(GL_DEPTH_TEST);
-	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER) 
+	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 	|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 	|| !_shader.build())
 		return false;
 	glm::mat4 projection;
 	glm::mat4 transformation;
-	projection = glm::perspective(60.0f, 1920.0f / 1080.0f, 0.1f, 100.0f);
+	glViewport(1920/2, 0, 1920/2, 1080);
+	projection = glm::perspective(60.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
 	transformation = glm::lookAt(glm::vec3(0, 7, -10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	_shader.bind();
 	_shader.setUniform("view", transformation);
 	_shader.setUniform("projection", projection);
-	for (unsigned int y = 0; y < _level->map().height(); y++)
-	{
-		for (unsigned int x = 0; x < _level->map().width(); x++)
-		{	
-			Object *cube = new Cube(x, y, 0, 0);
-			if (cube->initialize() == false)
-				return (false);
-			_objects.push_back(cube);
-			if (_level->map().getMap()[y][x] == 1)
-			{
-				Object *cube = new Cube(x, y, 1, 1);
-				if (cube->initialize() == false)
-					return (false);
-				_objects.push_back(cube);
-			}
-			else if (_level->map().getMap()[y][x] == 2)
-			{
-				Object *cube = new Cube(x, y, 1, 2);
-				if (cube->initialize() == false)
-					return (false);
-				_objects.push_back(cube);
-			}
-		}
-	}
+	_map.initialize(&_objects, _level->map().height(), _level->map().width(), _level->map().getMap());
 	return (true);
 }
 

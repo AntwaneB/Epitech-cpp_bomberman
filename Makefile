@@ -36,6 +36,9 @@ SRCS		  =  main.cpp \
 		     Graphics/Object.cpp \
 		     Graphics/Cube.cpp \
 		     Graphics/Map.cpp \
+		     Graphics/Ground.cpp \
+		     Graphics/Marvin.cpp \
+		     Graphics/Bomb.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -66,6 +69,9 @@ INCS		  =  global.hh \
 		     Graphics/Object.hh \
 		     Graphics/Cube.hh \
 		     Graphics/Map.hh \
+		     Graphics/Ground.hh \
+		     Graphics/Marvin.hh \
+		     Graphics/Bomb.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp
@@ -76,7 +82,7 @@ DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
 CXXFLAGS	  += -I$(INCS_DIR) -I$(INCS_DIR)/misc
 CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs
-CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread
+CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 
 CXXFLAGS	  += -g

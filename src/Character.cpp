@@ -26,10 +26,10 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 		_queuedActions.push(Character::MOVE_DOWN);
 		_queuedActions.push(Character::MOVE_RIGHT);
 		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
+//		_queuedActions.push(Character::MOVE_LEFT);
+//		_queuedActions.push(Character::MOVE_UP);
+//		_queuedActions.push(Character::MOVE_UP);
+//		_queuedActions.push(Character::MOVE_UP);
 	}
 
 	this->notify(this, CHARACTER_SPAWNED);
