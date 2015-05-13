@@ -23,9 +23,7 @@ void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 
 void Graphics::Object::translate(glm::vec3 const &v)
 {
-	std::cout << _position << " + " << Position(v[0], v[2], v[1]) << std::endl;
 	_position = _position + Position(v[0], v[2], v[1]);
-	std::cout << _position << std::endl << std::endl;
 }
 
 void Graphics::Object::rotate(glm::vec3 const& axis, float angle)

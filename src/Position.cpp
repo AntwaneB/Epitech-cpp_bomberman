@@ -170,7 +170,6 @@ Position::toConfig(Config & cfg) const
 
 Position operator+(const Position & pos1, const Position & pos2)
 {
-	std::cout << "putaind e merde" << std::endl;
 	return (Position(pos1.x() + pos2.x(), pos1.y() + pos2.y(), pos1.z() + pos2.z()));
 }
 
