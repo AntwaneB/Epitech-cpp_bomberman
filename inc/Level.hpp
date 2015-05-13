@@ -23,10 +23,14 @@ public:
 	Level(size_t width, size_t height, size_t charactersCount);
 	virtual ~Level();
 
-	void		run();
-	Clock&	clock();
-	Map		map() const;
-	size_t	charactersCount() const;
+	void				run();
+	Clock&			clock();
+
+	Map const &		map() const;
+	std::map<Position, std::list<Character*> > const & characters() const;
+	size_t			charactersCount() const;
+
+	void	exportFile(const std::string &) const;
 
 private:
 	Character*	pushCharacter();
@@ -38,6 +42,7 @@ private:
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 
+	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);
 
 private:

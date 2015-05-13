@@ -11,12 +11,15 @@
 #include "Observer.hpp"
 #include "Item.hh"
 #include "Position.hpp"
+#include "Character.hpp"
 
 class BonusItem : public Item, public EventHandler<BonusItem>, public Subject
 {
 public:
 	BonusItem(Position const &);
 	virtual ~BonusItem();
+
+	virtual void applyEffect(Character*) = 0;
 
 private:
 	virtual void tick(Subject*) = 0;

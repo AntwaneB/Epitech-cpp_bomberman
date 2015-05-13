@@ -27,6 +27,8 @@ public:
 	Position	position() const;
 	Position	prevPosition() const;
 
+	void		toConfig(Config &) const;
+
 private:
 	void tick(Subject* entity);
 	void bombExploded(Subject* entity);

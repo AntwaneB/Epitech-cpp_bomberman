@@ -43,7 +43,7 @@ public:
 	void	generateMap();
 	void 	generateMap(const std::string &);
 
-	std::vector<std::vector<int> > getMap();
+	std::vector<std::vector<int> > getMap() const;
 	int	at(Position const &) const;
 
 private:

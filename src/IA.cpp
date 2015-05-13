@@ -12,7 +12,7 @@ IA::Action IA::playTurn(const std::vector<sd::vector<int>> & map, const Position
 {
   int	x = myPos.getX();
   int	y = myPos.getY();
- 
+
   if (this->_lastAction != WAIT)
     this->_history[x][y] += 1;
   if (amIExposed(map, myPos))
@@ -35,8 +35,8 @@ Action IA::decideMovement(std::vector<std::vector<int>> cpyMap, const Position &
   std::vector<int>	xSearch  {-1, 1, 0, 0};
   std::vector<int>	ySearch  {0, 0, 1, -1};
   int	bestPathValue = 0;
-  int	x = myPos.getX();  
-  int	y = myPos.getY();  
+  int	x = myPos.getX();
+  int	y = myPos.getY();
   int	mapSize = cpyMap.size();
   Action	bestDirection = WAIT;
   std::vector<Action>	possibleDirections;
@@ -53,7 +53,7 @@ Action IA::decideMovement(std::vector<std::vector<int>> cpyMap, const Position &
 	{
 	  possibleDirections.push_back(actionList[i]);
 	  pathLog.push_back(this->_history[xSearch[i]][ySearch[i]]);
-	}     
+	}
       i++;
     }
   if (pathLog.size() == 0)
@@ -84,8 +84,8 @@ Action IA::findEscapeDirection(std::vector<std::vector<int>> cpyMap, const Posit
   std::vector<int>	xSearch  {-1, 1, 0, 0};
   std::vector<int>	ySearch  {0, 0, 1, -1};
   std::vector<Action>	actionList (83, 0);
-  int	x = myPos.getX();  
-  int	y = myPos.getY();  
+  int	x = myPos.getX();
+  int	y = myPos.getY();
   int	i = 0;
   int	mapSize = cpyMap.size();
   int	direction = 0;

@@ -20,6 +20,7 @@ public:
 
 	Position	position() const;
 	Position	prevPosition() const;
+	void		toConfig(Config &) const;
 
 private:
 	virtual void tick(Subject*) = 0;

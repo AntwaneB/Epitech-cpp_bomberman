@@ -121,7 +121,7 @@ public:
 	private:
 		Param::Status						_status;
 		std::string							_value;
-		std::map<std::string, Param>	_map;
+		std::map<std::string, Param>		_map;
 	};
 
 public:

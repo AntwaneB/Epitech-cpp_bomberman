@@ -37,7 +37,7 @@ Level::clock()
 	return (_clock);
 }
 
-Map
+Map const &
 Level::map() const
 {
 	return (_map);
@@ -91,6 +91,7 @@ Level::pushCharacter()
 	_characters[Position(charX, charY)].push_back(character);
 
 	_clock.addObserver(character);
+	this->addObserver(character);
 
 	return (character);
 }
@@ -120,6 +121,7 @@ Level::itemDropped(Subject* entity)
 	BonusItem* item = safe_cast<BonusItem*>(entity);
 
 	_clock.addObserver(item);
+	this->addObserver(item);
 	item->addObserver(this);
 }
 
@@ -139,6 +141,7 @@ Level::bombDropped(Subject* entity)
 
 	_bombs[bomb->position()].push_back(bomb);
 	_clock.addObserver(bomb);
+	this->addObserver(bomb);
 	bomb->addObserver(this);
 }
 
@@ -187,7 +190,37 @@ Level::bombExploded(Subject* entity)
 	bomb->setHitbox(hitbox);
 
 	_clock.removeObserver(bomb);
+	this->removeObserver(bomb);
 	_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
+}
+
+void
+Level::toConfig(Config & cfg) const
+{
+	int	index;
+
+	index = 0;
+	cfg["charactersCount"] = _charactersCount;
+	cfg["timeSpend"] = _clock.seconds();
+	for (std::map<Position, std::list<Character*>>::const_iterator it = _characters.begin(); it != _characters.end(); it++)
+		for (std::list<Character*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++)
+			(*it)->toConfig(cfg["characters"]);
+	for (std::map<Position, std::list<Bomb*>>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++)
+		for (std::list<Bomb*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
+			(*it)->toConfig(cfg["bombs"][index]);
+	index = 0;
+	for (std::map<Position, std::list<Item*>>::const_iterator it = _items.begin(); it != _items.end(); it++)
+		for (std::list<Item*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
+			(*it)->toConfig(cfg["items"][index]);
+}
+
+void
+Level::exportFile(const std::string & filename) const
+{
+	Config	cfg;
+
+	toConfig(cfg);
+	cfg.exportFile(filename);
 }

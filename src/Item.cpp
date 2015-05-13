@@ -27,3 +27,12 @@ Item::prevPosition() const
 {
 	return (_prevPosition);
 }
+
+void
+Item::toConfig(Config & cfg) const
+{
+	_position.toConfig(cfg["position"]);
+	_prevPosition.toConfig(cfg["prevPosition"]);
+	cfg["clockInit"] = _clockInit;
+	cfg["spawnTime"] = _spawnTime;
+}
