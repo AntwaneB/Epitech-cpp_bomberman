@@ -23,7 +23,7 @@ bool Graphics::Cube::initialize()
 	if (_type == 0)
 		path = "./libgdl/assets/sand.tga";
 	else if (_type == 1)
-		path = "./libgdl/assets/sol.tga";
+		path = "./libgdl/assets/rock.tga";
 	else
 		path = "./libgdl/assets/wood.tga";
 	if(_texture.load(path) == false)
