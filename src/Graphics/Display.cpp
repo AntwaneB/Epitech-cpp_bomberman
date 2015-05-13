@@ -13,10 +13,17 @@ Graphics::Display::Display()
 {
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
+	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
 }
 
 Graphics::Display::~Display()
 {
+}
+
+void
+Graphics::Display::exitGame(Subject* entity __attribute__((unused)))
+{
+	this->notify(this, EXIT_TRIGGERED);
 }
 
 void

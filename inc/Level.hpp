@@ -32,6 +32,9 @@ public:
 	std::map<Position, std::list<Bomb*> > const & bombs() const;
 	std::map<Position, std::list<Item*> > const & items() const;
 
+	void	exportFile(const std::string &) const;
+	void	toConfig(Config & cfg) const;
+
 private:
 	Character*	pushCharacter();
 
@@ -42,6 +45,7 @@ private:
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 
+	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);
 
 private:

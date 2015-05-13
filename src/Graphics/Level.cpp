@@ -10,6 +10,10 @@
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
+	_width = 1920;
+	_height = 1080;
+	_context.start(1920, 1080, "My bomberman!");
+	glViewport(0, 0, 1920/2, 1080);
 	this->initialize();
 	while (this->update() == true)
 		this->draw();
@@ -24,8 +28,6 @@ Graphics::Level::~Level()
 bool
 Graphics::Level::initialize()
 {
-	if (!_context.start(1920, 1080, "My bomberman!"))
-		return false;
 	glEnable(GL_DEPTH_TEST);
 	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 		|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
@@ -33,7 +35,6 @@ Graphics::Level::initialize()
 		return false;
 	glm::mat4 projection;
 	glm::mat4 transformation;
-	glViewport(1920/2, 0, 1920/2, 1080);
 	projection = glm::perspective(60.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
 	transformation = glm::lookAt(glm::vec3(0, 7, -10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	_shader.bind();
@@ -47,7 +48,10 @@ bool
 Graphics::Level::update()
 {
 	if (_input.getKey(SDLK_ESCAPE) || _input.getInput(SDL_QUIT))
-		return false;
+	{
+		_context.stop();
+		this->notify(this, EXIT_TRIGGERED);
+	}
 	_context.updateClock(_clock);
 	_context.updateInputs(_input);
 	for (size_t i = 0; i < _objects.size(); ++i)
@@ -64,3 +68,4 @@ Graphics::Level::draw()
 	_objects[i]->draw(_shader, _clock);
 	_context.flush();
 }
+

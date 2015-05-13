@@ -31,9 +31,11 @@ namespace Graphics
 		void	runLevel(Subject* entity);
 		void	updateLevel(Subject* entity);
 
+		void	exitGame(Subject* entity);
+
 	private:
 		Graphics::Level*	_level;
-		Graphics::Menu*	_menu;
+		Graphics::Menu*		_menu;
 	};
 
 }

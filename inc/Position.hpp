@@ -8,6 +8,7 @@
 #ifndef POSITION_HPP
 #define	POSITION_HPP
 
+#include "Config.hpp"
 #include <iostream>
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
@@ -24,19 +25,21 @@ public:
 	bool	operator==(Position const & o) const;
 	bool	operator<(Position const & o) const;
 
-   void	setZ(int z);
-   void	incZ(int inc = 1);
-   void	decZ(int dec = 1);
-   int	z() const;
-   void	setY(int y);
-   void	incY(int inc = 1);
-   void	decY(int dec = 1);
-   int	y() const;
-   void	setX(int x);
-   void	incX(int inc = 1);
-   void	decX(int dec = 1);
-   int	x() const;
+	void	setZ(int z);
+	void	incZ(int inc = 1);
+	void	decZ(int dec = 1);
+	int	z() const;
+	void	setY(int y);
+	void	incY(int inc = 1);
+	void	decY(int dec = 1);
+	int	y() const;
+	void	setX(int x);
+	void	incX(int inc = 1);
+	void	decX(int dec = 1);
+	int	x() const;
 	bool	isSet() const;
+
+	void	toConfig(Config &) const;
 
 private:
 	int	_x;

@@ -158,3 +158,12 @@ operator<<(std::ostream& os, const Position & position)
 
 	return (os);
 }
+
+void
+Position::toConfig(Config & cfg) const
+{
+	cfg["x"] = _x;
+	cfg["y"] = _y;
+	cfg["z"] = _z;
+	cfg["isSet"] = _isSet;
+}

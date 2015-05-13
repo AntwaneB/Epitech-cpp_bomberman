@@ -69,3 +69,14 @@ Bomb::tick(Subject* entity)
 		}
 	}
 }
+
+/*
+void
+Bomb::toConfig(Config & cfg) const
+{
+	cfg["attributes"] = _attributes;
+	cfg["range"] = _range;
+	cfg["duration"] = _duration;
+	cfg["progress"] = progress;
+}
+*/
