@@ -36,6 +36,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Object.cpp \
 		     Graphics/Cube.cpp \
 		     Graphics/Map.cpp \
+		     Graphics/Ground.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -66,6 +67,7 @@ INCS		  =  global.hh \
 		     Graphics/Object.hh \
 		     Graphics/Cube.hh \
 		     Graphics/Map.hh \
+		     Graphics/Ground.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp

@@ -18,6 +18,7 @@
 #include "Clock.hh"
 #include "Input.hh"
 #include "Graphics/Object.hh"
+#include "Graphics/Map.hh"
 #include "Graphics/Cube.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
@@ -29,6 +30,7 @@ namespace Graphics
 	class Level : public EventHandler<Graphics::Level>, public gdl::Game
 	{
 	public:
+		Level();
 		Level(const ::Level*);
 		virtual ~Level();
 
@@ -43,6 +45,7 @@ namespace Graphics
 		gdl::Input _input;
 		gdl::BasicShader _shader;
 		std::vector<Object*> _objects;
+		Map	_map;
 	};
 
 }
