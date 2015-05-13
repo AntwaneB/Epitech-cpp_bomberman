@@ -1,86 +1,90 @@
 <?xml version="1.0" ?>
 
-<maps>
-	<param name="min_width">10</param>
-	<param name="min_height">10</param>
-	<param name="default_blocks">
-		<param name="wall">wall</param>
-		<param name="box">box</param>
-		<param name="void">void</param>
-	</param>
-</maps>
+<config>
 
-<entities>
-	<entity name="character">
-		<param name="visible">true</param>
-		<param name="speed">120</param>
-		<param name="can_move">true</param>
-		<param name="destructible">true</param>
-		<param name="collision">true</param>
-		<param name="bombs">
-			<param name="available">true</param>
-			<param name="amount">1</param>
-			<param name="range">2</param>
-			<param name="duration_modifier">1</param>
+	<maps>
+		<param name="min_width">10</param>
+		<param name="min_height">10</param>
+		<param name="default_blocks">
+			<param name="wall">wall</param>
+			<param name="box">box</param>
+			<param name="void">void</param>
 		</param>
-	</entity>
+	</maps>
 
-	<entity name="bomb">
-		<param name="visible">true</param>
-		<param name="destructible">false</param>
-		<param name="collision">false</param>
-		<param name="range">2</param>
-		<param name="duration">4</param>
-	</entity>
-
-	<entity name="bonus_item">
-		<param name="types_count">3</param>
-		<param name="visible">true</param>
-		<param name="destructible">false</param>
-		<param name="collision">false</param>
-
-		<item name="range_increase">
-			<param name="range_modifier">1</param>
-		</item>
-		<item name="speed_increase">
-			<param name="speed_modifier">5</param>
-		</item>
-		<item name="bomb_amount_increase">
-			<param name="bomb_amount_modifier">1</param>
-		</item>
-	</entity>
-
-	<category name="blocks">
-		<block name="wall">
+	<entities>
+		<entity name="character">
 			<param name="visible">true</param>
-			<param name="collision">true</param>
-			<param name="destructible">false</param>
-			<param name="block_bombs">true</param>
-			<param name="texture">./libgdl/assets/rock.tga</param>
-		</block>
-
-		<block name="box">
-			<param name="visible">true</param>
-			<param name="collision">true</param>
+			<param name="speed">120</param>
+			<param name="can_move">true</param>
 			<param name="destructible">true</param>
-			<param name="block_bombs">false</param>
-			<param name="texture">./libgdl/assets/wood.tga</param>
-		</block>
+			<param name="collision">true</param>
+			<param name="bombs">
+				<param name="available">true</param>
+				<param name="amount">1</param>
+				<param name="range">2</param>
+				<param name="duration_modifier">1</param>
+			</param>
+		</entity>
 
-		<block name="void">
-			<param name="visible">false</param>
-			<param name="collision">false</param>
-			<param name="destructible">false</param>
-			<param name="block_bombs">false</param>
-		</block>
-
-		<block name="floor">
+		<entity name="bomb">
 			<param name="visible">true</param>
-			<param name="collision">false</param>
 			<param name="destructible">false</param>
-			<param name="block_bombs">false</param>
-			<param name="texture">./libgdl/assets/sand.tga</param>
-		</block>
-	</category>
+			<param name="collision">false</param>
+			<param name="range">2</param>
+			<param name="duration">4</param>
+		</entity>
 
-</entities>
+		<entity name="bonus_item">
+			<param name="types_count">3</param>
+			<param name="visible">true</param>
+			<param name="destructible">false</param>
+			<param name="collision">false</param>
+
+			<item name="range_increase">
+				<param name="range_modifier">1</param>
+			</item>
+			<item name="speed_increase">
+				<param name="speed_modifier">5</param>
+			</item>
+			<item name="bomb_amount_increase">
+				<param name="bomb_amount_modifier">1</param>
+			</item>
+		</entity>
+
+		<category name="blocks">
+			<block name="wall">
+				<param name="visible">true</param>
+				<param name="collision">true</param>
+				<param name="destructible">false</param>
+				<param name="block_bombs">true</param>
+				<param name="texture">./libgdl/assets/rock.tga</param>
+			</block>
+
+			<block name="box">
+				<param name="visible">true</param>
+				<param name="collision">true</param>
+				<param name="destructible">true</param>
+				<param name="block_bombs">false</param>
+				<param name="texture">./libgdl/assets/wood.tga</param>
+			</block>
+
+			<block name="void">
+				<param name="visible">false</param>
+				<param name="collision">false</param>
+				<param name="destructible">false</param>
+				<param name="block_bombs">false</param>
+			</block>
+
+			<block name="floor">
+				<param name="visible">true</param>
+				<param name="collision">false</param>
+				<param name="destructible">false</param>
+				<param name="block_bombs">false</param>
+				<param name="texture">./libgdl/assets/sand.tga</param>
+			</block>
+		</category>
+
+	</entities>
+
+</config>

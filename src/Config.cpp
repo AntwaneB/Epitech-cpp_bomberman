@@ -418,7 +418,6 @@ void	Config::importFile(std::string const & filename)
 {
 	pugi::xml_document	file;
 
-
 	pugi::xml_parse_result	result = file.load_file(filename.c_str());
 	if (!result)
 		throw ConfigException("Invalid file.");
