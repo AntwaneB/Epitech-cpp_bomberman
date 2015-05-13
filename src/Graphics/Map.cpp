@@ -17,6 +17,16 @@ bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, unsigne
 		return (false);
 	objects->push_back(ground);
 
+	Object *marvin = new Marvin();
+	if (marvin->initialize() == false)
+		return (false);
+	objects->push_back(marvin);
+
+	Object *bomb = new Bomb();
+	if (bomb->initialize() == false)
+		return (false);
+	objects->push_back(bomb);
+
 	for (unsigned int y = 0; y < height; y++)
 	{
 		for (unsigned int x = 0; x < width; x++)

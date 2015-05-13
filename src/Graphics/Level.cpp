@@ -27,7 +27,7 @@ Graphics::Level::initialize()
 	if (!_context.start(1920, 1080, "My bomberman!"))
 		return false;
 	glEnable(GL_DEPTH_TEST);
-	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER) 
+	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 	|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 	|| !_shader.build())
 		return false;

@@ -23,10 +23,12 @@ public:
 	Level(size_t width, size_t height, size_t charactersCount);
 	virtual ~Level();
 
-	void		run();
-	Clock&	clock();
-	Map		map() const;
-	size_t	charactersCount() const;
+	void				run();
+	Clock&			clock();
+
+	Map const &		map() const;
+	std::map<Position, std::list<Character*> > const & characters() const;
+	size_t			charactersCount() const;
 
 private:
 	Character*	pushCharacter();
