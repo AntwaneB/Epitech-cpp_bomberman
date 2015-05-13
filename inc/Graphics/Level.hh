@@ -27,7 +27,7 @@
 namespace Graphics
 {
 
-	class Level : public EventHandler<Graphics::Level>, public gdl::Game
+	class Level : public EventHandler<Graphics::Level>, public Subject, public gdl::Game
 	{
 	public:
 		Level();
@@ -46,6 +46,8 @@ namespace Graphics
 		gdl::BasicShader _shader;
 		std::vector<Object*> _objects;
 		Map	_map;
+		int _width;
+		int _height;
 	};
 
 }
