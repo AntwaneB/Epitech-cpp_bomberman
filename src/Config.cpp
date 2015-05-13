@@ -357,7 +357,6 @@ Config::Param	Config::fillParams(pugi::xml_node node, Config::Param params, int 
 	if (node != NULL)
 	{
 		if (node.attribute("name"))
-//			key = std::string(node.attribute("name").value());
 			key = node.attribute("name").value();
 		else
 			key = std::string(node.name());

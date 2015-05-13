@@ -40,7 +40,7 @@ private:
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 
-	void	charactersToConfig(Config);
+	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);
 
 private:

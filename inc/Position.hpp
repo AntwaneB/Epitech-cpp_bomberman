@@ -38,7 +38,7 @@ public:
 	int	x() const;
 	bool	isSet() const;
 
-	const std::string	toXML(void) const;
+	void	toConfig(Config &) const;
 
 private:
 	int	_x;

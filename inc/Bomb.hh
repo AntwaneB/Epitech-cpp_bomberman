@@ -29,6 +29,8 @@ public:
 	size_t	range() const;
 	Position	position() const;
 
+	void		toConfig(Config &) const;
+
 private:
 	virtual void tick(Subject*);
 
