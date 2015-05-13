@@ -13,7 +13,7 @@ Graphics::Cube::~Cube()
 
 bool Graphics::Cube::initialize()
 {
-	_speed = 10.0f;
+	_speed = 50.0f;
 
 	if(_texture.load(_block->texture()) == false)
 	{

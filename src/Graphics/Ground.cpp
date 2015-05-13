@@ -13,7 +13,7 @@ Graphics::Ground::~Ground()
 
 bool Graphics::Ground::initialize()
 {
-	_speed = 10.0f;
+	_speed = 50.0f;
 	std::string path = "./libgdl/assets/sand.tga";
 	if(_texture.load(path) == false)
 	{
