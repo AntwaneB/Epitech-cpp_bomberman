@@ -109,9 +109,13 @@ public:
 
 		Param& operator [] (std::string const &);
 		Param& operator [] (const char[]);
+		Param const & operator [] (std::string const &) const;
+		Param const & operator [] (const char[]) const;
 
 		std::map<std::string, Param>::iterator	find(const std::string &);
 		std::map<std::string, Param>::iterator	end(void);
+		std::map<std::string, Param>::const_iterator	find(const std::string &) const;
+		std::map<std::string, Param>::const_iterator	end(void) const;
 		void												insert(std::map<std::string, Param>::value_type);
 
 		const std::string	toXML(void) const;
@@ -131,6 +135,8 @@ public:
 
 	Config::Param&	operator [] (std::string const &);
 	Config::Param&	operator [] (const char[]);
+	Config::Param const & operator [] (std::string const &) const;
+	Config::Param const & operator [] (const char[]) const;
 
 	const std::string	toXML(void) const;
 

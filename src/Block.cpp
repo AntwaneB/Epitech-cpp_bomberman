@@ -5,7 +5,9 @@
  * Created on May 11, 2015, 11:27 AM
  */
 
+#include "global.hh"
 #include "Block.hh"
+#include "Bomb.hh"
 
 Block::Block(Position const & position, std::string const & type)
 	: _position(position), _type(type), _elapsedTime(0)
@@ -68,15 +70,9 @@ Block::bombExploded(Subject* entity)
 }
 
 void
-Character::tick(Subject* entity)
+Block::tick(Subject* entity)
 {
 	Clock* clock = safe_cast<Clock*>(entity);
 
-	if (_elapsedTime == -1)
-		_elapsedTime = clock->deciseconds();
-
-	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
-	{
-		_elapsedTime++;
-	}
+	(void)clock;
 }

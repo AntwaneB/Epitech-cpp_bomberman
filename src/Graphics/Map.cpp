@@ -31,18 +31,10 @@ bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, size_t 
 	{
 		for (unsigned int x = 0; x < width; x++)
 		{
-			if (map[y][x] == 1)
+			if (map[y][x]->visible())
 			{
-				Object *cube = new Cube(x, y, 1, 1);
-				if (cube->initialize() == false)
-					return (false);
-				objects->push_back(cube);
-			}
-			else if (map[y][x] == 2)
-			{
-				Object *cube = new Cube(x, y, 1, 2);
-				if (cube->initialize() == false)
-					return (false);
+				Object *cube = new Cube(Position(x, y, 1), map[y][x]);
+				cube->initialize();
 				objects->push_back(cube);
 			}
 		}

@@ -49,6 +49,16 @@ Config::Param&	Config::operator [](const char key[])
 	return (this->operator[](std::string(key)));
 }
 
+Config::Param const &	Config::operator [](const std::string& key) const
+{
+	return (_params.find(key)->second);
+}
+
+Config::Param const & Config::operator [](const char key[]) const
+{
+	return (this->operator[](std::string(key)));
+}
+
 Config::Param::Param(const std::string & value)
 	: _status(Config::Param::VALUE), _value(value)
 {
@@ -76,6 +86,16 @@ Config::Param& Config::Param::operator [](const std::string& key)
 }
 
 Config::Param& Config::Param::operator [](const char key[])
+{
+	return (this->operator[](std::string(key)));
+}
+
+Config::Param const & Config::Param::operator [](const std::string& key) const
+{
+	return (_map.find(key)->second);
+}
+
+Config::Param const & Config::Param::operator [](const char key[]) const
 {
 	return (this->operator[](std::string(key)));
 }
@@ -264,6 +284,16 @@ std::map<std::string, Config::Param>::iterator	Config::Param::find(const std::st
 }
 
 std::map<std::string, Config::Param>::iterator	Config::Param::end(void)
+{
+	return (_map.end());
+}
+
+std::map<std::string, Config::Param>::const_iterator	Config::Param::find(const std::string & key) const
+{
+	return (_map.find(key));
+}
+
+std::map<std::string, Config::Param>::const_iterator	Config::Param::end(void) const
 {
 	return (_map.end());
 }

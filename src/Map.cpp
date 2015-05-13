@@ -66,6 +66,14 @@ Map::map() const
 }
 
 void
+Map::bombExploded(Subject* entity)
+{
+	Bomb* bomb = safe_cast<Bomb*>(entity);
+
+	(void)bomb;
+}
+
+void
 Map::pushCharacter(Character* character)
 {
 	(void)character;

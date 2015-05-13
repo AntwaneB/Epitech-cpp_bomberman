@@ -18,11 +18,11 @@ public:
 	Block(Position const & position, std::string const & type);
 	virtual ~Block();
 
-	Position position() const;
-	bool		destructible() const;
-	bool		visible() const;
-	bool		solid() const;
-	bool		blockBombs() const;
+	Position		position() const;
+	bool			destructible() const;
+	bool			visible() const;
+	bool			solid() const;
+	bool			blockBombs() const;
 	std::string	texture() const;
 
 private:
