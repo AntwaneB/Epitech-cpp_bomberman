@@ -13,6 +13,8 @@
 #include "Position.hpp"
 
 # define	EXPLOSION	'@'
+# define  BOMBE     'B'
+# define  ENEMY     'E'
 
 namespace IA
 {
@@ -30,24 +32,28 @@ namespace IA
 	template <Style style = MIXED, Difficulty difficulty = EASY>
 	class IA
 	{
+    std::vector<std::vector<int>> *_strategyMap;
 	  std::vector<std::vector<int>>	*_history;
-	  Difficulty	_diff;
-	  Action	_lastAction;
+	  const Difficulty   _diff;
+	  Action             _lastAction;
+    const int          _xMapSize;
+    const	int          _yMapSize;
 	public:
 
 	public:
-	  IA(int xMapSize, int yMapSize);
+	  IA(int xMapSize, int yMapSize, Difficulty);
 		virtual ~IA();
-  Action playTurn(const std::vector<std::vector<int>> &, const Position &) const;
+  void playTurn(const std::vector<std::vector<int>> &, const Position &, std::queue<Action> &) const;
 
 	private:
 	  bool		amIExposed(std::vector<std::vector<int>>, const Position &) const;
 	  Action	decideMovement(const std::vector<std::vector<int>> &, const Position &);
 	  Action	findEscapeDirection(std::vector<std::vector<int>>, const Position &) const;
 	  Action	findEnemyDirection(std::vector<std::vector<int>>, const Position &) const;
+    void    generateStrategyMap (const std::vector<std::vector<int>> &);
 	  int		isEnemyAtRange(const std::vector<std::vector<int>> &, const Position &) const;
 	  int		isEscapeNode(int x, int y, std::vector<std::vector<int>> & cpyMap) const;
-	  void		markBombs(std::vector<std::vector<int>> & cpyMap) const;
+	  void		markBombs(const	std::list<Bomb*> &);
 	  Action	playDefensive(const std::vector<std::vector<int>> &, const Position &) const;
 	  Action	playOffensive(const std::vector<std::vector<int>> &, const Position &) const;
 	};
