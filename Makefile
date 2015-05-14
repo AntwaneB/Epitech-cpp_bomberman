@@ -32,6 +32,7 @@ SRCS		  =  main.cpp \
 		     BonusItem.cpp \
 		     \
 		     Graphics/Display.cpp \
+		     Graphics/Player.cpp \
 		     Graphics/Level.cpp \
 		     Graphics/Menu.cpp \
 		     Graphics/Object.cpp \
@@ -74,6 +75,7 @@ INCS		  =  global.hh \
 		     Graphics/Ground.hh \
 		     Graphics/Marvin.hh \
 		     Graphics/Bomb.hh \
+		     Graphics/Player.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp

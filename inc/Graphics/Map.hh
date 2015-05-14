@@ -16,7 +16,6 @@
 #include "Clock.hh"
 #include "Input.hh"
 #include "Graphics/Object.hh"
-#include "Graphics/Level.hh"
 #include "Graphics/Cube.hh"
 #include "Graphics/Ground.hh"
 #include "Graphics/Marvin.hh"

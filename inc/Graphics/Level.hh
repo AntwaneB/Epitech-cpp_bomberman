@@ -17,8 +17,8 @@
 #include "BasicShader.hh"
 #include "Clock.hh"
 #include "Input.hh"
+#include "Graphics/Player.hh"
 #include "Graphics/Object.hh"
-#include "Graphics/Map.hh"
 #include "Graphics/Cube.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
@@ -45,10 +45,7 @@ namespace Graphics
 		gdl::Clock _clock;
 		gdl::Input _input;
 		gdl::BasicShader _shader;
-		std::vector<Object*> _objects;
-		Map	_map;
-		int _width;
-		int _height;
+		std::vector<Player> _players;
 	};
 
 }
