@@ -30,7 +30,7 @@ SRCS		  =  main.cpp \
 		     Bomb.cpp \
 		     Block.cpp \
 		     BonusItem.cpp \
-		     IA.cpp
+		     IA.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Player.cpp \

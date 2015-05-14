@@ -1,6 +1,5 @@
-
-
 ## LA NORME DU BOMBERMAN, #PAGE_A
+
 
 
 ### Ce qu'il faut faire / ne pas faire
