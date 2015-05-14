@@ -5,22 +5,22 @@
 
 ### Ce qu'il faut faire / ne pas faire
 
-- TOUTES les valeurs sont passées par pointeur ou par référence, sauf les types de base (int, char, ...) et sont en const.
-  Si besoin d'une valeur non-const, on enlève le const, mais par défaut on le met.
+- TOUTES les valeurs sont passées par pointeur ou par référence, sauf les types de base (`int`, `char`, ...) et sont en `const`.
+  Si besoin d'une valeur non-const, on enlève le `const`, mais par défaut on le met.
 
-- TOUS les attributs sont en private ou en protected, AUCUNE exception.
+- TOUS les attributs sont en `private` ou en `protected`, AUCUNE exception.
 
-- TOUTES les méthodes sont en private ou en protected par défault. Les deux seules exceptions c'est pour les getters et
-  les fonctions qui démarrent l'object (genre runLevel).
+- TOUTES les méthodes sont en `private` ou en `protected` par défaut. Les deux seules exceptions c'est pour les getters et
+  les fonctions qui démarrent l'object (genre `runLevel`).
 
-- AUCUN char*, int*, etc... Les seuls "new" qu'on fais c'est sur des classes
+- AUCUN `char*`, `int*`, etc... Les seuls `new` qu'on fait c'est sur des classes.
 
-- AUCUN define, peu importe la raison. On utilise un enum à la place.
+- AUCUN `define`, peu importe la raison. On utilise un `enum` à la place.
 
 
 ### Comment on code ? (syntaxe)
 
-- Le symbole pointeur `*` est sur le type, pas sur le nom de la variable : `MaClass* monobjet`
+- Le symbole pointeur `*` est sur le type, pas sur le nom de la variable : `MaClasse* monobjet` à la place de `MaClasse *monobjet`
 
 - Dans le header d'une classe, on a en premier la définition des types spécifiques à la classe (enum et co.),
   puis la définition des méthodes publiques (saut de ligne entre contructeur / destructeur et les autres méthodes),
@@ -52,11 +52,11 @@ private:
 	virtual void tick(Subject*) = 0;
 
 protected:
-	Position		_position;
-	Position		_prevPosition;
+	Position    _position;
+	Position    _prevPosition;
 
-	bool			_clockInit;
-	seconds_t	_spawnTime;
+	bool        _clockInit;
+	seconds_t   _spawnTime;
 };
 
 #endif	/* ITEM_HH */
