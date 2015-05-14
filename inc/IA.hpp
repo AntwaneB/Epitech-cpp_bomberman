@@ -12,9 +12,14 @@
 #include <vector>
 #include "Position.hpp"
 
+// elements map de _strategyMap en plus de ceux de Map
 # define	EXPLOSION	'@'
 # define  BOMBE     'B'
 # define  ENEMY     'E'
+
+class Bomb;
+class Character;
+class Item;
 
 namespace IA
 {
@@ -50,10 +55,12 @@ namespace IA
 	  Action	decideMovement(const Position &) const;
 	  Action	findEscapeDirection(const Position &) const;
 	  Action	findEnemyDirection(const Position &) const;
-    void    generateStrategyMap (const std::vector<std::vector<int>> &);
-	  int		isEnemyAtRange(const Position &) const;
-	  int		isEscapeNode(int x, int y) const;
-	  void		markBombs(const	std::list<Bomb*> &);
+    void    generateStrategyMap (const std::vector<std::vector<int>> & map, const std::map<Position, std::list<Bomb*>> &, const std::map<Position, std::list<Character*>>);
+	  int		  isEnemyAtRange(const Position &) const;
+	  int		  isEscapeNode(int x, int y) const;
+	  void		markBombs(const std::map<Position, std::list<Bomb*>> &);
+    void    markEnemy (const std::map<Position, std::list<Character*>> &, const Position &);
+    void    markItems(const std::map<Position, std::list<Item*>> & items);
 	  Action	playDefensive(const Position &) const;
 	  Action	playOffensive(const Position &) const;
 	};
