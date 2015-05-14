@@ -1,24 +1,41 @@
 
 #include "IA.hpp"
 
-IA::IA(int xSize, int ySize, Difficulty diff) : _lastAction(MOVE_RIGHT), _diff(diff), _xMapSize(xSize), _yMapSize(ySize)
+MYIA::IA::IA(int xSize, int ySize, Difficulty diff) : _diff(diff), _xMapSize(xSize), _yMapSize(ySize), _lastAction(Character::MOVE_RIGHT)
 {
-  this->_history = new std::vector<std::vector<int>>(xSize, std::vector<int>(ySize, 0));
-  this->_strategyMap = new std::vector<std::vector<int>>(xSize, std::vector<int>(ySize, 0));
+/*  this->_history = new std::vector<std::vector<int> >(xSize, std::vector<int>(ySize, 0));
+  this->_strategyMap = new std::vector<std::vector<int> >(xSize, std::vector<int>(ySize, 0));*/
+
+  int y = 0;
+  _strategyMap.resize(ySize);
+  for (std::vector<std::vector<int> >::const_iterator it = _strategyMap.begin(); it != _strategyMap.end(); it++)
+  {
+    _strategyMap[y].resize(xSize);
+    int x = 0;
+    for (std::vector<int>::const_iterator it2 = it->begin(); it2 != it->end(); it2++)
+    {
+      _strategyMap[y][x] = 0;
+      x++;
+    }
+    y++;
+  }
 }
 
-IA::~IA() {}
+MYIA::IA::~IA() {}
 
-void IA::playTurn(const std::vector<sd::vector<int>> & map, const Position & myPos, std::queue<Action> & squeue, Level *lvl)// fonction appellee depuis le personnage pour prendre une decision
+void MYIA::IA::playTurn(const std::vector<std::vector<int> > & map, const Position & myPos, std::queue<Character::Action> & squeue, Level *lvl)// fonction appellee depuis le personnage pour prendre une decision
 {
-  int	x = myPos.X();
-  int	y = myPos.Y();
+  int	x = myPos.x();
+  int	y = myPos.y();
 
-  if (this->_lastAction != WAIT)
-  {
-    this->_history[x][y] += 1;
-  }
-  generateStrategyMap(map, lvl.bombs(), lvl.characters());
+  (void) x;
+  (void) y;
+  (void) map;
+  (void) myPos;
+  (void) lvl;
+  (void) squeue;
+  this->_history[x][y] += 1;
+//  generateStrategyMap(map, lvl->bombs(), lvl->characters());
   if (squeue.size() >= 1)
   {
     squeue.pop();
@@ -33,15 +50,17 @@ void IA::playTurn(const std::vector<sd::vector<int>> & map, const Position & myP
   }
 }
 
-bool IA::amIExposed(const Position & myPos) const // indique a l'IA s'il est en zone d'explosion de bombe
+bool MYIA::IA::amIExposed(const Position & myPos) const // indique a l'IA s'il est en zone d'explosion de bombe
 {
-  if (this->_strategyMap[myPos.X()][myPos.Y()] == EXPLOSION)
+  (void) myPos;
+  return true;
+/*  if (this->_strategyMap[myPos.X()][myPos.Y()] == EXPLOSION)
   {
     return (true);
   }
-  return (false);
+  return (false);*/
 }
-
+/*
 Character::Action IA::decideMovement(const Position & myPos) //decide et retourne le mvt de l'IA selon la difficulte
 {
   std::vector<Character::Action>	actionList	{MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN, MOVE_UP};
@@ -92,10 +111,11 @@ else
 }
 return (this->_lastAction);
 }
-
-Character::Action IA::findEscapeDirection(const Position & myPos) //indique a l'IA en zone d'explosion la direction du node safe le plus rapide a atteindre
+*/
+Character::Action MYIA::IA::findEscapeDirection(const Position & myPos) //indique a l'IA en zone d'explosion la direction du node safe le plus rapide a atteindre
 {
-  std::vector<int>	dirList	{'L', 'R', 'D', 'U'};
+  (void) myPos;
+ /* std::vector<int>	dirList	{'L', 'R', 'D', 'U'};
   std::vector<int>	xSearch  {-1, 1, 0, 0};
   std::vector<int>	ySearch  {0, 0, 1, -1};
   std::vector<Character::Action>	actionList (83, 0);
@@ -141,19 +161,23 @@ Character::Action IA::findEscapeDirection(const Position & myPos) //indique a l'
   else
   {
     return (decideMovement(myPos));
-  }
+  }*/
+  return Character::MOVE_RIGHT;
 }
 
-Character::Action	IA::findEnemyDrection(const Position & myPos) const
+Character::Action	MYIA::IA::findEnemyDirection(const Position & myPos) const
 {
+  (void) myPos;
+  return (Character::MOVE_RIGHT);
   //pour niveau difficile**********************methode du path le plus court. retourne une des 4 directions
 }
 
-void IA::generateStrategyMap (const std::vector<std::vector<int>> & map, const std::map<Position, std::list<Bomb*>> & bombs, const std::map<Position, std::list<Character*>> characters) //genere _strategyMap (murs, destr, ennemis, bombes, zones d'explo) sur laquelle l'IA travaille
+void MYIA::IA::generateStrategyMap (const std::vector<std::vector<int> > & map, const std::map<Position, std::list<Bomb*> > & bombs, const std::map<Position, std::list<Character*> > characters) //genere _strategyMap (murs, destr, ennemis, bombes, zones d'explo) sur laquelle l'IA travaille
 {
 
-
-
+  (void) map;
+  (void) characters;
+  (void) bombs;
   //copier ICI le contenu de la map originale dans la _strategyMap
 
 
@@ -164,9 +188,10 @@ void IA::generateStrategyMap (const std::vector<std::vector<int>> & map, const s
   markEnemy(characters);//on marque les ennemis sur _strategyMap
 }
 
-int	IA::isEnemyAtRange(const Position & myPos) const//fonction qui retourne 0 si ennemi >2 cases , sinon renvoi la distance
+int	MYIA::IA::isEnemyAtRange(const Position & myPos) const//fonction qui retourne 0 si ennemi >2 cases , sinon renvoi la distance
 {
-  std::vector<int>	xSearch  {-1, 1, 0, 0, -2, 2, 0, 0};
+  (void) myPos;
+/*  std::vector<int>	xSearch  {-1, 1, 0, 0, -2, 2, 0, 0};
   std::vector<int>	ySearch  {0, 0, 1, -1, 0, 0, 2, -2};
   std::vector<bool>	dirClear (4, true);
   std::vector<bool>	enemy	(4, false);
@@ -194,9 +219,10 @@ int	IA::isEnemyAtRange(const Position & myPos) const//fonction qui retourne 0 si
     }
     i++;
   }
-  return (nearestEnemy);
+  return (nearestEnemy);*/
+  return (-1);
 }
-
+/*
 int	IA::isEscapeNode(int subjectX, int subjectY) const //retourne une direction si succès, sinon marque le node comme chemin
 {
   std::vector<int>	xSearch  {-1, 1, 0, 0};
@@ -218,9 +244,13 @@ int	IA::isEscapeNode(int subjectX, int subjectY) const //retourne une direction 
   return (0);
 }
 
-void	IA::markBombs(const	std::list<Bomb*> &) // place les bombes sur _strategyMap et definit dessus egalement les zones d'explosion
+*/
+
+void	MYIA::IA::markBombs(const std::map<Position, std::list<Bomb*> > &bombes) // place les bombes sur _strategyMap et definit dessus egalement les zones d'explosion
 {
-  int	x = 0;
+  (void) bombes;
+
+/*  int	x = 0;
   int	x_process;
   int	y = 0;
   int	y_process;
@@ -271,35 +301,36 @@ void	IA::markBombs(const	std::list<Bomb*> &) // place les bombes sur _strategyMa
       x++;
     }
     y++;
-  }
+  }*/
 }
 
-void    IA::markEnemy(const std::map<Position, std::list<Character*>> &, const Position & myPos) //marque tous les character sauf lui meme dans _strategyMap
+void    MYIA::IA::markEnemy(const std::map<Position, std::list<Character*> > &characters) //marque tous les character sauf lui meme dans _strategyMap
 {
-
+  (void) characters;
   //parcourir la std::map et les placer un a un sauf himself
 
 }
 
-/*
-void IA::markItems(const std::map<Position, std::list<Item*>> & items) //place sur _strategyMap les items
+void MYIA::IA::markItems(const std::map<Position, std::list<Item*>> & items) //place sur _strategyMap les items
 {
-
+  (void) items;
   // parcourir la std::map et les placer un a un
 
 }
-*/
 
-Character::Action	IA::playDefensive(const Position & myPos) const //seule priorite de l'IA : sortir de la zone d'explosion
+Character::Action	MYIA::IA::playDefensive(const Position & myPos) //seule priorite de l'IA : sortir de la zone d'explosion
 {
-  return(findEscapeDirection(map, myPos));
+  (void) myPos;
+  return (findEscapeDirection(myPos));
 }
 
-Character::Action	IA::playOffensive(const Position & myPos) const // pose une bombe ou s'approche de l'ennemi selon la difficulte
+Character::Action	MYIA::IA::playOffensive(const Position & myPos) const // pose une bombe ou s'approche de l'ennemi selon la difficulte
 {
-  if (isEnemyAtRange(map, myPos) >= 1)
+  (void) myPos;
+  return (Character::MOVE_RIGHT);
+/*  if (isEnemyAtRange(map, myPos) >= 1)
   {
-    return (DROP_BOMB);
-  }
-  return (decideMovement(map, myPos));
+    return (Character::DROP_BOMB);
+  }*/
+  /* return (decideMovement(map, myPos));*/
 }
