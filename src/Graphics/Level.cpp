@@ -15,8 +15,6 @@ Graphics::Level::Level(::Level const * level)
 	_context.start(1920, 1080, "My bomberman!");
 	glViewport(0, 0, 1920/2, 1080);
 	this->initialize();
-	while (this->update() == true)
-		this->draw();
 }
 
 Graphics::Level::~Level()
@@ -34,9 +32,8 @@ Graphics::Level::initialize()
 		|| !_shader.build())
 		return false;
 
-//	projection = glm::perspective(60.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
 	glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, -10), glm::vec3(0, 0, 0), glm::vec3(0, 3, 0));
+	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(7, 0, 7), glm::vec3(0, 1, 0));
 
 	_shader.bind();
 	_shader.setUniform("view", transformation);

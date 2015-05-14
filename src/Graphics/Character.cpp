@@ -26,6 +26,8 @@ bool Graphics::Character::initialize()
 
 void Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
+	_position = _character->position();
+
 	if (input.getKey(SDLK_UP))
 		translate(glm::vec3(0, 0, -1) * static_cast<float>(clock.getElapsed()) * _speed);
 	if (input.getKey(SDLK_DOWN))
