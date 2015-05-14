@@ -30,6 +30,7 @@ SRCS		  =  main.cpp \
 		     Bomb.cpp \
 		     Block.cpp \
 		     BonusItem.cpp \
+		     IA.cpp
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Player.cpp \
@@ -42,9 +43,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
 		     \
-		     misc/pugixml.cpp \
-		     \
-		     IA.cpp
+		     misc/pugixml.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -80,9 +79,7 @@ INCS		  =  global.hh \
 		     Graphics/Player.hh \
 		     \
 		     misc/pugiconfig.hpp \
-		     misc/pugixml.hpp \
-		     \
-		     IA.hpp
+		     misc/pugixml.hpp
 
 LGDL_DIR	  =  libgdl
 
