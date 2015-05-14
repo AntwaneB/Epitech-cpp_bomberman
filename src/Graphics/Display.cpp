@@ -57,10 +57,10 @@ Graphics::Display::runLevel(Subject* entity)
 }
 
 void
-Graphics::Display::updateLevel(Subject* entity)
+Graphics::Display::updateLevel(Subject* entity __attribute__((unused)))
 {
-	::Level*	level = safe_cast<::Level*>(entity);
-	(void)level;
+//	::Level*	level = safe_cast<::Level*>(entity);
 
 	_level->update();
+	_level->draw();
 }

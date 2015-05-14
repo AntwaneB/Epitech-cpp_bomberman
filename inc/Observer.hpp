@@ -96,7 +96,6 @@ public:
 		if (it != _observers.end())
 		{
 			*it = NULL;
-			//_observers.erase(it);
 		}
 	}
 

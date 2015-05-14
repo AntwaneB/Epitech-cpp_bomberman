@@ -35,7 +35,7 @@ namespace Graphics
 
 	private:
 		Graphics::Level*	_level;
-		Graphics::Menu*		_menu;
+		Graphics::Menu*	_menu;
 	};
 
 }

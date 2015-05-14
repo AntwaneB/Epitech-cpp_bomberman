@@ -22,14 +22,7 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 	if (_nth == 4)
 	{
 		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_RIGHT);
 		_queuedActions.push(Character::DROP_BOMB);
-//		_queuedActions.push(Character::MOVE_LEFT);
-//		_queuedActions.push(Character::MOVE_UP);
-//		_queuedActions.push(Character::MOVE_UP);
-//		_queuedActions.push(Character::MOVE_UP);
 	}
 
 	this->notify(this, CHARACTER_SPAWNED);
@@ -90,6 +83,7 @@ Character::bombExploded(Subject* entity)
 	if (bomb->hasHit(_position))
 	{ // The character got hit by the bomb
 		this->notify(this, CHARACTER_DIED);
+		delete this;
 	}
 }
 
@@ -111,6 +105,23 @@ Character::move(Character::Action action)
 	(void)action; // We have to make the character to actually move
 
 	_prevPosition = _position;
+	switch (action)
+	{
+		case Character::MOVE_DOWN:
+			_position.incY();
+			break;
+		case Character::MOVE_UP:
+			_position.decY();
+			break;
+		case Character::MOVE_LEFT:
+			_position.decX();
+			break;
+		case Character::MOVE_RIGHT:
+			_position.incX();
+			break;
+		default:
+			break;
+	}
 
 	this->notify(this, CHARACTER_MOVED);
 }
