@@ -119,7 +119,7 @@ Level::characterDied(Subject* entity)
 {
 	Character* character = safe_cast<Character*>(entity);
 
-	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), character));
+	_characters[character->position()].erase(std::find(_characters[character->position()].begin(), _characters[character->position()].end(), character));
 	_clock.removeObserver(character);
 	this->removeObserver(character);
 }
@@ -200,7 +200,8 @@ Level::bombExploded(Subject* entity)
 
 	_clock.removeObserver(bomb);
 	this->removeObserver(bomb);
-	_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
+	if (std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb) != _bombs[bomb->position()].end())
+		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }
