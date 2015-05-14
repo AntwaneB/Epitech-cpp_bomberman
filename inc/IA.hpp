@@ -43,19 +43,19 @@ namespace IA
 	public:
 	  IA(int xMapSize, int yMapSize, Difficulty);
 		virtual ~IA();
-  void playTurn(const std::vector<std::vector<int>> &, const Position &, std::queue<Action> &) const;
+  void playTurn(const std::vector<std::vector<int>> &, const Position &, std::queue<Action> &);
 
 	private:
-	  bool		amIExposed(std::vector<std::vector<int>>, const Position &) const;
-	  Action	decideMovement(const std::vector<std::vector<int>> &, const Position &);
-	  Action	findEscapeDirection(std::vector<std::vector<int>>, const Position &) const;
-	  Action	findEnemyDirection(std::vector<std::vector<int>>, const Position &) const;
+	  bool		amIExposed(const Position &) const;
+	  Action	decideMovement(const Position &) const;
+	  Action	findEscapeDirection(const Position &) const;
+	  Action	findEnemyDirection(const Position &) const;
     void    generateStrategyMap (const std::vector<std::vector<int>> &);
-	  int		isEnemyAtRange(const std::vector<std::vector<int>> &, const Position &) const;
-	  int		isEscapeNode(int x, int y, std::vector<std::vector<int>> & cpyMap) const;
+	  int		isEnemyAtRange(const Position &) const;
+	  int		isEscapeNode(int x, int y) const;
 	  void		markBombs(const	std::list<Bomb*> &);
-	  Action	playDefensive(const std::vector<std::vector<int>> &, const Position &) const;
-	  Action	playOffensive(const std::vector<std::vector<int>> &, const Position &) const;
+	  Action	playDefensive(const Position &) const;
+	  Action	playOffensive(const Position &) const;
 	};
 
 };
