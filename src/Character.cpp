@@ -22,12 +22,7 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 	if (_nth == 4)
 	{
 		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_queuedActions.push(Character::MOVE_LEFT);
+		_queuedActions.push(Character::DROP_BOMB);
 	}
 
 	this->notify(this, CHARACTER_SPAWNED);
@@ -88,6 +83,7 @@ Character::bombExploded(Subject* entity)
 	if (bomb->hasHit(_position))
 	{ // The character got hit by the bomb
 		this->notify(this, CHARACTER_DIED);
+		delete this;
 	}
 }
 
