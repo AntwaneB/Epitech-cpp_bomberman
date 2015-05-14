@@ -20,6 +20,7 @@
 #include "Graphics/Player.hh"
 #include "Graphics/Object.hh"
 #include "Graphics/Cube.hh"
+#include "Graphics/Character.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "Config.hpp"
@@ -46,6 +47,7 @@ namespace Graphics
 		gdl::Input _input;
 		gdl::BasicShader _shader;
 		std::vector<Player> _players;
+		std::vector<Graphics::Character*>	_characters;
 	};
 
 }

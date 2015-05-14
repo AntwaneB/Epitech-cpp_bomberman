@@ -17,11 +17,6 @@ bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, size_t 
 		return (false);
 	objects->push_back(ground);
 
-	Object *marvin = new Marvin();
-	if (marvin->initialize() == false)
-		return (false);
-	objects->push_back(marvin);
-
 	Object *bomb = new Bomb();
 	if (bomb->initialize() == false)
 		return (false);

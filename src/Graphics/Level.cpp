@@ -14,8 +14,6 @@ Graphics::Level::Level(::Level const * level)
 		_players.push_back(Player());
 	_context.start(1920, 1080, "My bomberman!");
 	this->initialize();
-	while (this->update() == true)
-		this->draw();
 }
 
 Graphics::Level::~Level()
@@ -31,22 +29,35 @@ bool
 Graphics::Level::initialize()
 {
 	glEnable(GL_DEPTH_TEST);
+
 	for (size_t i = 0; i < _players.size(); i++)
 	{
 		if (!_players[i]._shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 			|| !_players[i]._shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 			|| !_players[i]._shader.build())
 			return false;
-		glm::mat4 projection;
-		glm::mat4 transformation;
-	//	projection = glm::perspective(60.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-		projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-		transformation = glm::lookAt(glm::vec3(0, 90, -10), glm::vec3(0, 0, 0), glm::vec3(0, 3, 0));
+
+		glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
+		glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(7, 0, 7), glm::vec3(0, 1, 0));
+
 		_players[i]._shader.bind();
 		_players[i]._shader.setUniform("view", transformation);
 		_players[i]._shader.setUniform("projection", projection);
+
 		_players[i]._map.initialize(&_players[i]._objects, _level->map().height(), _level->map().width(), _level->map().map());
+
+
+		for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
+		{
+			for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
+			{
+				Object* character = new Graphics::Character((*iit)->position(), *iit);
+				character->initialize();
+				_players[i]._objects.push_back(character);
+			}
+		}
 	}
+
 	return (true);
 }
 

@@ -17,6 +17,7 @@ Map::Map(size_t width, size_t height):
 	this->initMap();
 	this->setBorders();
 	this->setSolid();
+	this->setDestructible();
 
 	/*
 	this->generateMap();
@@ -86,6 +87,8 @@ Map::initMap()
 	for (auto it = _map.begin(); it != _map.end(); ++it)
 	{
 		it->resize(_width);
+		for (auto block = it->begin(); block != it->end(); ++block)
+			*block = NULL;
 	}
 }
 
@@ -102,16 +105,37 @@ Map::setBorders()
 		_map[0][x] = new Block(Position(x, 0), g_settings["maps"]["default_blocks"]["wall"]);
 		_map[_height - 1][x] = new Block(Position(x, _height - 1), g_settings["maps"]["default_blocks"]["wall"]);
 	}
-
-	for (size_t y = 1; y < _height - 1; ++y)
-		for (size_t x = 1; x < _width - 1; ++x)
-			_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["void"]);
 }
 
 void
 Map::setSolid()
 {
+	for (size_t y = 2; y < _height - 1; y += 2)
+	{
+		for (size_t x = 2; x < _width - 1; x += 2)
+		{
+			if (y % 2 == 0 && x % 2 == 0)
+				_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["wall"]);
+		}
+	}
+}
 
+void
+Map::setDestructible()
+{
+	for (size_t y = 1; y < _height - 1; ++y)
+	{
+		for (size_t x = 1; x < _width - 1; ++x)
+		{
+			if (_map[y][x] == NULL)
+			{
+				if (rand() % 100 < 60)
+					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["box"]);
+				else
+					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["void"]);
+			}
+		}
+	}
 }
 
 /*

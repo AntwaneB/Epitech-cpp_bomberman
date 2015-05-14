@@ -52,6 +52,12 @@ Level::charactersCount() const
 	return (_characters.size());
 }
 
+std::map<Position, std::list<Character*> > const &
+Level::characters() const
+{
+	return (_characters);
+}
+
 void
 Level::run()
 {

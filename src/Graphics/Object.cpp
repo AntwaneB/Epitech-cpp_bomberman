@@ -26,6 +26,11 @@ void Graphics::Object::translate(glm::vec3 const &v)
 	_position = _position + Position(v[0], v[2], v[1]);
 }
 
+void Graphics::Object::translate(Position const &v)
+{
+	_position = _position + v;
+}
+
 void Graphics::Object::rotate(glm::vec3 const& axis, float angle)
 {
 	_rotation += axis * angle;

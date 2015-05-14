@@ -41,6 +41,7 @@ private:
 	void	initMap();
 	void	setBorders();
 	void	setSolid();
+	void	setDestructible();
 
 private:
 	void	bombExploded(Subject*);
