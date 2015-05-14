@@ -66,7 +66,7 @@ App::runLevel(Subject* entity)
 void
 App::exit(Subject* entity __attribute__((unused)))
 {
-
+	exit(0);
 }
 
 int

@@ -20,6 +20,7 @@
 #include "Graphics/Object.hh"
 #include "Graphics/Map.hh"
 #include "Graphics/Cube.hh"
+#include "Graphics/Character.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "Config.hpp"
@@ -40,15 +41,18 @@ namespace Graphics
 		virtual void draw();
 
 	protected:
-		const ::Level*	_level;
-		gdl::SdlContext _context;
-		gdl::Clock _clock;
-		gdl::Input _input;
-		gdl::BasicShader _shader;
-		std::vector<Object*> _objects;
-		Map	_map;
-		int _width;
-		int _height;
+		const ::Level*			_level;
+
+		gdl::SdlContext		_context;
+		gdl::Clock				_clock;
+		gdl::Input				_input;
+		gdl::BasicShader		_shader;
+		std::vector<Object*>	_objects;
+
+		std::vector<Graphics::Character*>	_characters;
+		Map							_map;
+		int							_width;
+		int							_height;
 	};
 
 }

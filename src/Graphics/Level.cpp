@@ -33,15 +33,27 @@ Graphics::Level::initialize()
 		|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 		|| !_shader.build())
 		return false;
-	glm::mat4 projection;
-	glm::mat4 transformation;
+
 //	projection = glm::perspective(60.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-	projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-	transformation = glm::lookAt(glm::vec3(0, 90, -10), glm::vec3(0, 0, 0), glm::vec3(0, 3, 0));
+	glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
+	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, -10), glm::vec3(0, 0, 0), glm::vec3(0, 3, 0));
+
 	_shader.bind();
 	_shader.setUniform("view", transformation);
 	_shader.setUniform("projection", projection);
+
 	_map.initialize(&_objects, _level->map().height(), _level->map().width(), _level->map().map());
+
+	for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
+	{
+		for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
+		{
+			Object* character = new Graphics::Character((*iit)->position(), *iit);
+			character->initialize();
+			_objects.push_back(character);
+		}
+	}
+
 	return (true);
 }
 
@@ -55,8 +67,10 @@ Graphics::Level::update()
 	}
 	_context.updateClock(_clock);
 	_context.updateInputs(_input);
+
 	for (size_t i = 0; i < _objects.size(); ++i)
-	_objects[i]->update(_clock, _input);
+		_objects[i]->update(_clock, _input);
+
 	return (true);
 }
 

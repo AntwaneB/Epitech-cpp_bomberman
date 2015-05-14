@@ -38,7 +38,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Cube.cpp \
 		     Graphics/Map.cpp \
 		     Graphics/Ground.cpp \
-		     Graphics/Marvin.cpp \
+		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
 		     \
 		     misc/pugixml.cpp
@@ -72,7 +72,7 @@ INCS		  =  global.hh \
 		     Graphics/Cube.hh \
 		     Graphics/Map.hh \
 		     Graphics/Ground.hh \
-		     Graphics/Marvin.hh \
+		     Graphics/Character.hh \
 		     Graphics/Bomb.hh \
 		     \
 		     misc/pugiconfig.hpp \
