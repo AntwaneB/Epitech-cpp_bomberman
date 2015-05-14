@@ -30,36 +30,37 @@
   puis la définition des attributs private.
   Avec un saut de ligne entre chaque nouvelle "section".
 
-    #ifndef ITEM_HH
-    #define	ITEM_HH
+```
+#ifndef ITEM_HH
+#define	ITEM_HH
 
-    #include "Observer.hpp"
-    #include "Position.hpp"
-    #include "Clock.hpp"
+#include "Observer.hpp"
+#include "Position.hpp"
+#include "Clock.hpp"
 
-    class Item
-    {
-    public:
-    	Item(Position const &);
-    	virtual ~Item() = 0;
+class Item
+{
+public:
+	Item(Position const &);
+	virtual ~Item() = 0;
 
-    	Position	position() const;
-    	Position	prevPosition() const;
-    	void		toConfig(Config &) const;
+	Position	position() const;
+	Position	prevPosition() const;
+	void		toConfig(Config &) const;
 
-    private:
-    	virtual void tick(Subject*) = 0;
+private:
+	virtual void tick(Subject*) = 0;
 
-    protected:
-    	Position		_position;
-    	Position		_prevPosition;
+protected:
+	Position		_position;
+	Position		_prevPosition;
 
-    	bool			_clockInit;
-    	seconds_t	_spawnTime;
-    };
+	bool			_clockInit;
+	seconds_t	_spawnTime;
+};
 
-    #endif	/* ITEM_HH */
-
+#endif	/* ITEM_HH */
+```
 
 - Dans le header d'une classe, le nom de tous les attributs est aligné.
 
