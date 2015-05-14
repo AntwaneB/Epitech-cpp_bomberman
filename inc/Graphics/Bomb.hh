@@ -17,13 +17,15 @@ namespace Graphics
     public:
       Bomb();
       virtual ~Bomb();
+
       virtual bool  initialize();
       virtual void  update(gdl::Clock const &clock, gdl::Input &input);
       virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
-    private:
-      gdl::Texture    _texture;
-      gdl::Model    _model;
+
+  private:
+      gdl::Texture	_texture;
+      gdl::Model		_model;
   };
 };
 
-#endif 
+#endif
