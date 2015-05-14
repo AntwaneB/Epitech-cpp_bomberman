@@ -41,7 +41,9 @@ SRCS		  =  main.cpp \
 		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
 		     \
-		     misc/pugixml.cpp
+		     misc/pugixml.cpp \
+		     \
+		     IA.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -76,7 +78,9 @@ INCS		  =  global.hh \
 		     Graphics/Bomb.hh \
 		     \
 		     misc/pugiconfig.hpp \
-		     misc/pugixml.hpp
+		     misc/pugixml.hpp \
+		     \
+		     IA.hpp
 
 LGDL_DIR	  =  libgdl
 
