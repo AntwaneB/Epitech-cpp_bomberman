@@ -45,18 +45,17 @@ Graphics::Level::initialize()
 		_players[i]._shader.setUniform("projection", projection);
 
 		_players[i]._map.initialize(&_players[i]._objects, _level->map().height(), _level->map().width(), _level->map().map());
-
-
+	
 		for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
-		{
-			for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
 			{
-				Object* character = new Graphics::Character((*iit)->position(), *iit);
-				character->initialize();
-				_players[i]._objects.push_back(character);
+				for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
+				{
+					Object* character = new Graphics::Character((*iit)->position(), *iit);
+					character->initialize();
+					_players[i]._objects.push_back(character);
+				}
 			}
 		}
-	}
 
 	return (true);
 }
