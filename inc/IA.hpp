@@ -10,9 +10,18 @@
 
 #include <cstdlib>
 #include <vector>
+#include "Level.hpp"
+#include "Character.hpp"
 #include "Position.hpp"
 
+// elements map de _strategyMap en plus de ceux de Map
 # define	EXPLOSION	'@'
+# define  BOMBE     'B'
+# define  ENEMY     'E'
+
+class Bomb;
+class Character;
+class Item;
 
 namespace IA
 {
@@ -25,34 +34,37 @@ namespace IA
 
 	enum Style { AGGRESSIVE, DEFENSIVE, MIXED };
 	enum Difficulty { EASY, MEDIUM, HIGH };
-  enum Action { WAIT, GO_LEFT, GO_UP, GO_RIGHT, GO_DOWN, DROP_BOMB};
+//  enum Action { WAIT, GO_LEFT, GO_UP, GO_RIGHT, GO_DOWN, DROP_BOMB};
 
 	template <Style style = MIXED, Difficulty difficulty = EASY>
 	class IA
 	{
+    std::vector<std::vector<int>> *_strategyMap;
 	  std::vector<std::vector<int>>	*_history;
-	  Difficulty	_diff;
-	  Action	_lastAction;
-	public:
+	  const Difficulty   _diff;
+	  Character::Action             _lastAction;
+    const int          _xMapSize;
+    const	int          _yMapSize;
 
 	public:
-	  IA(int xMapSize, int yMapSize);
+	  IA(int xMapSize, int yMapSize, Difficulty);
 		virtual ~IA();
-  Action playTurn(const std::vector<std::vector<int>> &, const Position &) const;
+  void playTurn(const std::vector<std::vector<int>> &, const Position &, std::queue<Action> &, Level*);
 
 	private:
-	  bool		amIExposed(std::vector<std::vector<int>>, const Position &) const;
-	  Action	decideMovement(const std::vector<std::vector<int>> &, const Position &);
-	  Action	findEscapeDirection(std::vector<std::vector<int>>, const Position &) const;
-	  Action	findEnemyDirection(std::vector<std::vector<int>>, const Position &) const;
-	  int		isEnemyAtRange(const std::vector<std::vector<int>> &, const Position &) const;
-	  int		isEscapeNode(int x, int y, std::vector<std::vector<int>> & cpyMap) const;
-	  void		markBombs(std::vector<std::vector<int>> & cpyMap) const;
-	  Action	playDefensive(const std::vector<std::vector<int>> &, const Position &) const;
-	  Action	playOffensive(const std::vector<std::vector<int>> &, const Position &) const;
+	  bool		amIExposed(const Position &) const;
+	  Character::Action	decideMovement(const Position &) const;
+    Character::Action	findEscapeDirection(const Position &) const;
+    Character::Action	findEnemyDirection(const Position &) const;
+    void    generateStrategyMap (const std::vector<std::vector<int>> & map, const std::map<Position, std::list<Bomb*>> &, const std::map<Position, std::list<Character*>>);
+	  int		  isEnemyAtRange(const Position &) const;
+	  int		  isEscapeNode(int x, int y) const;
+	  void		markBombs(const std::map<Position, std::list<Bomb*>> &);
+    void    markEnemy(const std::map<Position, std::list<Character*>> &, const Position &);
+//    void    markItems(const std::map<Position, std::list<Item*>> & items);
+    Character::Action	playDefensive(const Position &) const;
+    Character::Action	playOffensive(const Position &) const;
 	};
-
 };
-
 
 #endif	/* IA_HH */
