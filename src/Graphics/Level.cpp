@@ -18,7 +18,7 @@ Graphics::Level::Level(::Level const * level)
 
 Graphics::Level::~Level()
 {
-	for (size_t i = 0; i < _players.size(); i++)
+	for (size_t i = 0; i < _players.size() - 1; i++)
 	{
 		for (size_t i = 0; i < _players[i]._objects.size(); ++i)
 			delete _players[i]._objects[i];
@@ -30,7 +30,7 @@ Graphics::Level::initialize()
 {
 	glEnable(GL_DEPTH_TEST);
 
-	for (size_t i = 0; i < _players.size(); i++)
+	for (size_t i = 0; i < _players.size() - 1; i++)
 	{
 		if (!_players[i]._shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 			|| !_players[i]._shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
@@ -63,7 +63,7 @@ Graphics::Level::initialize()
 bool
 Graphics::Level::update()
 {
-	for (size_t i = 0; i < _players.size(); i++)
+	for (size_t i = 0; i < _players.size() - 1; i++)
 	{	
 	if (_players[i]._input.getKey(SDLK_ESCAPE) || _players[i]._input.getInput(SDL_QUIT))
 	{
@@ -89,7 +89,7 @@ Graphics::Level::draw()
 	size_t blockHeight = 1080 / lines;
 	size_t x = 0;
 	size_t y = 0;
-	for (size_t j = 0; j < _players.size(); j++)
+	for (size_t j = 0; j < _players.size() - 1; j++)
 	{*/
 	_players[0]._shader.bind();
 	glViewport(0, 0, 1920/2, 1080);
