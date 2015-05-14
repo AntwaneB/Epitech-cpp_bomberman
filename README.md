@@ -20,7 +20,7 @@
 
 ### Comment on code ? (syntaxe)
 
-- Le symbole pointeur (*) est sur le type, pas sur le nom de la variable : MaClass* monobjet
+- Le symbole pointeur `*` est sur le type, pas sur le nom de la variable : `MaClass* monobjet`
 
 - Dans le header d'une classe, on a en premier la définition des types spécifiques à la classe (enum et co.),
   puis la définition des méthodes publiques (saut de ligne entre contructeur / destructeur et les autres méthodes),
@@ -28,7 +28,38 @@
   puis la définition des méthodes private,
   puis la définition des attributs protected,
   puis la définition des attributs private.
-  Avec un saut de ligne entre chaque nouvelle "section"
+  Avec un saut de ligne entre chaque nouvelle "section".
+
+    #ifndef ITEM_HH
+    #define	ITEM_HH
+
+    #include "Observer.hpp"
+    #include "Position.hpp"
+    #include "Clock.hpp"
+
+    class Item
+    {
+    public:
+    	Item(Position const &);
+    	virtual ~Item() = 0;
+
+    	Position	position() const;
+    	Position	prevPosition() const;
+    	void		toConfig(Config &) const;
+
+    private:
+    	virtual void tick(Subject*) = 0;
+
+    protected:
+    	Position		_position;
+    	Position		_prevPosition;
+
+    	bool			_clockInit;
+    	seconds_t	_spawnTime;
+    };
+
+    #endif	/* ITEM_HH */
+
 
 - Dans le header d'une classe, le nom de tous les attributs est aligné.
 
