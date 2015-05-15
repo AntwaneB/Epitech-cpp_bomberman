@@ -15,57 +15,56 @@
 #include "Position.hpp"
 #include "Map.hpp"
 
-// elements map de _strategyMap en plus de ceux de Map
-# define	EXPLOSION	'@'
-# define  BOMBE     'B'
-# define  ENEMY     'E'
-
 class Bomb;
 class Character;
 class Item;
 
-namespace MYIA
-{
-  typedef	struct	s_enemyPos
-  {
-    int		x;
-    int		y;
-    int id;
-  } enemyPos;
-
-	enum Style { AGGRESSIVE, DEFENSIVE, MIXED };
+	enum mapSymbol { EXPLOSION, BOMBE, ENEMY };
 	enum Difficulty { EASY, MEDIUM, HIGH };
-//  enum Action { WAIT, GO_LEFT, GO_UP, GO_RIGHT, GO_DOWN, DROP_BOMB};
+//	template <Style style = MIXED, Difficulty difficulty = EASY>
 
-	//template <Style style = MIXED, Difficulty difficulty = EASY>
-	class IA
-	{
-    	std::vector<std::vector<int> > _strategyMap;
-	  	std::vector<std::vector<int> >	_history;
-	  const Difficulty   _diff;
-      const int          _xMapSize;
-      const int          _yMapSize;
-	  Character::Action             _lastAction;
-
+template<Difficulty T>
+class IA
+{
 	public:
-	  IA(int xMapSize, int yMapSize, Difficulty);
-		virtual ~IA();
-    void playTurn(const std::vector<std::vector<int> > &, const Position &, std::queue<Character::Action> &, Level*);
+	  	IA(const Level* , const Character* , Difficulty);
+	  	virtual ~IA();
+	  	void playTurn();
 
 	private:
-	  bool		amIExposed(const Position &) const;
-/*	  Character::Action	decideMovement(const Position &) const; */
-    Character::Action	findEscapeDirection(const Position &);
-    Character::Action	findEnemyDirection(const Position &) const;
-    void    generateStrategyMap (const std::vector<std::vector<int> > & map, const std::map<Position, std::list<Bomb*> > &, const std::map<Position, std::list<Character*> >);
-	  int		  isEnemyAtRange(const Position &) const;
-	  int		  isEscapeNode(int x, int y) const;
-	  void		markBombs(const std::map<Position, std::list<Bomb*> > &);
-    void    markEnemy(const std::map<Position, std::list<Character*> > &);
-    void    markItems(const std::map<Position, std::list<Item*>> & items);
-    Character::Action	playDefensive(const Position &);
-    Character::Action	playOffensive(const Position &) const;
-	};
+		std::vector<std::vector<int> > _strategyMap;
+	  	std::vector<std::vector<int> >	_history;
+		const Character* _self;
+		const Level* 	_lvl;
+/*		const Difficulty _diff;*/
+		void scanMap(); // Reconstitue la map pour par la suite cree une strategie
+		Character::Action Move();
+		Character::Action easyMove(); // 3 fonctions a appeller qui depende du niveau de l'IA
+		Character::Action mediumMove();
+		Character::Action hardMove();
+
+		bool BombOpportunity(); // Faut-il que le joueur place une bombe ?
+		bool BombDetection(); // L'IA est-elle dans une zone dangereuse ?
+		Character::Action escapeBomb();
+		bool isBlockFree(const Position &) const;
+
 };
 
-#endif	/* IA_HH */
+template<Difficulty T>
+IA<T>::IA(const Level* level, const Character* character, Difficulty diff):
+		_lvl(level), _self(character)
+{
+	(void) level;
+	(void) character;
+	(void) diff;
+}
+
+template<Difficulty T>
+IA<T>::~IA()
+{
+
+}
+
+
+
+#endif	/* IA_HPP */
