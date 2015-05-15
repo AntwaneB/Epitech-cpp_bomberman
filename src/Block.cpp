@@ -71,6 +71,7 @@ Block::bombExploded(Subject* entity)
 	if (destructible() && bomb->hasHit(_position))
 	{ // The block got hit by the bomb and is destructible
 		this->notify(this, BLOCK_DESTROYED);
+		delete this;
 	}
 }
 

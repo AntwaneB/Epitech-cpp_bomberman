@@ -43,8 +43,6 @@ namespace Graphics
 	protected:
 		const ::Level*	_level;
 		gdl::SdlContext _context;
-		gdl::Clock _clock;
-		gdl::Input _input;
 		gdl::BasicShader _shader;
 		std::vector<Player> _players;
 		std::vector<Graphics::Character*>	_characters;
