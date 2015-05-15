@@ -18,7 +18,7 @@ Graphics::Level::Level(::Level const * level)
 
 Graphics::Level::~Level()
 {
-	for (size_t j = 0; j < _players.size() - 1; j++)
+	for (size_t j = 0; j < _players.size(); j++)
 	{
 		for (size_t i = 0; i < _players[j]._objects.size(); ++i)
 			delete _players[j]._objects[i];
@@ -65,15 +65,15 @@ Graphics::Level::update()
 {
 	for (size_t j = 0; j < _players.size(); j++)
 	{	
-	if (_players[j]._input.getKey(SDLK_ESCAPE) || _players[j]._input.getInput(SDL_QUIT))
-	{
-		_context.stop();
-		this->notify(this, EXIT_TRIGGERED);
-	}
+		if (_players[j]._input.getKey(SDLK_ESCAPE) || _players[j]._input.getInput(SDL_QUIT))
+		{
+			_context.stop();
+			this->notify(this, EXIT_TRIGGERED);
+		}
 	_context.updateClock(_players[j]._clock);
 	_context.updateInputs(_players[j]._input);
 	for (size_t i = 0; i < _players[j]._objects.size(); ++i)
-		_players[j]._objects[i]->update(_clock, _input);
+		_players[j]._objects[i]->update(_players[j]._clock, _players[j]._input);
 	}
 	return (true);
 }
@@ -91,22 +91,22 @@ Graphics::Level::draw()
 	size_t y = 0;
 	for (size_t j = 0; j < _players.size(); j++)
 	{
-	_players[j]._shader.bind();
-	glViewport(x, y, blockWidth, blockHeight);
-	//std::cout << x << " " << y << " "<< x + blockWidth << " " << y + blockHeight << std::endl;
-	for (size_t i = 0; i < _players[j]._objects.size(); ++i)
-		_players[j]._objects[i]->draw(_players[j]._shader, _players[j]._clock);
-	x += blockWidth;
-	if (x > 1920 - blockWidth)
-	{
-		x = 0;
-		y += blockHeight;
-	}
-		/*if (y > 1080 - blockHeight)
+		_players[j]._shader.bind();
+		glViewport(x, y, blockWidth, blockHeight);
+		//std::cout << x << " " << y << " "<< x + blockWidth << " " << y + blockHeight << std::endl;
+		for (size_t i = 0; i < _players[j]._objects.size(); ++i)
+			_players[j]._objects[i]->draw(_players[j]._shader, _players[j]._clock);
+		x += blockWidth;
+		if (x > 1920 - blockWidth)
 		{
-			std::cout << "ERROR" << std::endl;
-			_context.stop();
-		}*/
+			x = 0;
+			y += blockHeight;
+		}
+			/*if (y > 1080 - blockHeight)
+			{
+				std::cout << "ERROR" << std::endl;
+				_context.stop();
+			}*/
 	}
 	//std::cout << "FIN" << std::endl;
 	_context.flush();

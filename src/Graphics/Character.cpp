@@ -11,20 +11,22 @@ Graphics::Character::~Character()
 
 }
 
-bool Graphics::Character::initialize()
+bool
+Graphics::Character::initialize()
 {
 	_speed = 50.0f;
 
-    if (_model.load("./libgdl/assets/marvin.fbx") == false)
-      {
-	     std::cout << "Cannot load the marvin model" << std::endl;
-	     return (false);
-      }
-    _model.setCurrentAnim(0);
-    return (true);
+	if (_model.load("./libgdl/assets/marvin.fbx") == false)
+	{
+		std::cout << "Cannot load the marvin model" << std::endl;
+		return (false);
+	}
+	_model.setCurrentAnim(0);
+	return (true);
 }
 
-void Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
+void
+Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	_position = _character->position();
 
@@ -38,7 +40,8 @@ void Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 		translate(glm::vec3(1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
 }
 
-void Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
+void
+Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	_texture.bind();
 	_model.draw(shader, getTransformation(), GL_QUADS);
