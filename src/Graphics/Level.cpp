@@ -83,36 +83,32 @@ Graphics::Level::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-/*	size_t blocksPerLine = ceil(sqrt(_players.size()));
+	size_t blocksPerLine = ceil(sqrt(_players.size()));
 	size_t lines = floor(sqrt(_players.size()));
 	size_t blockWidth = 1920 / blocksPerLine;
 	size_t blockHeight = 1080 / lines;
 	size_t x = 0;
 	size_t y = 0;
-	for (size_t j = 0; j < _players.size() - 1; j++)
-	{*/
-	_players[0]._shader.bind();
-	glViewport(0, 0, 1920/2, 1080);
-	for (size_t i = 0; i < _players[0]._objects.size(); ++i)
-		_players[0]._objects[i]->draw(_players[0]._shader, _players[0]._clock);
-	_players[1]._shader.bind();
-	glViewport(1920/2, 0, 1920/2, 1080);
-	for (size_t i = 0; i < _players[1]._objects.size(); ++i)
-		_players[1]._objects[i]->draw(_players[1]._shader, _players[1]._clock);
-
-	/*	x += blockWidth;
-		std::cout << x << " " << y << std::endl;
-		if (x > 1920 - blockWidth)
-		{
-			x = 0;
-			y += blockHeight;
-		}
-		if (y > 1080 - blockHeight)
+	for (size_t j = 0; j < _players.size(); j++)
+	{
+	_players[j]._shader.bind();
+	glViewport(x, y, blockWidth, blockHeight);
+	//std::cout << x << " " << y << " "<< x + blockWidth << " " << y + blockHeight << std::endl;
+	for (size_t i = 0; i < _players[j]._objects.size(); ++i)
+		_players[j]._objects[i]->draw(_players[j]._shader, _players[j]._clock);
+	x += blockWidth;
+	if (x > 1920 - blockWidth)
+	{
+		x = 0;
+		y += blockHeight;
+	}
+		/*if (y > 1080 - blockHeight)
 		{
 			std::cout << "ERROR" << std::endl;
 			_context.stop();
-		}
-	}*/
+		}*/
+	}
+	//std::cout << "FIN" << std::endl;
 	_context.flush();
 }
 
