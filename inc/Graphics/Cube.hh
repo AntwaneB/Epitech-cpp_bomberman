@@ -29,7 +29,6 @@ namespace Graphics
 			gdl::Geometry	_geometry;
 			float				_speed;
 
-			Position			_position;
 			const Block*	_block;
 	};
 };

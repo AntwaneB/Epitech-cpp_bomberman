@@ -48,7 +48,7 @@ Config::Param&	Config::operator [](const char key[])
 {
 	return (this->operator[](std::string(key)));
 }
-
+/*
 Config::Param const &	Config::operator [](const std::string& key) const
 {
 	return (_params.find(key)->second);
@@ -58,7 +58,7 @@ Config::Param const & Config::operator [](const char key[]) const
 {
 	return (this->operator[](std::string(key)));
 }
-
+*/
 Config::Param::Param(const std::string & value)
 	: _status(Config::Param::VALUE), _value(value)
 {
@@ -89,7 +89,7 @@ Config::Param& Config::Param::operator [](const char key[])
 {
 	return (this->operator[](std::string(key)));
 }
-
+/*
 Config::Param const & Config::Param::operator [](const std::string& key) const
 {
 	return (_map.find(key)->second);
@@ -99,9 +99,10 @@ Config::Param const & Config::Param::operator [](const char key[]) const
 {
 	return (this->operator[](std::string(key)));
 }
-
+*/
 Config::Param& Config::Param::operator = (bool value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = value ? "true" : "false";
@@ -111,6 +112,7 @@ Config::Param& Config::Param::operator = (bool value)
 
 Config::Param& Config::Param::operator = (char value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = std::to_string(value);
@@ -120,6 +122,7 @@ Config::Param& Config::Param::operator = (char value)
 
 Config::Param& Config::Param::operator = (short value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = std::to_string(value);
@@ -129,6 +132,7 @@ Config::Param& Config::Param::operator = (short value)
 
 Config::Param& Config::Param::operator = (int value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = std::to_string(value);
@@ -138,6 +142,7 @@ Config::Param& Config::Param::operator = (int value)
 
 Config::Param& Config::Param::operator = (long value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = std::to_string(value);
@@ -147,6 +152,7 @@ Config::Param& Config::Param::operator = (long value)
 
 Config::Param& Config::Param::operator = (double value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = std::to_string(value);
@@ -156,6 +162,7 @@ Config::Param& Config::Param::operator = (double value)
 
 Config::Param& Config::Param::operator = (float value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = std::to_string(value);
@@ -165,6 +172,7 @@ Config::Param& Config::Param::operator = (float value)
 
 Config::Param& Config::Param::operator = (std::string const & value)
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = value;
@@ -174,6 +182,7 @@ Config::Param& Config::Param::operator = (std::string const & value)
 
 Config::Param& Config::Param::operator = (const char value[])
 {
+	_map.clear();
 	_status = Config::Param::VALUE;
 
 	_value = value;
@@ -287,7 +296,7 @@ std::map<std::string, Config::Param>::iterator	Config::Param::end(void)
 {
 	return (_map.end());
 }
-
+/*
 std::map<std::string, Config::Param>::const_iterator	Config::Param::find(const std::string & key) const
 {
 	return (_map.find(key));
@@ -297,7 +306,7 @@ std::map<std::string, Config::Param>::const_iterator	Config::Param::end(void) co
 {
 	return (_map.end());
 }
-
+*/
 void	Config::Param::insert(std::map<std::string, Param>::value_type insert)
 {
 	_map.insert(insert);
@@ -404,7 +413,6 @@ Config::Param	Config::fillParams(pugi::xml_node node, Config::Param params, int 
 void	Config::importFile(std::string const & filename)
 {
 	pugi::xml_document	file;
-
 
 	pugi::xml_parse_result	result = file.load_file(filename.c_str());
 	if (!result)

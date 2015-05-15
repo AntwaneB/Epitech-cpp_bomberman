@@ -13,10 +13,13 @@ Map::Map(size_t width, size_t height):
 	_width(width), _height(height)
 {
 	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
+	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
 
 	this->initMap();
 	this->setBorders();
 	this->setSolid();
+	this->setDestructible();
+	this->bindBlocks();
 
 	/*
 	this->generateMap();
@@ -70,7 +73,27 @@ Map::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
-	(void)bomb;
+	this->notify(bomb, MAP_BOMB_EXPLODED);
+}
+
+void
+Map::blockDestroyed(Subject* entity)
+{
+	Block* block = safe_cast<Block*>(entity);
+
+	for (auto it = _map.begin(); it != _map.end(); ++it)
+	{
+		for (auto iit = it->begin(); iit != it->end(); ++iit)
+		{
+			if (*iit == block)
+			{
+				*iit = new Block(block->position(), g_settings["maps"]["default_blocks"]["void"]);
+				this->removeObserver(block);
+				this->addObserver(*iit);
+				(*iit)->addObserver(this);
+			}
+		}
+	}
 }
 
 void
@@ -86,6 +109,8 @@ Map::initMap()
 	for (auto it = _map.begin(); it != _map.end(); ++it)
 	{
 		it->resize(_width);
+		for (auto block = it->begin(); block != it->end(); ++block)
+			*block = NULL;
 	}
 }
 
@@ -107,7 +132,45 @@ Map::setBorders()
 void
 Map::setSolid()
 {
+	for (size_t y = 2; y < _height - 1; y += 2)
+	{
+		for (size_t x = 2; x < _width - 1; x += 2)
+		{
+			if (y % 2 == 0 && x % 2 == 0)
+				_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["wall"]);
+		}
+	}
+}
 
+void
+Map::setDestructible()
+{
+	for (size_t y = 1; y < _height - 1; ++y)
+	{
+		for (size_t x = 1; x < _width - 1; ++x)
+		{
+			if (_map[y][x] == NULL)
+			{
+				if (rand() % 100 < 60)
+					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["box"]);
+				else
+					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["void"]);
+			}
+		}
+	}
+}
+
+void
+Map::bindBlocks()
+{
+	for (auto row = _map.begin(); row != _map.end(); ++row)
+	{
+		for (auto block = row->begin(); block != row->end(); ++block)
+		{
+			this->addObserver(*block);
+			(*block)->addObserver(this);
+		}
+	}
 }
 
 /*

@@ -2,7 +2,7 @@
 #include <iostream>
 
 Graphics::Cube::Cube(Position const & position, Block const * block)
-	: _position(position), _block(block)
+	: Object(position), _block(block)
 {
 }
 
@@ -13,7 +13,7 @@ Graphics::Cube::~Cube()
 
 bool Graphics::Cube::initialize()
 {
-	_speed = 10.0f;
+	_speed = 50.0f;
 
 	if(_texture.load(_block->texture()) == false)
 	{

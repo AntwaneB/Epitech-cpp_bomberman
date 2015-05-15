@@ -167,3 +167,27 @@ Position::toConfig(Config & cfg) const
 	cfg["z"] = _z;
 	cfg["isSet"] = _isSet;
 }
+
+Position operator+(const Position & pos1, const Position & pos2)
+{
+	return (Position(pos1.x() + pos2.x(), pos1.y() + pos2.y(), pos1.z() + pos2.z()));
+}
+
+void operator+=(Position & pos1, const Position & pos2)
+{
+	pos1.incX(pos2.x());
+	pos1.incY(pos2.y());
+	pos1.incZ(pos2.z());
+}
+
+Position operator-(const Position & pos1, const Position & pos2)
+{
+	return (Position(pos1.x() - pos2.x(), pos1.y() - pos2.y(), pos1.z() - pos2.z()));
+}
+
+void operator-=(Position & pos1, const Position & pos2)
+{
+	pos1.decX(pos2.x());
+	pos1.decY(pos2.y());
+	pos1.decZ(pos2.z());
+}

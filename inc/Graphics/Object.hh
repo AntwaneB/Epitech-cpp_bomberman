@@ -8,6 +8,7 @@
 #include "BasicShader.hh"
 #include "Clock.hh"
 #include "Input.hh"
+#include "Position.hpp"
 
 namespace Graphics
 {
@@ -15,21 +16,23 @@ namespace Graphics
 	class Object
 	{
 	public:
-		Object();
+		Object(Position const &);
 		virtual ~Object();
+
 		virtual bool initialize();
 		virtual void update(gdl::Clock const &clock, gdl::Input &input);
 		virtual void draw(gdl::AShader &shader, gdl::Clock const &clock) = 0;
+
 		void translate(glm::vec3 const &v);
+		void translate(Position const &v);
 		void rotate(glm::vec3 const& axis, float angle);
 		void scale(glm::vec3 const& scale);
-		void position(int, int, int);
 		glm::mat4 getTransformation();
 
 	protected:
-		glm::vec3 _position;
-		glm::vec3 _rotation;
-		glm::vec3 _scale;
+		Position		_position;
+		glm::vec3	_rotation;
+		glm::vec3	_scale;
 	};
 
 };

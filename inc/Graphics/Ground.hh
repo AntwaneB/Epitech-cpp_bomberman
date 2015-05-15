@@ -15,19 +15,20 @@ namespace Graphics
 	class Ground : public Object
 	{
 		public:
-			Ground();
-			Ground(double, double, double, int);
+			Ground(Position const &);
 			virtual ~Ground();
+
 			virtual bool initialize();
 			virtual void update(gdl::Clock const &clock, gdl::Input &input);
 			virtual void draw(gdl::AShader &shader, gdl::Clock const &clock);
+
 		private:
-			gdl::Texture _texture;
-			gdl::Geometry _geometry;
-			float _speed;
-			int _type;
-			int _width;
-			int _height;
+			gdl::Texture	_texture;
+			gdl::Geometry	_geometry;
+			float				_speed;
+
+			int				_width;
+			int				_height;
 	};
 };
 

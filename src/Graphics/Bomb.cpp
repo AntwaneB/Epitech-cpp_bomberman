@@ -1,6 +1,7 @@
 #include "Graphics/Bomb.hh"
 
 Graphics::Bomb::Bomb()
+	: Object(Position(0, 0, 0))
 {
   scale(glm::vec3(0.0025, 0.0025, 0.0025));
   translate(glm::vec3(0, 1, 0));

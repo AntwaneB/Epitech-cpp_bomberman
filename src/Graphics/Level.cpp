@@ -10,52 +10,71 @@
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
-	_width = 1920;
-	_height = 1080;
+	for (size_t i = 0; i < 3; i++)
+		_players.push_back(Player());
 	_context.start(1920, 1080, "My bomberman!");
-	glViewport(0, 0, 1920/2, 1080);
 	this->initialize();
-	while (this->update() == true)
-		this->draw();
 }
 
 Graphics::Level::~Level()
 {
-	for (size_t i = 0; i < _objects.size(); ++i)
-		delete _objects[i];
+	for (size_t i = 0; i < _players.size() - 1; i++)
+	{
+		for (size_t i = 0; i < _players[i]._objects.size(); ++i)
+			delete _players[i]._objects[i];
+	}
 }
 
 bool
 Graphics::Level::initialize()
 {
 	glEnable(GL_DEPTH_TEST);
-	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
-		|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
-		|| !_shader.build())
-		return false;
-	glm::mat4 projection;
-	glm::mat4 transformation;
-	projection = glm::perspective(60.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-	transformation = glm::lookAt(glm::vec3(0, 7, -10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	_shader.bind();
-	_shader.setUniform("view", transformation);
-	_shader.setUniform("projection", projection);
-	_map.initialize(&_objects, _level->map().height(), _level->map().width(), _level->map().map());
+
+	for (size_t i = 0; i < _players.size() - 1; i++)
+	{
+		if (!_players[i]._shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
+			|| !_players[i]._shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
+			|| !_players[i]._shader.build())
+			return false;
+
+		glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
+		glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(7, 0, 7), glm::vec3(0, 1, 0));
+
+		_players[i]._shader.bind();
+		_players[i]._shader.setUniform("view", transformation);
+		_players[i]._shader.setUniform("projection", projection);
+
+		_players[i]._map.initialize(&_players[i]._objects, _level->map().height(), _level->map().width(), _level->map().map());
+	
+		for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
+			{
+				for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
+				{
+					Object* character = new Graphics::Character((*iit)->position(), *iit);
+					character->initialize();
+					_players[i]._objects.push_back(character);
+				}
+			}
+		}
+
 	return (true);
 }
 
 bool
 Graphics::Level::update()
 {
-	if (_input.getKey(SDLK_ESCAPE) || _input.getInput(SDL_QUIT))
+	for (size_t i = 0; i < _players.size() - 1; i++)
+	{	
+	if (_players[i]._input.getKey(SDLK_ESCAPE) || _players[i]._input.getInput(SDL_QUIT))
 	{
 		_context.stop();
 		this->notify(this, EXIT_TRIGGERED);
 	}
-	_context.updateClock(_clock);
-	_context.updateInputs(_input);
-	for (size_t i = 0; i < _objects.size(); ++i)
-	_objects[i]->update(_clock, _input);
+	_context.updateClock(_players[i]._clock);
+	_context.updateInputs(_players[i]._input);
+		for (size_t i = 0; i < _players[i]._objects.size(); ++i)
+			_players[i]._objects[i]->update(_clock, _input);
+	}
 	return (true);
 }
 
@@ -63,9 +82,37 @@ void
 Graphics::Level::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	_shader.bind();
-	for (size_t i = 0; i < _objects.size(); ++i)
-	_objects[i]->draw(_shader, _clock);
+
+/*	size_t blocksPerLine = ceil(sqrt(_players.size()));
+	size_t lines = floor(sqrt(_players.size()));
+	size_t blockWidth = 1920 / blocksPerLine;
+	size_t blockHeight = 1080 / lines;
+	size_t x = 0;
+	size_t y = 0;
+	for (size_t j = 0; j < _players.size() - 1; j++)
+	{*/
+	_players[0]._shader.bind();
+	glViewport(0, 0, 1920/2, 1080);
+	for (size_t i = 0; i < _players[0]._objects.size(); ++i)
+		_players[0]._objects[i]->draw(_players[0]._shader, _players[0]._clock);
+	_players[1]._shader.bind();
+	glViewport(1920/2, 0, 1920/2, 1080);
+	for (size_t i = 0; i < _players[1]._objects.size(); ++i)
+		_players[1]._objects[i]->draw(_players[1]._shader, _players[1]._clock);
+
+	/*	x += blockWidth;
+		std::cout << x << " " << y << std::endl;
+		if (x > 1920 - blockWidth)
+		{
+			x = 0;
+			y += blockHeight;
+		}
+		if (y > 1080 - blockHeight)
+		{
+			std::cout << "ERROR" << std::endl;
+			_context.stop();
+		}
+	}*/
 	_context.flush();
 }
 

@@ -96,14 +96,13 @@ public:
 		if (it != _observers.end())
 		{
 			*it = NULL;
-			//_observers.erase(it);
 		}
 	}
 
 protected:
 	void notify(Subject * entity, Event event)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK)
+		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED)
 			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)

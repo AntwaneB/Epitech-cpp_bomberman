@@ -34,6 +34,12 @@ private:
 	std::string	_type;
 	Config		_attributes;
 	int			_elapsedTime;
+
+	bool			_visible;
+	bool			_destructible;
+	bool			_solid;
+	bool			_blockBombs;
+	std::string _texture;
 };
 
 #endif	/* BLOCK_HH */

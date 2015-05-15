@@ -49,6 +49,10 @@ private:
 };
 
 std::ostream& operator<<(std::ostream&, const Position &);
+Position operator+(const Position &, const Position &);
+void operator+=(Position &, const Position &);
+Position operator-(const Position &, const Position &);
+void operator-=(Position &, const Position &);
 
 #endif	/* POSITION_HPP */
 

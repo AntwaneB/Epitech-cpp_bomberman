@@ -16,6 +16,11 @@ Block::Block(Position const & position, std::string const & type)
 	_actions[MAP_BOMB_EXPLODED] = &Block::bombExploded;
 
 	_attributes = g_settings["entities"]["blocks"][_type];
+	_visible = g_settings["entities"]["blocks"][_type]["visible"];
+	_destructible = g_settings["entities"]["blocks"][_type]["destructible"];
+	_solid = g_settings["entities"]["blocks"][_type]["collision"];
+	_blockBombs = g_settings["entities"]["blocks"][_type]["block_bombs"];
+	_texture = static_cast<std::string>(g_settings["entities"]["blocks"][_type]["texture"]);
 }
 
 Block::~Block()
@@ -31,31 +36,31 @@ Block::position() const
 bool
 Block::destructible() const
 {
-	return (_attributes["destructible"]);
+	return (_destructible);
 }
 
 bool
 Block::visible() const
 {
-	return (_attributes["visible"]);
+	return (_visible);
 }
 
 bool
 Block::solid() const
 {
-	return (_attributes["collision"]);
+	return (_solid);
 }
 
 bool
 Block::blockBombs() const
 {
-	return (_attributes["block_bombs"]);
+	return (_blockBombs);
 }
 
 std::string
 Block::texture() const
 {
-	return (_attributes["texture"]);
+	return (_texture);
 }
 
 void
@@ -66,6 +71,7 @@ Block::bombExploded(Subject* entity)
 	if (destructible() && bomb->hasHit(_position))
 	{ // The block got hit by the bomb and is destructible
 		this->notify(this, BLOCK_DESTROYED);
+		delete this;
 	}
 }
 

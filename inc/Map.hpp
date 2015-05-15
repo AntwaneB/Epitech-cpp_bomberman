@@ -41,9 +41,13 @@ private:
 	void	initMap();
 	void	setBorders();
 	void	setSolid();
+	void	setDestructible();
+	void	bindBlocks();
 
 private:
 	void	bombExploded(Subject*);
+	void	blockDestroyed(Subject*);
+
 /*
 	void	generateMap();
 	void 	generateMap(const std::string &);
