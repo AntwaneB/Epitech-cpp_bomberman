@@ -10,7 +10,7 @@
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 2; i++)
 		_players.push_back(Player());
 	_context.start(1920, 1080, "My bomberman!");
 	this->initialize();
@@ -18,10 +18,10 @@ Graphics::Level::Level(::Level const * level)
 
 Graphics::Level::~Level()
 {
-	for (size_t i = 0; i < _players.size() - 1; i++)
+	for (size_t j = 0; j < _players.size() - 1; j++)
 	{
-		for (size_t i = 0; i < _players[i]._objects.size(); ++i)
-			delete _players[i]._objects[i];
+		for (size_t i = 0; i < _players[j]._objects.size(); ++i)
+			delete _players[j]._objects[i];
 	}
 }
 
@@ -29,8 +29,8 @@ bool
 Graphics::Level::initialize()
 {
 	glEnable(GL_DEPTH_TEST);
-
-	for (size_t i = 0; i < _players.size() - 1; i++)
+	std::cout << _players.size() << std::endl;
+	for (size_t i = 0; i < _players.size(); i++)
 	{
 		if (!_players[i]._shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 			|| !_players[i]._shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
@@ -55,7 +55,7 @@ Graphics::Level::initialize()
 					_players[i]._objects.push_back(character);
 				}
 			}
-		}
+	}
 
 	return (true);
 }
@@ -63,17 +63,17 @@ Graphics::Level::initialize()
 bool
 Graphics::Level::update()
 {
-	for (size_t i = 0; i < _players.size() - 1; i++)
+	for (size_t j = 0; j < _players.size(); j++)
 	{	
-	if (_players[i]._input.getKey(SDLK_ESCAPE) || _players[i]._input.getInput(SDL_QUIT))
+	if (_players[j]._input.getKey(SDLK_ESCAPE) || _players[j]._input.getInput(SDL_QUIT))
 	{
 		_context.stop();
 		this->notify(this, EXIT_TRIGGERED);
 	}
-	_context.updateClock(_players[i]._clock);
-	_context.updateInputs(_players[i]._input);
-		for (size_t i = 0; i < _players[i]._objects.size(); ++i)
-			_players[i]._objects[i]->update(_clock, _input);
+	_context.updateClock(_players[j]._clock);
+	_context.updateInputs(_players[j]._input);
+	for (size_t i = 0; i < _players[j]._objects.size(); ++i)
+		_players[j]._objects[i]->update(_clock, _input);
 	}
 	return (true);
 }
