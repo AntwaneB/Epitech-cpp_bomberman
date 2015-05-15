@@ -312,11 +312,7 @@ const std::string	Config::Param::toXML(void) const
 		res = _value;
 	else
 		for(std::map<std::string, Param>::const_iterator it = _map.begin(); it != _map.end(); it++)
-		{
-			res = res + "<" + it->first + ">";
-			res = res + it->second.toXML();
-			res = res + "</" + it->first + ">";
-		}
+			res += "<" + it->first + ">" + it->second.toXML() + "</" + it->first + ">";
 	return (res);
 }
 

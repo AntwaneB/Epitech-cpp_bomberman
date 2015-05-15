@@ -20,6 +20,7 @@ if [ $# = 0 ]; then
 
 elif [ $1 = "--gui" ]; then
 
+	#valgrind ./bomberman --gui
 	./bomberman --gui
 
 fi
