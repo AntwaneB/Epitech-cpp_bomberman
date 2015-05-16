@@ -20,8 +20,8 @@ class Bomb;
 class Character;
 class Item;
 
-	enum mapSymbol { EXPLOSION, BOMBE, ENEMY };
-	enum Difficulty { EASY, MEDIUM, HARD };
+enum mapSymbol { EXPLOSION, BOMBE, ENEMY };
+enum Difficulty { EASY, MEDIUM, HARD };
 //	template <Style style = MIXED, Difficulty difficulty = EASY>
 
 template<Difficulty T>
@@ -30,11 +30,11 @@ class IA
 	public:
 	  	IA(Level const* level, Character const* character);
 	  	virtual ~IA();
-	  	void playTurn() {}
+	  	void playTurn();
 		Character::Action Move();
 
 	private:
-		std::vector<std::vector<int> > _strategyMap;
+		std::vector<std::vector<Block*> > _strategyMap;
 	  	std::vector<std::vector<int> >	_history;
 		const Character* _self;
 		const Level* 	_lvl;
@@ -54,8 +54,13 @@ template<Difficulty T>
 IA<T>::IA(Level const* level, Character const* character):
 		_self(character), _lvl(level)
 {
-	(void) level;
-	(void) character;
+	_history.resize(_lvl->map().width());
+	int i = 0;
+	for (std::vector<std::vector<int> >::iterator it = _history.begin(); it != _history.end(); it++)
+	{
+		_history[i].resize(_lvl->map().height());
+		i++;
+	}
 	scanMap();
 }
 
@@ -66,18 +71,25 @@ IA<T>::~IA()
 }
 
 template<Difficulty T>
+void IA<T>::playTurn()
+{
+
+}
+
+template<Difficulty T>
 inline void IA<T>::scanMap()
 {
+	_strategyMap = _lvl->map().map();
 	std::cout << "HARD OR MEDIUM scanMap()" << std::endl;
 }
 
 template<>
 inline void IA<EASY>::scanMap() // NE PREND PAS EN COMPTE LES BOMBES
 {
-	std::vector<std::vector<Block*> > map = _lvl->map().map();
+	_strategyMap = _lvl->map().map();
 	std::cout << "EASY scanMap()" << std::endl;
 
-	for (std::vector<std::vector<Block*> >::iterator it = map.begin(); it != map.end(); it++)
+	for (std::vector<std::vector<Block*> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); it++)
 	{
 		for (std::vector<Block*>::iterator it2 = it->begin(); it2 != it->end(); it2++)
 		{
@@ -86,6 +98,8 @@ inline void IA<EASY>::scanMap() // NE PREND PAS EN COMPTE LES BOMBES
 			{
 				b->setBlockBombs(false);
 				b->setVisible(true);
+				Map tmp = _lvl->map();
+				Position currentPosition = b->position();
 			}
 		}
 	}
@@ -103,16 +117,19 @@ inline Character::Action IA<EASY>::Move()
 	int		myX = _self->position().x();
 	int		myY = _self->position().y();
 	int		i = 0;
+	Block* 	currentBlock;
 
 	std::cout << "running MOVE(EASY)" << std::endl;
 	while (i < 4)
+	{
+		if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
 		{
-			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
-			{
+			currentBlock = _strategyMap[myX + searchX[i]][myY + searchY[i]];
+			if (currentBlock->visible())
 				possibleDirections.push_back(searchActions[i]);
-			}
-		i++;
 		}
+		i++;
+	}
 	std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
 	if (possibleDirections.size() != 0)
 		return (possibleDirections[rand() % possibleDirections.size()]);
@@ -133,20 +150,22 @@ inline Character::Action IA<MEDIUM>::Move()
 	int		myX = _self->position().x();
 	int		myY = _self->position().y();
 	int		i = 0;
+	Block* 	currentBlock;
 
 	std::cout << "running MOVE(MEDIUM)" << std::endl;
 	while (i < 4)
+	{
+		if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
 		{
-			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
+			currentBlock = _strategyMap[myX + searchX[i]][myY + searchY[i]];
+			if (_history[myX + searchX[i]][myY + searchY[i]] < currentBestDirectionHistory && currentBlock->visible())
 			{
-				if (_history[myX + searchX[i]][myY + searchY[i]] < currentBestDirectionHistory)
-				{
-					currentBestDirectionHistory = _history[myX + searchX[i]][myY + searchY[i]];
-					currentBestAction = searchActions[i];
-				}
+				currentBestDirectionHistory = _history[myX + searchX[i]][myY + searchY[i]];
+				currentBestAction = searchActions[i];
 			}
-		i++;
 		}
+		i++;
+	}
 	return (currentBestAction);
 }
 
