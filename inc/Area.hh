@@ -24,11 +24,11 @@ public:
 	void 	setFree(bool);
 
 private:
-	bool	_bomb;
-	int 	_enemy;
-	bool	_wall;
 	bool 	_destructible;
 	bool	_free;
+	bool	_wall;
+	bool	_bomb;
+	int 	_enemy;
 	bool	_explosion;
 
 	Character::Action _direction;
