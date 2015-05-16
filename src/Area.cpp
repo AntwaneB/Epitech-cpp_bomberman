@@ -45,7 +45,7 @@ bool Area::destructible() const
 	return _destructible;
 }
 
-Character::Action direction() const
+Character::Action Area::direction() const
 {
 	return _direction;
 }
