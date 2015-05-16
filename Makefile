@@ -31,6 +31,7 @@ SRCS		  =  main.cpp \
 		     Block.cpp \
 		     BonusItem.cpp \
 		     IA.cpp \
+		     Area.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Player.cpp \
@@ -66,6 +67,7 @@ INCS		  =  global.hh \
 		     Bomb.hh \
 		     Block.hh \
 		     BonusItem.hh \
+ 		     Area.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \
@@ -80,6 +82,7 @@ INCS		  =  global.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp
+		     \
 
 LGDL_DIR	  =  libgdl
 
@@ -121,3 +124,4 @@ fclean:		     clean
 re:		     fclean all
 
 .PHONY: re fclean clean all
+	
