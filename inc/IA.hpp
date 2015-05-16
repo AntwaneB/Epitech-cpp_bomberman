@@ -20,25 +20,35 @@ class Character;
 class Item;
 
 	enum mapSymbol { EXPLOSION, BOMBE, ENEMY };
-	enum Difficulty { EASY, MEDIUM, HIGH };
+	enum Difficulty { EASY, MEDIUM, HARD };
 //	template <Style style = MIXED, Difficulty difficulty = EASY>
 
 template<Difficulty T>
 class IA
 {
 	public:
-	  	IA(const Level* , const Character* , Difficulty);
-	  	virtual ~IA();
-	  	void playTurn();
+	  	IA(Level const* level, Character const* character):
+				_self(character), _lvl(level)
+		{
+			(void) level;
+			(void) character;
+		}
+
+	  	virtual ~IA() {}
+
+	  	void playTurn() {}
+		
+		inline Character::Action Move()
+		{
+			return Character::MOVE_RIGHT;
+		}
 
 	private:
 		std::vector<std::vector<int> > _strategyMap;
 	  	std::vector<std::vector<int> >	_history;
 		const Character* _self;
 		const Level* 	_lvl;
-/*		const Difficulty _diff;*/
 		void scanMap(); // Reconstitue la map pour par la suite cree une strategie
-		Character::Action Move();
 		Character::Action easyMove(); // 3 fonctions a appeller qui depende du niveau de l'IA
 		Character::Action mediumMove();
 		Character::Action hardMove();
@@ -50,21 +60,26 @@ class IA
 
 };
 
-template<Difficulty T>
-IA<T>::IA(const Level* level, const Character* character, Difficulty diff):
-		_lvl(level), _self(character)
+template<>
+inline Character::Action IA<EASY>::Move()
 {
-	(void) level;
-	(void) character;
-	(void) diff;
+	std::cout << "EASY" << std::endl;
+	return Character::MOVE_RIGHT;
 }
 
-template<Difficulty T>
-IA<T>::~IA()
+template<>
+inline Character::Action IA<MEDIUM>::Move()
 {
-
+	std::cout << "MIDDLE" << std::endl;
+	return Character::MOVE_RIGHT;
 }
 
+template<>
+inline Character::Action IA<HARD>::Move()
+{
+	std::cout << "HARD" << std::endl;
+	return Character::MOVE_RIGHT;
+}
 
 
 #endif	/* IA_HPP */
