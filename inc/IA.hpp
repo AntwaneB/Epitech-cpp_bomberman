@@ -27,21 +27,10 @@ template<Difficulty T>
 class IA
 {
 	public:
-	  	IA(Level const* level, Character const* character):
-				_self(character), _lvl(level)
-		{
-			(void) level;
-			(void) character;
-		}
-
-	  	virtual ~IA() {}
-
+	  	IA(Level const* level, Character const* character);
+	  	virtual ~IA();
 	  	void playTurn() {}
-		
-		inline Character::Action Move()
-		{
-			return Character::MOVE_RIGHT;
-		}
+		Character::Action Move();
 
 	private:
 		std::vector<std::vector<int> > _strategyMap;
@@ -60,6 +49,20 @@ class IA
 
 };
 
+template<Difficulty T>
+IA<T>::IA(Level const* level, Character const* character):
+		_self(character), _lvl(level)
+{
+	(void) level;
+	(void) character;
+}
+
+template<Difficulty T>
+IA<T>::~IA()
+{
+
+}
+
 template<>
 inline Character::Action IA<EASY>::Move()
 {
@@ -70,7 +73,7 @@ inline Character::Action IA<EASY>::Move()
 template<>
 inline Character::Action IA<MEDIUM>::Move()
 {
-	std::cout << "MIDDLE" << std::endl;
+	std::cout << "MEDIUM" << std::endl;
 	return Character::MOVE_RIGHT;
 }
 
@@ -80,6 +83,4 @@ inline Character::Action IA<HARD>::Move()
 	std::cout << "HARD" << std::endl;
 	return Character::MOVE_RIGHT;
 }
-
-
 #endif	/* IA_HPP */
