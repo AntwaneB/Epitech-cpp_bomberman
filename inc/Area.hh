@@ -7,6 +7,7 @@ class Area
 {
 public:
 	Area(bool, bool, bool, bool);
+	Area();
 	~Area();
 
 	bool 	explosion() const;

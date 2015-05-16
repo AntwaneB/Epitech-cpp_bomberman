@@ -10,6 +10,11 @@ Area::Area(bool destructible, bool visible, bool solid, bool blockBombs)
 	_enemy = 0;
 }
 
+Area::Area()
+{
+
+}
+
 Area::~Area()
 {
 
