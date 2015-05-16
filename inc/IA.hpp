@@ -10,6 +10,7 @@
 
 #include <cstdlib>
 #include <vector>
+#include <ctime>
 #include "Level.hpp"
 #include "Character.hpp"
 #include "Position.hpp"
@@ -55,6 +56,7 @@ IA<T>::IA(Level const* level, Character const* character):
 {
 	(void) level;
 	(void) character;
+	scanMap();
 }
 
 template<Difficulty T>
@@ -63,24 +65,95 @@ IA<T>::~IA()
 
 }
 
+template<Difficulty T>
+inline void IA<T>::scanMap()
+{
+	std::cout << "HARD OR MEDIUM scanMap()" << std::endl;
+}
+
+template<>
+inline void IA<EASY>::scanMap() // NE PREND PAS EN COMPTE LES BOMBES
+{
+	std::vector<std::vector<Block*> > map = _lvl->map().map();
+	std::cout << "EASY scanMap()" << std::endl;
+
+	for (std::vector<std::vector<Block*> >::iterator it = map.begin(); it != map.end(); it++)
+	{
+		for (std::vector<Block*>::iterator it2 = it->begin(); it2 != it->end(); it2++)
+		{
+			Block *b = *it2;
+			if (b->blockBombs())
+			{
+				b->setBlockBombs(false);
+				b->setVisible(true);
+			}
+		}
+	}
+}
+
 template<>
 inline Character::Action IA<EASY>::Move()
 {
-	std::cout << "EASY" << std::endl;
-	return Character::MOVE_RIGHT;
+	std::vector<Character::Action>	searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
+	std::vector<Character::Action>	possibleDirections;
+	std::vector<int> 				searchX = {0, 1, 0, -1};
+	std::vector<int>				searchY = {-1, 0, 1, 0};
+	int		mapHeight = _lvl->map().height();
+	int		mapWidth = _lvl->map().width();
+	int		myX = _self->position().x();
+	int		myY = _self->position().y();
+	int		i = 0;
+
+	std::cout << "running MOVE(EASY)" << std::endl;
+	while (i < 4)
+		{
+			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
+			{
+				possibleDirections.push_back(searchActions[i]);
+			}
+		i++;
+		}
+	std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
+	if (possibleDirections.size() != 0)
+		return (possibleDirections[rand() % possibleDirections.size()]);
+	else
+		return (Character::WAIT);
 }
 
 template<>
 inline Character::Action IA<MEDIUM>::Move()
 {
-	std::cout << "MEDIUM" << std::endl;
-	return Character::MOVE_RIGHT;
+	std::vector<Character::Action>	searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
+	std::vector<int> 				searchX = {0, 1, 0, -1};
+	std::vector<int>				searchY = {-1, 0, 1, 0};
+	Character::Action  				currentBestAction = Character::WAIT;
+	int		currentBestDirectionHistory = 5000;
+	int		mapHeight = _lvl->map().height();
+	int		mapWidth = _lvl->map().width();
+	int		myX = _self->position().x();
+	int		myY = _self->position().y();
+	int		i = 0;
+
+	std::cout << "running MOVE(MEDIUM)" << std::endl;
+	while (i < 4)
+		{
+			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
+			{
+				if (_history[myX + searchX[i]][myY + searchY[i]] < currentBestDirectionHistory)
+				{
+					currentBestDirectionHistory = _history[myX + searchX[i]][myY + searchY[i]];
+					currentBestAction = searchActions[i];
+				}
+			}
+		i++;
+		}
+	return (currentBestAction);
 }
 
 template<>
 inline Character::Action IA<HARD>::Move()
 {
-	std::cout << "HARD" << std::endl;
+	std::cout << "HARD Move()" << std::endl;
 	return Character::MOVE_RIGHT;
 }
 #endif	/* IA_HPP */
