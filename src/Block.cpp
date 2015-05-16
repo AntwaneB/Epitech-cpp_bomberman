@@ -82,3 +82,15 @@ Block::tick(Subject* entity)
 
 	(void)clock;
 }
+
+void
+Block::setBlockBombs(bool value)
+{
+	_blockBombs = value;
+}
+
+void
+Block::setVisible(bool value)
+{
+	_visible = value;
+}

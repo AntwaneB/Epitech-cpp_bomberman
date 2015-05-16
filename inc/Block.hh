@@ -24,6 +24,8 @@ public:
 	bool			solid() const;
 	bool			blockBombs() const;
 	std::string	texture() const;
+	void 			setBlockBombs(bool);
+	void			setVisible(bool);
 
 private:
 	void tick(Subject* entity);
