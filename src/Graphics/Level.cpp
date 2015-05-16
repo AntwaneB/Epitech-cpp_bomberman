@@ -45,7 +45,7 @@ Graphics::Level::initialize()
 		_players[i]._shader.setUniform("projection", projection);
 
 		_players[i]._map.initialize(&_players[i]._objects, _level->map().height(), _level->map().width(), _level->map().map());
-	
+
 		for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
 			{
 				for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
@@ -64,7 +64,7 @@ bool
 Graphics::Level::update()
 {
 	for (size_t j = 0; j < _players.size(); j++)
-	{	
+	{
 		if (_players[j]._input.getKey(SDLK_ESCAPE) || _players[j]._input.getInput(SDL_QUIT))
 		{
 			_context.stop();
