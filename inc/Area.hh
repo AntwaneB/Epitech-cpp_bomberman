@@ -15,6 +15,7 @@ public:
 	bool 	free() const;
 	bool 	wall() const;
 	bool 	destructible() const;
+	Character::Action direction() const;
 
 	void 	setDirection(Character::Action);
 	void	setExplosion(bool);

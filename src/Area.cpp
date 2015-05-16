@@ -45,6 +45,11 @@ bool Area::destructible() const
 	return _destructible;
 }
 
+Character::Action direction() const
+{
+	return _direction;
+}
+
 void Area::setExplosion(bool value)
 {
 	_explosion = value;
