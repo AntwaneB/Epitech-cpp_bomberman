@@ -100,8 +100,6 @@ Level::pushCharacter()
 	size_t blockX = nth % blocksPerLine;
 	size_t blockY = nth / blocksPerLine;
 
-	std::cout << blocksPerLine << " -- " << lines << std::endl;
-
 	size_t charX, charY;
 	if (blockX == 0)
 		charX = 1;
