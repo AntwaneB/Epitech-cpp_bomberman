@@ -17,6 +17,7 @@
 #include "Position.hpp"
 #include "Map.hpp"
 #include "Area.hh"
+#include "Block.hh"
 
 class Bomb;
 class Character;

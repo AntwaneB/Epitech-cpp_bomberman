@@ -91,8 +91,23 @@ Level::pushCharacter()
 
 	size_t nth = _characters.size();
 
-	size_t charX = (nth % blocksPerLine) * blockWidth + blockWidth / 2;
-	size_t charY = (nth / blocksPerLine) * blockHeight + blockHeight / 2;
+	size_t blockX = nth % blocksPerLine;
+	size_t blockY = nth / blocksPerLine;
+
+	size_t charX, charY;
+	if (blockX == 0)
+		charX = 1;
+	else if (blockX == blocksPerLine - 1)
+		charX = _map.width() - 2;
+	else
+		charX = blockX * blockWidth + blockWidth / 2;
+
+	if (blockY == 0)
+		charY = 1;
+	else if (blockY == lines - 1)
+		charY = _map.height() - 2;
+	else
+		charY = blockY * blockHeight + blockHeight / 2;
 
 	Character*	character = new Character(nth + 1, charX, charY);
 	character->addObserver(this);
@@ -167,7 +182,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.decY();
-		if (_map.at(explosion)->blockBombs())
+		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}
@@ -175,7 +190,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.incY();
-		if (_map.at(explosion)->blockBombs())
+		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}
@@ -183,7 +198,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.decX();
-		if (_map.at(explosion)->blockBombs())
+		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}
@@ -191,7 +206,7 @@ Level::bombExploded(Subject* entity)
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.incX();
-		if (_map.at(explosion)->blockBombs())
+		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
 	}

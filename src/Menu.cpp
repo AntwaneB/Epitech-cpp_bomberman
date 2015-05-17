@@ -19,5 +19,5 @@ Menu::~Menu()
 void
 Menu::run()
 {
-	this->notify(new Level(15, 15, 6), LEVEL_GENERATED);
+	this->notify(new Level(16, 16, 9), LEVEL_GENERATED);
 }
