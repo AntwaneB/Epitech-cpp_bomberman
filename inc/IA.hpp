@@ -35,31 +35,32 @@ class IA
 		Character::Action Move();
 
 	private:
-		std::vector<std::vector<Area> > _strategyMap;
-	  	std::vector<std::vector<int> >	_history;
-		std::list<Position>             _escapeNodes;
-		bool    scanMapForEnemy(Character::Action & action);
-		const Character* _self;
-		const Level* 	_lvl;
-		void scanMap(); // Reconstitue la map pour par la suite cree une strategie
-		void MarkExplosion(const Position&);
-		bool BombOpportunity(); // Faut-il que le joueur place une bombe ?
-		bool BombDetection(); // L'IA est-elle dans une zone dangereuse ?
-		void ConvertMapBlock();
+		bool	scanMapForEnemy(Character::Action & action);
+		void	scanMap(); // Reconstitue la map pour par la suite cree une strategie
+		void	MarkExplosion(const Position&);
+		bool	BombOpportunity(); // Faut-il que le joueur place une bombe ?
+		bool	BombDetection(); // L'IA est-elle dans une zone dangereuse ?
+		void	ConvertMapBlock();
+		bool	isBlockFree(const Position &) const;
 		Character::Action escapeBomb();
-		bool isBlockFree(const Position &) const;
 
+	private:
+		std::vector<std::vector<Area> > _strategyMap;
+		std::vector<std::vector<int> >	_history;
+		std::list<Position>             _escapeNodes;
+		const Character*	_self;
+		const Level*		_level;
 };
 
 template<Difficulty T>
 IA<T>::IA(Level const* level, Character const* character):
-		_self(character), _lvl(level)
+		_self(character), _level(level)
 {
-	_history.resize(_lvl->map().width());
+	_history.resize(_level->map().width());
 	int i = 0;
 	for (std::vector<std::vector<int> >::iterator it = _history.begin(); it != _history.end(); it++)
 	{
-		_history[i].resize(_lvl->map().height());
+		_history[i].resize(_level->map().height());
 		i++;
 	}
 	scanMap();
@@ -79,8 +80,8 @@ bool    IA<T>::scanMapForEnemy(Character::Action & action)
 	Character::Action   currentDirection;
 	int             	currentX;
 	int             	currentY;
-	int             	mapHeight = _lvl->map().height();
-	int             	mapWidth = _lvl->map().width();
+	int             	mapHeight = _level->map().height();
+	int             	mapWidth = _level->map().width();
 	int             	myX = _self->position().x();
 	int             	myY = _self->position().y();
 	int             	i = 0;
@@ -121,7 +122,7 @@ bool    IA<T>::scanMapForEnemy(Character::Action & action)
 template<Difficulty T>
 void IA<T>::scanMap()
 {
-	std::vector<std::vector<Block*> > map = _lvl->map().map();
+	std::vector<std::vector<Block*> > map = _level->map().map();
 	std::vector<int> searchX = {0, 1, 0, -1, 0, 2, 0, -2};
 	std::vector<int> searchY = {1, 0, -1, 0, 2, 0, -2, 0};
 	int y;
@@ -130,11 +131,11 @@ void IA<T>::scanMap()
 	(void) y;
 
 	y = 0;
-	_strategyMap.resize(_lvl->map().width());
+	_strategyMap.resize(_level->map().width());
 	for (std::vector<std::vector<Block*> >::iterator i = map.begin(); i != map.end(); ++i)
 	{
 		x = 0;
-		_strategyMap[y].resize(_lvl->map().height());
+		_strategyMap[y].resize(_level->map().height());
 		for (std::vector<Block*>::iterator j = i->begin(); j != i->end(); ++i)
 		{
 			Block *b = *j;
@@ -149,7 +150,7 @@ void IA<T>::scanMap()
 		y++;
 	}
 	y = 0;
-	std::map<Position, std::list<Character*> > players = _lvl->characters();
+	std::map<Position, std::list<Character*> > players = _level->characters();
 	for (std::map<Position, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
 	{
 		x = 0;
@@ -171,8 +172,8 @@ inline Character::Action IA<EASY>::Move()
 	std::vector<Character::Action>  possibleDirections;
 	std::vector<int>            	searchX = {0, 1, 0, -1};
 	std::vector<int>           		searchY = {-1, 0, 1, 0};
-	int             				mapHeight = _lvl->map().height();
-	int             				mapWidth = _lvl->map().width();
+	int             				mapHeight = _level->map().height();
+	int             				mapWidth = _level->map().width();
 	int             				myX = _self->position().x();
 	int             				myY = _self->position().y();
 	int             				i = 0;
@@ -202,8 +203,8 @@ inline Character::Action IA<MEDIUM>::Move()
 	std::vector<int>   				searchY = {-1, 0, 1, 0};
 	Character::Action   			currentBestAction = Character::WAIT;
 	int             				currentBestDirectionHistory = 5000;
-	int             				mapHeight = _lvl->map().height();
-	int             				mapWidth = _lvl->map().width();
+	int             				mapHeight = _level->map().height();
+	int             				mapWidth = _level->map().width();
 	int             				myX = _self->position().x();
 	int             				myY = _self->position().y();
 	int             				i = 0;
@@ -234,8 +235,8 @@ inline Character::Action IA<HARD>::Move()
 	bool    enemyDirectionFound = false;
 	int             myX = _self->position().x();
 	int             myY = _self->position().y();
-	int             mapHeight = _lvl->map().height();
-	int             mapWidth = _lvl->map().width();
+	int             mapHeight = _level->map().height();
+	int             mapWidth = _level->map().width();
 	int             i = 0;
 
 	std::cout << "running MOVE(HARD)" << std::endl;
@@ -249,7 +250,7 @@ inline Character::Action IA<HARD>::Move()
 		}
 		i++;
 	}
-	while (enemyDirectionFound == false && _lvl->characters().size() > 1)
+	while (enemyDirectionFound == false && _level->characters().size() > 1)
 	{
 		 enemyDirectionFound = scanMapForEnemy(finalAction);
 	}
@@ -263,8 +264,8 @@ inline bool IA<T>::BombOpportunity() // pose une bombe a +2 minimum de l ennemi
 	std::vector<int>  	searchY = {-2, 0, 2, 0};
 	int             	myX = _self->position().x();
 	int             	myY = _self->position().y();
-	int             	mapHeight = _lvl->map().height();
-	int             	mapWidth = _lvl->map().width();
+	int             	mapHeight = _level->map().height();
+	int             	mapWidth = _level->map().width();
 	int             	i = 0;
 
 	std::cout << "processing BombOpportunity()..." << std::endl;
@@ -288,8 +289,8 @@ inline bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l enne
     std::vector<int> 	searchY = {-1, 0, 1, 0, -2, 0, 2, 0};
     int             	myX = _self->position().x();
     int             	myY = _self->position().y();
-    int             	mapHeight = _lvl->map().height();
-    int             	mapWidth = _lvl->map().width();
+    int             	mapHeight = _level->map().height();
+    int             	mapWidth = _level->map().width();
     int             	i = 0;
 
     std::cout << "processing BombOpportunity()..." << std::endl;
@@ -305,4 +306,5 @@ inline bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l enne
     std::cout << "IA : useless to drom bomb here" << std::endl;
     return (false);
 }
+
 #endif	/* IA_HPP */
