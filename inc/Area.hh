@@ -32,6 +32,7 @@ private:
 	bool	_bomb;
 	int 	_enemy;
 	bool	_explosion;
+	int		_history;
 
 	Character::Action _direction;
 	/* data */

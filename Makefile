@@ -31,7 +31,6 @@ SRCS		  =  main.cpp \
 		     Block.cpp \
 		     BonusItem.cpp \
 		     IA.cpp \
-		     Area.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Player.cpp \
