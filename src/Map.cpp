@@ -103,6 +103,7 @@ Map::pushCharacter(const Character* character)
 
 	if (block->solid() || block->visible())
 	{
+		this->removeObserver(block);
 		delete block;
 		_map[character->position().y()][character->position().x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
 	}
@@ -138,6 +139,8 @@ Map::pushCharacter(const Character* character)
 		Position first = (*(freePath.begin())).first.first;
 		Position second = (*(freePath.begin())).first.second;
 
+		this->removeObserver(_map[first.y()][first.x()]);
+		this->removeObserver(_map[second.y()][second.x()]);
 		delete _map[first.y()][first.x()];
 		delete _map[second.y()][second.x()];
 		_map[first.y()][first.x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
