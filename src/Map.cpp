@@ -97,16 +97,22 @@ Map::blockDestroyed(Subject* entity)
 }
 
 void
+Map::replaceAt(const Position& position, Block* block)
+{
+	Block* toRemove = _map[position.y()][position.x()];
+
+	this->removeObserver(toRemove);
+	delete toRemove;
+	_map[position.y()][position.x()] = block;
+}
+
+void
 Map::pushCharacter(const Character* character)
 {
 	Block* block = _map[character->position().y()][character->position().x()];
 
 	if (block->solid() || block->visible())
-	{
-		this->removeObserver(block);
-		delete block;
-		_map[character->position().y()][character->position().x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
-	}
+		this->replaceAt(Position(character->position().x(), character->position().y()), new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
 
 	std::map<std::pair<Position, Position>, bool> freePath;
 	Position up(character->position().x(), character->position().y() - 1);
@@ -139,12 +145,8 @@ Map::pushCharacter(const Character* character)
 		Position first = (*(freePath.begin())).first.first;
 		Position second = (*(freePath.begin())).first.second;
 
-		this->removeObserver(_map[first.y()][first.x()]);
-		this->removeObserver(_map[second.y()][second.x()]);
-		delete _map[first.y()][first.x()];
-		delete _map[second.y()][second.x()];
-		_map[first.y()][first.x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
-		_map[second.y()][second.x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
+		this->replaceAt(first, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
+		this->replaceAt(second, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
 	}
 }
 

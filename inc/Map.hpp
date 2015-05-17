@@ -44,6 +44,8 @@ private:
 	void	setDestructible();
 	void	bindBlocks();
 
+	void	replaceAt(Position const &, Block*);
+
 private:
 	void	bombExploded(Subject*);
 	void	blockDestroyed(Subject*);
