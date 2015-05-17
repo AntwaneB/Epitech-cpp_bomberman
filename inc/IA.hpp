@@ -27,7 +27,7 @@ enum Difficulty { EASY, MEDIUM, HARD };
 //	template <Style style = MIXED, Difficulty difficulty = EASY>
 
 template<Difficulty T>
-class IA
+class IA: public Area
 {
 	public:
 	  	IA(Level const* level, Character const* character);
@@ -136,16 +136,26 @@ void IA<T>::scanMap()
 	for (std::vector<std::vector<Block*> >::iterator i = map.begin(); i != map.end(); ++i)
 	{
 		x = 0;
-		_strategyMap[y].resize(_level->map().height());
-		for (std::vector<Block*>::iterator j = i->begin(); j != i->end(); ++i)
+		for (std::vector<Block*>::iterator j = i->begin(); j != i->end(); ++j)
 		{
+			_strategyMap[x].resize(_level->map().height());
 			Block *b = *j;
+			(void) b;
 			_strategyMap[x][y] = Area(b->destructible(), b->visible(), b->solid(), b->blockBombs());
 			if (b->blockBombs())
 			{
-				for (int i = 0; i < 4; ++i)
-					_strategyMap[searchX[i]][searchY[i]].explosion();
+				for (int i = 0; i < 4; i++)
+				{
+					if (x + searchX[i] > 0 && x + searchX[i] < _level->map().width()
+						&& y + searchY[i] > 0 && y + searchY[i] < _level->map().height())
+					{
+						std::cout << i << std::endl;
+						_strategyMap[x + searchX[i]][y + searchY[i]].setExplosion(true);
+						std::cout << i << std::endl;
+					}
+				}
 			}
+			std::cout << x << std::endl;
 			x++;
 		}
 		y++;
@@ -155,7 +165,7 @@ void IA<T>::scanMap()
 	for (std::map<Position, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
 	{
 		x = 0;
-		for (std::list<Character*>::iterator j = i->second.begin(); j != i->second.end(); ++i)
+		for (std::list<Character*>::iterator j = i->second.begin(); j != i->second.end(); ++j)
 		{
 			Character* c = *j;
 			Position posPlayer = c->position();
