@@ -134,20 +134,35 @@ void IA<T>::scanMap()
 	for (std::vector<std::vector<Block*> >::iterator i = map.begin(); i != map.end(); ++i)
 	{
 		x = 0;
+		std::cout << "a" << std::endl;
 		_strategyMap[y].resize(_lvl->map().height());
 		for (std::vector<Block*>::iterator j = i->begin(); j != i->end(); ++i)
 		{
 			Block *b = *j;
+			std::cout << "b" << std::endl;
 			_strategyMap[x][y] = Area(b->destructible(), b->visible(), b->solid(), b->blockBombs());
+			std::cout << "c" << std::endl;			
 			if (b->blockBombs())
 			{
-				for (int i = 0; i < 4; ++i)
-					_strategyMap[searchX[i]][searchY[i]].explosion();
+				std::cout << "d" << std::endl;
+				for (int i = 0; i < 4; i++)
+				{
+					std::cout << "e" << std::endl;
+					if (x + searchX[i] > 0 && x + searchX[i] < _lvl->map().width()
+						&& y + searchY[i] > 0 && y + searchY[i] < _lvl->map().height())
+					{
+						std::cout << i << std::endl;
+						_strategyMap[x + searchX[i]][y + searchY[i]].setExplosion(true);
+						std::cout << i << std::endl;
+					}
+				}
 			}
+			std::cout << "f" << std::endl;
 			x++;
 		}
 		y++;
 	}
+	std::cout << "c" << std::endl;
 	y = 0;
 	std::map<Position, std::list<Character*> > players = _lvl->characters();
 	for (std::map<Position, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
