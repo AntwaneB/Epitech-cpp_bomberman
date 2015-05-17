@@ -83,7 +83,7 @@ Level::tick(Subject* entity)
 Character*
 Level::pushCharacter()
 {
-	size_t blocksPerLine = _map.width() > _map.height() ? ceil(sqrt(_charactersCount)) : floor(sqrt(_charactersCount));
+	size_t blocksPerLine = _map.width() >= _map.height() ? ceil(sqrt(_charactersCount)) : floor(sqrt(_charactersCount));
 	size_t lines = _map.width() > _map.height() ? floor(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
 
 	size_t blockWidth = _map.width() / blocksPerLine;
@@ -93,6 +93,8 @@ Level::pushCharacter()
 
 	size_t blockX = nth % blocksPerLine;
 	size_t blockY = nth / blocksPerLine;
+
+	std::cout << blocksPerLine << " -- " << lines << std::endl;
 
 	size_t charX, charY;
 	if (blockX == 0)
