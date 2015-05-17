@@ -97,9 +97,52 @@ Map::blockDestroyed(Subject* entity)
 }
 
 void
-Map::pushCharacter(Character* character)
+Map::pushCharacter(const Character* character)
 {
-	(void)character;
+	Block* block = _map[character->position().y()][character->position().x()];
+
+	if (block->solid() || block->visible())
+	{
+		delete block;
+		_map[character->position().y()][character->position().x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
+	}
+
+	std::map<std::pair<Position, Position>, bool> freePath;
+	Position up(character->position().x(), character->position().y() - 1);
+	Position down(character->position().x(), character->position().y() + 1);
+	Position left(character->position().x() - 1, character->position().y());
+	Position right(character->position().x() + 1, character->position().y());
+
+	if (up.y() > 0 && right.x() < (int)_width - 1)
+		freePath[{ up, right }] = false;
+	if (right.x() < (int)_width - 1 && down.y() < (int)_height - 1)
+		freePath[{ right, down }] = false;
+	if (down.y() < (int)_height - 1 && left.x() > 0)
+		freePath[{ down, left }] = false;
+	if (left.x() > 0 && up.y() > 0)
+		freePath[{ left, up }] = false;
+
+	int count = 0;
+	for (auto it = freePath.begin(); it != freePath.end(); ++it)
+	{
+		if (!this->at(it->first.first)->solid() && !this->at(it->first.first)->visible()
+			&& !this->at(it->first.second)->solid() && !this->at(it->first.second)->visible())
+		{
+			it->second = true;
+			count++;
+		}
+	}
+
+	if (count == 0)
+	{
+		Position first = (*(freePath.begin())).first.first;
+		Position second = (*(freePath.begin())).first.second;
+
+		delete _map[first.y()][first.x()];
+		delete _map[second.y()][second.x()];
+		_map[first.y()][first.x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
+		_map[second.y()][second.x()] = new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]);
+	}
 }
 
 void
@@ -151,7 +194,7 @@ Map::setDestructible()
 		{
 			if (_map[y][x] == NULL)
 			{
-				if (rand() % 100 < 60)
+				if (rand() % 100 < 75)
 					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["box"]);
 				else
 					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["void"]);

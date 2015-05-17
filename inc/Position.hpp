@@ -38,6 +38,7 @@ public:
 	void	decX(int dec = 1);
 	int	x() const;
 	bool	isSet() const;
+	bool	outOfBounds(int maxX, int maxY) const;
 
 	void	toConfig(Config &) const;
 

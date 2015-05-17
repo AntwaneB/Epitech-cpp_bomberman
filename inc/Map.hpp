@@ -30,7 +30,7 @@ public:
 	Map(std::string const & mapFile, std::map<Position, std::list<Character* > > const &);
 	virtual ~Map();
 
-	void	pushCharacter(Character*);
+	void	pushCharacter(const Character*);
 
 	size_t	width() const;
 	size_t	height() const;

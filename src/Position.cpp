@@ -151,6 +151,12 @@ Position::operator==(Position const & o) const
 	return (o._x == _x && o._y == _y && o._z == _z);
 }
 
+bool
+Position::outOfBounds(int maxX, int maxY) const
+{
+	return (_x <= 0 || _x >= maxX || _y <= 0 || _y >= maxY);
+}
+
 std::ostream&
 operator<<(std::ostream& os, const Position & position)
 {

@@ -21,10 +21,10 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 
 	if (_nth == 4)
 	{
-		_queuedActions.push(Character::MOVE_DOWN);
 		_queuedActions.push(Character::DROP_BOMB);
 	}
 
+	std::cout << "Character spawned at " << _position << std::endl;
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
