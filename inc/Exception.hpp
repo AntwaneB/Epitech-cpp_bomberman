@@ -39,6 +39,14 @@ public:
 	virtual ~ArgumentsException() throw() {}
 };
 
+class ExitException : public Exception
+{
+public:
+	ExitException(std::string const & s) : Exception(s) {}
+
+	virtual ~ExitException() throw() {}
+};
+
 class ConfigException : public Exception
 {
 public:

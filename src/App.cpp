@@ -66,28 +66,41 @@ App::runLevel(Subject* entity)
 void
 App::exit(Subject* entity __attribute__((unused)))
 {
-	exit(0);
+	throw ExitException("Exiting normally");
 }
 
 int
 App::run()
 {
-	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+	try
 	{
-		_display = new Graphics::Display;
-		this->addObserver(_display);
+		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+		{
+			_display = new Graphics::Display;
+			this->addObserver(_display);
+			_display->addObserver(this);
+		}
+
+		Menu* mainMenu = new Menu;
+		mainMenu->addObserver(this);
+		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+			mainMenu->addObserver(_display);
+
+		mainMenu->run();
+
+		delete mainMenu;
 	}
-
-	Menu* mainMenu = new Menu;
-	mainMenu->addObserver(this);
-	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
-		mainMenu->addObserver(_display);
-
-	mainMenu->run();
-
-	delete mainMenu;
-	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
-		delete _display;
+	catch (ExitException const & e)
+	{
+		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
+			delete _display;
+		return (EXIT_SUCCESS);
+	}
+	catch (std::exception const & e)
+	{
+		std::cerr << e.what() << std::endl;
+		return (EXIT_FAILURE);
+	}
 
 	return (0);
 }
