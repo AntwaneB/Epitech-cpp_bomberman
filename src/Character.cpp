@@ -154,3 +154,10 @@ Character::toConfig(Config & cfg) const
 		(*it)->toConfig(cfg[_nth]["bombs"][index]);
 }
 */
+
+void
+Character::pushAction(Character::Action action)
+{
+	if (_queuedActions.size() == 0)
+		_queuedActions.push(action);
+}

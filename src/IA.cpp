@@ -1,11 +1,9 @@
 #include "IA.hpp"
 
-Area::Area(bool destructible, bool visible, bool solid, bool blockBombs)
+Area::Area(bool destructible, bool solid)
 {
 	_destructible = destructible;
-	_free = visible;
 	_wall = solid;
-	_bomb = blockBombs;
 	_direction = Character::WAIT;
 	_enemy = 0;
 }
@@ -33,11 +31,6 @@ bool Area::bomb() const
 int Area::enemy() const
 {
 	return _enemy;
-}
-
-bool Area::free() const
-{
-	return _free;
 }
 
 bool Area::wall() const
@@ -68,16 +61,6 @@ void Area::setBomb(bool value)
 void Area::incEnemy()
 {
 	_enemy += 1;
-}
-
-void Area::decEnemy()
-{
-	_enemy -= 1;
-}
-
-void Area::setFree(bool value)
-{
-	_free = value;
 }
 
 void Area::setDirection(Character::Action move)

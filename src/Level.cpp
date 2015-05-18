@@ -58,6 +58,12 @@ Level::characters() const
 	return (_characters);
 }
 
+std::map<Position, std::list<Bomb *> > const &
+Level::bombs() const
+{
+	return _bombs;
+}
+
 void
 Level::run()
 {
