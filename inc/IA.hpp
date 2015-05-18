@@ -27,7 +27,7 @@ enum Difficulty { EASY, MEDIUM, HARD };
 //	template <Style style = MIXED, Difficulty difficulty = EASY>
 
 template<Difficulty T>
-class IA: public Area
+class IA : public Area
 {
 	public:
 	  	IA(Level const* level, Character* character);
@@ -215,7 +215,7 @@ void IA<T>::scanMap()
 }
 
 template<Difficulty T>
-bool IA<T>::BombDetection() // BOMBS DETECTION FOR HARD AND MEDIUM 
+bool IA<T>::BombDetection() // BOMBS DETECTION FOR HARD AND MEDIUM
 {
 	Position currentPosition = _self->position();
 	Area a = _strategyMap[currentPosition.x()][currentPosition.y()];
