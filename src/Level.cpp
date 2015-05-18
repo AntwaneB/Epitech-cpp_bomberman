@@ -90,7 +90,7 @@ Character*
 Level::pushCharacter()
 {
 	size_t blocksPerLine = _map.width() >= _map.height() ? ceil(sqrt(_charactersCount)) : floor(sqrt(_charactersCount));
-	size_t lines = _map.width() > _map.height() ? floor(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
+	size_t lines = _map.width() >= _map.height() && sqrt(_charactersCount) != static_cast<int>(sqrt(_charactersCount)) ? floor(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
 
 	size_t blockWidth = _map.width() / blocksPerLine;
 	size_t blockHeight = _map.height() / lines;
