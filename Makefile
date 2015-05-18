@@ -88,9 +88,11 @@ LGDL_DIR	  =  libgdl
 DEPS		  =  $(patsubst %,$(INCS_DIR)/%,$(INCS))
 
 CXXFLAGS	  += -I$(INCS_DIR) -I$(INCS_DIR)/misc
-CXXFLAGS	  += -I$(LGDL_DIR)/includes -L$(LGDL_DIR)/libs
-CXXFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+CXXFLAGS	  += -I$(LGDL_DIR)/includes
 CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
+
+GDLFLAGS	  += -L$(LGDL_DIR)/libs
+GDLFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 CXXFLAGS	  += -g
 
@@ -99,16 +101,18 @@ CXXFLAGS	  += -g
 ## COMPILATION RULES ##
 #######################
 
-$(NAME):		$(OBJS)
-			$(CXX) $(OBJS) $(CXXFLAGS) -o $(NAME)
+$(NAME):		   $(OBJS)
+			   $(CXX) $(OBJS) $(CXXFLAGS) $(GDLFLAGS) -o $(NAME)
 
-all:			$(NAME)
+all:			   $(NAME)
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.cpp $(DEPS)
-		        @$(MKDIR) $(OBJS_DIR)
-			@$(MKDIR) $(OBJS_DIR)/Graphics
-			@$(MKDIR) $(OBJS_DIR)/misc
-			$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(OBJS_DIR)/Graphics/%.o:  CXXFLAGS += $(GDLFLAGS)
+
+$(OBJS_DIR)/%.o:	   $(SRCS_DIR)/%.cpp $(DEPS)
+			   @$(MKDIR) $(OBJS_DIR)
+			   @$(MKDIR) $(OBJS_DIR)/Graphics
+			   @$(MKDIR) $(OBJS_DIR)/misc
+			   $(CXX) $(CXXFLAGS) -c -o $@ $<
 
 ################
 ## MISC RULES ##
@@ -123,4 +127,3 @@ fclean:		     clean
 re:		     fclean all
 
 .PHONY: re fclean clean all
-	
