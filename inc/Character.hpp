@@ -28,6 +28,7 @@ public:
 	Position	prevPosition() const;
 
 	void		toConfig(Config &) const;
+	void		pushAction(Character::Action);
 
 private:
 	void tick(Subject* entity);
