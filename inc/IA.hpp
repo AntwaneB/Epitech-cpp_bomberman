@@ -20,71 +20,69 @@
 class Bomb;
 class Item;
 
-
 namespace IA
 {
-enum Difficulty { EASY, MEDIUM, HARD };
+	enum Difficulty { EASY, MEDIUM, HARD };
 
-class Area
-{
-public:
-    Area(bool, bool);
-    Area();
-    ~Area();
-
-    bool    explosion() const;
-    bool    bomb() const;
-    int     enemy() const;
-    int     history() const;    
-    bool    wall() const;
-    bool    destructible() const;
-    Character::Action direction() const;
-
-    void    setDirection(Character::Action);
-    void    setExplosion(bool);
-    void    setBomb(bool);
-    void    incEnemy();
-    void    incHistory();
-
-private:
-    bool    _destructible;
-    bool    _wall;
-    bool    _bomb;
-    int     _enemy;
-    bool    _explosion;
-    int     _history;
-
-    Character::Action _direction;
-    /* data */
-};
-
-template<Difficulty T>
-class IA
-{
+	class Area
+	{
 	public:
-	  	IA(Level const* level, Character* character);
-	  	virtual ~IA();
-	  	void playTurn();
-		
+		 Area(bool, bool);
+		 Area();
+		 ~Area();
+
+		 bool    explosion() const;
+		 bool    bomb() const;
+		 int     enemy() const;
+		 int     history() const;
+		 bool    wall() const;
+		 bool    destructible() const;
+		 Character::Action direction() const;
+
+		 void    setDirection(Character::Action);
+		 void    setExplosion(bool);
+		 void    setBomb(bool);
+		 void    incEnemy();
+		 void    incHistory();
 
 	private:
-		bool	scanMapForEnemy(Character::Action & action);
-		void	scanMap();
-		void	MarkExplosion(const Position&);
-		bool	BombOpportunity();
-		bool	BombDetection();
-		bool 	scanMapForEscape(Character::Action &);
-/*		void 	debugStrategieMap();*/
-        Character::Action     Move();
-		Character::Action     escapeBomb();
+		 bool    _destructible;
+		 bool    _wall;
+		 bool    _bomb;
+		 int     _enemy;
+		 bool    _explosion;
+		 int     _history;
 
-	private:
-		std::vector<std::vector<Area> > _strategyMap;
-		std::list<Position>             _escapeNodes;
-		Character*						_self;
-		const Level*					_level;
-};
+		 Character::Action _direction;
+		 /* data */
+	};
 
+	template<Difficulty T>
+	class IA
+	{
+		public:
+			IA(Level const* level, Character* character);
+			virtual ~IA();
+			void playTurn();
+
+
+		private:
+			bool	scanMapForEnemy(Character::Action & action);
+			void	scanMap();
+			void	MarkExplosion(const Position&);
+			bool	BombOpportunity();
+			bool	BombDetection();
+			bool 	scanMapForEscape(Character::Action &);
+	/*		void 	debugStrategieMap();*/
+			Character::Action     Move();
+			Character::Action     escapeBomb();
+
+		private:
+			std::vector<std::vector<Area> > _strategyMap;
+			std::list<Position>             _escapeNodes;
+			Character*						_self;
+			const Level*					_level;
+	};
 
 }
 
@@ -266,7 +264,7 @@ void IA::IA<T>::playTurn()
 }
 
 template<IA::Difficulty T>
-inline Character::Action IA::IA<T>::escapeBomb()
+Character::Action IA::IA<T>::escapeBomb()
 {
     std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
     std::vector<int>                searchX = {0, 1, 0, -1};
@@ -358,14 +356,14 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
 namespace IA
 {
 template<>
-inline bool IA<EASY>::BombDetection()
+bool IA<EASY>::BombDetection()
 {
     return (false);
 }
 }
 
 template<IA::Difficulty T>
-inline bool IA::IA<T>::BombDetection()
+bool IA::IA<T>::BombDetection()
 {
     Position currentPosition = _self->position();
     Area a = _strategyMap[currentPosition.x()][currentPosition.y()];
@@ -379,7 +377,7 @@ inline bool IA::IA<T>::BombDetection()
 namespace IA
 {
 template<>
-inline Character::Action IA<EASY>::Move()
+Character::Action IA<EASY>::Move()
 {
     std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
     std::vector<Character::Action>  possibleDirections;
@@ -412,7 +410,7 @@ inline Character::Action IA<EASY>::Move()
 namespace IA
 {
 template<>
-inline Character::Action IA<MEDIUM>::Move()
+Character::Action IA<MEDIUM>::Move()
 {
     std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
     std::vector<int>                searchX = {0, 1, 0, -1};
@@ -449,47 +447,47 @@ inline Character::Action IA<MEDIUM>::Move()
 
 namespace IA
 {
-template<>
-inline Character::Action IA<HARD>::Move()
-{
-    std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
-    std::vector<int>                searchX = {0, 1, 0, -1};
-    std::vector<int>                searchY = {-1, 0, 1, 0};
-    Character::Action               finalAction = Character::WAIT;
-    bool                            enemyDirectionFound = false;
-    int                             myX = _self->position().x();
-    int                             myY = _self->position().y();
-    int                             mapHeight = _level->map().height();
-    int                             mapWidth = _level->map().width();
-    int                             i = 0;
-    int                             counter = 0;
+	template<>
+	Character::Action IA<HARD>::Move()
+	{
+		 std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
+		 std::vector<int>                searchX = {0, 1, 0, -1};
+		 std::vector<int>                searchY = {-1, 0, 1, 0};
+		 Character::Action               finalAction = Character::WAIT;
+		 bool                            enemyDirectionFound = false;
+		 int                             myX = _self->position().x();
+		 int                             myY = _self->position().y();
+		 int                             mapHeight = _level->map().height();
+		 int                             mapWidth = _level->map().width();
+		 int                             i = 0;
+		 int                             counter = 0;
 
-    std::cout << "running MOVE(HARD)" << std::endl;
-    std::cout << "myPos : " << myX << "/" << myY << std::endl;
-    _strategyMap[myX][myY].setDirection(Character::MOVE_UP);
-    while (i < 4)
-    {
-            if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
-            {
-                counter++;
-                _strategyMap[myX + searchX[i]][myY + searchY[i]].setDirection(searchActions[i]);
-                _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
-            }
-            i++;
-    }
-    while (enemyDirectionFound == false && _level->characters().size() > 1)
-    {
-         enemyDirectionFound = scanMapForEnemy(finalAction);
-    }
-    _escapeNodes.clear();
-    return finalAction;
-}
+		 std::cout << "running MOVE(HARD)" << std::endl;
+		 std::cout << "myPos : " << myX << "/" << myY << std::endl;
+		 _strategyMap[myX][myY].setDirection(Character::MOVE_UP);
+		 while (i < 4)
+		 {
+					if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
+							  && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
+							  && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
+					{
+						 counter++;
+						 _strategyMap[myX + searchX[i]][myY + searchY[i]].setDirection(searchActions[i]);
+						 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
+					}
+					i++;
+		 }
+		 while (enemyDirectionFound == false && _level->characters().size() > 1)
+		 {
+				enemyDirectionFound = scanMapForEnemy(finalAction);
+		 }
+		 _escapeNodes.clear();
+		 return finalAction;
+	}
 }
 
 template<IA::Difficulty T>
-inline bool IA::IA<T>::BombOpportunity() // pose une bombe a +2 de l ennemi
+bool IA::IA<T>::BombOpportunity() // pose une bombe a +2 de l ennemi
 {
     std::vector<int>    searchX = {0, 2, 0, -2};
     std::vector<int>    searchY = {-2, 0, 2, 0};
@@ -502,7 +500,7 @@ inline bool IA::IA<T>::BombOpportunity() // pose une bombe a +2 de l ennemi
     std::cout << "processing BombOpportunity()..." << std::endl;
     while (i < 8)
     {
-         if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight 
+         if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
             && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
          {
               std::cout << "IA advise to DROP_BOMB!" << std::endl;
@@ -516,31 +514,31 @@ inline bool IA::IA<T>::BombOpportunity() // pose une bombe a +2 de l ennemi
 
 namespace IA
 {
-template<>
-inline bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
-{
-    std::vector<int> 	searchX = {0, 1, 0, -1, 0, 2, 0, -2};
-    std::vector<int> 	searchY = {-1, 0, 1, 0, -2, 0, 2, 0};
-    int             	myX = _self->position().x();
-    int             	myY = _self->position().y();
-    int             	mapHeight = _level->map().height();
-    int             	mapWidth = _level->map().width();
-    int             	i = 0;
+	template<>
+	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
+	{
+		 std::vector<int> 	searchX = {0, 1, 0, -1, 0, 2, 0, -2};
+		 std::vector<int> 	searchY = {-1, 0, 1, 0, -2, 0, 2, 0};
+		 int             	myX = _self->position().x();
+		 int             	myY = _self->position().y();
+		 int             	mapHeight = _level->map().height();
+		 int             	mapWidth = _level->map().width();
+		 int             	i = 0;
 
-    std::cout << "processing BombOpportunity()..." << std::endl;
-    while (i < 8)
-    {
-        if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 
-            && (myY + searchY[i]) < mapHeight && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
-        {
-            std::cout << "IA advise to DROP_BOMB!" << std::endl;
-            return (true);
-        }
-    	i++;
-    }
-    std::cout << "IA : useless to drom bomb here" << std::endl;
-    return (false);
-}
+		 std::cout << "processing BombOpportunity()..." << std::endl;
+		 while (i < 8)
+		 {
+			  if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0
+					&& (myY + searchY[i]) < mapHeight && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
+			  {
+					std::cout << "IA advise to DROP_BOMB!" << std::endl;
+					return (true);
+			  }
+			i++;
+		 }
+		 std::cout << "IA : useless to drom bomb here" << std::endl;
+		 return (false);
+	}
 }
 
 #endif	/* IA_HPP */
