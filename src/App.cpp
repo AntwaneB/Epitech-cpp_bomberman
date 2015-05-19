@@ -81,7 +81,7 @@ App::run()
 			_display->addObserver(this);
 		}
 
-		Menu* mainMenu = new Menu;
+		Menu* mainMenu = new Menu("menus/main.xml");
 		mainMenu->addObserver(this);
 		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
 			mainMenu->addObserver(_display);
