@@ -9,7 +9,6 @@
 #define	IA_HH
 
 #include <vector>
-//#include <ctime>
 #include <random>
 #include "Level.hpp"
 #include "Character.hpp"
