@@ -65,6 +65,7 @@ Graphics::Level::update()
 {
 	for (size_t j = 0; j < _players.size(); j++)
 	{
+		_players[j]._map.update(&_players[j]._objects, _level->map().height(), _level->map().width(), _level->map().map());
 		if (_players[j]._input.getKey(SDLK_ESCAPE) || _players[j]._input.getInput(SDL_QUIT))
 		{
 			_context.stop();

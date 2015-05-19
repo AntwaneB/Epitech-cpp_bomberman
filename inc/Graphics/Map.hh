@@ -32,8 +32,10 @@ namespace Graphics
 		Map();
 		virtual ~Map();
 		virtual bool initialize(std::vector<Object*> *, size_t, size_t, std::vector<std::vector<Block*> >);
-		virtual bool update();
+		virtual bool update(std::vector<Object*> *, size_t, size_t, std::vector<std::vector<Block*> >);
 		virtual void draw();
+	private:
+		std::vector<std::vector<Block*> > _map;
 	};
 
 };

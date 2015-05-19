@@ -38,6 +38,11 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 		translate(glm::vec3(-1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
 	if (input.getKey(SDLK_LEFT))
 		translate(glm::vec3(1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
+	/*
+	if (input.getKey(SDLK_DOWN) || input.getKey(SDLK_UP) || input.getKey(SDLK_RIGHT) || input.getKey(SDLK_LEFT))
+		_model.setCurrentAnim(0);
+		_model.setCurrentAnim(1);
+	*/
 }
 
 void
