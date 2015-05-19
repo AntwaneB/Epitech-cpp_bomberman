@@ -41,15 +41,15 @@ Graphics::Menu::Menu()
             else if(event.type == sf::Event::KeyPressed)
              {
                 if(event.key.code == sf::Keyboard::Down)
-                { 
+                {
              		if (y >= 950)
             			y = 500;
             		else
             			y += 150;
-            		update(x, y);   
+            		update(x, y);
                 }
                 else if(event.key.code == sf::Keyboard::Up)
-                { 
+                {
              		if (y <= 500)
             			y = 950;
             		else
