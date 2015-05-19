@@ -1,69 +1,80 @@
 #include "IA.hpp"
 
-Area::Area(bool destructible, bool solid)
+IA::Area::Area(bool destructible, bool solid)
 {
 	_destructible = destructible;
 	_wall = solid;
 	_direction = Character::WAIT;
 	_enemy = 0;
+	_history = 0;
 }
 
-Area::Area()
+IA::Area::Area()
 {
 
 }
 
-Area::~Area()
+IA::Area::~Area()
 {
 
 }
 
-bool Area::explosion() const
+bool IA::Area::explosion() const
 {
 	return _explosion;
 }
 
-bool Area::bomb() const
+bool IA::Area::bomb() const
 {
 	return _bomb;
 }
 
-int Area::enemy() const
+int IA::Area::enemy() const
 {
 	return _enemy;
 }
 
-bool Area::wall() const
+int IA::Area::history() const
+{
+	return _history;
+}
+
+bool IA::Area::wall() const
 {
 	return _wall;
 }
 
-bool Area::destructible() const
+bool IA::Area::destructible() const
 {
 	return _destructible;
 }
 
-Character::Action Area::direction() const
+Character::Action IA::Area::direction() const
 {
 	return _direction;
 }
 
-void Area::setExplosion(bool value)
+void IA::Area::setExplosion(bool value)
 {
 	_explosion = value;
 }
 
-void Area::setBomb(bool value)
+void IA::Area::setBomb(bool value)
 {
 	_bomb = value;
 }
 
-void Area::incEnemy()
+void IA::Area::incEnemy()
 {
 	_enemy += 1;
 }
 
-void Area::setDirection(Character::Action move)
+void IA::Area::incHistory()
+{
+	_history += 1;
+}
+
+void IA::Area::setDirection(Character::Action move)
 {
 	_direction = move;
 }

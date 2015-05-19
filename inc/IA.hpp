@@ -8,32 +8,64 @@
 #ifndef IA_HH
 #define	IA_HH
 
-#include <cstdlib>
 #include <vector>
-#include <ctime>
+//#include <ctime>
 #include <random>
 #include "Level.hpp"
 #include "Character.hpp"
 #include "Position.hpp"
 #include "Map.hpp"
-#include "Area.hh"
 #include "Block.hh"
 
 class Bomb;
-class Character;
 class Item;
 
+
+namespace IA
+{
 enum Difficulty { EASY, MEDIUM, HARD };
-//	template <Style style = MIXED, Difficulty difficulty = EASY>
+
+class Area
+{
+public:
+    Area(bool, bool);
+    Area();
+    ~Area();
+
+    bool    explosion() const;
+    bool    bomb() const;
+    int     enemy() const;
+    int     history() const;    
+    bool    wall() const;
+    bool    destructible() const;
+    Character::Action direction() const;
+
+    void    setDirection(Character::Action);
+    void    setExplosion(bool);
+    void    setBomb(bool);
+    void    incEnemy();
+    void    incHistory();
+
+private:
+    bool    _destructible;
+    bool    _wall;
+    bool    _bomb;
+    int     _enemy;
+    bool    _explosion;
+    int     _history;
+
+    Character::Action _direction;
+    /* data */
+};
 
 template<Difficulty T>
-class IA : public Area
+class IA
 {
 	public:
 	  	IA(Level const* level, Character* character);
 	  	virtual ~IA();
 	  	void playTurn();
-		Character::Action Move();
+		
 
 	private:
 		bool	scanMapForEnemy(Character::Action & action);
@@ -43,34 +75,30 @@ class IA : public Area
 		bool	BombDetection();
 		bool 	scanMapForEscape(Character::Action &);
 /*		void 	debugStrategieMap();*/
-		Character::Action escapeBomb();
+        Character::Action     Move();
+		Character::Action     escapeBomb();
 
 	private:
 		std::vector<std::vector<Area> > _strategyMap;
-		std::vector<std::vector<int> >	_history;
 		std::list<Position>             _escapeNodes;
 		Character*						_self;
 		const Level*					_level;
 };
 
-template<Difficulty T>
-IA<T>::IA(Level const* level, Character* character):
+
+}
+
+template<IA::Difficulty T>
+IA::IA<T>::IA(Level const* level, Character* character):
 		_level(level)
 {
 	_self = character;
-	_history.resize(_level->map().width());
-	int i = 0;
-	for (std::vector<std::vector<int> >::iterator it = _history.begin(); it != _history.end(); it++)
-	{
-		_history[i].resize(_level->map().height());
-		i++;
-	}
 	scanMap();
 	//debugStrategieMap();
 }
 
-template<Difficulty T>
-IA<T>::~IA()
+template<IA::Difficulty T>
+IA::IA<T>::~IA()
 {
 
 }
@@ -100,8 +128,8 @@ void IA<T>::debugStrategieMap()
 	}
 }*/
 
-template<Difficulty T>
-bool    IA<T>::scanMapForEnemy(Character::Action & action)
+template<IA::Difficulty T>
+bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
 {
     std::vector<int>        searchX = {0, 1, 0, -1};
     std::vector<int>        searchY = {-1, 0, 1, 0};
@@ -152,8 +180,8 @@ bool    IA<T>::scanMapForEnemy(Character::Action & action)
     return (false);
 }
 
-template<Difficulty T>
-void IA<T>::scanMap()
+template<IA::Difficulty T>
+void IA::IA<T>::scanMap()
 {
 	std::vector<std::vector<Block*> > map = _level->map().map();
 	std::vector<int> searchX = {0, 1, 0, -1, 0, 2, 0, -2};
@@ -202,8 +230,8 @@ void IA<T>::scanMap()
 			_strategyMap[p.x()][p.y()].setExplosion(true);
 			for (int i = 0; i < 4; i++)
 			{
-				if (x + searchX[i] > 0 && x + searchX[i] < _level->map().width()
-					&& y + searchY[i] > 0 && y + searchY[i] < _level->map().height())
+				if (x + searchX[i] > 0 && x + searchX[i] < static_cast<int>(_level->map().width())
+					&& y + searchY[i] > 0 && y + searchY[i] < static_cast<int>(_level->map().height()))
 				{
 					_strategyMap[x + searchX[i]][y + searchY[i]].setExplosion(true);
 				}
@@ -214,23 +242,15 @@ void IA<T>::scanMap()
 	}
 }
 
-template<Difficulty T>
-bool IA<T>::BombDetection() // BOMBS DETECTION FOR HARD AND MEDIUM
+template<IA::Difficulty T>
+void IA::IA<T>::playTurn()
 {
-	Position currentPosition = _self->position();
-	Area a = _strategyMap[currentPosition.x()][currentPosition.y()];
+    int     myX = _self->position().x();
+    int     myY = _self->position().y();
 
-	if (a.bomb() || a.explosion())
-		return true;
-	else
-		return false;
-}
-
-template<Difficulty T>
-void IA<T>::playTurn()
-{
+    _strategyMap[myX][myY].incHistory();
 	scanMap();
-	bool isInDanger = BombDetection();
+    bool isInDanger = BombDetection();
 	Character::Action action;
 
 	if (isInDanger)
@@ -245,45 +265,20 @@ void IA<T>::playTurn()
 	_self->pushAction(action);
 }
 
-template<Difficulty T>
-inline bool IA<T>::BombOpportunity() // pose une bombe a +2 minimum de l ennemi
-{
-	std::vector<int>  	searchX = {0, 2, 0, -2};
-	std::vector<int>  	searchY = {-2, 0, 2, 0};
-	int             	myX = _self->position().x();
-	int             	myY = _self->position().y();
-	int             	mapHeight = _level->map().height();
-	int             	mapWidth = _level->map().width();
-	int             	i = 0;
-
-	std::cout << "processing BombOpportunity()..." << std::endl;
-	while (i < 8)
-	{
-		 if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
-		 {
-			  std::cout << "IA advise to DROP_BOMB!" << std::endl;
-			  return (true);
-		 }
-	 i++;
-	}
-	std::cout << "IA : useless to drom bomb here" << std::endl;
-	return (false);
-}
-
-template<Difficulty T>
-inline Character::Action IA<T>::escapeBomb()
+template<IA::Difficulty T>
+inline Character::Action IA::IA<T>::escapeBomb()
 {
     std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
     std::vector<int>                searchX = {0, 1, 0, -1};
     std::vector<int>                searchY = {-1, 0, 1, 0};
     Character::Action               finalAction = Character::WAIT;
-    bool                                                    escapeDirectionFound = false;
-    int                                                     myX = _self->position().x();
-    int                                                     myY = _self->position().y();
-    int                                                     mapHeight = _level->map().height();
-    int                                                     mapWidth = _level->map().width();
-    int                                                     i = 0;
-    int                                                             counter = 0; //debug purpose only
+    bool                            escapeDirectionFound = false;
+    int                             myX = _self->position().x();
+    int                             myY = _self->position().y();
+    int                             mapHeight = _level->map().height();
+    int                             mapWidth = _level->map().width();
+    int                             i = 0;
+    int                             counter = 0; //debug purpose only
 
     std::cout << "running MOVE(HARD)" << std::endl;
     std::cout << "myPos : " << myX << "/" << myY << std::endl;
@@ -294,7 +289,7 @@ inline Character::Action IA<T>::escapeBomb()
                 && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
                 && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
         {
-            counter++;
+            counter++; //Debug
             _strategyMap[myX + searchX[i]][myY + searchY[i]].setDirection(searchActions[i]);
             _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
         }
@@ -308,17 +303,17 @@ inline Character::Action IA<T>::escapeBomb()
     return finalAction;
 }
 
-template<Difficulty T>
-bool    IA<T>::scanMapForEscape(Character::Action & action)
+template<IA::Difficulty T>
+bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
 {
-    std::vector<int>        searchX = {0, 1, 0, -1};
-    std::vector<int>        searchY = {-1, 0, 1, 0};
+    std::vector<int>    searchX = {0, 1, 0, -1};
+    std::vector<int>    searchY = {-1, 0, 1, 0};
     Character::Action   currentDirection;
-    int                     currentX;
-    int                     currentY;
-    int                     mapHeight = _level->map().height();
-    int                     mapWidth = _level->map().width();
-    int                     i = 0;
+    int                 currentX;
+    int                 currentY;
+    int                 mapHeight = _level->map().height();
+    int                 mapWidth = _level->map().width();
+    int                 i = 0;
 
     if (_escapeNodes.size() == 0)
     {
@@ -360,24 +355,41 @@ bool    IA<T>::scanMapForEscape(Character::Action & action)
     return (false);
 }
 
-template<>
-inline bool IA<EASY>::BombDetection() // BOMBS DETECTION FOR EASY IA
+namespace IA
 {
-	return (false);
+template<>
+inline bool IA<EASY>::BombDetection()
+{
+    return (false);
+}
 }
 
+template<IA::Difficulty T>
+inline bool IA::IA<T>::BombDetection()
+{
+    Position currentPosition = _self->position();
+    Area a = _strategyMap[currentPosition.x()][currentPosition.y()];
+
+    if (a.bomb() || a.explosion())
+        return true;
+    else
+        return false;
+}
+
+namespace IA
+{
 template<>
 inline Character::Action IA<EASY>::Move()
 {
     std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
     std::vector<Character::Action>  possibleDirections;
     std::vector<int>                searchX = {0, 1, 0, -1};
-    std::vector<int>                        searchY = {-1, 0, 1, 0};
-    int                                             mapHeight = _level->map().height();
-    int                                             mapWidth = _level->map().width();
-    int                                             myX = _self->position().x();
-    int                                             myY = _self->position().y();
-    int                                             i = 0;
+    std::vector<int>                searchY = {-1, 0, 1, 0};
+    int                             mapHeight = _level->map().height();
+    int                             mapWidth = _level->map().width();
+    int                             myX = _self->position().x();
+    int                             myY = _self->position().y();
+    int                             i = 0;
 
     std::cout << "running MOVE(EASY)" << std::endl;
     while (i < 4)
@@ -395,21 +407,24 @@ inline Character::Action IA<EASY>::Move()
     else
         return (Character::WAIT);
 }
+}
 
+namespace IA
+{
 template<>
 inline Character::Action IA<MEDIUM>::Move()
 {
     std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
-    std::vector<int>                                searchX = {0, 1, 0, -1};
-    std::vector<int>                                searchY = {-1, 0, 1, 0};
-    Character::Action                       currentBestAction = Character::WAIT;
-    int                                             currentBestDirectionHistory = 5000;
-    int                                             mapHeight = _level->map().height();
-    int                                             mapWidth = _level->map().width();
-    int                                             myX = _self->position().x();
-    int                                             myY = _self->position().y();
-    int                                             i = 0;
-    int                                                             counter = 0; //debug purpose only
+    std::vector<int>                searchX = {0, 1, 0, -1};
+    std::vector<int>                searchY = {-1, 0, 1, 0};
+    Character::Action               currentBestAction = Character::WAIT;
+    int                             currentBestDirectionHistory = 5000;
+    int                             mapHeight = _level->map().height();
+    int                             mapWidth = _level->map().width();
+    int                             myX = _self->position().x();
+    int                             myY = _self->position().y();
+    int                             i = 0;
+    int                             counter = 0; //debug purpose only
 
     std::cout << "running MOVE(MEDIUM)" << std::endl;
     while (i < 4)
@@ -418,10 +433,10 @@ inline Character::Action IA<MEDIUM>::Move()
                 && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
                 && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
         {
-            counter++;
-            if (_history[myX + searchX[i]][myY + searchY[i]] < currentBestDirectionHistory)
+            counter++; //debug
+            if (_strategyMap[myX + searchX[i]][myY + searchY[i]].history() < currentBestDirectionHistory)
             {
-                    currentBestDirectionHistory = _history[myX + searchX[i]][myY + searchY[i]];
+                    currentBestDirectionHistory = _strategyMap[myX + searchX[i]][myY + searchY[i]].history();
                     currentBestAction = searchActions[i];
             }
         }
@@ -430,7 +445,10 @@ inline Character::Action IA<MEDIUM>::Move()
     std::cout << "MOVE(MEDIUM) : found " << counter << " possible direction(s)" << std::endl;
     return (currentBestAction);
 }
+}
 
+namespace IA
+{
 template<>
 inline Character::Action IA<HARD>::Move()
 {
@@ -468,7 +486,36 @@ inline Character::Action IA<HARD>::Move()
     _escapeNodes.clear();
     return finalAction;
 }
+}
 
+template<IA::Difficulty T>
+inline bool IA::IA<T>::BombOpportunity() // pose une bombe a +2 de l ennemi
+{
+    std::vector<int>    searchX = {0, 2, 0, -2};
+    std::vector<int>    searchY = {-2, 0, 2, 0};
+    int                 myX = _self->position().x();
+    int                 myY = _self->position().y();
+    int                 mapHeight = _level->map().height();
+    int                 mapWidth = _level->map().width();
+    int                 i = 0;
+
+    std::cout << "processing BombOpportunity()..." << std::endl;
+    while (i < 8)
+    {
+         if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight 
+            && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
+         {
+              std::cout << "IA advise to DROP_BOMB!" << std::endl;
+              return (true);
+         }
+     i++;
+    }
+    std::cout << "IA : useless to drom bomb here" << std::endl;
+    return (false);
+}
+
+namespace IA
+{
 template<>
 inline bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
 {
@@ -483,7 +530,8 @@ inline bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l enne
     std::cout << "processing BombOpportunity()..." << std::endl;
     while (i < 8)
     {
-        if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
+        if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 
+            && (myY + searchY[i]) < mapHeight && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
         {
             std::cout << "IA advise to DROP_BOMB!" << std::endl;
             return (true);
@@ -492,6 +540,7 @@ inline bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l enne
     }
     std::cout << "IA : useless to drom bomb here" << std::endl;
     return (false);
+}
 }
 
 #endif	/* IA_HPP */

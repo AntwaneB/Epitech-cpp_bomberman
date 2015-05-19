@@ -21,9 +21,6 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 
 	if (_nth == 5)
 	{
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_LEFT);
 		_queuedActions.push(Character::DROP_BOMB);
 	}
 

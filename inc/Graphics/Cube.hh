@@ -7,6 +7,7 @@
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "glm/glm.hpp"
+
 #include "glm/gtc/matrix_transform.hpp"
 #include "Position.hpp"
 #include "Block.hh"
@@ -17,7 +18,7 @@ namespace Graphics
 	class Cube : public Object
 	{
 		public:
-			Cube(Position const &, Block const *);
+			Cube(Position const &, Block const *, gdl::Texture*);
 			virtual ~Cube();
 
 			virtual bool initialize();
@@ -25,11 +26,11 @@ namespace Graphics
 			virtual void draw(gdl::AShader &shader, gdl::Clock const &clock);
 
 		private:
-			gdl::Texture	_texture;
 			gdl::Geometry	_geometry;
 			float				_speed;
 
 			const Block*	_block;
+			gdl::Texture*	_texture;
 	};
 };
 

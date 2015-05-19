@@ -46,7 +46,7 @@ Graphics::Level::initialize()
 
 		_players[i]._map.initialize(&_players[i]._objects, _level->map().height(), _level->map().width(), _level->map().map());
 
-		for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
+		/*for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
 			{
 				for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
 				{
@@ -54,7 +54,7 @@ Graphics::Level::initialize()
 					character->initialize();
 					_players[i]._objects.push_back(character);
 				}
-			}
+			}*/
 	}
 
 	return (true);
@@ -71,10 +71,13 @@ Graphics::Level::update()
 			_context.stop();
 			this->notify(this, EXIT_TRIGGERED);
 		}
-	_context.updateClock(_players[j]._clock);
-	_context.updateInputs(_players[j]._input);
-	for (size_t i = 0; i < _players[j]._objects.size(); ++i)
-		_players[j]._objects[i]->update(_players[j]._clock, _players[j]._input);
+		_context.updateClock(_players[j]._clock);
+		_context.updateInputs(_players[j]._input);
+		for (size_t i = 0; i < _players[j]._objects.size(); ++i)
+		{
+			if (_players[j]._objects[i] != NULL)
+				_players[j]._objects[i]->update(_players[j]._clock, _players[j]._input);
+		}
 	}
 	return (true);
 }
@@ -96,7 +99,8 @@ Graphics::Level::draw()
 		glViewport(x, y, blockWidth, blockHeight);
 		//std::cout << x << " " << y << " "<< x + blockWidth << " " << y + blockHeight << std::endl;
 		for (size_t i = 0; i < _players[j]._objects.size(); ++i)
-			_players[j]._objects[i]->draw(_players[j]._shader, _players[j]._clock);
+			if (_players[j]._objects[i] != NULL)
+				_players[j]._objects[i]->draw(_players[j]._shader, _players[j]._clock);
 		x += blockWidth;
 		if (x > 1920 - blockWidth)
 		{
