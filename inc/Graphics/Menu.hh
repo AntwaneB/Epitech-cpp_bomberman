@@ -21,6 +21,7 @@ namespace Graphics
 	public:
 		Menu();
 		virtual ~Menu();
+		void	MainWin();
 		void	update(int, int);
 
 	private:
@@ -29,7 +30,19 @@ namespace Graphics
 		sf::Texture		_tBackground;
 		sf::Texture		_tArrow;
 		sf::Sprite		_background;
-		sf::Sprite		_arrow;		
+		sf::Sprite		_arrow;
+
+		//Textures
+		sf::Texture 	_tassets;
+
+		//Sprite
+		sf::Sprite		_assets;
+		sf::Sprite		_newgame;
+		sf::Sprite		_loadgame;
+		sf::Sprite		_setting;
+		sf::Sprite		_exit;
+		sf::Sprite		_quote;
+		sf::Sprite		_rya;
 
 	};
 };
