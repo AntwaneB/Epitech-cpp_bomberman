@@ -18,7 +18,7 @@
 class Character : public EventHandler<Character>, public Subject
 {
 public:
-	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DROP_BOMB };
+	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DROP_BOMB, WAIT };
 
 public:
 	Character(size_t nth, size_t x, size_t y, size_t z = 0);
@@ -28,6 +28,7 @@ public:
 	Position	prevPosition() const;
 
 	void		toConfig(Config &) const;
+	void		pushAction(Character::Action);
 
 private:
 	void tick(Subject* entity);

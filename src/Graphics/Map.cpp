@@ -12,15 +12,10 @@ Graphics::Map::~Map()
 
 bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, size_t height, size_t width, std::vector<std::vector<Block*> > map)
 {
-	Object *ground = new Ground(Position((width - 1) / 2, (height - 1) / 2, 0.4));
-	if (ground->initialize() == false)
-		return (false);
-	objects->push_back(ground);
-
-	Object *bomb = new Bomb();
+	/*Object *bomb = new Bomb();
 	if (bomb->initialize() == false)
 		return (false);
-	objects->push_back(bomb);
+	objects->push_back(bomb);*/
 
 	for (unsigned int y = 0; y < height; y++)
 	{
@@ -34,11 +29,32 @@ bool Graphics::Map::initialize(std::vector<Graphics::Object*> * objects, size_t 
 			}
 		}
 	}
+
+	Object *ground = new Ground(Position((width - 1) / 2, (height - 1) / 2, 0.4));
+	if (ground->initialize() == false)
+		return (false);
+	objects->push_back(ground);
+	_map = map;
 	return (true);
 }
 
-bool Graphics::Map::update()
+bool Graphics::Map::update(std::vector<Graphics::Object*> * objects, size_t height, size_t width, std::vector<std::vector<Block*> > map)
 {
+	int i = 0;
+	for (unsigned int y = 0; y < height; y++)
+	{
+		for (unsigned int x = 0; x < width; x++)
+		{
+			if (!map[y][x]->visible() && _map[y][x]->visible())
+			{
+				std::cout << "Delete: " << i << std::endl;
+				objects->erase(objects->begin() + i);
+			}
+			i++;
+		}
+		i--;
+	}
+	_map = map;
 	return (true);
 }
 

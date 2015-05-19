@@ -19,12 +19,15 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 
 	_attributes = g_settings["entities"]["character"];
 
-	if (_nth == 4)
+	if (_nth == 5)
 	{
 		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_LEFT);
 		_queuedActions.push(Character::DROP_BOMB);
 	}
 
+	std::cout << "Character spawned at " << _position << std::endl;
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
@@ -138,6 +141,13 @@ Character::dropBomb()
 	_bombs.push_back(bomb);
 
 	this->notify(bomb, BOMB_DROPPED);
+}
+
+void
+Character::pushAction(Character::Action action)
+{
+	if (_queuedActions.size() == 0)
+		_queuedActions.push(action);
 }
 
 /*
