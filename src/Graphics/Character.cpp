@@ -16,7 +16,7 @@ Graphics::Character::initialize()
 {
 	_speed = 10.0f;
 
-	if (_model.load("./libgdl/assets/marvin.fbx") == false)
+	if (_model.load("./libgdl/assets/micro_dragon.fbx") == false)
 	{
 		std::cout << "Cannot load the marvin model" << std::endl;
 		return (false);

@@ -51,6 +51,7 @@ private:
 private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
+	std::list<Character*>								_players;
 	std::map<Position, std::list<Bomb*> >			_bombs;
 	std::map<Position, std::list<Item*> >			_items;
 
