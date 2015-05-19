@@ -8,8 +8,9 @@
 #include <iostream>
 #include "Menu.hpp"
 
-Menu::Menu()
+Menu::Menu(const std::string & menuFile)
 {
+	(void)menuFile;
 }
 
 Menu::~Menu()
