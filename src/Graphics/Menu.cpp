@@ -21,7 +21,7 @@ Graphics::Menu::Menu()
 	sf::Sound sound;
 	sound.setBuffer(buff);
 	sound.play();
-	
+
     x = 1800;
     y = 500;
     while (_window.isOpen())

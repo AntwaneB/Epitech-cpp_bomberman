@@ -29,7 +29,7 @@ namespace Graphics
 		sf::Texture		_tBackground;
 		sf::Texture		_tArrow;
 		sf::Sprite		_background;
-		sf::Sprite		_arrow;		
+		sf::Sprite		_arrow;
 
 	};
 };
