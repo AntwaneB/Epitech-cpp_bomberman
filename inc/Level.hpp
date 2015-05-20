@@ -30,6 +30,7 @@ public:
 	Map const &		map() const;
 	size_t			charactersCount() const;
 	std::map<Position, std::list<Character*> > const & characters() const;
+	std::vector<Character*> const & charactersRaw() const;
 	std::map<Position, std::list<Bomb*> > const & bombs() const;
 	std::map<Position, std::list<Item*> > const & items() const;
 
@@ -52,6 +53,7 @@ private:
 private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
+	std::vector<Character*>								_charactersRaw;
 	std::list<Character*>								_players;
 	std::map<Position, std::list<Bomb*> >			_bombs;
 	std::map<Position, std::list<Item*> >			_items;
