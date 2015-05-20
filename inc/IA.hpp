@@ -64,7 +64,6 @@ namespace IA
 			virtual ~IA();
 			void playTurn();
 
-
 		private:
 			bool	scanMapForEnemy(Character::Action & action);
 			void	scanMap();
