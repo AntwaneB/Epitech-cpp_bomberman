@@ -13,7 +13,6 @@ Graphics::Cube::~Cube()
 
 bool Graphics::Cube::initialize()
 {
-	_speed = 50.0f;
 	_geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));
 	_geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));
 	_geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));

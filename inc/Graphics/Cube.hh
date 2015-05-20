@@ -27,7 +27,6 @@ namespace Graphics
 
 		private:
 			gdl::Geometry	_geometry;
-			float				_speed;
 
 			const Block*	_block;
 			gdl::Texture*	_texture;
