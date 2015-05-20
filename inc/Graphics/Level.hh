@@ -17,7 +17,7 @@
 #include "BasicShader.hh"
 #include "Clock.hh"
 #include "Input.hh"
-#include "Graphics/Player.hh"
+#include "Graphics/Split.hh"
 #include "Graphics/Object.hh"
 #include "Graphics/Cube.hh"
 #include "Graphics/Character.hh"
@@ -32,7 +32,6 @@ namespace Graphics
 	class Level : public EventHandler<Graphics::Level>, public Subject, public gdl::Game
 	{
 	public:
-		Level();
 		Level(const ::Level*);
 		virtual ~Level();
 
@@ -41,11 +40,11 @@ namespace Graphics
 		virtual void draw();
 
 	protected:
-		const ::Level*	_level;
-		gdl::SdlContext _context;
-		gdl::BasicShader _shader;
-		std::vector<Player> _players;
-		std::vector<Graphics::Character*>	_characters;
+		const ::Level*					_level;
+		gdl::SdlContext 				_context;
+		gdl::Input 						_input;
+		gdl::Clock 						_clock;
+		std::vector<Graphics::Split*> 	_splits;
 	};
 
 }

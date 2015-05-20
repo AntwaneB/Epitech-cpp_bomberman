@@ -42,6 +42,7 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 		_queuedActions.push(Character::MOVE_DOWN);
 		_queuedActions.push(Character::MOVE_DOWN);
 		_queuedActions.push(Character::DROP_BOMB);
+		_solid = false;
 	}
 
 	std::cout << "Character spawned at " << _position << std::endl;

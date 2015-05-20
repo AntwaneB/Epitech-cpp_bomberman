@@ -1,7 +1,7 @@
 #include "Graphics/Character.hh"
 
-Graphics::Character::Character(Position const & position, ::Character const * character)
-	: Object(position), _character(character)
+Graphics::Character::Character(Position const & position, ::Character const * character, gdl::Model* model)
+	: Object(position), _character(character), _model(model), _position(Position(position.x(), position.y(), position.z()))
 {
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
 }
@@ -16,12 +16,7 @@ Graphics::Character::initialize()
 {
 	_speed = 10.0f;
 
-	if (_model.load("./libgdl/assets/micro_dragon.fbx") == false)
-	{
-		std::cout << "Cannot load the marvin model" << std::endl;
-		return (false);
-	}
-	_model.setCurrentAnim(0);
+	_model->setCurrentAnim(0);
 	return (true);
 }
 
@@ -86,7 +81,11 @@ void
 Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	//_position = _character->position();
-
+	if (_character->position().y() != _position.y())
+	{
+		std::cout << "Ca bouge !" << std::endl;
+		_position = _character->position();
+	}
 	if (input.getKey(SDLK_DOWN))
 	{
 		translate(glm::vec3(0, 0, -1) * static_cast<float>(clock.getElapsed()) * _speed);
@@ -109,8 +108,8 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 	}
 	/*
 	if (input.getKey(SDLK_DOWN) || input.getKey(SDLK_UP) || input.getKey(SDLK_RIGHT) || input.getKey(SDLK_LEFT))
-		_model.setCurrentAnim(0);
-		_model.setCurrentAnim(1);
+		_model->setCurrentAnim(0);
+		_model->setCurrentAnim(1);
 	*/
 }
 
@@ -118,6 +117,6 @@ void
 Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	_texture.bind();
-	_model.draw(shader, getTransformation(), GL_QUADS);
+	_model->draw(shader, getTransformation(), GL_QUADS);
 	(void)clock;
 }

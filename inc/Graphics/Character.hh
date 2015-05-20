@@ -18,7 +18,7 @@ namespace Graphics
 	{
    public:
       enum direction {UP, LEFT, DOWN, RIGHT};
-      Character(Position const &, ::Character const *);
+      Character(Position const &, ::Character const *, gdl::Model*);
       virtual ~Character();
 
       virtual bool  initialize();
@@ -27,13 +27,12 @@ namespace Graphics
       int getAngle(direction);
 
 	private:
-		float				_speed;
-
-      gdl::Texture	_texture;
-      gdl::Model		_model;
-      direction _pos = UP;
-
-		const ::Character* _character;
+	float				_speed;
+      gdl::Texture            _texture;
+      direction               _pos = UP;
+      const ::Character*      _character;
+      gdl::Model*             _model;
+      Position                _position;
 	};
 };
 

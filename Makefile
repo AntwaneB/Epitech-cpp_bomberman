@@ -33,7 +33,7 @@ SRCS		  =  main.cpp \
 		     IA.cpp \
 		     \
 		     Graphics/Display.cpp \
-		     Graphics/Player.cpp \
+		     Graphics/Split.cpp \
 		     Graphics/Level.cpp \
 		     Graphics/Menu.cpp \
 		     Graphics/Object.cpp \
@@ -76,7 +76,7 @@ INCS		  =  global.hh \
 		     Graphics/Ground.hh \
 		     Graphics/Character.hh \
 		     Graphics/Bomb.hh \
-		     Graphics/Player.hh \
+		     Graphics/Split.hh \
 		     \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp
