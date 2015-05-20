@@ -27,7 +27,6 @@ namespace Graphics
       int getAngle(direction);
 
 	private:
-	float				_speed;
       gdl::Texture            _texture;
       direction               _pos = UP;
       const ::Character*      _character;

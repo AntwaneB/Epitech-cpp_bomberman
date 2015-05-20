@@ -14,8 +14,6 @@ Graphics::Character::~Character()
 bool
 Graphics::Character::initialize()
 {
-	_speed = 10.0f;
-
 	_model->setCurrentAnim(0);
 	return (true);
 }
@@ -80,32 +78,33 @@ Graphics::Character::getAngle(direction key)
 void
 Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
+	(void)clock;
 	//_position = _character->position();
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
 		int x = _character->position().x() - _position.x();
 		int y = _character->position().y() - _position.y();
-		translate(glm::vec3(x, 0, y) * static_cast<float>(clock.getElapsed()) * _speed);
+		translate(glm::vec3(x, 0, y));
 		_position = _character->position();
 	}
 	if (input.getKey(SDLK_DOWN))
 	{
-		translate(glm::vec3(0, 0, -1) * static_cast<float>(clock.getElapsed()) * _speed);
+		translate(glm::vec3(0, 0, -1));
 		//rotate(glm::vec3(0, 0, -1), getAngle(DOWN));
 	}
 	if (input.getKey(SDLK_UP))
 	{
-		translate(glm::vec3(0, 0, 1) * static_cast<float>(clock.getElapsed()) * _speed);
+		translate(glm::vec3(0, 0, 1));
 		//rotate(glm::vec3(0, 0, 1), getAngle(UP));
 	}
 	if (input.getKey(SDLK_RIGHT))
 	{
-		translate(glm::vec3(-1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
+		translate(glm::vec3(-1, 0, 0));
 		//rotate(glm::vec3(-1, 0, 0), getAngle(RIGHT));
 	}
 	if (input.getKey(SDLK_LEFT))
 	{
-		translate(glm::vec3(1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
+		translate(glm::vec3(1, 0, 0));
 		//rotate(glm::vec3(1, 0, 0), getAngle(LEFT));
 	}
 	/*
