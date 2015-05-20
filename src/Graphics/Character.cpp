@@ -81,9 +81,11 @@ void
 Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	//_position = _character->position();
-	if (_character->position().y() != _position.y())
+	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
-		std::cout << "Ca bouge !" << std::endl;
+		int x = _character->position().x() - _position.x();
+		int y = _character->position().y() - _position.y();
+		translate(glm::vec3(x, 0, y) * static_cast<float>(clock.getElapsed()) * _speed);
 		_position = _character->position();
 	}
 	if (input.getKey(SDLK_DOWN))
