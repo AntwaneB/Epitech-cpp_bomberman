@@ -16,6 +16,7 @@
 #include "Item.hh"
 #include "BonusItem.hh"
 #include "Bomb.hh"
+#include "Level.hpp"
 
 class Level : public EventHandler<Level>, public Subject
 {

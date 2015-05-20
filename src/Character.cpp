@@ -10,9 +10,10 @@
 #include "Character.hpp"
 #include "Exception.hpp"
 #include "Clock.hpp"
+#include "Level.hpp"
 
-Character::Character(size_t nth, size_t x, size_t y, size_t z)
-	: _nth(nth), _position(x, y, z), _elapsedTime(-1)
+Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t z)
+	: _level(level), _nth(nth), _position(x, y, z), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -21,6 +22,25 @@ Character::Character(size_t nth, size_t x, size_t y, size_t z)
 
 	if (_nth == 5)
 	{
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
 		_queuedActions.push(Character::DROP_BOMB);
 	}
 
@@ -102,28 +122,50 @@ Character::prevPosition() const
 void
 Character::move(Character::Action action)
 {
-	(void)action; // We have to make the character to actually move
-
-	_prevPosition = _position;
+	Position tmp = _position;
 	switch (action)
 	{
 		case Character::MOVE_DOWN:
-			_position.incY();
+			tmp.incY();
 			break;
 		case Character::MOVE_UP:
-			_position.decY();
+			tmp.decY();
 			break;
 		case Character::MOVE_LEFT:
-			_position.decX();
+			tmp.decX();
 			break;
 		case Character::MOVE_RIGHT:
-			_position.incX();
+			tmp.incX();
 			break;
 		default:
 			break;
 	}
-
-	this->notify(this, CHARACTER_MOVED);
+	if (_level->map().at(tmp)->solid() == false)
+	{
+		_prevPosition = _position;
+		switch (action)
+		{
+			case Character::MOVE_DOWN:
+				_position.incY();
+				break;
+			case Character::MOVE_UP:
+				_position.decY();
+				break;
+			case Character::MOVE_LEFT:
+				_position.decX();
+				break;
+			case Character::MOVE_RIGHT:
+				_position.incX();
+				break;
+			default:
+				break;
+		}
+		this->notify(this, CHARACTER_MOVED);
+	}
+	else
+	{
+		std::cout << "Tried to move, but collided" << std::endl;
+	}
 }
 
 void

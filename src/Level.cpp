@@ -115,7 +115,7 @@ Level::pushCharacter()
 	else
 		charY = blockY * blockHeight + blockHeight / 2;
 
-	Character*	character = new Character(nth + 1, charX, charY);
+	Character*	character = new Character(this, nth + 1, charX, charY);
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
