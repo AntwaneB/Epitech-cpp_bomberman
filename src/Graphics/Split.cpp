@@ -56,14 +56,11 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		if (_ocharacters[i] != NULL)
 		{
 			_ocharacters[i]->update(clock, input);
-			size_t j = 0;
-			for (auto it = _level->characters().begin(); it != _level->characters().end() || j > i; ++it, j++)
-				if (j == i)
-					if (_ocharacters[i]->isLive(it->second) == false)
-					{
-						delete _ocharacters[i];
-						_ocharacters[i] = NULL;
-					}
+			if (_ocharacters[i]->isLive(_level->charactersRaw()[i]) == false)
+			{
+				delete _ocharacters[i];
+				_ocharacters[i] = NULL;
+			}
 		}
 	}
 }

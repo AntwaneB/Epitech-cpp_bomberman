@@ -40,11 +40,11 @@ namespace Graphics
 		virtual void draw();
 
 	protected:
-		const ::Level*					_level;
-		gdl::SdlContext 				_context;
-		gdl::Input 						_input;
-		gdl::Clock 						_clock;
-		std::vector<Graphics::Split*> 	_splits;
+		const ::Level*						_level;
+		gdl::SdlContext					_context;
+		gdl::Input							_input;
+		gdl::Clock							_clock;
+		std::vector<Graphics::Split*> _splits;
 	};
 
 }

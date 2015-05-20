@@ -23,6 +23,7 @@ void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 
 bool Graphics::Object::isLive(::Character* character)
 {
+	(void)character;
 	return (true);
 }
 

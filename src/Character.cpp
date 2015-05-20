@@ -22,13 +22,10 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 
 	if (_nth == 5)
 	{
+		_queuedActions.push(Character::MOVE_RIGHT);
 		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_solid = false;
 	}
 
-	std::cout << "Character spawned at " << _position << std::endl;
 	this->notify(this, CHARACTER_SPAWNED);
 }
 

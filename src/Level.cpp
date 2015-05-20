@@ -58,6 +58,12 @@ Level::characters() const
 	return (_characters);
 }
 
+std::vector<Character*> const &
+Level::charactersRaw() const
+{
+	return (_charactersRaw);
+}
+
 std::map<Position, std::list<Bomb *> > const &
 Level::bombs() const
 {
@@ -119,6 +125,7 @@ Level::pushCharacter()
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
+	_charactersRaw.push_back(character);
 
 	_clock.addObserver(character);
 	this->addObserver(character);
@@ -141,6 +148,7 @@ Level::characterDied(Subject* entity)
 	Character* character = safe_cast<Character*>(entity);
 
 	_characters[character->position()].erase(std::find(_characters[character->position()].begin(), _characters[character->position()].end(), character));
+	_charactersRaw.erase(std::find(_charactersRaw.begin(), _charactersRaw.end(), character));
 	_clock.removeObserver(character);
 	this->removeObserver(character);
 }
