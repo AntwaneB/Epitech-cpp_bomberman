@@ -25,6 +25,7 @@ namespace Graphics
       virtual void  update(gdl::Clock const &clock, gdl::Input &input);
       virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
       int getAngle(direction);
+      bool isLive(::Character* character);
 
 	private:
       gdl::Texture            _texture;

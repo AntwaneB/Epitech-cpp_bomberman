@@ -21,6 +21,11 @@ void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 	(void)clock;
 }
 
+bool Graphics::Object::isLive(::Character* character)
+{
+	return (true);
+}
+
 void Graphics::Object::translate(glm::vec3 const &v)
 {
 	_position = _position + Position(v[0], v[2], v[1]);

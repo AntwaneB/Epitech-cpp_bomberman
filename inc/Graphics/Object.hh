@@ -9,6 +9,7 @@
 #include "Clock.hh"
 #include "Input.hh"
 #include "Position.hpp"
+#include "Character.hpp"
 
 namespace Graphics
 {
@@ -28,6 +29,7 @@ namespace Graphics
 		void rotate(glm::vec3 const& axis, float angle);
 		void scale(glm::vec3 const& scale);
 		glm::mat4 getTransformation();
+		bool isLive(::Character* character);
 
 	protected:
 		Position		_position;

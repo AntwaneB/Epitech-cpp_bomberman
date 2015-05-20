@@ -18,6 +18,14 @@ Graphics::Character::initialize()
 	return (true);
 }
 
+bool
+Graphics::Character::isLive(::Character* character)
+{
+	if (character != _character)
+		return (false);
+	return (true);
+}
+
 int 
 Graphics::Character::getAngle(direction key)
 {
