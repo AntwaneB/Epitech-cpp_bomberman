@@ -13,7 +13,7 @@
 #include "Level.hpp"
 
 Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _position(x, y, z), _elapsedTime(-1)
+	: _level(level), _nth(nth), _position(x, y, z), _solid(true), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -140,7 +140,7 @@ Character::move(Character::Action action)
 		default:
 			break;
 	}
-	if (_level->map().at(tmp)->solid() == false)
+	if (_level->map().at(tmp)->solid() == false || _solid == false)
 	{ // The block where we want to move isn't solid
 		_prevPosition = _position;
 		switch (action)

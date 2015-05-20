@@ -45,9 +45,10 @@ private:
 	Position					_position;
 	Position					_prevPosition;
 	Config					_attributes;
+	bool						_solid;
+
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;
-
 	int						_elapsedTime;
 };
 
