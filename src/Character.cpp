@@ -141,7 +141,7 @@ Character::move(Character::Action action)
 			break;
 	}
 	if (_level->map().at(tmp)->solid() == false)
-	{
+	{ // The block where we want to move isn't solid
 		_prevPosition = _position;
 		switch (action)
 		{
