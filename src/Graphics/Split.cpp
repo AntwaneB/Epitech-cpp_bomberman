@@ -9,8 +9,11 @@ Graphics::Split::Split(::Level const * level)
 Graphics::Split::~Split()
 {
 	delete _map;
-	for (size_t i = 0; i < _characters.size(); ++i)
-		delete _characters[i];
+
+	for (auto it = _characters.begin(); it != _characters.end(); ++it)
+		delete *it;
+	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		delete *it;
 }
 
 bool Graphics::Split::initialize()
@@ -39,7 +42,7 @@ bool Graphics::Split::initialize()
 	{
 		for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
 		{
-			Object* character = new Graphics::Character((*iit)->position(), *iit, model);
+			Character* character = new Graphics::Character(*iit, model);
 			character->initialize();
 			_characters.push_back(character);
 		}
@@ -47,53 +50,57 @@ bool Graphics::Split::initialize()
 	return (true);
 }
 
-int Graphics::Split::isIn(std::vector<::Character*> characters)
-{
-	int is = -1;
-	for (size_t i = 0; i < _characters.size(); ++i)
-	{
-		if (_characters[i] != NULL)
-		{
-			bool in = false;
-			for (size_t j = 0; j < characters.size() && !in; ++j)
-			{
-				if (_characters[i]->isLive(characters[j]) == true)
-				{
-					in = true;
-				}
-			}
-			if (in == false)
-				is = i;
-		}
-	}
-	return (is);
-}
-
 void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 {
 	_map->update();
-	if (_bombs.size() != _level->bombs().size())
+
+	auto bombs = _level->bombsRaw();
+	if (_bombs.size() != bombs.size())
 	{
-		for (auto it=_level->bombs().begin(); it != _level->bombs().end(); ++it)
+		for (auto it = bombs.begin(); it != bombs.end(); ++it)
 		{
-			Object* bomb = new Graphics::Bomb(it->first, _model);
+			Bomb* bomb = new Graphics::Bomb(*it, _model);
 			bomb->initialize();
 			_bombs.push_back(bomb);
 		}
 	}
-	for (size_t i = 0; i < _characters.size(); ++i)
+
+	bombs = _level->bombsRaw();
+	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
 	{
-		if (_characters[i] != NULL)
+		bool exists = false;
+		for (auto iit = bombs.begin(); iit != bombs.end() && !exists; ++iit)
 		{
-			int j = 0;
-			if ((j = isIn(_level->charactersRaw())) != -1)
-			{
-				std::cout << "Character[" << j << "] is dead" << std::endl;
-				delete _characters[j];
-				_characters[j] = NULL;
-			}
-			_characters[i]->update(clock, input);
+			exists = *it && *(*it) == *iit;
 		}
+		if (!exists)
+		{
+			std::cout << "deleting bomb from display" << std::endl;
+			delete (*it);
+			it = _bombs.erase(it);
+			--it;
+		}
+		else
+			(*it)->update(clock, input);
+	}
+
+	auto characters = _level->charactersRaw();
+	for (auto it = _characters.begin(); it != _characters.end(); ++it)
+	{
+		bool exists = false;
+		for (auto iit = characters.begin(); iit != characters.end() && !exists; ++iit)
+		{
+			exists = *it && *(*it) == *iit;
+		}
+		if (!exists)
+		{
+			std::cout << "deleting char from display" << std::endl;
+			delete (*it);
+			it = _characters.erase(it);
+			--it;
+		}
+		else
+			(*it)->update(clock, input);
 	}
 }
 
@@ -101,10 +108,9 @@ void Graphics::Split::draw(gdl::Clock clock)
 {
 	_shader.bind();
 	_map->draw(_shader, clock);
-	for (size_t i = 0; i < _characters.size(); ++i)
-		if (_characters[i] != NULL)
-			_characters[i]->draw(_shader, clock);
-	if (_bombs.size() > 0)
-		for (size_t i = 0; i < _bombs.size(); ++i)
-			_bombs[i]->draw(_shader, clock);
+
+	for (auto it = _characters.begin(); it != _characters.end(); ++it)
+		(*it)->draw(_shader, clock);
+	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		(*it)->draw(_shader, clock);
 }

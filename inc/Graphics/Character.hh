@@ -18,21 +18,23 @@ namespace Graphics
 	{
    public:
       enum direction {UP, LEFT, DOWN, RIGHT};
-      Character(Position const &, ::Character const *, gdl::Model*);
+
+	public:
+      Character(::Character const *, gdl::Model*);
       virtual ~Character();
 
       virtual bool  initialize();
       virtual void  update(gdl::Clock const &clock, gdl::Input &input);
       virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
-      int getAngle(direction);
-      bool isLive(::Character* character);
+
+      int	getAngle(direction);
+		bool	operator==(const ::Character*) const;
 
 	private:
       gdl::Texture            _texture;
       direction               _pos = UP;
       const ::Character*      _character;
       gdl::Model*             _model;
-      Position                _position;
 	};
 };
 

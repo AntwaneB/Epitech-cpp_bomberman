@@ -1,6 +1,7 @@
 #ifndef SPLIT_HH
 #define SPLIT_HH
 
+#include <list>
 #include "Input.hh"
 #include "Graphics/Object.hh"
 #include "Graphics/Character.hh"
@@ -11,7 +12,6 @@
 #include "Texture.hh"
 #include "Config.hpp"
 #include "Level.hpp"
-#include <vector>
 
 namespace Graphics
 {
@@ -26,15 +26,13 @@ namespace Graphics
 		virtual void update(gdl::Clock, gdl::Input);
 		virtual void draw(gdl::Clock);
 
-		int isIn(std::vector<::Character*>);
-
 	public:
 		const ::Level*							_level;
 		gdl::BasicShader						_shader;
 		const ::Character*					_player;
-		std::vector<Graphics::Object*>	_characters;
-		std::vector<Graphics::Object*>	_bombs;
-		//std::vector<Graphics::Item*>	_items;
+		std::list<Graphics::Character*>	_characters;
+		std::list<Graphics::Bomb*>			_bombs;
+		//std::list<Graphics::Item*>		_items;
 		Graphics::Map*							_map;
 		gdl::Model*								_model;
 	};
