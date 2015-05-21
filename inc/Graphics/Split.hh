@@ -26,6 +26,8 @@ namespace Graphics
 		virtual void update(gdl::Clock, gdl::Input);
 		virtual void draw(gdl::Clock);
 
+		int isIn(std::vector<::Character*>);
+
 	public:
 		const ::Level*							_level;
 		gdl::BasicShader						_shader;

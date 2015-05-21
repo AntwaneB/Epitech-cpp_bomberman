@@ -47,6 +47,28 @@ bool Graphics::Split::initialize()
 	return (true);
 }
 
+int Graphics::Split::isIn(std::vector<::Character*> characters)
+{
+	int is = -1;
+	for (size_t i = 0; i < _characters.size(); ++i)
+	{
+		if (_characters[i] != NULL)
+		{
+			bool in = false;
+			for (size_t j = 0; j < characters.size() && !in; ++j)
+			{
+				if (_characters[i]->isLive(characters[j]) == true)
+				{
+					in = true;
+				}
+			}
+			if (in == false)
+				is = i;
+		}
+	}
+	return (is);
+}
+
 void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 {
 	_map->update();
@@ -59,17 +81,16 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			_bombs.push_back(bomb);
 		}
 	}
-
-	auto characters = _level->charactersRaw();
 	for (size_t i = 0; i < _characters.size(); ++i)
 	{
 		if (_characters[i] != NULL)
 		{
-			if (_characters[i]->isLive(characters[i]) == false)
+			int j = 0;
+			if ((j = isIn(_level->charactersRaw())) != -1)
 			{
-				std::cout << "Character[" << i << "] is dead" << std::endl;
-				delete _characters[i];
-				_characters[i] = NULL;
+				std::cout << "Character[" << j << "] is dead" << std::endl;
+				delete _characters[j];
+				_characters[j] = NULL;
 			}
 			_characters[i]->update(clock, input);
 		}
