@@ -24,6 +24,7 @@ public:
 	bool	hasHit(Position const &) const;
 
 	size_t	range() const;
+	char		progress() const;
 
 	void		toConfig(Config &) const;
 
