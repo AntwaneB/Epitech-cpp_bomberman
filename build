@@ -9,7 +9,7 @@ echo ""
 
 export LD_LIBRARY_PATH=libgdl/libs
 
-make
+time make
 
 echo "";
 

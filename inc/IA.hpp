@@ -257,6 +257,7 @@ void IA::IA<T>::playTurn()
 		else
 			action = Move();
 	}
+//	_self->clearActions();
 	_self->pushAction(action);
 }
 
