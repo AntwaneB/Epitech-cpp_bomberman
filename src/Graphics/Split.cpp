@@ -59,11 +59,13 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			_bombs.push_back(bomb);
 		}
 	}
+
+	auto characters = _level->charactersRaw();
 	for (size_t i = 0; i < _characters.size(); ++i)
 	{
 		if (_characters[i] != NULL)
 		{
-			if (_characters[i]->isLive(_level->charactersRaw()[i]) == false)
+			if (_characters[i]->isLive(characters[i]) == false)
 			{
 				std::cout << "Character[" << i << "] is dead" << std::endl;
 				delete _characters[i];

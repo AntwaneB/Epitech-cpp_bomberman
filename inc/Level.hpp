@@ -29,10 +29,13 @@ public:
 
 	Map const &		map() const;
 	size_t			charactersCount() const;
-	std::map<Position, std::list<Character*> > const & characters() const;
-	std::vector<Character*> const & charactersRaw() const;
-	std::map<Position, std::list<Bomb*> > const & bombs() const;
-	std::map<Position, std::list<Item*> > const & items() const;
+
+	std::map<Position, std::list<Character*> > const &	characters() const;
+	std::map<Position, std::list<Bomb*> > const &		bombs() const;
+	std::map<Position, std::list<Item*> > const &		items() const;
+	std::vector<Character*> const charactersRaw() const;
+	std::vector<Bomb*>		const bombsRaw() const;
+	std::vector<BonusItem*>	const itemsRaw() const;
 
 	void	exportFile(const std::string &) const;
 	void	toConfig(Config & cfg) const;
@@ -54,7 +57,6 @@ private:
 private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
-	std::vector<Character*>								_charactersRaw;
 	std::list<Character*>								_players;
 	std::map<Position, std::list<Bomb*> >			_bombs;
 	std::map<Position, std::list<BonusItem*> >	_items;

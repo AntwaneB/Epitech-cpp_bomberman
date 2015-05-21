@@ -81,6 +81,7 @@ INCS		  =  global.hh \
 		     Graphics/Bomb.hh \
 		     Graphics/Split.hh \
 		     \
+		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \
 		     misc/pugixml.hpp
 

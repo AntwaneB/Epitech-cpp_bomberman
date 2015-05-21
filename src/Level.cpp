@@ -6,6 +6,7 @@
  */
 
 #include "Exception.hpp"
+#include "misc/StdHelper.hpp"
 #include "Level.hpp"
 
 Level::Level(size_t width, size_t height, size_t charactersCount)
@@ -59,10 +60,22 @@ Level::characters() const
 	return (_characters);
 }
 
-std::vector<Character*> const &
+std::vector<Character*> const
 Level::charactersRaw() const
 {
-	return (_charactersRaw);
+	return (StdHelper::flatten<Character*, Position>(_characters));
+}
+
+std::vector<Bomb*> const
+Level::bombsRaw() const
+{
+	return (StdHelper::flatten<Bomb*, Position>(_bombs));
+}
+
+std::vector<BonusItem*> const
+Level::itemsRaw() const
+{
+	return (StdHelper::flatten<BonusItem*, Position>(_items));
 }
 
 std::map<Position, std::list<Bomb *> > const &
@@ -126,7 +139,6 @@ Level::pushCharacter()
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
-	_charactersRaw.push_back(character);
 
 	_clock.addObserver(character);
 	this->addObserver(character);
@@ -149,7 +161,6 @@ Level::characterDied(Subject* entity)
 	Character* character = safe_cast<Character*>(entity);
 
 	_characters[character->position()].erase(std::find(_characters[character->position()].begin(), _characters[character->position()].end(), character));
-	_charactersRaw.erase(std::find(_charactersRaw.begin(), _charactersRaw.end(), character));
 	_clock.removeObserver(character);
 	this->removeObserver(character);
 }
