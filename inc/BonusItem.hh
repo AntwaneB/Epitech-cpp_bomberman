@@ -21,6 +21,8 @@ public:
 
 	virtual void applyEffect(Character*) = 0;
 
+	static BonusItem* factory(BonusItem::Type type, Position const &);
+
 private:
 	virtual void tick(Subject*) = 0;
 

@@ -8,13 +8,19 @@
 #ifndef RANGEINCREASER_HH
 #define	RANGEINCREASER_HH
 
-class RangeIncreaser
+#include "BonusItem.hh"
+#include "Character.hpp"
+
+class RangeIncreaser : public BonusItem
 {
 public:
-	RangeIncreaser();
+	RangeIncreaser(Position const &);
 	virtual ~RangeIncreaser();
 
 	virtual void applyEffect(Character*);
+
+private:
+	virtual void tick(Subject*);
 
 private:
 

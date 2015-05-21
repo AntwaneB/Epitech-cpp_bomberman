@@ -6,6 +6,7 @@
  */
 
 #include "Map.hpp"
+#include "Bomb.hh"
 #include "pugixml.hpp"
 #include "global.hh"
 
@@ -82,12 +83,14 @@ Map::blockDestroyed(Subject* entity)
 			if (*iit == block)
 			{
 				*iit = new Block(block->position(), g_settings["maps"]["default_blocks"]["void"]);
-				this->removeObserver(block);
 				this->addObserver(*iit);
 				(*iit)->addObserver(this);
 			}
 		}
 	}
+
+	this->notify(block, MAP_BLOCK_DESTROYED);
+	this->removeObserver(block);
 }
 
 void

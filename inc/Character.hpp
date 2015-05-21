@@ -9,12 +9,12 @@
 #define	CHARACTER_HPP
 
 class Level;
+class Bomb;
 
 #include <queue>
 #include <list>
 #include "Observer.hpp"
 #include "Position.hpp"
-#include "Bomb.hh"
 #include "Config.hpp"
 
 class Character : public EventHandler<Character>, public Subject

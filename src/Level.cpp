@@ -18,6 +18,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount)
 	_actions[ITEM_MOVED] = &Level::itemMoved;
 	_actions[BOMB_DROPPED] = &Level::bombDropped;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
+	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
 
 	_clock.addObserver(this);
 
@@ -233,6 +234,21 @@ Level::bombExploded(Subject* entity)
 		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
+}
+
+void
+Level::blockDestroyed(Subject* entity __attribute__((unused)))
+{
+	Block* block = safe_cast<Block*>(entity);
+
+	if (rand() % 100 < 25)
+	{ // We decide to create a random item
+		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
+
+		BonusItem* item = BonusItem::factory(type, block->position());
+		(void)item;
+		std::cout << "Special item spawned" << std::endl;
+	}
 }
 
 /*
