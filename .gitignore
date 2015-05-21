@@ -3,4 +3,5 @@ obj/
 debug.log
 *~
 bomberman
-libgdl/textures/**.sublime-*
+libgdl/textures/*
+*.sublime-*
