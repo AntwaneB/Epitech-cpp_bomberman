@@ -20,6 +20,7 @@ public:
 	void	run();
 
 private:
+	Config	_cfg;
 
 };
 
