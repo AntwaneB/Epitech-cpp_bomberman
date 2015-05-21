@@ -11,19 +11,20 @@
 #include "Observer.hpp"
 #include "Position.hpp"
 #include "Clock.hpp"
+#include "Character.hpp"
 
 class Item
 {
 public:
+	enum Type { RANGE_INCREASER, SPEED_INCREASER, BOMB_AMOUNT_INCREASER, last };
+
+public:
 	Item(Position const &);
 	virtual ~Item() = 0;
 
-	Position	position() const;
-	Position	prevPosition() const;
-	void		toConfig(Config &) const;
-
-private:
-	virtual void tick(Subject*) = 0;
+	Position			position() const;
+	Position			prevPosition() const;
+	void				toConfig(Config &) const;
 
 protected:
 	Position		_position;

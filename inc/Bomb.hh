@@ -11,13 +11,13 @@
 class Bomb;
 class Character;
 
+#include <vector>
 #include "Item.hh"
 #include "Position.hpp"
 #include "Config.hpp"
 #include "Character.hpp"
-#include <vector>
 
-class Bomb : public Item, public EventHandler<Bomb>, public Subject
+class Bomb : public EventHandler<Bomb>, public Subject, public Item
 {
 public:
 	Bomb(Position const &, size_t, double, const Character*);
@@ -27,7 +27,6 @@ public:
 	bool	hasHit(Position const &) const;
 
 	size_t	range() const;
-	Position	position() const;
 
 	void		toConfig(Config &) const;
 

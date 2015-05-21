@@ -5,7 +5,11 @@
  * Created on May 6, 2015, 3:30 PM
  */
 
+#include "Exception.hpp"
 #include "Item.hh"
+#include "RangeIncreaser.hh"
+#include "SpeedIncreaser.hh"
+#include "BombAmountIncreaser.hh"
 
 Item::Item(Position const & position)
 	: _position(position), _prevPosition(position), _clockInit(false)

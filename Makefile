@@ -31,6 +31,9 @@ SRCS		  =  main.cpp \
 		     Block.cpp \
 		     BonusItem.cpp \
 		     IA.cpp \
+		     RangeIncreaser.cpp \
+		     SpeedIncreaser.cpp \
+		     BombAmountIncreaser.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Split.cpp \

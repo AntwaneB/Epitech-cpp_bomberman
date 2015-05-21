@@ -77,4 +77,12 @@ public:
 	virtual ~EventException() throw() {}
 };
 
+class FactoryException : public Exception
+{
+public:
+	FactoryException(std::string const & s) : Exception(s) {}
+
+	virtual ~FactoryException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */

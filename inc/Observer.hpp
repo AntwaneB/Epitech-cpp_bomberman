@@ -26,6 +26,7 @@ enum Event
 	LEVEL_GENERATED,
 	LEVEL_UPDATED,
 	LEVEL_BOMB_EXPLODED,
+	MAP_BLOCK_DESTROYED,
 	MAP_BOMB_EXPLODED,
 	EXIT_TRIGGERED,
 
@@ -105,10 +106,12 @@ protected:
 		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED)
 			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
+		int i = 0;
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
 		{
 			if (*it != NULL)
 				(*it)->onNotify(entity, event);
+			i++;
 		}
 
 		while (!_eraseQueue.empty())
@@ -132,6 +135,7 @@ private:
 		{ LEVEL_UPDATED, "LEVEL_UPDATED" },
 		{ LEVEL_BOMB_EXPLODED, "LEVEL_BOMB_EXPLODED" },
 		{ MAP_BOMB_EXPLODED, "MAP_BOMB_EXPLODED" },
+		{ MAP_BLOCK_DESTROYED, "MAP_BLOCK_DESTROYED" },
 		{ EXIT_TRIGGERED, "EXIT_TRIGGERED" },
 
 		{ KEY_PRESSED_P1_UP, "KEY_PRESSED_P1_UP" },
