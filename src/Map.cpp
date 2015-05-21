@@ -29,6 +29,13 @@ Map::Map(std::string const & mapFile)
 
 Map::~Map()
 {
+	for (size_t y = 0; y < _map.size(); ++y)
+	{
+		for (size_t x = 0; x < _map[y].size(); ++x)
+		{
+			delete _map[y][x];
+		}
+	}
 }
 
 size_t

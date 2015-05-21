@@ -48,16 +48,6 @@ private:
 	void	bombExploded(Subject*);
 	void	blockDestroyed(Subject*);
 
-/*
-	void	generateMap();
-	void 	generateMap(const std::string &);
-	void 	displayMap();
-	void 	delimitMap();
-	void 	placeDestrBlock();
-	void 	oneOnTwo();
-	void 	checkPositionPlayer();
-*/
-
 private:
 	size_t	_width;
 	size_t	_height;

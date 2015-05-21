@@ -1,8 +1,8 @@
 #include "Graphics/Cube.hh"
 #include <iostream>
 
-Graphics::Cube::Cube(Position const & position, Block const * block)
-	: Object(position), _block(block)
+Graphics::Cube::Cube(Position const & position, Block const * block, gdl::Texture* texture)
+	: Object(position), _block(block), _texture(texture)
 {
 }
 
@@ -13,13 +13,6 @@ Graphics::Cube::~Cube()
 
 bool Graphics::Cube::initialize()
 {
-	_speed = 50.0f;
-
-	if(_texture.load(_block->texture()) == false)
-	{
-		std::cout << "false texture" << std::endl;
-		return (false);
-	}
 	_geometry.pushVertex(glm::vec3(0.5, -0.5, 0.5));
 	_geometry.pushVertex(glm::vec3(0.5, 0.5, 0.5));
 	_geometry.pushVertex(glm::vec3(-0.5, 0.5, 0.5));
@@ -89,6 +82,6 @@ void Graphics::Cube::update(gdl::Clock const &clock, gdl::Input &input)
 void Graphics::Cube::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	(void)clock;
-	_texture.bind();
+	_texture->bind();
 	_geometry.draw(shader, getTransformation(), GL_QUADS);
 }

@@ -13,6 +13,7 @@ class Subject;
 
 #include <iostream>
 #include <list>
+#include <queue>
 #include <map>
 #include <algorithm>
 #include <exception>
@@ -78,9 +79,7 @@ public:
 		_id = ++id;
 	}
 
-	virtual ~Subject()
-	{
-	}
+	virtual ~Subject() {}
 
 	void addObserver(Observer* observer)
 	{
@@ -96,6 +95,7 @@ public:
 		if (it != _observers.end())
 		{
 			*it = NULL;
+			_eraseQueue.push(it);
 		}
 	}
 
@@ -110,11 +110,18 @@ protected:
 			if (*it != NULL)
 				(*it)->onNotify(entity, event);
 		}
+
+		while (!_eraseQueue.empty())
+		{
+			_observers.erase(_eraseQueue.front());
+			_eraseQueue.pop();
+		}
 	}
 
 private:
-	size_t					_id;
-	std::list<Observer*>	_observers;
+	size_t						_id;
+	std::list<Observer*>		_observers;
+	std::queue<std::list<Observer*>::iterator>	_eraseQueue;
 
 	std::map<Event, std::string> _events =
 	{

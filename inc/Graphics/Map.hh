@@ -19,8 +19,10 @@
 #include "Graphics/Cube.hh"
 #include "Graphics/Ground.hh"
 #include "Graphics/Bomb.hh"
+#include "Block.hh" 
 #include "Geometry.hh"
 #include "Texture.hh"
+#include "Map.hpp"
 #include <vector>
 
 namespace Graphics
@@ -29,13 +31,18 @@ namespace Graphics
 	class Map
 	{
 	public:
-		Map();
+		Map(const ::Map&);
 		virtual ~Map();
-		virtual bool initialize(std::vector<Object*> *, size_t, size_t, std::vector<std::vector<Block*> >);
-		virtual bool update(std::vector<Object*> *, size_t, size_t, std::vector<std::vector<Block*> >);
-		virtual void draw();
+
+		virtual bool initialize();
+		virtual bool update();
+		virtual void draw(gdl::AShader&, gdl::Clock const&);
+
 	private:
-		std::vector<std::vector<Block*> > _map;
+		const ::Map* _map;
+		//std::vector<std::vector<::Block*> > _blocks;
+		std::vector<std::vector<Graphics::Object*> > _blocks;
+		Graphics::Object* _ground;
 	};
 
 };

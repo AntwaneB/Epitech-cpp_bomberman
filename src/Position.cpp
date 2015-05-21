@@ -46,6 +46,12 @@ Position::operator<(const Position & o) const
 	return ((_y < o._y) || (_y == o._y && _x < o._x));
 }
 
+bool
+Position::operator!=(const Position & o) const
+{
+	return ((_x != o._x) || (_y != o._y) || (_z != o._z));
+}
+
 void
 Position::setZ(int z)
 {
@@ -104,7 +110,8 @@ int
 Position::y() const
 {
 	if (!_isSet)
-		throw PositionException("Getting unset position.");
+		return (0);
+	//throw PositionException("Getting unset position.");
 	return _y;
 }
 
@@ -135,7 +142,8 @@ int
 Position::x() const
 {
 	if (!_isSet)
-		throw PositionException("Getting unset position.");
+		return (0);
+		//throw PositionException("Getting unset position.");
 	return _x;
 }
 

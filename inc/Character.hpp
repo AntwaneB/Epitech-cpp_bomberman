@@ -8,6 +8,8 @@
 #ifndef CHARACTER_HPP
 #define	CHARACTER_HPP
 
+class Level;
+
 #include <queue>
 #include <list>
 #include "Observer.hpp"
@@ -21,7 +23,7 @@ public:
 	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DROP_BOMB, WAIT };
 
 public:
-	Character(size_t nth, size_t x, size_t y, size_t z = 0);
+	Character(const Level * level, size_t nth, size_t x, size_t y, size_t z = 0);
 	virtual ~Character();
 
 	Position	position() const;
@@ -38,13 +40,15 @@ private:
 	void dropBomb();
 
 private:
+	const Level*			_level;
 	size_t					_nth;
 	Position					_position;
 	Position					_prevPosition;
 	Config					_attributes;
+	bool						_solid;
+
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;
-
 	int						_elapsedTime;
 };
 

@@ -14,7 +14,7 @@
 class Menu : public Subject, public EventHandler<Menu>
 {
 public:
-	Menu();
+	Menu(const std::string &);
 	virtual ~Menu();
 
 	void	run();
