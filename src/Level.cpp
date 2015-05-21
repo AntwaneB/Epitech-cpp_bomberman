@@ -246,8 +246,10 @@ Level::blockDestroyed(Subject* entity __attribute__((unused)))
 		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
 
 		BonusItem* item = BonusItem::factory(type, block->position());
-		(void)item;
-		std::cout << "Special item spawned" << std::endl;
+		_items[block->position()].push_back(item);
+		_clock.addObserver(item);
+		this->addObserver(item);
+		item->addObserver(this);
 	}
 }
 
