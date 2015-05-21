@@ -34,6 +34,7 @@ namespace Graphics
 		std::vector<Graphics::Object*>			_bombs;
 		//std::vector<Graphics::Item*>	_items;
 		Graphics::Map*							_map;
+		gdl::Model*								_model;
 	};
 
 };

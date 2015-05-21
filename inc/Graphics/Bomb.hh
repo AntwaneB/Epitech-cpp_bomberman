@@ -15,7 +15,7 @@ namespace Graphics
 	class Bomb : public Object
 	{
 	public:
-		Bomb(Position const &);
+		Bomb(Position const &, gdl::Model*);
 		virtual ~Bomb();
 
 		virtual bool  initialize();
@@ -24,7 +24,7 @@ namespace Graphics
 
 	private:
 		gdl::Texture	_texture;
-		gdl::Model		_model;
+		gdl::Model*		_model;
 	};
 };
 

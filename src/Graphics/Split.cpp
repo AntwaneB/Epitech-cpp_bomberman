@@ -1,7 +1,7 @@
 #include "Graphics/Split.hh"
 
 Graphics::Split::Split(::Level const * level)
-	: _level(level)
+	: _level(level), _model(new gdl::Model)
 {
 	_map = new Map(level->map());
 }
@@ -30,7 +30,7 @@ bool Graphics::Split::initialize()
 	_map->initialize();
 
 	gdl::Model* model = new gdl::Model;
-	if (model->load("./libgdl/assets/marvin.fbx") == false)
+	if (model->load("./libgdl/assets/marvin.fbx") == false || _model->load("./libgdl/assets/bomb.fbx") == false)
 	{
 		std::cout << "Cannot load the marvin model" << std::endl;
 		return (false);
@@ -54,7 +54,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 	{
 		for (auto it=_level->bombs().begin(); it != _level->bombs().end(); ++it)
 		{
-			Object* bomb = new Graphics::Bomb(it->first);
+			Object* bomb = new Graphics::Bomb(it->first, _model);
 			bomb->initialize();
 			_bombs.push_back(bomb);
 		}
@@ -63,12 +63,13 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 	{
 		if (_characters[i] != NULL)
 		{
-			_characters[i]->update(clock, input);
 			if (_characters[i]->isLive(_level->charactersRaw()[i]) == false)
 			{
+				std::cout << "Character[" << i << "] is dead" << std::endl;
 				delete _characters[i];
 				_characters[i] = NULL;
 			}
+			_characters[i]->update(clock, input);
 		}
 	}
 }
