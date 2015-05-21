@@ -75,7 +75,6 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 		if (!exists)
 		{
-			std::cout << "deleting bomb from display" << std::endl;
 			delete (*it);
 			it = _bombs.erase(it);
 			--it;
@@ -94,7 +93,6 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 		if (!exists)
 		{
-			std::cout << "deleting char from display" << std::endl;
 			delete (*it);
 			it = _characters.erase(it);
 			--it;

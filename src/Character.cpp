@@ -20,7 +20,7 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 
 	_attributes = g_settings["entities"]["character"];
 
-	if (_nth == 5)
+//	if (_nth == 5)
 	{
 		_queuedActions.push(Character::MOVE_RIGHT);
 		_queuedActions.push(Character::DROP_BOMB);
@@ -149,10 +149,6 @@ Character::move(Character::Action action)
 				break;
 		}
 		this->notify(this, CHARACTER_MOVED);
-	}
-	else
-	{
-		std::cout << "Tried to move, but collided" << std::endl;
 	}
 }
 

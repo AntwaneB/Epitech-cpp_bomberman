@@ -28,7 +28,6 @@ Graphics::Bomb::initialize()
 void
 Graphics::Bomb::update(gdl::Clock const &clock, gdl::Input &input)
 {
-// 	scale(glm::vec3(1 + (1 * _bomb->progress() / 100.0), 1 + (1 * _bomb->progress() / 100.0), 1 + (1 * _bomb->progress() / 100.0)));
 	if (_bomb->progress() <= 20 || (_bomb->progress() > 40 && _bomb->progress() <= 60) || (_bomb->progress() > 80 && _bomb->progress() <= 100))
 	 	scale(glm::vec3(1.025, 1.025, 1.025));
 	else
