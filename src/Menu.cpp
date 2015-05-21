@@ -17,7 +17,8 @@ Menu::~Menu()
 {
 }
 
-void	Menu::save(void) const
+void
+Menu::save(void) const
 {
 	_cfg.exportFile(_filename);
 }

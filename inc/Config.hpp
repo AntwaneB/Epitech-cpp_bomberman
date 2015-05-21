@@ -141,7 +141,7 @@ public:
 	const std::string	toXML(void) const;
 
 	void	importFile(std::string const &);
-	void	exportFile(std::string const &);
+	void	exportFile(std::string const &) const;
 
 private:
 	Config::Param	fillParams(pugi::xml_node, Config::Param, int);

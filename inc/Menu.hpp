@@ -19,8 +19,11 @@ public:
 
 	void	run();
 
+	void	save(void) const;
+
 private:
-	Config	_cfg;
+	Config		_cfg;
+	std::string	_filename;
 
 };
 

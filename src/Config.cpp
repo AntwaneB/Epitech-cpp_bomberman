@@ -420,7 +420,7 @@ void	Config::importFile(std::string const & filename)
 	_params = (fillParams(file.first_child(), _params, 0))["config"];
 }
 
-void	Config::exportFile(std::string const & filename)
+void	Config::exportFile(std::string const & filename) const
 {
 	pugi::xml_document	file;
 
