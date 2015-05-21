@@ -11,6 +11,7 @@
 #include "Exception.hpp"
 #include "Clock.hpp"
 #include "Level.hpp"
+#include "IA.hpp"
 
 Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t z)
 	: _level(level), _nth(nth), _position(x, y, z), _solid(true), _elapsedTime(-1)
@@ -20,7 +21,9 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 
 	_attributes = g_settings["entities"]["character"];
 
-//	if (_nth == 5)
+	_ia = new IA::IA<IA::HARD>(_level, this);
+	/*
+	if (_nth == 5)
 	{
 		_queuedActions.push(Character::MOVE_RIGHT);
 		_queuedActions.push(Character::DROP_BOMB);
@@ -32,6 +35,7 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 		_queuedActions.push(Character::MOVE_UP);
 		_queuedActions.push(Character::DROP_BOMB);
 	}
+	*/
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
@@ -50,6 +54,7 @@ Character::tick(Subject* entity)
 
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
 	{
+		_ia->playTurn();
 		_elapsedTime++;
 
 		if (_queuedActions.size() > 0
@@ -171,6 +176,13 @@ Character::pushAction(Character::Action action)
 {
 	if (_queuedActions.size() == 0)
 		_queuedActions.push(action);
+}
+
+void
+Character::clearActions()
+{
+	while (!_queuedActions.empty())
+		_queuedActions.pop();
 }
 
 /*

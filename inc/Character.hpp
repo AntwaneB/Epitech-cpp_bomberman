@@ -10,12 +10,20 @@
 
 class Level;
 class Bomb;
+namespace IA
+{
+	enum Difficulty { EASY, MEDIUM, HARD };
+
+	template<Difficulty T>
+	class IA;
+};
 
 #include <queue>
 #include <list>
 #include "Observer.hpp"
 #include "Position.hpp"
 #include "Config.hpp"
+//#include "IA.hpp"
 
 class Character : public EventHandler<Character>, public Subject
 {
@@ -29,8 +37,10 @@ public:
 	Position	position() const;
 	Position	prevPosition() const;
 
-	void		toConfig(Config &) const;
+	void		clearActions();
 	void		pushAction(Character::Action);
+
+	void		toConfig(Config &) const;
 
 private:
 	void tick(Subject* entity);
@@ -46,6 +56,8 @@ private:
 	Position					_prevPosition;
 	Config					_attributes;
 	bool						_solid;
+
+	IA::IA<IA::HARD>*		_ia;
 
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;
