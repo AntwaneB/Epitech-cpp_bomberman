@@ -34,6 +34,7 @@
 	<content>
 		<selectable>
 			<start>
+				<order>1</order>
 				<asset>
 					<texture>
 						<pos1>0</pos1>
@@ -59,6 +60,7 @@
 				</arrow>
 			</start>
 			<load>
+				<order>2</order>
 				<texture>
 					<pos1>0</pos1>
 					<pos2>128</pos2>
@@ -82,6 +84,7 @@
 				</arrow>
 			</load>
 			<settings>
+				<order>3</order>
 				<texture>
 					<pos1>0</pos1>
 					<pos2>242</pos2>
@@ -105,6 +108,7 @@
 				</arrow>
 			</settings>
 			<exit>
+				<order>4</order>
 				<texture>
 					<pos1>0</pos1>
 					<pos2>372</pos2>
