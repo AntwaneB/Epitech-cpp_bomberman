@@ -29,10 +29,9 @@ namespace Graphics
 	public:
 		const ::Level*							_level;
 		gdl::BasicShader						_shader;
-		const ::Character*					_player;
-		std::vector<Graphics::Object*>	_ocharacters;
-		std::vector<const ::Character*>	_characters;
-		std::vector<Graphics::Object*>	_bombs;
+		const ::Character*						_player;
+		std::vector<Graphics::Object*>			_characters;
+		std::vector<Graphics::Object*>			_bombs;
 		//std::vector<Graphics::Item*>	_items;
 		Graphics::Map*							_map;
 	};

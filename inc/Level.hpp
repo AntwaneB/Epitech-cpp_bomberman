@@ -46,6 +46,7 @@ private:
 	void	itemMoved(Subject* entity);
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
+	void	blockDestroyed(Subject* entity);
 
 	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);
@@ -56,7 +57,7 @@ private:
 	std::vector<Character*>								_charactersRaw;
 	std::list<Character*>								_players;
 	std::map<Position, std::list<Bomb*> >			_bombs;
-	std::map<Position, std::list<Item*> >			_items;
+	std::map<Position, std::list<BonusItem*> >	_items;
 
 	size_t													_charactersCount;
 	Clock														_clock;

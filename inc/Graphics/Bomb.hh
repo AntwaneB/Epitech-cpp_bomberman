@@ -15,7 +15,7 @@ namespace Graphics
 	class Bomb : public Object
 	{
 	public:
-		Bomb();
+		Bomb(Position const &);
 		virtual ~Bomb();
 
 		virtual bool  initialize();

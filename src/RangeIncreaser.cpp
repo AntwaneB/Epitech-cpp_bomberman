@@ -6,8 +6,10 @@
  */
 
 #include "RangeIncreaser.hh"
+#include "Clock.hpp"
 
-RangeIncreaser::RangeIncreaser()
+RangeIncreaser::RangeIncreaser(Position const & position)
+	: BonusItem(position)
 {
 }
 
@@ -19,4 +21,19 @@ void
 RangeIncreaser::applyEffect(Character* character)
 {
 	(void)character;
+}
+
+void
+RangeIncreaser::tick(Subject* entity)
+{
+	Clock* clock = safe_cast<Clock*>(entity);
+
+	if (!_clockInit)
+	{
+		_spawnTime = clock->seconds();
+		_clockInit = true;
+	}
+	else
+	{
+	}
 }

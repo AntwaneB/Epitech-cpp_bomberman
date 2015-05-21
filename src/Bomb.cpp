@@ -38,12 +38,6 @@ Bomb::range() const
 	return (_range);
 }
 
-Position
-Bomb::position() const
-{
-	return (_position);
-}
-
 void
 Bomb::tick(Subject* entity)
 {

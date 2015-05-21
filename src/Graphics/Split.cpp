@@ -9,8 +9,8 @@ Graphics::Split::Split(::Level const * level)
 Graphics::Split::~Split()
 {
 	delete _map;
-	for (size_t i = 0; i < _ocharacters.size(); ++i)
-		delete _ocharacters[i];
+	for (size_t i = 0; i < _characters.size(); ++i)
+		delete _characters[i];
 }
 
 bool Graphics::Split::initialize()
@@ -41,8 +41,7 @@ bool Graphics::Split::initialize()
 		{
 			Object* character = new Graphics::Character((*iit)->position(), *iit, model);
 			character->initialize();
-			_ocharacters.push_back(character);
-			_characters.push_back(*iit);
+			_characters.push_back(character);
 		}
 	}
 	return (true);
@@ -51,15 +50,24 @@ bool Graphics::Split::initialize()
 void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 {
 	_map->update();
-	for (size_t i = 0; i < _ocharacters.size(); ++i)
+	if (_bombs.size() != _level->bombs().size())
 	{
-		if (_ocharacters[i] != NULL)
+		for (auto it=_level->bombs().begin(); it != _level->bombs().end(); ++it)
 		{
-			_ocharacters[i]->update(clock, input);
-			if (_ocharacters[i]->isLive(_level->charactersRaw()[i]) == false)
+			Object* bomb = new Graphics::Bomb(it->first);
+			bomb->initialize();
+			_bombs.push_back(bomb);
+		}
+	}
+	for (size_t i = 0; i < _characters.size(); ++i)
+	{
+		if (_characters[i] != NULL)
+		{
+			_characters[i]->update(clock, input);
+			if (_characters[i]->isLive(_level->charactersRaw()[i]) == false)
 			{
-				delete _ocharacters[i];
-				_ocharacters[i] = NULL;
+				delete _characters[i];
+				_characters[i] = NULL;
 			}
 		}
 	}
@@ -69,7 +77,10 @@ void Graphics::Split::draw(gdl::Clock clock)
 {
 	_shader.bind();
 	_map->draw(_shader, clock);
-	for (size_t i = 0; i < _ocharacters.size(); ++i)
-		if (_ocharacters[i] != NULL)
-			_ocharacters[i]->draw(_shader, clock);
+	for (size_t i = 0; i < _characters.size(); ++i)
+		if (_characters[i] != NULL)
+			_characters[i]->draw(_shader, clock);
+	if (_bombs.size() > 0)
+		for (size_t i = 0; i < _bombs.size(); ++i)
+			_bombs[i]->draw(_shader, clock);
 }
