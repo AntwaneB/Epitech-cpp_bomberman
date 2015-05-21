@@ -30,7 +30,7 @@ bool Graphics::Split::initialize()
 	_map->initialize();
 
 	gdl::Model* model = new gdl::Model;
-	if (model->load("./libgdl/assets/marvin.fbx") == false || _model->load("./libgdl/assets/bomb.fbx") == false)
+	if (model->load("./libgdl/assets/marvin.fbx") == false || _model->load("./libgdl/assets/a bomb/a_bomb.fbx") == false)
 	{
 		std::cout << "Cannot load the marvin model" << std::endl;
 		return (false);
