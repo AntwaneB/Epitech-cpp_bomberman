@@ -8,13 +8,19 @@
 #include <iostream>
 #include "Menu.hpp"
 
-Menu::Menu(const std::string & menuFile)
+Menu::Menu(const std::string & filename) : _filename(filename)
 {
-	(void)menuFile;
+	_cfg.importFile(_filename);
 }
 
 Menu::~Menu()
 {
+}
+
+void
+Menu::save(void) const
+{
+	_cfg.exportFile(_filename);
 }
 
 void

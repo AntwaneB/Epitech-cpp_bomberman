@@ -321,11 +321,7 @@ const std::string	Config::Param::toXML(void) const
 		res = _value;
 	else
 		for(std::map<std::string, Param>::const_iterator it = _map.begin(); it != _map.end(); it++)
-		{
-			res = res + "<" + it->first + ">";
-			res = res + it->second.toXML();
-			res = res + "</" + it->first + ">";
-		}
+			res += "<" + it->first + ">" + it->second.toXML() + "</" + it->first + ">";
 	return (res);
 }
 
@@ -424,7 +420,7 @@ void	Config::importFile(std::string const & filename)
 	_params = (fillParams(file.first_child(), _params, 0))["config"];
 }
 
-void	Config::exportFile(std::string const & filename)
+void	Config::exportFile(std::string const & filename) const
 {
 	pugi::xml_document	file;
 
