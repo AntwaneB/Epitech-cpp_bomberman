@@ -26,15 +26,19 @@ bool
 Graphics::Level::initialize()
 {
 	glEnable(GL_DEPTH_TEST);
-	gdl::Model* model = new gdl::Model;
-	gdl::Model* model2 = new gdl::Model;
-	if (model->load("./libgdl/assets/marvin.fbx") == false || model2->load("./libgdl/assets/a bomb/a_bomb.fbx") == false)
+	for (int i = 0; i < 5; i++)
+		_models.push_back(new gdl::Model);
+	if (_models[0]->load("./libgdl/assets/marvin.fbx") == false 
+		|| _models[1]->load("./libgdl/assets/a bomb/a_bomb.fbx") == false
+		|| _models[2]->load("./libgdl/assets/ball_01.fbx") == false
+		|| _models[3]->load("./libgdl/assets/ball_02.fbx") == false
+		|| _models[4]->load("./libgdl/assets/ball_03.fbx") == false)
 	{
-		std::cout << "Cannot load the marvin model" << std::endl;
+		std::cout << "Cannot load model" << std::endl;
 		return (false);
 	}
 	for (size_t i = 0; i < _splits.size(); i++)
-		_splits[i]->initialize(model, model2);
+		_splits[i]->initialize(_models);
 	return (true);
 }
 

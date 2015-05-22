@@ -3,7 +3,7 @@
 Graphics::Item::Item(const ::Item* item, gdl::Model* model)
 	: Object(item->position()), _item(item), _model(model)
 {
- 	scale(glm::vec3(0.002, 0.002, 0.002));
+ 	scale(glm::vec3(0.015, 0.015, 0.015));
 	translate(glm::vec3(0, 1, 0));
 
 }
