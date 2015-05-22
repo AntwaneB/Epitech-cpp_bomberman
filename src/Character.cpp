@@ -13,19 +13,19 @@
 #include "Level.hpp"
 #include "IA.hpp"
 
-Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
+Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
 
 	_attributes = g_settings["entities"]["character"];
 
-	if (_nth != 5)
-	{
-	//	_ia = new IA::IA<IA::HARD>(_level, this);
-	}
-	else
+	if (!_isPlayer)
+		_ia = new IA::IA<IA::HARD>(_level, this);
+
+	/*
+	if (_nth == 5)
 	{
 		_queuedActions.push(Character::MOVE_RIGHT);
 		_queuedActions.push(Character::DROP_BOMB);
@@ -45,6 +45,7 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 		_queuedActions.push(Character::MOVE_UP);
 		_queuedActions.push(Character::MOVE_LEFT);
 	}
+	*/
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
@@ -83,7 +84,7 @@ Character::tick(Subject* entity)
 	{
 		_elapsedTime++;
 
-		if (_ia)
+		if (_ia && !_isPlayer)
 			_ia->playTurn();
 
 		if (_queuedActions.size() > 0

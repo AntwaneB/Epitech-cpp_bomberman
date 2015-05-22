@@ -94,7 +94,8 @@ namespace IA
         int                             myY = _self->position().y();
         int                             i = 0;
 
-        std::cout << "running MOVE(EASY)" << std::endl;
+		  if (VERBOSE)
+	        std::cout << "running MOVE(EASY)" << std::endl;
         while (i < 4)
         {
             if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
@@ -104,7 +105,8 @@ namespace IA
             }
             i++;
         }
-        std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
+		  if (VERBOSE)
+			 std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
         if (possibleDirections.size() != 0)
             return (possibleDirections[rand() % possibleDirections.size()]);
         else
@@ -129,7 +131,8 @@ namespace IA
         int                             i = 0;
         int                             counter = 0; //debug purpose only
 
-        std::cout << "running MOVE(MEDIUM)" << std::endl;
+		  if (VERBOSE)
+	        std::cout << "running MOVE(MEDIUM)" << std::endl;
         while (i < 4)
         {
             if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
@@ -145,7 +148,8 @@ namespace IA
             }
             i++;
         }
-        std::cout << "MOVE(MEDIUM) : found " << counter << " possible direction(s)" << std::endl;
+		  if (VERBOSE)
+	        std::cout << "MOVE(MEDIUM) : found " << counter << " possible direction(s)" << std::endl;
         return (currentBestAction);
     }
 }
@@ -167,8 +171,11 @@ namespace IA
 		 int                             i = 0;
 		 int                             counter = 0;
 
-		 std::cout << "running MOVE(HARD)" << std::endl;
-		 std::cout << "myPos : " << myX << "/" << myY << std::endl;
+		 if (VERBOSE)
+		 {
+			std::cout << "running MOVE(HARD)" << std::endl;
+			std::cout << "myPos : " << myX << "/" << myY << std::endl;
+		 }
 		 _strategyMap[myX][myY].setDirection(Character::MOVE_UP);
 		 while (i < 4)
 		 {
@@ -214,18 +221,21 @@ namespace IA
 		 int             	mapWidth = _level->map().width();
 		 int             	i = 0;
 
-		 std::cout << "processing BombOpportunity()..." << std::endl;
+		 if (VERBOSE)
+			 std::cout << "processing BombOpportunity()..." << std::endl;
 		 while (i < 8)
 		 {
 			  if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0
 					&& (myY + searchY[i]) < mapHeight && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
 			  {
-					std::cout << "IA advise to DROP_BOMB!" << std::endl;
+				  if (VERBOSE)
+						std::cout << "IA advise to DROP_BOMB!" << std::endl;
 					return (true);
 			  }
 			i++;
 		 }
-		 std::cout << "IA : useless to drom bomb here" << std::endl;
+		 if (VERBOSE)
+			 std::cout << "IA : useless to drom bomb here" << std::endl;
 		 return (false);
 	}
 }

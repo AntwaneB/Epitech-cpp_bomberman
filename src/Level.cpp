@@ -9,8 +9,8 @@
 #include "misc/StdHelper.hpp"
 #include "Level.hpp"
 
-Level::Level(size_t width, size_t height, size_t charactersCount)
-	: _map(width, height), _charactersCount(charactersCount)
+Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
+	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
@@ -31,6 +31,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount)
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+	exit(0);
 }
 
 Level::~Level()
@@ -110,8 +111,12 @@ Level::tick(Subject* entity)
 Character*
 Level::pushCharacter()
 {
+	// Getting character spawn coordinates
 	size_t blocksPerLine = _map.width() >= _map.height() ? ceil(sqrt(_charactersCount)) : floor(sqrt(_charactersCount));
-	size_t lines = _map.width() >= _map.height() && sqrt(_charactersCount) != static_cast<int>(sqrt(_charactersCount)) ? floor(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
+	size_t lines = _map.width() >= _map.height() && sqrt(_charactersCount) != static_cast<int>(sqrt(_charactersCount)) ? ceil(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
+
+	if (blocksPerLine * lines >= _charactersCount + blocksPerLine)
+		lines--;
 
 	size_t blockWidth = _map.width() / blocksPerLine;
 	size_t blockHeight = _map.height() / lines;
@@ -136,10 +141,27 @@ Level::pushCharacter()
 	else
 		charY = blockY * blockHeight + blockHeight / 2;
 
-	Character*	character = new Character(this, nth + 1, charX, charY);
+	// Getting isPlayer
+	bool isPlayer = false;
+
+	if (_playersCount == 1)
+		isPlayer = nth == _charactersCount / 2;
+	else if (_playersCount == 2)
+		isPlayer = nth == 0 || nth == _charactersCount - 1;
+	else
+	{
+		size_t step = round(_charactersCount / static_cast<float>(_playersCount));
+		if (_players.size() < _playersCount && (nth % step == 0 || nth + 1 == _charactersCount))
+			isPlayer = true;
+	}
+
+	// Creating new character
+	Character*	character = new Character(this, nth + 1, isPlayer, charX, charY);
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
+	if (isPlayer)
+		_players.push_back(character);
 
 	_clock.addObserver(character);
 	this->addObserver(character);
@@ -278,7 +300,6 @@ Level::blockDestroyed(Subject* entity __attribute__((unused)))
 
 		BonusItem* item = BonusItem::factory(type, block->position());
 		this->itemDropped(item);
-		std::cout << "Item dropped" << std::endl;
 	}
 }
 
