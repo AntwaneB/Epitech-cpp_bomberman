@@ -49,10 +49,15 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 {
 	_map->update();
 
+	// Creating new bombs
 	auto bombs = _level->bombsRaw();
-	if (_bombs.size() != bombs.size())
+	for (auto it = bombs.begin(); it != bombs.end(); ++it)
 	{
-		for (auto it = bombs.begin(); it != bombs.end(); ++it)
+		bool found = false;
+		for (auto iit = _bombs.begin(); iit != _bombs.end() && !found; ++iit)
+			found = (*(*iit) == (*it));
+
+		if (!found)
 		{
 			Bomb* bomb = new Graphics::Bomb(*it, _models[1]);
 			bomb->initialize();
@@ -60,10 +65,15 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 	}
 
+	// Creating new items
 	auto items = _level->itemsRaw();
-	if (_items.size() != items.size())
+	for (auto it = items.begin(); it != items.end(); ++it)
 	{
-		for (auto it = items.begin(); it != items.end(); ++it)
+		bool found = false;
+		for (auto iit = _items.begin(); iit != _items.end() && !found; ++iit)
+			found = (*(*iit) == (*it));
+
+		if (!found)
 		{
 			Item* item = new Graphics::Item(*it, _models);
 			item->initialize();
@@ -71,24 +81,8 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 	}
 
-	items = _level->itemsRaw();
-	for (auto it = _items.begin(); it != _items.end(); ++it)
-	{
-		bool exists = false;
-		for (auto iit = items.begin(); iit != items.end() && !exists; ++iit)
-		{
-			exists = *it && *(*it) == *iit;
-		}
-		if (!exists)
-		{
-			delete (*it);
-			it = _items.erase(it);
-			--it;
-		}
-		else
-			(*it)->update(clock, input);
-	}
 
+	// Updating bombs
 	bombs = _level->bombsRaw();
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
 	{
@@ -107,6 +101,26 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			(*it)->update(clock, input);
 	}
 
+	// Updating items
+	items = _level->itemsRaw();
+	for (auto it = _items.begin(); it != _items.end(); ++it)
+	{
+		bool exists = false;
+		for (auto iit = items.begin(); iit != items.end() && !exists; ++iit)
+		{
+			exists = *it && *(*it) == *iit;
+		}
+		if (!exists)
+		{
+			delete (*it);
+			it = _items.erase(it);
+			--it;
+		}
+		else
+			(*it)->update(clock, input);
+	}
+
+	// Updating characters
 	auto characters = _level->charactersRaw();
 	for (auto it = _characters.begin(); it != _characters.end(); ++it)
 	{
