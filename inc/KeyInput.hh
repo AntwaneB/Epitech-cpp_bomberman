@@ -33,7 +33,7 @@ public:
 
 public:
 	KeyInput(Key key) : _key(key) {}
-	virtual ~KeyInput();
+	virtual ~KeyInput() {}
 
 	Key	key() const
 	{

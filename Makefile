@@ -70,6 +70,7 @@ INCS		  =  global.hh \
 		     Bomb.hh \
 		     Block.hh \
 		     BonusItem.hh \
+		     KeyInput.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \
