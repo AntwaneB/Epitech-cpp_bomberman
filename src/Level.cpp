@@ -8,6 +8,7 @@
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
 #include "Level.hpp"
+#include "KeyInput.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)

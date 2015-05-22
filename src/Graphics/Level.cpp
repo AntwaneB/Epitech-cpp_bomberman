@@ -54,8 +54,10 @@ Graphics::Level::draw()
 
 	size_t blocksPerLine = ceil(sqrt(_splits.size()));
 	size_t lines = floor(sqrt(_splits.size()));
+
 	size_t blockWidth = 1920 / blocksPerLine;
 	size_t blockHeight = 1080 / lines;
+
 	size_t x = 0;
 	size_t y = 0;
 	for (size_t i = 0; i < _splits.size(); i++)
@@ -69,6 +71,7 @@ Graphics::Level::draw()
 			y += blockHeight;
 		}
 	}
+
 	_context.flush();
 }
 

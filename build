@@ -27,17 +27,4 @@ else
 	fi
 fi
 
-
-#if [ $# = 0 ]; then
-
-	#valgrind ./bomberman
-#	./bomberman
-
-#elif [ $1 = "--gui" ]; then
-
-	#valgrind ./bomberman --gui
-#	./bomberman --gui
-
-#fi
-
 set +e
