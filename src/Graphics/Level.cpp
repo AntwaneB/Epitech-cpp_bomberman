@@ -39,6 +39,14 @@ Graphics::Level::update()
 		_context.stop();
 		this->notify(this, EXIT_TRIGGERED);
 	}
+	if (_input.getKey(SDLK_DOWN))
+		this->notify(this, KEY_PRESSED_P1_DOWN);
+	if (_input.getKey(SDLK_UP))
+		this->notify(this, KEY_PRESSED_P1_UP);
+	if (_input.getKey(SDLK_RIGHT))
+		this->notify(this, KEY_PRESSED_P1_RIGHT);
+	if (_input.getKey(SDLK_LEFT))
+		this->notify(this, KEY_PRESSED_P1_LEFT);
 	_context.updateClock(_clock);
 	_context.updateInputs(_input);
 	for (size_t i = 0; i < _splits.size(); i++)

@@ -65,6 +65,35 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 	}
 
+	auto items = _level->itemsRaw();
+	if (_items.size() != items.size())
+	{
+		for (auto it = items.begin(); it != items.end(); ++it)
+		{
+			Item* item = new Graphics::Item(*it, _model);
+			item->initialize();
+			_items.push_back(item);
+		}
+	}
+
+	items = _level->itemsRaw();
+	for (auto it = _items.begin(); it != _items.end(); ++it)
+	{
+		bool exists = false;
+		for (auto iit = items.begin(); iit != items.end() && !exists; ++iit)
+		{
+			exists = *it && *(*it) == *iit;
+		}
+		if (!exists)
+		{
+			delete (*it);
+			it = _items.erase(it);
+			--it;
+		}
+		else
+			(*it)->update(clock, input);
+	}
+
 	bombs = _level->bombsRaw();
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
 	{
@@ -110,5 +139,7 @@ void Graphics::Split::draw(gdl::Clock clock)
 	for (auto it = _characters.begin(); it != _characters.end(); ++it)
 		(*it)->draw(_shader, clock);
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		(*it)->draw(_shader, clock);
+	for (auto it = _items.begin(); it != _items.end(); ++it)
 		(*it)->draw(_shader, clock);
 }

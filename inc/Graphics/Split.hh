@@ -6,18 +6,21 @@
 #include "Graphics/Object.hh"
 #include "Graphics/Character.hh"
 #include "Graphics/Bomb.hh"
+#include "Graphics/Item.hh"
 #include "Graphics/Map.hh"
 #include "Graphics/Cube.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "Config.hpp"
 #include "Level.hpp"
+#include "Character.hpp"
 
 namespace Graphics
 {
 
 	class Split
 	{
+
 	public:
 		Split(const ::Level*);
 		virtual ~Split();
@@ -32,7 +35,7 @@ namespace Graphics
 		const ::Character*					_player;
 		std::list<Graphics::Character*>	_characters;
 		std::list<Graphics::Bomb*>			_bombs;
-		//std::list<Graphics::Item*>		_items;
+		std::list<Graphics::Item*>		_items;
 		Graphics::Map*							_map;
 		gdl::Model*								_model;
 	};
