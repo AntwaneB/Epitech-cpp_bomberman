@@ -48,6 +48,17 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 
 Level::~Level()
 {
+	for (auto it = _characters.begin(); it != _characters.end(); ++it)
+		for (auto yt = (*it).second.begin(); yt != (*it).second.end(); ++yt)
+			delete *yt;
+
+	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		for (auto yt = (*it).second.begin(); yt != (*it).second.end(); ++yt)
+			delete *yt;
+
+	for (auto it = _items.begin(); it != _items.end(); ++it)
+		for (auto yt = (*it).second.begin(); yt != (*it).second.end(); ++yt)
+			delete *yt;
 }
 
 Clock&
@@ -114,7 +125,14 @@ Level::tick(Subject* entity)
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
-
+		/*
+		std::cout << clock->seconds() << std::endl;
+		if (clock->seconds() >= 15)
+		{
+			delete this;
+			throw ExitException("lol");
+		}
+		*/
 
 		this->notify(this, LEVEL_UPDATED);
 	}

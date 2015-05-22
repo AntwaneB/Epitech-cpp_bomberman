@@ -28,7 +28,7 @@ Graphics::Level::initialize()
 	glEnable(GL_DEPTH_TEST);
 	for (int i = 0; i < 5; i++)
 		_models.push_back(new gdl::Model);
-	if (_models[0]->load("./libgdl/assets/marvin.fbx") == false 
+	if (_models[0]->load("./libgdl/assets/marvin.fbx") == false
 		|| _models[1]->load("./libgdl/assets/a bomb/a_bomb.fbx") == false
 		|| _models[2]->load("./libgdl/assets/ball_01.fbx") == false
 		|| _models[3]->load("./libgdl/assets/ball_02.fbx") == false

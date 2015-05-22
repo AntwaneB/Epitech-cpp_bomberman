@@ -16,7 +16,6 @@ IA::Area::Area()
 
 IA::Area::~Area()
 {
-
 }
 
 bool IA::Area::explosion() const
@@ -305,14 +304,14 @@ namespace IA
 		std::cout << "Starting BombOpportunity()..." << std::endl;
 	while (i < 4)
 	{
-	     if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-	        && _strategyMap[myY + searchY[i]][myX + searchX[i]].enemy() == true)
-	     {
-	     	if (VERBOSE)
-	        	std::cout << "BombOpportunity() END : advise to DROP_BOMB!" << std::endl;
-	        return (true);
-	     }
-	 i++;
+		if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
+			&& _strategyMap[myY + searchY[i]][myX + searchX[i]].enemy() == true)
+		{
+			if (VERBOSE)
+				std::cout << "BombOpportunity() END : advise to DROP_BOMB!" << std::endl;
+			return (true);
+		}
+		i++;
 	}
 	if (VERBOSE)
 		std::cout << "BombOpportunity() END : useless to drom bomb here" << std::endl;

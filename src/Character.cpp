@@ -29,6 +29,8 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, s
 
 Character::~Character()
 {
+	if (_ia)
+		delete _ia;
 }
 
 Position

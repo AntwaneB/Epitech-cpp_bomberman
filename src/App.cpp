@@ -86,7 +86,15 @@ App::run()
 		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
 			mainMenu->addObserver(_display);
 
-		mainMenu->run();
+		try
+		{
+			mainMenu->run();
+		}
+		catch (ExitException const & e)
+		{
+			delete mainMenu;
+			throw e;
+		}
 
 		delete mainMenu;
 	}
