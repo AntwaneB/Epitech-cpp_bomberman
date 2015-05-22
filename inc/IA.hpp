@@ -54,7 +54,7 @@ namespace IA
 		 bool    _explosion;
 		 int     _history;
 		 Character::Action _direction;
-       
+
 		 /* data */
 	};
 
@@ -120,7 +120,7 @@ void IA::IA<T>::debugStrategieMap()
 			else if (a.enemy() > 0)
 				std::cout << "e";
 			else if (a.bomb())
-				std::cout << "b";	
+				std::cout << "b";
 		}
 		std::cout << std::endl;
 	}
@@ -159,7 +159,7 @@ void IA::IA<T>::debugStrategieMapDirections()
         y++;
         }
         std::cout << std::endl;
-    x++;    
+    x++;
     }
 }
 
@@ -313,7 +313,7 @@ if (VERBOSE)
 	_self->pushAction(action);
     if (VERBOSE)
     {
-        debugStrategieMap(); 
+        debugStrategieMap();
         debugStrategieMapDirections();
         std::cout << "END IA" << std::endl;
     }
@@ -554,14 +554,14 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
                         action = currentDirection;
                         return (true);
                     }
-                else if ((_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false 
+                else if ((_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
                      || _strategyMap[currentY + searchY[i]][currentX + searchX[i]].destructible() == true)
                                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].enemy() == 0)
                     {
                         if (VERBOSE)
                         {
                             std::cout << "scanMapForEnemyThroughDestructible() : no enemy found at " << currentX << "/" << currentY;
-                            std::cout << ". Extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl; 
+                            std::cout << ". Extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                          _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
                          _escapeNodes.push_back(Position(currentX + searchX[i], currentY + searchY[i]));
