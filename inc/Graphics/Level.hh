@@ -24,6 +24,7 @@
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "Config.hpp"
+#include "KeyInput.hh"
 #include <vector>
 
 namespace Graphics
