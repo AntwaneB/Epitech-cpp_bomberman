@@ -10,7 +10,7 @@
 #include "Clock.hpp"
 
 RangeIncreaser::RangeIncreaser(Position const & position)
-	: BonusItem(position)
+	: BonusItem(position, Item::RANGE_INCREASER)
 {
 	_attributes = g_settings["entities"]["bonus_item"]["range_increase"];
 }

@@ -11,8 +11,8 @@
 #include "SpeedIncreaser.hh"
 #include "BombAmountIncreaser.hh"
 
-BonusItem::BonusItem(Position const & position)
-	: Item(position)
+BonusItem::BonusItem(Position const & position, Type type)
+	: Item(position, type)
 {
 }
 

@@ -11,13 +11,19 @@
 #include "SpeedIncreaser.hh"
 #include "BombAmountIncreaser.hh"
 
-Item::Item(Position const & position)
-	: _position(position), _prevPosition(position), _clockInit(false)
+Item::Item(Position const & position, Type type)
+	: _position(position), _prevPosition(position), _type(type), _clockInit(false)
 {
 }
 
 Item::~Item()
 {
+}
+
+Item::Type
+Item::type() const
+{
+	return (_type);
 }
 
 Position

@@ -16,7 +16,7 @@
 class BonusItem : public Item, public EventHandler<BonusItem>, public Subject
 {
 public:
-	BonusItem(Position const &);
+	BonusItem(Position const &, Item::Type type);
 	virtual ~BonusItem();
 
 	virtual void applyEffect(Character*) = 0;

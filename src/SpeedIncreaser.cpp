@@ -10,7 +10,7 @@
 #include "SpeedIncreaser.hh"
 
 SpeedIncreaser::SpeedIncreaser(Position const & position)
-	: BonusItem(position)
+	: BonusItem(position, Item::SPEED_INCREASER)
 {
 	_attributes = g_settings["entities"]["bonus_item"]["speed_increase"];
 }
