@@ -24,7 +24,7 @@ bool Graphics::Split::initialize()
 		return false;
 
 	glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(7, 0, 7), glm::vec3(0, 1, 0));
+	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(6, 0, 6), glm::vec3(-180, 1, -180));
 
 	_shader.bind();
 	_shader.setUniform("view", transformation);
