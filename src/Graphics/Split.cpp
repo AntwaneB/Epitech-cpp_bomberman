@@ -65,7 +65,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 	{
 		for (auto it = items.begin(); it != items.end(); ++it)
 		{
-			Item* item = new Graphics::Item(*it, _models[2]);
+			Item* item = new Graphics::Item(*it, _models);
 			item->initialize();
 			_items.push_back(item);
 		}
