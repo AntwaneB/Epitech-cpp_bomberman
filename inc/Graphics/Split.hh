@@ -25,7 +25,7 @@ namespace Graphics
 		Split(const ::Level*);
 		virtual ~Split();
 
-		virtual bool initialize();
+		virtual bool initialize(gdl::Model*, gdl::Model*);
 		virtual void update(gdl::Clock, gdl::Input);
 		virtual void draw(gdl::Clock);
 
