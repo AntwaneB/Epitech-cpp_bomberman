@@ -3,9 +3,9 @@
 Graphics::Bomb::Bomb(Position const & position, gdl::Model* model)
 	: Object(position), _model(model)
 {
-	//rotate(glm::vec3(1, 0, 0), -90);
+	rotate(glm::vec3(1, 0, 0), -90);
+	_position = Position(position.x(), position.y(), position.z());
  	scale(glm::vec3(0.0025, 0.0025, 0.0025));
-	translate(glm::vec3(0, 1, 0));
 }
 
 Graphics::Bomb::~Bomb()
