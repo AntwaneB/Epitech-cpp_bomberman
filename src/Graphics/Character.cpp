@@ -15,6 +15,7 @@ bool
 Graphics::Character::initialize()
 {
 	_model->setCurrentAnim(0);
+	//_model->set_default_model_color(gdl::Color(255, 0, 0));
 	return (true);
 }
 
@@ -85,7 +86,8 @@ void
 Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	(void)clock;
-	//_position = _character->position();
+	(void)input;
+	/*//_position = _character->position();
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
 		int x = _character->position().x() - _position.x();
@@ -112,7 +114,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 	{
 		translate(glm::vec3(1, 0, 0));
 		//rotate(glm::vec3(1, 0, 0), getAngle(LEFT));
-	}
+	}*/
 	/*
 	if (input.getKey(SDLK_DOWN) || input.getKey(SDLK_UP) || input.getKey(SDLK_RIGHT) || input.getKey(SDLK_LEFT))
 		_model->setCurrentAnim(0);

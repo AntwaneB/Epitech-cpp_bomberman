@@ -45,6 +45,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Ground.cpp \
 		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
+		     Graphics/Item.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -80,6 +81,7 @@ INCS		  =  global.hh \
 		     Graphics/Character.hh \
 		     Graphics/Bomb.hh \
 		     Graphics/Split.hh \
+		     Graphics/Item.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \

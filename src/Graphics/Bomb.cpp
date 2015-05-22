@@ -5,6 +5,7 @@ Graphics::Bomb::Bomb(const ::Bomb* bomb, gdl::Model* model)
 {
  	scale(glm::vec3(0.002, 0.002, 0.002));
 	translate(glm::vec3(0, 1, 0));
+
 }
 
 Graphics::Bomb::~Bomb()

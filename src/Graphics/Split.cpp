@@ -24,7 +24,7 @@ bool Graphics::Split::initialize()
 		return false;
 
 	glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
-	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(7, 0, 7), glm::vec3(0, 1, 0));
+	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(6, 0, 6), glm::vec3(-180, 1, -180));
 
 	_shader.bind();
 	_shader.setUniform("view", transformation);
@@ -63,6 +63,35 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			bomb->initialize();
 			_bombs.push_back(bomb);
 		}
+	}
+
+	auto items = _level->itemsRaw();
+	if (_items.size() != items.size())
+	{
+		for (auto it = items.begin(); it != items.end(); ++it)
+		{
+			Item* item = new Graphics::Item(*it, _model);
+			item->initialize();
+			_items.push_back(item);
+		}
+	}
+
+	items = _level->itemsRaw();
+	for (auto it = _items.begin(); it != _items.end(); ++it)
+	{
+		bool exists = false;
+		for (auto iit = items.begin(); iit != items.end() && !exists; ++iit)
+		{
+			exists = *it && *(*it) == *iit;
+		}
+		if (!exists)
+		{
+			delete (*it);
+			it = _items.erase(it);
+			--it;
+		}
+		else
+			(*it)->update(clock, input);
 	}
 
 	bombs = _level->bombsRaw();
@@ -110,5 +139,7 @@ void Graphics::Split::draw(gdl::Clock clock)
 	for (auto it = _characters.begin(); it != _characters.end(); ++it)
 		(*it)->draw(_shader, clock);
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		(*it)->draw(_shader, clock);
+	for (auto it = _items.begin(); it != _items.end(); ++it)
 		(*it)->draw(_shader, clock);
 }
