@@ -180,7 +180,7 @@ namespace IA
 namespace IA
 {
 	template<>
-	Character::Action IA<HARD>::Move() //FONCTION MODIFIEEEEEEEEEEEEEEEEEEEEEEEEE
+	Character::Action IA<HARD>::Move()
 	{
 		std::list<Character::Action>::iterator	it;
 		std::list<Character::Action>	destructibleDirections;
@@ -255,6 +255,8 @@ namespace IA
 			}
 			if (destructibleDirections.size() > 0 && escapeBomb() != Character::WAIT)//verif si le prochain path est destr. et si on peut s'echapp.
 			{
+				if (VERBOSE)
+					std::cout << "Now comparing with destructibleDirections..." << std::endl;
 				it = destructibleDirections.begin();
 				while (it != destructibleDirections.end())
 				{
@@ -291,7 +293,7 @@ namespace IA
 namespace IA
 {
 	template<>
-	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi FONCTION CHANGEEEEEEEEEEEEEEEEEEEE
+	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
 	{
 	std::vector<int>    searchX = {0, 2, 0, -2};
 	std::vector<int>    searchY = {-2, 0, 2, 0};
