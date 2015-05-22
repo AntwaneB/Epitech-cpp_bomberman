@@ -5,12 +5,14 @@
  * Created on May 21, 2015, 9:58 AM
  */
 
+#include "global.hh"
 #include "Clock.hh"
 #include "SpeedIncreaser.hh"
 
 SpeedIncreaser::SpeedIncreaser(Position const & position)
 	: BonusItem(position)
 {
+	_attributes = g_settings["entities"]["bonus_item"]["speed_increase"];
 }
 
 SpeedIncreaser::~SpeedIncreaser()
@@ -20,7 +22,14 @@ SpeedIncreaser::~SpeedIncreaser()
 void
 SpeedIncreaser::applyEffect(Character* character)
 {
-	(void)character;
+	int speed = character->attributes()["speed"];
+	speed += static_cast<int>(_attributes["speed_modifier"]);
+	speed = speed < 0 ? 0 : speed;
+
+	character->attributes()["speed"] = speed;
+
+	this->notify(this, ITEM_DESTROYED);
+	delete this;
 }
 
 void

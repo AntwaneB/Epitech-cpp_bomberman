@@ -9,14 +9,15 @@
 #include "misc/StdHelper.hpp"
 #include "Level.hpp"
 
-Level::Level(size_t width, size_t height, size_t charactersCount)
-	: _map(width, height), _charactersCount(charactersCount)
+Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
+	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
 	_actions[CHARACTER_DIED] = &Level::characterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
 	_actions[ITEM_MOVED] = &Level::itemMoved;
+	_actions[ITEM_DESTROYED] = &Level::itemDestroyed;
 	_actions[BOMB_DROPPED] = &Level::bombDropped;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
 	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
@@ -109,8 +110,12 @@ Level::tick(Subject* entity)
 Character*
 Level::pushCharacter()
 {
+	// Getting character spawn coordinates
 	size_t blocksPerLine = _map.width() >= _map.height() ? ceil(sqrt(_charactersCount)) : floor(sqrt(_charactersCount));
-	size_t lines = _map.width() >= _map.height() && sqrt(_charactersCount) != static_cast<int>(sqrt(_charactersCount)) ? floor(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
+	size_t lines = _map.width() >= _map.height() && sqrt(_charactersCount) != static_cast<int>(sqrt(_charactersCount)) ? ceil(sqrt(_charactersCount)) : ceil(sqrt(_charactersCount));
+
+	if (blocksPerLine * lines >= _charactersCount + blocksPerLine)
+		lines--;
 
 	size_t blockWidth = _map.width() / blocksPerLine;
 	size_t blockHeight = _map.height() / lines;
@@ -135,10 +140,27 @@ Level::pushCharacter()
 	else
 		charY = blockY * blockHeight + blockHeight / 2;
 
-	Character*	character = new Character(this, nth + 1, charX, charY);
+	// Getting isPlayer
+	bool isPlayer = false;
+
+	if (_playersCount == 1)
+		isPlayer = nth == _charactersCount / 2;
+	else if (_playersCount == 2)
+		isPlayer = nth == 0 || nth == _charactersCount - 1;
+	else
+	{
+		size_t step = round(_charactersCount / static_cast<float>(_playersCount));
+		if (_players.size() < _playersCount && (nth % step == 0 || nth + 1 == _charactersCount))
+			isPlayer = true;
+	}
+
+	// Creating new character
+	Character*	character = new Character(this, nth + 1, isPlayer, charX, charY);
 	character->addObserver(this);
 
 	_characters[Position(charX, charY)].push_back(character);
+	if (isPlayer)
+		_players.push_back(character);
 
 	_clock.addObserver(character);
 	this->addObserver(character);
@@ -153,6 +175,14 @@ Level::characterMoved(Subject* entity)
 
 	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), character));
 	_characters[character->position()].push_back(character);
+
+	while (!_items[character->position()].empty())
+	{
+		BonusItem* item = _items[character->position()].front();
+
+		item->applyEffect(character);
+		std::cout << "Applied bonus item effect to character" << std::endl;
+	}
 }
 
 void
@@ -170,6 +200,7 @@ Level::itemDropped(Subject* entity)
 {
 	BonusItem* item = safe_cast<BonusItem*>(entity);
 
+	_items[item->position()].push_back(item);
 	_clock.addObserver(item);
 	this->addObserver(item);
 	item->addObserver(this);
@@ -182,6 +213,16 @@ Level::itemMoved(Subject* entity)
 
 	_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), item));
 	_items[item->position()].push_back(item);
+}
+
+void
+Level::itemDestroyed(Subject* entity)
+{
+	BonusItem* item = safe_cast<BonusItem*>(entity);
+
+	_items[item->position()].erase(std::find(_items[item->position()].begin(), _items[item->position()].end(), item));
+	_clock.removeObserver(item);
+	this->removeObserver(item);
 }
 
 void
@@ -252,15 +293,12 @@ Level::blockDestroyed(Subject* entity __attribute__((unused)))
 {
 	Block* block = safe_cast<Block*>(entity);
 
-	if (rand() % 100 < 25)
+	if (rand() % 100 < 150)
 	{ // We decide to create a random item
 		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
 
 		BonusItem* item = BonusItem::factory(type, block->position());
-		_items[block->position()].push_back(item);
-		_clock.addObserver(item);
-		this->addObserver(item);
-		item->addObserver(this);
+		this->itemDropped(item);
 	}
 }
 

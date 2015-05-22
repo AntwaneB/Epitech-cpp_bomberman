@@ -26,8 +26,8 @@ public:
 private:
 	virtual void tick(Subject*) = 0;
 
-private:
-
+protected:
+	Config	_attributes;
 };
 
 #endif	/* BONUSITEM_HH */

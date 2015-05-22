@@ -13,15 +13,17 @@
 #include "Level.hpp"
 #include "IA.hpp"
 
-Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _position(x, y, z), _solid(true), _elapsedTime(-1)
+Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
 
 	_attributes = g_settings["entities"]["character"];
 
-	_ia = new IA::IA<IA::HARD>(_level, this);
+	if (!_isPlayer)
+		_ia = new IA::IA<IA::HARD>(_level, this);
+
 	/*
 	if (_nth == 5)
 	{
@@ -33,7 +35,15 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 		_queuedActions.push(Character::MOVE_UP);
 		_queuedActions.push(Character::MOVE_UP);
 		_queuedActions.push(Character::MOVE_UP);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_RIGHT);
+		_queuedActions.push(Character::MOVE_DOWN);
+		_queuedActions.push(Character::MOVE_DOWN);
 		_queuedActions.push(Character::DROP_BOMB);
+		_queuedActions.push(Character::MOVE_UP);
+		_queuedActions.push(Character::DROP_BOMB);
+		_queuedActions.push(Character::MOVE_UP);
+		_queuedActions.push(Character::MOVE_LEFT);
 	}
 	*/
 
@@ -42,6 +52,24 @@ Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t
 
 Character::~Character()
 {
+}
+
+Position
+Character::position() const
+{
+	return (_position);
+}
+
+Position
+Character::prevPosition() const
+{
+	return (_prevPosition);
+}
+
+Config&
+Character::attributes()
+{
+	return (_attributes);
 }
 
 void
@@ -54,8 +82,10 @@ Character::tick(Subject* entity)
 
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
 	{
-		_ia->playTurn();
 		_elapsedTime++;
+
+		if (_ia && !_isPlayer)
+			_ia->playTurn();
 
 		if (_queuedActions.size() > 0
 			&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
@@ -98,18 +128,6 @@ Character::bombExploded(Subject* entity)
 		this->notify(this, CHARACTER_DIED);
 		delete this;
 	}
-}
-
-Position
-Character::position() const
-{
-	return (_position);
-}
-
-Position
-Character::prevPosition() const
-{
-	return (_prevPosition);
 }
 
 void

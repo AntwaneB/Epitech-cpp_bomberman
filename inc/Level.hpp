@@ -21,7 +21,7 @@
 class Level : public EventHandler<Level>, public Subject
 {
 public:
-	Level(size_t width, size_t height, size_t charactersCount);
+	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount);
 	virtual ~Level();
 
 	void				run();
@@ -47,6 +47,7 @@ private:
 	void	characterDied(Subject* entity);
 	void	itemDropped(Subject* entity);
 	void	itemMoved(Subject* entity);
+	void	itemDestroyed(Subject* entity);
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 	void	blockDestroyed(Subject* entity);
@@ -62,6 +63,7 @@ private:
 	std::map<Position, std::list<BonusItem*> >	_items;
 
 	size_t													_charactersCount;
+	size_t													_playersCount;
 	Clock														_clock;
 };
 
