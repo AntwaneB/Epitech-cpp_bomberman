@@ -233,8 +233,8 @@ void IA::IA<T>::scanMap()
 	int y;
 	int x;
 
-    if (VERBOSE)
-        std::cout << "Starting scanMap()" << std::endl;
+	if (VERBOSE)
+		std::cout << "Starting scanMap()" << std::endl;
 	y = 0;
 	_strategyMap.resize(_level->map().height());
 	for (std::vector<std::vector<Block*> >::iterator i = map.begin(); i != map.end(); ++i)
@@ -294,8 +294,8 @@ void IA::IA<T>::playTurn()
     int     myX = _self->position().x();
     int     myY = _self->position().y();
 
-if (VERBOSE)
-    std::cout << "BEGIN IA" << std::endl;
+	if (VERBOSE)
+		std::cout << "BEGIN IA" << std::endl;
     _strategyMap[myY][myX].incHistory();
 	scanMap();
     bool isInDanger = BombDetection();

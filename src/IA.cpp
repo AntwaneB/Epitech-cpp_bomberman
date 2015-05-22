@@ -81,46 +81,46 @@ void IA::Area::setDirection(Character::Action move)
 
 namespace IA
 {
-    template<>
-    Character::Action IA<EASY>::Move()
-    {
-        std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
-        std::vector<Character::Action>  possibleDirections;
-        std::vector<int>                searchX = {0, 1, 0, -1};
-        std::vector<int>                searchY = {-1, 0, 1, 0};
-        int                             mapHeight = _level->map().height();
-        int                             mapWidth = _level->map().width();
-        int                             myX = _self->position().x();
-        int                             myY = _self->position().y();
-        int                             i = 0;
+	template<>
+	Character::Action IA<EASY>::Move()
+	{
+		std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
+		std::vector<Character::Action>  possibleDirections;
+		std::vector<int>                searchX = {0, 1, 0, -1};
+		std::vector<int>                searchY = {-1, 0, 1, 0};
+		int                             mapHeight = _level->map().height();
+		int                             mapWidth = _level->map().width();
+		int                             myX = _self->position().x();
+		int                             myY = _self->position().y();
+		int                             i = 0;
 
-        if (VERBOSE)
-        	std::cout << "Starting MOVE(EASY)" << std::endl;
-        while (i < 4)
-        {
-            if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
-            {
-                if (_strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
-                	&& _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == false)
-                        possibleDirections.push_back(searchActions[i]);
-            }
-            i++;
-        }
-        if (VERBOSE)
-        	std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
-        if (possibleDirections.size() != 0)
-        {
-        	if (VERBOSE)
-        		std::cout << "MOVE(EASY) END" << std::endl;
-            return (possibleDirections[rand() % possibleDirections.size()]);
-        }
-        else
-        {
-        	if (VERBOSE)
-        		std::cout << "MOVE(EASY) END" << std::endl;
-            return (Character::WAIT);
-    	}
-    }
+		if (VERBOSE)
+			std::cout << "Starting MOVE(EASY)" << std::endl;
+		while (i < 4)
+		{
+			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
+			{
+				if (_strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
+					&& _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == false)
+					possibleDirections.push_back(searchActions[i]);
+			}
+			i++;
+		}
+		if (VERBOSE)
+			std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
+		if (possibleDirections.size() != 0)
+		{
+			if (VERBOSE)
+				std::cout << "MOVE(EASY) END" << std::endl;
+				return (possibleDirections[rand() % possibleDirections.size()]);
+		}
+		else
+		{
+			if (VERBOSE)
+				std::cout << "MOVE(EASY) END" << std::endl;
+				return (Character::WAIT);
+		}
+	}
 }
 
 namespace IA
@@ -193,7 +193,6 @@ namespace IA
 		int                             myY = _self->position().y();
 		int                             mapHeight = _level->map().height();
 		int                             mapWidth = _level->map().width();
-		int                             i = 0;
 		int                             counter = 0;
 
 		if (VERBOSE)
@@ -202,7 +201,7 @@ namespace IA
 			std::cout << "myPos : " << myX << "/" << myY << std::endl;
 		}
 		_strategyMap[myY][myX].setDirection(Character::MOVE_UP);
-		while (i < 4)
+		for (int i = 0; i < 4; ++i)
 		{
 			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
 					  && _strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
@@ -214,7 +213,6 @@ namespace IA
 				 _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
 				 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
 			}
-			i++;
 		}
 		if (VERBOSE)
 			std::cout << "MOVE(HARD) : found " << counter << " possible FREE direction(s)" << std::endl; // debug
@@ -230,11 +228,10 @@ namespace IA
 	 		_escapeNodes.clear();
 	 		enemyDirectionFound = false;
 	 		scanMap();
-	 		i = 0;
-	 		while (i < 4)
+			for (int i = 0; i < 4; ++i)
 	 		{
 				if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-					&& (_strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false 
+					&& (_strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
 					|| _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == true )
 					&& _strategyMap[myY + searchY[i]][myX + searchX[i]].explosion() == false
 					&& _strategyMap[myY + searchY[i]][myX + searchX[i]].direction() == Character::WAIT)
@@ -247,7 +244,6 @@ namespace IA
 					 _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
 					 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
 				}
-				i++;
 	 		}
 	 		if (VERBOSE)
 	 			std::cout << "MOVE(HARD) : found " << counter << " possible FREE/DESTR direction(s)" << std::endl; // debug
