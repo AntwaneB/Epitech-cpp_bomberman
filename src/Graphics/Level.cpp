@@ -47,6 +47,18 @@ Graphics::Level::update()
 		this->notify(new KeyInput(::KeyInput::P1_RIGHT), KEY_PRESSED);
 	if (_input.getKey(SDLK_LEFT))
 		this->notify(new KeyInput(::KeyInput::P1_LEFT), KEY_PRESSED);
+	if (_input.getKey(SDLK_KP_0))
+		this->notify(new KeyInput(::KeyInput::P1_SPACE), KEY_PRESSED);
+	if (_input.getKey(SDLK_z))
+		this->notify(new KeyInput(::KeyInput::P2_UP), KEY_PRESSED);
+	if (_input.getKey(SDLK_s))
+		this->notify(new KeyInput(::KeyInput::P1_DOWN), KEY_PRESSED);
+	if (_input.getKey(SDLK_q))
+		this->notify(new KeyInput(::KeyInput::P1_RIGHT), KEY_PRESSED);
+	if (_input.getKey(SDLK_d))
+		this->notify(new KeyInput(::KeyInput::P1_LEFT), KEY_PRESSED);
+	if (_input.getKey(SDLK_SPACE))
+		this->notify(new KeyInput(::KeyInput::P2_SPACE), KEY_PRESSED);
 	_context.updateClock(_clock);
 	_context.updateInputs(_input);
 	for (size_t i = 0; i < _splits.size(); i++)
