@@ -38,6 +38,12 @@ Bomb::range() const
 	return (_range);
 }
 
+char
+Bomb::progress() const
+{
+	return (_progress);
+}
+
 void
 Bomb::tick(Subject* entity)
 {

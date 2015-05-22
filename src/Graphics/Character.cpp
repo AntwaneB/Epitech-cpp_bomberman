@@ -1,7 +1,7 @@
 #include "Graphics/Character.hh"
 
-Graphics::Character::Character(Position const & position, ::Character const * character, gdl::Model* model)
-	: Object(position), _character(character), _model(model), _position(Position(position.x(), position.y(), position.z()))
+Graphics::Character::Character(::Character const * character, gdl::Model* model)
+	: Object(character->position()), _character(character), _model(model)
 {
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
 }
@@ -19,14 +19,12 @@ Graphics::Character::initialize()
 }
 
 bool
-Graphics::Character::isLive(::Character* character)
+Graphics::Character::operator==(const ::Character* other) const
 {
-	if (character != _character)
-		return (false);
-	return (true);
+	return (other == _character);
 }
 
-int 
+int
 Graphics::Character::getAngle(direction key)
 {
 	switch(_pos)

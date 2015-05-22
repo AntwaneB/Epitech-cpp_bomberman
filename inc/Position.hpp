@@ -8,8 +8,8 @@
 #ifndef POSITION_HPP
 #define	POSITION_HPP
 
-#include "Config.hpp"
 #include <iostream>
+#include "Config.hpp"
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 

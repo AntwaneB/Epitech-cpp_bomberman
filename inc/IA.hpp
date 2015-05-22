@@ -21,7 +21,7 @@ class Item;
 
 namespace IA
 {
-	enum Difficulty { EASY, MEDIUM, HARD };
+//	enum Difficulty { EASY, MEDIUM, HARD };
 
 	class Area
 	{
@@ -85,8 +85,8 @@ namespace IA
 }
 
 template<IA::Difficulty T>
-IA::IA<T>::IA(Level const* level, Character* character):
-		_level(level)
+IA::IA<T>::IA(Level const* level, Character* character)
+	: _level(level)
 {
 	_self = character;
 	scanMap();
@@ -96,7 +96,6 @@ IA::IA<T>::IA(Level const* level, Character* character):
 template<IA::Difficulty T>
 IA::IA<T>::~IA()
 {
-
 }
 
 /*template<Difficulty T>
@@ -224,7 +223,7 @@ void IA::IA<T>::scanMap()
 			Position p = (*i)->position();
 			_strategyMap[p.x()][p.y()].setBomb(true);
 			_strategyMap[p.x()][p.y()].setExplosion(true);
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 8; i++)
 			{
 				if (x + searchX[i] > 0 && x + searchX[i] < static_cast<int>(_level->map().width())
 					&& y + searchY[i] > 0 && y + searchY[i] < static_cast<int>(_level->map().height()))
@@ -258,6 +257,7 @@ void IA::IA<T>::playTurn()
 		else
 			action = Move();
 	}
+//	_self->clearActions();
 	_self->pushAction(action);
 }
 

@@ -5,11 +5,8 @@
  * Created on May 7, 2015, 12:15 AM
  */
 
-#ifndef BOMB_HH
-#define	BOMB_HH
-
-class Bomb;
-class Character;
+#ifndef CORE_BOMB_HH
+#define	CORE_BOMB_HH
 
 #include <vector>
 #include "Item.hh"
@@ -27,6 +24,7 @@ public:
 	bool	hasHit(Position const &) const;
 
 	size_t	range() const;
+	char		progress() const;
 
 	void		toConfig(Config &) const;
 
