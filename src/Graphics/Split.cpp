@@ -16,8 +16,9 @@ Graphics::Split::~Split()
 		delete *it;
 }
 
-bool Graphics::Split::initialize()
+bool Graphics::Split::initialize(gdl::Model* model, gdl::Model* model2)
 {
+	_model = model2;
 	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 	|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 	|| !_shader.build())
@@ -32,12 +33,6 @@ bool Graphics::Split::initialize()
 
 	_map->initialize();
 
-	gdl::Model* model = new gdl::Model;
-	if (model->load("./libgdl/assets/marvin.fbx") == false || _model->load("./libgdl/assets/a bomb/a_bomb.fbx") == false)
-	{
-		std::cout << "Cannot load the marvin model" << std::endl;
-		return (false);
-	}
 	for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
 	{
 		for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
