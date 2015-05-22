@@ -100,7 +100,8 @@ namespace IA
         {
             if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
             {
-                if (_strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false)
+                if (_strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
+                	&& _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false)
                         possibleDirections.push_back(searchActions[i]);
             }
             i++;
@@ -146,6 +147,7 @@ namespace IA
         {
             if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
                     && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
+                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false
                     && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
             {
                 freePath++;
@@ -204,6 +206,7 @@ namespace IA
 		{
 			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
 					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
+					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false
 					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
 			{
 				 counter++;
@@ -259,8 +262,8 @@ namespace IA
 					{
 						if (VERBOSE)
 						{
-							std::cout << "MOVE(HARD) : this destructible block next to this player must be exploded to reach enemy!" << std::endl;
-							std::cout << "MOVE(HARD) now finished" << std::endl;
+							std::cout << "MOVE(HARD) : this destructible block next to this player must be exploded to reach enemy!*********************" << std::endl;
+							std::cout << "MOVE(HARD) now finished with DROP_BOMB (in order to access enemy)" << std::endl;
 						}
 						return (Character::DROP_BOMB);
 					}

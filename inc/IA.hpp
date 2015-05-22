@@ -75,7 +75,7 @@ namespace IA
 			bool	BombOpportunity();
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
-	/*		void 	debugStrategieMap();*/
+			void 	debugStrategieMap();
 			Character::Action     Move();
 			Character::Action     escapeBomb();
 
@@ -102,16 +102,16 @@ IA::IA<T>::~IA()
 
 }
 
-/*template<Difficulty T>
-void IA<T>::debugStrategieMap()
+template<IA::Difficulty T>
+void IA::IA<T>::debugStrategieMap()
 {
 	for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
 	{
 		for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
 		{
 			Area a = *i;
-			if (a.free())
-				std::cout << "7";
+			if (a.destructible() == false && a.wall() == false)
+				std::cout << "_";
 			else if (a.destructible())
 				std::cout << "d";
 			else if (a.wall())
@@ -125,7 +125,7 @@ void IA<T>::debugStrategieMap()
 		}
 		std::cout << std::endl;
 	}
-}*/
+}
 
 template<IA::Difficulty T>
 bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
@@ -278,7 +278,10 @@ if (VERBOSE)
 	}
 	_self->pushAction(action);
     if (VERBOSE)
+    {
+        debugStrategieMap(); 
         std::cout << "END IA" << std::endl;
+    }
 }
 
 template<IA::Difficulty T>
@@ -306,6 +309,7 @@ Character::Action IA::IA<T>::escapeBomb()
     {
         if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
                 && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
+                && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false
                 && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
         {
             counter++; //Debug
@@ -359,7 +363,11 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
                 && (currentY + searchY[i]) < mapHeight
                 && _strategyMap[currentX + searchX[i]][currentY + searchY[i]].direction() == Character::WAIT)
                 {
+                if (VERBOSE)
+                    std::cout << "scanMapForEscape() checking if " << currentX + searchX[i] << "/" << currentY + searchY[i] << "is explosion-free" << std::endl;
+
                 if (_strategyMap[currentX + searchX[i]][currentY + searchY[i]].wall() == false
+                    && _strategyMap[currentX + searchX[i]][currentY + searchY[i]].destructible() == false
                         && _strategyMap[currentX + searchX[i]][currentY + searchY[i]].explosion() == false)
                     {
                         if (VERBOSE)
@@ -368,6 +376,7 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
                         return (true);
                     }
                 else if (_strategyMap[currentX + searchX[i]][currentY + searchY[i]].wall() == false
+                    && _strategyMap[currentX + searchX[i]][currentY + searchY[i]].destructible() == false
                         && _strategyMap[currentX + searchX[i]][currentY + searchY[i]].explosion() == true)
                     {
                         if (VERBOSE)
