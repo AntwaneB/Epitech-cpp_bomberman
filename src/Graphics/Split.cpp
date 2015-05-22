@@ -1,7 +1,7 @@
 #include "Graphics/Split.hh"
 
 Graphics::Split::Split(::Level const * level)
-	: _level(level), _model(new gdl::Model)
+	: _level(level)
 {
 	_map = new Map(level->map());
 }
@@ -16,9 +16,9 @@ Graphics::Split::~Split()
 		delete *it;
 }
 
-bool Graphics::Split::initialize(gdl::Model* model, gdl::Model* model2)
+bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 {
-	_model = model2;
+	_models = models;
 	if (!_shader.load("./libgdl/shaders/basic.fp", GL_FRAGMENT_SHADER)
 	|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 	|| !_shader.build())
@@ -37,7 +37,7 @@ bool Graphics::Split::initialize(gdl::Model* model, gdl::Model* model2)
 	{
 		for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
 		{
-			Character* character = new Graphics::Character(*iit, model);
+			Character* character = new Graphics::Character(*iit, _models[0]);
 			character->initialize();
 			_characters.push_back(character);
 		}
@@ -54,7 +54,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 	{
 		for (auto it = bombs.begin(); it != bombs.end(); ++it)
 		{
-			Bomb* bomb = new Graphics::Bomb(*it, _model);
+			Bomb* bomb = new Graphics::Bomb(*it, _models[1]);
 			bomb->initialize();
 			_bombs.push_back(bomb);
 		}
@@ -65,7 +65,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 	{
 		for (auto it = items.begin(); it != items.end(); ++it)
 		{
-			Item* item = new Graphics::Item(*it, _model);
+			Item* item = new Graphics::Item(*it, _models[2]);
 			item->initialize();
 			_items.push_back(item);
 		}

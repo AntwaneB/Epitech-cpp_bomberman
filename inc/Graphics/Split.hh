@@ -25,7 +25,7 @@ namespace Graphics
 		Split(const ::Level*);
 		virtual ~Split();
 
-		virtual bool initialize(gdl::Model*, gdl::Model*);
+		virtual bool initialize(std::vector<gdl::Model*>);
 		virtual void update(gdl::Clock, gdl::Input);
 		virtual void draw(gdl::Clock);
 
@@ -37,7 +37,7 @@ namespace Graphics
 		std::list<Graphics::Bomb*>			_bombs;
 		std::list<Graphics::Item*>		_items;
 		Graphics::Map*							_map;
-		gdl::Model*								_model;
+		std::vector<gdl::Model*> 				_models;
 	};
 
 };
