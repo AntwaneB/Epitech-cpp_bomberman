@@ -100,8 +100,8 @@ namespace IA
         {
             if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight)
             {
-                if (_strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
-                	&& _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false)
+                if (_strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
+                	&& _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == false)
                         possibleDirections.push_back(searchActions[i]);
             }
             i++;
@@ -146,20 +146,20 @@ namespace IA
         while (i < 4)
         {
             if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
+                    && _strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
+                    && _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == false
+                    && _strategyMap[myY + searchY[i]][myX + searchX[i]].direction() == Character::WAIT)
             {
                 freePath++;
-                if (_strategyMap[myX + searchX[i]][myY + searchY[i]].history() < currentBestDirectionHistory)
+                if (_strategyMap[myY + searchY[i]][myX + searchX[i]].history() < currentBestDirectionHistory)
                 {
-                        currentBestDirectionHistory = _strategyMap[myX + searchX[i]][myY + searchY[i]].history();
+                        currentBestDirectionHistory = _strategyMap[myY + searchY[i]][myX + searchX[i]].history();
                         currentBestAction = searchActions[i];
                 }
             }
             else if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == true
-                    && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
+                    && _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == true
+                    && _strategyMap[myY + searchY[i]][myX + searchX[i]].direction() == Character::WAIT)
             {
             	destructibleDirections++;
             }
@@ -201,17 +201,17 @@ namespace IA
 			std::cout << "running MOVE(HARD)" << std::endl;
 			std::cout << "myPos : " << myX << "/" << myY << std::endl;
 		}
-		_strategyMap[myX][myY].setDirection(Character::MOVE_UP);
+		_strategyMap[myY][myX].setDirection(Character::MOVE_UP);
 		while (i < 4)
 		{
 			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
-					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false
-					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].explosion() == false
-					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
+					  && _strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false
+					  && _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == false
+					  && _strategyMap[myY + searchY[i]][myX + searchX[i]].explosion() == false
+					  && _strategyMap[myY + searchY[i]][myX + searchX[i]].direction() == Character::WAIT)
 			{
 				 counter++;
-				 _strategyMap[myX + searchX[i]][myY + searchY[i]].setDirection(searchActions[i]);
+				 _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
 				 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
 			}
 			i++;
@@ -234,17 +234,17 @@ namespace IA
 	 		while (i < 4)
 	 		{
 				if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-					&& (_strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false 
-					|| _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == true )
-					&& _strategyMap[myX + searchX[i]][myY + searchY[i]].explosion() == false
-					&& _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
+					&& (_strategyMap[myY + searchY[i]][myX + searchX[i]].wall() == false 
+					|| _strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == true )
+					&& _strategyMap[myY + searchY[i]][myX + searchX[i]].explosion() == false
+					&& _strategyMap[myY + searchY[i]][myX + searchX[i]].direction() == Character::WAIT)
 				{
-					if (_strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == true)
+					if (_strategyMap[myY + searchY[i]][myX + searchX[i]].destructible() == true)
 					{
 						destructibleDirections.push_back(searchActions[i]);
 					}
 					 counter++;
-					 _strategyMap[myX + searchX[i]][myY + searchY[i]].setDirection(searchActions[i]);
+					 _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
 					 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
 				}
 				i++;
@@ -276,7 +276,7 @@ namespace IA
 			}
 		}
 		if (VERBOSE)
-		std::cout << "MOVE(HARD) now finished" << std::endl;
+			std::cout << "MOVE(HARD) now finished" << std::endl;
 		_escapeNodes.clear();
 		return finalAction;
 	}
@@ -310,7 +310,7 @@ namespace IA
 	while (i < 4)
 	{
 	     if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
-	        && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
+	        && _strategyMap[myY + searchY[i]][myX + searchX[i]].enemy() == true)
 	     {
 	     	if (VERBOSE)
 	        	std::cout << "BombOpportunity() END : advise to DROP_BOMB!" << std::endl;
