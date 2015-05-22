@@ -207,6 +207,7 @@ namespace IA
 			if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
 					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false
 					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == false
+					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].explosion() == false
 					  && _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
 			{
 				 counter++;
@@ -235,6 +236,7 @@ namespace IA
 				if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
 					&& (_strategyMap[myX + searchX[i]][myY + searchY[i]].wall() == false 
 					|| _strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == true )
+					&& _strategyMap[myX + searchX[i]][myY + searchY[i]].explosion() == false
 					&& _strategyMap[myX + searchX[i]][myY + searchY[i]].direction() == Character::WAIT)
 				{
 					if (_strategyMap[myX + searchX[i]][myY + searchY[i]].destructible() == true)

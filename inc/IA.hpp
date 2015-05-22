@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE true
+#define VERBOSE false
 
 namespace IA
 {
@@ -76,6 +76,7 @@ namespace IA
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
 			void 	debugStrategieMap();
+            void    debugStrategieMapDirections();
 			Character::Action     Move();
 			Character::Action     escapeBomb();
 
@@ -110,7 +111,9 @@ void IA::IA<T>::debugStrategieMap()
 		for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
 		{
 			Area a = *i;
-			if (a.destructible() == false && a.wall() == false)
+            if (a.explosion())
+                std::cout << "x";
+			else if (a.destructible() == false && a.wall() == false)
 				std::cout << "_";
 			else if (a.destructible())
 				std::cout << "d";
@@ -119,12 +122,47 @@ void IA::IA<T>::debugStrategieMap()
 			else if (a.enemy() > 0)
 				std::cout << "e";
 			else if (a.bomb())
-				std::cout << "b";
-			else if (a.explosion())
-				std::cout << "x";
+				std::cout << "b";	
 		}
 		std::cout << std::endl;
 	}
+}
+
+template<IA::Difficulty T>
+void IA::IA<T>::debugStrategieMapDirections()
+{
+    Character::Action currentDirection;
+    int                             myX = _self->position().x();
+    int                             myY = _self->position().y();
+int x = 0;
+int y = 0;
+
+    for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
+    {
+        y = 0;
+        for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
+        {
+            Area a = *i;
+            currentDirection = a.direction();
+            if (currentDirection == Character::MOVE_UP)
+                std::cout << "U";
+            else if (currentDirection == Character::MOVE_RIGHT)
+                std::cout << "R";
+            else if (currentDirection == Character::MOVE_DOWN)
+                std::cout << "D";
+            else if (currentDirection == Character::MOVE_LEFT)
+                std::cout << "L";
+            else if (currentDirection == Character::WAIT)
+                std::cout << "W";
+            else if (a.destructible() == false && a.wall() == false)
+                std::cout << "1";
+            else if (myX == x && myY == y)
+                std::cout << "M";
+        y++;
+        }
+        std::cout << std::endl;
+    x++;    
+    }
 }
 
 template<IA::Difficulty T>
@@ -235,20 +273,18 @@ void IA::IA<T>::scanMap()
 		x = 0;
 		for (std::list<Bomb*>::iterator i = it->second.begin(); i != it->second.end(); ++i)
 		{
-			Position p = (*i)->position();
+			Position p = (*i)->position();       //postion bombe
 			_strategyMap[p.x()][p.y()].setBomb(true);
 			_strategyMap[p.x()][p.y()].setExplosion(true);
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 8; i++)
 			{
-				if (x + searchX[i] > 0 && x + searchX[i] < static_cast<int>(_level->map().width())
-					&& y + searchY[i] > 0 && y + searchY[i] < static_cast<int>(_level->map().height()))
+				if ((p.x() + searchX[i]) > 0 && (p.x() + searchX[i]) < static_cast<int>(_level->map().width())
+					&& (p.y() + searchY[i]) > 0 && (p.y() + searchY[i]) < static_cast<int>(_level->map().height()))
 				{
-					_strategyMap[x + searchX[i]][y + searchY[i]].setExplosion(true);
+					_strategyMap[p.x() + searchX[i]][p.y() + searchY[i]].setExplosion(true);
 				}
 			}
-			x++;
 		}
-		y++;
 	}
     if (VERBOSE)
         std::cout << "scanMap() END" << std::endl;
@@ -280,6 +316,7 @@ if (VERBOSE)
     if (VERBOSE)
     {
         debugStrategieMap(); 
+        debugStrategieMapDirections();
         std::cout << "END IA" << std::endl;
     }
 }
@@ -304,7 +341,7 @@ Character::Action IA::IA<T>::escapeBomb()
         std::cout << "Starting escapeBomb()" << std::endl;
         std::cout << "myPos : " << myX << "/" << myY << std::endl;
     }
-    _strategyMap[myX][myY].setDirection(Character::MOVE_UP);
+    _strategyMap[myX][myY].setDirection(Character::WAIT);
     while (i < 4)
     {
         if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
