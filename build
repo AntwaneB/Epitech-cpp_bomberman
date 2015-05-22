@@ -2,8 +2,8 @@
 
 set -e
 
-echo -n "Project line count : "
-cat `find ./ -path ./libgdl -prune -o -path ./_Ressources -prune -o -type f ! -name "pugi*" -iname "*.cpp" -o ! -name "pugi*" -iname "*.h*"` 2> /dev/null | wc -l
+lines=$(cat `find ./ -path ./libgdl -prune -o -path ./_Ressources -prune -o -type f ! -name "pugi*" -iname "*.cpp" -o ! -name "pugi*" -iname "*.h*"` 2> /dev/null | wc -l)
+echo "Project line count : $lines"
 
 echo ""
 
@@ -13,16 +13,31 @@ time make
 
 echo "";
 
-if [ $# = 0 ]; then
+if [ "$1" == "--gui" ]||[ "$2" == "--gui" ]; then
+	if [ "$1" == "-d" ]||[ "$2" == "-d" ]; then
+		valgrind ./bomberman --gui
+	else
+		./bomberman --gui
+	fi
+else
+	if [ "$1" == "-d" ]||[ "$2" == "-d" ]; then
+		valgrind ./bomberman
+	else
+		./bomberman
+	fi
+fi
+
+
+#if [ $# = 0 ]; then
 
 	#valgrind ./bomberman
-	./bomberman
+#	./bomberman
 
-elif [ $1 = "--gui" ]; then
+#elif [ $1 = "--gui" ]; then
 
 	#valgrind ./bomberman --gui
-	./bomberman --gui
+#	./bomberman --gui
 
-fi
+#fi
 
 set +e

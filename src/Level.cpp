@@ -31,7 +31,6 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
-	exit(0);
 }
 
 Level::~Level()
