@@ -70,10 +70,11 @@ Graphics::Level::update()
 		this->notify(new KeyInput(::KeyInput::P1_LEFT), KEY_PRESSED);
 	if (_input.getKey(SDLK_SPACE))
 		this->notify(new KeyInput(::KeyInput::P2_SPACE), KEY_PRESSED);
-	_context.updateClock(_clock);
-	_context.updateInputs(_input);
 	for (size_t i = 0; i < _splits.size(); i++)
 		_splits[i]->update(_clock, _input);
+	_context.updateClock(_clock);
+	_context.updateInputs(_input);
+	std::cout << _clock.getElapsed() << std::endl;
 	return (true);
 }
 
