@@ -67,8 +67,6 @@ App::runLevel(Subject* entity)
 void
 App::exit(Subject* entity __attribute__((unused)))
 {
-	this->notify(this, EXIT_TRIGGERED);
-
 	throw ExitException("Exiting normally");
 }
 
