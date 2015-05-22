@@ -9,6 +9,7 @@
 #include "misc/StdHelper.hpp"
 #include "Level.hpp"
 #include "KeyInput.hh"
+#include "RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
@@ -32,6 +33,17 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+
+	/* Pushing a lot of elements to test graphical perfs
+	for (size_t y = 0; y < _map.height(); ++y)
+	{
+		for (size_t x = 0; x < _map.width(); ++x)
+		{
+			_items[Position(x, y)].push_back(new RangeIncreaser(Position(x, y)));
+			_bombs[Position(x, y)].push_back(new Bomb(Position(x, y), 2, 4, NULL));
+		}
+	}
+	*/
 }
 
 Level::~Level()
