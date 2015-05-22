@@ -47,6 +47,7 @@ private:
 	void	characterDied(Subject* entity);
 	void	itemDropped(Subject* entity);
 	void	itemMoved(Subject* entity);
+	void	itemDestroyed(Subject* entity);
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 	void	blockDestroyed(Subject* entity);

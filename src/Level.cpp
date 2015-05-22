@@ -17,6 +17,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount)
 	_actions[CHARACTER_DIED] = &Level::characterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
 	_actions[ITEM_MOVED] = &Level::itemMoved;
+	_actions[ITEM_DESTROYED] = &Level::itemDestroyed;
 	_actions[BOMB_DROPPED] = &Level::bombDropped;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
 	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
@@ -153,6 +154,14 @@ Level::characterMoved(Subject* entity)
 
 	_characters[character->prevPosition()].erase(std::find(_characters[character->prevPosition()].begin(), _characters[character->prevPosition()].end(), character));
 	_characters[character->position()].push_back(character);
+
+	while (!_items[character->position()].empty())
+	{
+		BonusItem* item = _items[character->position()].front();
+
+		item->applyEffect(character);
+		std::cout << "Applied bonus item effect to character" << std::endl;
+	}
 }
 
 void
@@ -170,6 +179,7 @@ Level::itemDropped(Subject* entity)
 {
 	BonusItem* item = safe_cast<BonusItem*>(entity);
 
+	_items[item->position()].push_back(item);
 	_clock.addObserver(item);
 	this->addObserver(item);
 	item->addObserver(this);
@@ -182,6 +192,16 @@ Level::itemMoved(Subject* entity)
 
 	_items[item->prevPosition()].erase(std::find(_items[item->prevPosition()].begin(), _items[item->prevPosition()].end(), item));
 	_items[item->position()].push_back(item);
+}
+
+void
+Level::itemDestroyed(Subject* entity)
+{
+	BonusItem* item = safe_cast<BonusItem*>(entity);
+
+	_items[item->position()].erase(std::find(_items[item->position()].begin(), _items[item->position()].end(), item));
+	_clock.removeObserver(item);
+	this->removeObserver(item);
 }
 
 void
@@ -252,15 +272,13 @@ Level::blockDestroyed(Subject* entity __attribute__((unused)))
 {
 	Block* block = safe_cast<Block*>(entity);
 
-	if (rand() % 100 < 25)
+	if (rand() % 100 < 150)
 	{ // We decide to create a random item
 		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
 
 		BonusItem* item = BonusItem::factory(type, block->position());
-		_items[block->position()].push_back(item);
-		_clock.addObserver(item);
-		this->addObserver(item);
-		item->addObserver(this);
+		this->itemDropped(item);
+		std::cout << "Item dropped" << std::endl;
 	}
 }
 

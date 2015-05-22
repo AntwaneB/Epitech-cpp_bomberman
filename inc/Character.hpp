@@ -36,6 +36,7 @@ public:
 
 	Position	position() const;
 	Position	prevPosition() const;
+	Config&	attributes();
 
 	void		clearActions();
 	void		pushAction(Character::Action);
