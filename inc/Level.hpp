@@ -51,6 +51,7 @@ private:
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 	void	blockDestroyed(Subject* entity);
+	void	quitLevel(Subject* entity);
 
 	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);

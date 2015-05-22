@@ -23,6 +23,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	_actions[BOMB_DROPPED] = &Level::bombDropped;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
 	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
+	_actions[EXIT_TRIGGERED] = &Level::quitLevel;
 
 	_clock.addObserver(this);
 
@@ -320,7 +321,7 @@ Level::bombExploded(Subject* entity)
 }
 
 void
-Level::blockDestroyed(Subject* entity __attribute__((unused)))
+Level::blockDestroyed(Subject* entity)
 {
 	Block* block = safe_cast<Block*>(entity);
 
@@ -331,6 +332,12 @@ Level::blockDestroyed(Subject* entity __attribute__((unused)))
 		BonusItem* item = BonusItem::factory(type, block->position());
 		this->itemDropped(item);
 	}
+}
+
+void
+Level::quitLevel(Subject* entity __attribute__((unused)))
+{
+	delete this;
 }
 
 /*
