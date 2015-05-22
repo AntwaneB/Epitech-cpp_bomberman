@@ -126,15 +126,6 @@ Level::tick(Subject* entity)
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
-		/*
-		std::cout << clock->seconds() << std::endl;
-		if (clock->seconds() >= 15)
-		{
-			delete this;
-			throw ExitException("lol");
-		}
-		*/
-
 		this->notify(this, LEVEL_UPDATED);
 	}
 }
@@ -213,7 +204,6 @@ Level::characterMoved(Subject* entity)
 		BonusItem* item = _items[character->position()].front();
 
 		item->applyEffect(character);
-		std::cout << "Applied bonus item effect to character" << std::endl;
 	}
 }
 
@@ -325,7 +315,7 @@ Level::blockDestroyed(Subject* entity)
 {
 	Block* block = safe_cast<Block*>(entity);
 
-	if (rand() % 100 < 150)
+	if (rand() % 100 < 35)
 	{ // We decide to create a random item
 		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
 
