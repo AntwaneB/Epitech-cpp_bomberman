@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE true
+#define VERBOSE false
 
 namespace IA
 {
@@ -68,14 +68,14 @@ namespace IA
 
 		private:
 			bool	scanMapForEnemy(Character::Action & action);
-            bool    scanMapForEnemyThroughDestructible(Character::Action &);
+         bool    scanMapForEnemyThroughDestructible(Character::Action &);
 			void	scanMap();
 			bool	BombOpportunity();
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
 			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
-            void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
-            void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
+         void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
+         void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
 			Character::Action     Move();
 			Character::Action     escapeBomb();
 
@@ -104,63 +104,69 @@ IA::IA<T>::~IA()
 template<IA::Difficulty T>
 void IA::IA<T>::debugStrategieMap()
 {
-	for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
+	if (VERBOSE)
 	{
-		for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
+		for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
 		{
-			Area a = *i;
-            if (a.explosion())
-                std::cout << "x";
-			else if (a.destructible() == false && a.wall() == false)
-				std::cout << "_";
-			else if (a.destructible())
-				std::cout << "d";
-			else if (a.wall())
-				std::cout << "1";
-			else if (a.enemy() > 0)
-				std::cout << "e";
-			else if (a.bomb())
-				std::cout << "b";
+			for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
+			{
+				Area a = *i;
+					if (a.explosion())
+						 std::cout << "x";
+				else if (a.destructible() == false && a.wall() == false)
+					std::cout << "_";
+				else if (a.destructible())
+					std::cout << "d";
+				else if (a.wall())
+					std::cout << "1";
+				else if (a.enemy() > 0)
+					std::cout << "e";
+				else if (a.bomb())
+					std::cout << "b";
+			}
+			std::cout << std::endl;
 		}
-		std::cout << std::endl;
 	}
 }
 
 template<IA::Difficulty T>
 void IA::IA<T>::debugStrategieMapDirections()
 {
-    Character::Action currentDirection;
-    int         myX = _self->position().x();
-    int         myY = _self->position().y();
-    int         x = 0;
-    int         y = 0;
+	if (VERBOSE)
+	{
+		Character::Action currentDirection;
+		 int         myX = _self->position().x();
+		 int         myY = _self->position().y();
+		 int         x = 0;
+		 int         y = 0;
 
-    for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
-    {
-        y = 0;
-        for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
-        {
-            Area a = *i;
-            currentDirection = a.direction();
-            if (currentDirection == Character::MOVE_UP)
-                std::cout << "U";
-            else if (currentDirection == Character::MOVE_RIGHT)
-                std::cout << "R";
-            else if (currentDirection == Character::MOVE_DOWN)
-                std::cout << "D";
-            else if (currentDirection == Character::MOVE_LEFT)
-                std::cout << "L";
-            else if (currentDirection == Character::WAIT)
-                std::cout << "W";
-            else if (a.destructible() == false && a.wall() == false)
-                std::cout << "1";
-            else if (myX == x && myY == y)
-                std::cout << "S";
-        y++;
-        }
-        std::cout << std::endl;
-    x++;
-    }
+		 for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
+		 {
+			  y = 0;
+			  for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
+			  {
+					Area a = *i;
+					currentDirection = a.direction();
+					if (currentDirection == Character::MOVE_UP)
+						 std::cout << "U";
+					else if (currentDirection == Character::MOVE_RIGHT)
+						 std::cout << "R";
+					else if (currentDirection == Character::MOVE_DOWN)
+						 std::cout << "D";
+					else if (currentDirection == Character::MOVE_LEFT)
+						 std::cout << "L";
+					else if (currentDirection == Character::WAIT)
+						 std::cout << "W";
+					else if (a.destructible() == false && a.wall() == false)
+						 std::cout << "1";
+					else if (myX == x && myY == y)
+						 std::cout << "S";
+			  y++;
+			  }
+			  std::cout << std::endl;
+		 x++;
+		 }
+	}
 }
 
 template<IA::Difficulty T>
@@ -233,8 +239,8 @@ void IA::IA<T>::scanMap()
 	int y;
 	int x;
 
-    if (VERBOSE)
-        std::cout << "Starting scanMap()" << std::endl;
+	if (VERBOSE)
+		std::cout << "Starting scanMap()" << std::endl;
 	y = 0;
 	_strategyMap.resize(_level->map().height());
 	for (std::vector<std::vector<Block*> >::iterator i = map.begin(); i != map.end(); ++i)
@@ -294,8 +300,8 @@ void IA::IA<T>::playTurn()
     int     myX = _self->position().x();
     int     myY = _self->position().y();
 
-if (VERBOSE)
-    std::cout << "BEGIN IA" << std::endl;
+	if (VERBOSE)
+		std::cout << "BEGIN IA" << std::endl;
     _strategyMap[myY][myX].incHistory();
 	scanMap();
     bool isInDanger = BombDetection();
@@ -317,6 +323,12 @@ if (VERBOSE)
         debugStrategieMapDirections();
         std::cout << "END IA" << std::endl;
     }
+
+	/*
+	for (auto yt = _strategyMap.begin(); yt != _strategyMap.end(); ++yt)
+		(*yt).clear();
+	_strategyMap.clear();
+	*/
 }
 
 template<IA::Difficulty T>
@@ -457,26 +469,29 @@ bool IA::IA<T>::BombDetection()
 template<IA::Difficulty T>
 void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOVE when finished
 {
-   if(action == Character::MOVE_UP)
-   {
-    std::cout << "MOVE_UP" << std::endl;
-   }
-   if(action == Character::MOVE_LEFT)
-   {
-    std::cout << "MOVE_LEFT" << std::endl;
-   }
-      if(action == Character::MOVE_DOWN)
-   {
-    std::cout << "MOVE_DOWN" << std::endl;
-   }
-      if(action == Character::MOVE_LEFT)
-   {
-    std::cout << "MOVE_LEFT" << std::endl;
-   }
-   if(action == Character::WAIT)
-   {
-    std::cout << "WAIT" << std::endl;
-   }
+	if (VERBOSE)
+	{
+		if(action == Character::MOVE_UP)
+		{
+		 std::cout << "MOVE_UP" << std::endl;
+		}
+		if(action == Character::MOVE_LEFT)
+		{
+		 std::cout << "MOVE_LEFT" << std::endl;
+		}
+		if(action == Character::MOVE_DOWN)
+		{
+		 std::cout << "MOVE_DOWN" << std::endl;
+		}
+		if(action == Character::MOVE_LEFT)
+		{
+		 std::cout << "MOVE_LEFT" << std::endl;
+		}
+		if(action == Character::WAIT)
+		{
+		 std::cout << "WAIT" << std::endl;
+		}
+	}
 }
 
 template<IA::Difficulty T>

@@ -7,6 +7,7 @@
 
 #include <unistd.h>
 #include <iostream>
+#include "global.hh"
 #include "Clock.hpp"
 
 Clock::Clock()
@@ -44,7 +45,7 @@ Clock::run(void)
 
 		_seconds += elapsedTime() / 1000000;
 		this->restart();
-		usleep(167);
+		usleep(1000000 / FPS);
 	}
 
 	return (_seconds);

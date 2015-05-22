@@ -9,6 +9,7 @@
 #include "misc/StdHelper.hpp"
 #include "Level.hpp"
 #include "KeyInput.hh"
+#include "RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
@@ -32,10 +33,32 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+
+	/* Pushing a lot of elements to test graphical perfs
+	for (size_t y = 0; y < _map.height(); ++y)
+	{
+		for (size_t x = 0; x < _map.width(); ++x)
+		{
+			_items[Position(x, y)].push_back(new RangeIncreaser(Position(x, y)));
+			_bombs[Position(x, y)].push_back(new Bomb(Position(x, y), 2, 4, NULL));
+		}
+	}
+	*/
 }
 
 Level::~Level()
 {
+	for (auto it = _characters.begin(); it != _characters.end(); ++it)
+		for (auto yt = (*it).second.begin(); yt != (*it).second.end(); ++yt)
+			delete *yt;
+
+	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		for (auto yt = (*it).second.begin(); yt != (*it).second.end(); ++yt)
+			delete *yt;
+
+	for (auto it = _items.begin(); it != _items.end(); ++it)
+		for (auto yt = (*it).second.begin(); yt != (*it).second.end(); ++yt)
+			delete *yt;
 }
 
 Clock&
@@ -102,7 +125,14 @@ Level::tick(Subject* entity)
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
-
+		/*
+		std::cout << clock->seconds() << std::endl;
+		if (clock->seconds() >= 15)
+		{
+			delete this;
+			throw ExitException("lol");
+		}
+		*/
 
 		this->notify(this, LEVEL_UPDATED);
 	}

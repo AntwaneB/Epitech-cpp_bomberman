@@ -24,34 +24,13 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, s
 	if (!_isPlayer)
 		_ia = new IA::IA<IA::HARD>(_level, this);
 
-	/*
-	if (_nth == 5)
-	{
-		_queuedActions.push(Character::MOVE_RIGHT);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_RIGHT);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_LEFT);
-	}
-	*/
-
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
 Character::~Character()
 {
+	if (_ia)
+		delete _ia;
 }
 
 Position
