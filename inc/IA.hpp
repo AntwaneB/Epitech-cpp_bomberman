@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE false
+#define VERBOSE true
 
 namespace IA
 {
@@ -116,7 +116,7 @@ void IA::IA<T>::debugStrategieMap()
 				std::cout << "d";
 			else if (a.wall())
 				std::cout << "1";
-			else if (a.enemy())
+			else if (a.enemy() > 0)
 				std::cout << "e";
 			else if (a.bomb())
 				std::cout << "b";
