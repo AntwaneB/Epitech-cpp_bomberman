@@ -8,6 +8,7 @@
 #ifndef MAP_HH
 #define	MAP_HH
 
+#include <vector>
 #include "SdlContext.hh"
 #include "Game.hh"
 #include "glm/glm.hpp"
@@ -19,11 +20,10 @@
 #include "Graphics/Cube.hh"
 #include "Graphics/Ground.hh"
 #include "Graphics/Bomb.hh"
-#include "Block.hh" 
+#include "Core/Block.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
-#include "Map.hpp"
-#include <vector>
+#include "Core/Map.hpp"
 
 namespace Graphics
 {

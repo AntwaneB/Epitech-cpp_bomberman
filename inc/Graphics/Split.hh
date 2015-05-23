@@ -11,9 +11,9 @@
 #include "Graphics/Cube.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
-#include "Config.hpp"
-#include "Level.hpp"
-#include "Character.hpp"
+#include "Core/Config.hpp"
+#include "Core/Level.hpp"
+#include "Core/Character.hpp"
 
 namespace Graphics
 {

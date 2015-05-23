@@ -55,22 +55,22 @@ OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
 INCS_DIR	  =  inc
 INCS		  =  global.hh \
 		     Exception.hpp \
-		     App.hpp \
-		     Config.hpp \
-		     Clock.hpp \
+		     Core/App.hpp \
+		     Core/Config.hpp \
+		     Core/Clock.hpp \
 		     \
-		     Observer.hpp \
-		     Menu.hpp \
-		     Level.hpp \
-		     Character.hpp \
-		     IA.hpp \
-		     Map.hpp \
-		     Position.hpp \
-		     Item.hh \
-		     Bomb.hh \
-		     Block.hh \
-		     BonusItem.hh \
-		     KeyInput.hh \
+		     Core/Observer.hpp \
+		     Core/Menu.hpp \
+		     Core/Level.hpp \
+		     Core/Character.hpp \
+		     Core/IA.hpp \
+		     Core/Map.hpp \
+		     Core/Position.hpp \
+		     Core/Item.hh \
+		     Core/Bomb.hh \
+		     Core/Block.hh \
+		     Core/BonusItem.hh \
+		     Core/KeyInput.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \

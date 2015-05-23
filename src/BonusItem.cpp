@@ -6,10 +6,10 @@
  */
 
 #include "Exception.hpp"
-#include "BonusItem.hh"
-#include "RangeIncreaser.hh"
-#include "SpeedIncreaser.hh"
-#include "BombAmountIncreaser.hh"
+#include "Core/BonusItem.hh"
+#include "Core/RangeIncreaser.hh"
+#include "Core/SpeedIncreaser.hh"
+#include "Core/BombAmountIncreaser.hh"
 
 BonusItem::BonusItem(Position const & position, Type type)
 	: Item(position, type)

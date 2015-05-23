@@ -8,7 +8,7 @@
 #ifndef DISPLAY_HH
 #define	DISPLAY_HH
 
-#include "Observer.hpp"
+#include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
 

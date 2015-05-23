@@ -6,10 +6,10 @@
  */
 
 #include "Exception.hpp"
-#include "Item.hh"
-#include "RangeIncreaser.hh"
-#include "SpeedIncreaser.hh"
-#include "BombAmountIncreaser.hh"
+#include "Core/Item.hh"
+#include "Core/RangeIncreaser.hh"
+#include "Core/SpeedIncreaser.hh"
+#include "Core/BombAmountIncreaser.hh"
 
 Item::Item(Position const & position, Type type)
 	: _position(position), _prevPosition(position), _type(type), _clockInit(false)

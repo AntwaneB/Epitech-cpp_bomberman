@@ -1,4 +1,4 @@
-#include "IA.hpp"
+#include "Core/IA.hpp"
 
 IA::Area::Area(bool destructible, bool solid)
 {

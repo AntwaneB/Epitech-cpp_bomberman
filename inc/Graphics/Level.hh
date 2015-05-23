@@ -9,8 +9,8 @@
 #define	LEVEL_HH
 
 #include "Game.hh"
-#include "Observer.hpp"
-#include "Level.hpp"
+#include "Core/Observer.hpp"
+#include "Core/Level.hpp"
 #include "SdlContext.hh"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -23,8 +23,8 @@
 #include "Graphics/Character.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
-#include "Config.hpp"
-#include "KeyInput.hh"
+#include "Core/Config.hpp"
+#include "Core/KeyInput.hh"
 #include <vector>
 
 namespace Graphics

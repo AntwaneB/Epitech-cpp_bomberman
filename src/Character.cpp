@@ -7,12 +7,12 @@
 
 #include <iostream>
 #include "global.hh"
-#include "Character.hpp"
+#include "Core/Character.hpp"
 #include "Exception.hpp"
-#include "Clock.hpp"
-#include "Level.hpp"
-#include "IA.hpp"
-#include "KeyInput.hh"
+#include "Core/Clock.hpp"
+#include "Core/Level.hpp"
+#include "Core/IA.hpp"
+#include "Core/KeyInput.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
 	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
@@ -122,8 +122,6 @@ Character::keyPressed(Subject* entity)
 	keys[KeyInput::RIGHT] = Character::MOVE_RIGHT;
 	keys[KeyInput::LEFT] = Character::MOVE_LEFT;
 	keys[KeyInput::SPACE] = Character::DROP_BOMB;
-
-	std::cout << "genericKey = " << input->genericKey() << std::endl;
 
 	if (input->genericKey() > KeyInput::KEYS_GENERIC_START && input->genericKey() < KeyInput::KEYS_GENERIC_END)
 	{

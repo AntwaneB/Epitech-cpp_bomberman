@@ -90,7 +90,7 @@ public:
 protected:
 	void notify(Subject * entity, Event event)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED)
+		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED)
 			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		int i = 0;
@@ -110,7 +110,7 @@ protected:
 
 	void notify(Subject * entity, Event event, Observer* observer)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED)
+		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED)
 			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		if (observer != NULL)

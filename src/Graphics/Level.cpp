@@ -6,7 +6,7 @@
  */
 
 #include "Graphics/Level.hh"
-#include "KeyInput.hh"
+#include "Core/KeyInput.hh"
 
 Graphics::Level::Level(::Level const * level)
 	: _level(level)

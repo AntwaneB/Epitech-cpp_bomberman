@@ -5,7 +5,7 @@
  * Created on May 6, 2015, 4:07 PM
  */
 
-#include "Level.hpp"
+#include "Core/Level.hpp"
 #include "Graphics/Display.hh"
 
 Graphics::Display::Display()

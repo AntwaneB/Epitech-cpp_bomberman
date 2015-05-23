@@ -6,8 +6,8 @@
  */
 
 #include "global.hh"
-#include "Clock.hh"
-#include "SpeedIncreaser.hh"
+#include "Core/Clock.hpp"
+#include "Core/SpeedIncreaser.hh"
 
 SpeedIncreaser::SpeedIncreaser(Position const & position)
 	: BonusItem(position, Item::SPEED_INCREASER)

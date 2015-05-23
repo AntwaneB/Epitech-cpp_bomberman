@@ -15,7 +15,7 @@
 	<entities>
 		<entity name="character">
 			<param name="visible">true</param>
-			<param name="speed">120</param>
+			<param name="speed">180</param>
 			<param name="can_move">true</param>
 			<param name="destructible">true</param>
 			<param name="collision">true</param>
@@ -40,6 +40,7 @@
 			<param name="visible">true</param>
 			<param name="destructible">false</param>
 			<param name="collision">false</param>
+			<param name="drop_chance">60</param>
 
 			<item name="range_increase">
 				<param name="range_modifier">1</param>

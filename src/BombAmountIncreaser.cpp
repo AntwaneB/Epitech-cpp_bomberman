@@ -6,8 +6,8 @@
  */
 
 #include "global.hh"
-#include "BombAmountIncreaser.hh"
-#include "Clock.hpp"
+#include "Core/BombAmountIncreaser.hh"
+#include "Core/Clock.hpp"
 
 BombAmountIncreaser::BombAmountIncreaser(Position const & position)
 	: BonusItem(position, Item::BOMB_AMOUNT_INCREASER)

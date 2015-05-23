@@ -5,11 +5,12 @@
  * Created on May 4, 2015, 2:34 PM
  */
 
+#include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
-#include "Level.hpp"
-#include "KeyInput.hh"
-#include "RangeIncreaser.hh"
+#include "Core/Level.hpp"
+#include "Core/KeyInput.hh"
+#include "Core/RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
@@ -320,7 +321,7 @@ Level::blockDestroyed(Subject* entity)
 {
 	Block* block = safe_cast<Block*>(entity);
 
-	if (rand() % 100 < 35)
+	if (rand() % 100 < static_cast<int>(g_settings["entities"]["bonus_item"]["drop_chance"]))
 	{ // We decide to create a random item
 		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
 

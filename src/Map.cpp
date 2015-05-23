@@ -5,8 +5,8 @@
  * Created on April 27, 2015, 11:14 PM
  */
 
-#include "Map.hpp"
-#include "Bomb.hh"
+#include "Core/Map.hpp"
+#include "Core/Bomb.hh"
 #include "pugixml.hpp"
 #include "global.hh"
 
