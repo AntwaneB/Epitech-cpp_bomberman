@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Core/App.hpp"
+#include "Core/App.hh"
 #include "Exception.hpp"
 
 int	main(int ac, char **av)

@@ -23,7 +23,7 @@
 #include "Core/Block.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
-#include "Core/Map.hpp"
+#include "Core/Map.hh"
 
 namespace Graphics
 {

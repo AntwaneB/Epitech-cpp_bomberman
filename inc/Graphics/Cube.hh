@@ -9,7 +9,7 @@
 #include "glm/glm.hpp"
 
 #include "glm/gtc/matrix_transform.hpp"
-#include "Core/Position.hpp"
+#include "Core/Position.hh"
 #include "Core/Block.hh"
 
 namespace Graphics

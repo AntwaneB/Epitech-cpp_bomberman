@@ -10,10 +10,10 @@
 
 #include <vector>
 #include <random>
-#include "Level.hpp"
-#include "Character.hpp"
-#include "Position.hpp"
-#include "Map.hpp"
+#include "Level.hh"
+#include "Character.hh"
+#include "Position.hh"
+#include "Map.hh"
 #include "Block.hh"
 
 class Bomb;

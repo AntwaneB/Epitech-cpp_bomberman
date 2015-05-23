@@ -7,7 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "BasicShader.hh"
 #include "Input.hh"
-#include "Core/Position.hpp"
+#include "Core/Position.hh"
 
 namespace Graphics
 {

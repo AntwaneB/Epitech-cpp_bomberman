@@ -8,9 +8,9 @@
 #ifndef CLOCK_HPP
 #define	CLOCK_HPP
 
-#include "Observer.hpp"
 #include <time.h>
 #include <chrono>
+#include "Observer.hpp"
 
 typedef long double	seconds_t;
 

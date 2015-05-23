@@ -9,9 +9,9 @@
 #define	ITEM_HH
 
 #include "Observer.hpp"
-#include "Position.hpp"
-#include "Clock.hpp"
-#include "Character.hpp"
+#include "Position.hh"
+#include "Clock.hh"
+#include "Character.hh"
 
 class Item
 {

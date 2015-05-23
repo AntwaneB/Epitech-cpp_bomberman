@@ -13,7 +13,7 @@
 
 #include "global.hh"
 #include "Core/Observer.hpp"
-#include "Core/Menu.hpp"
+#include "Core/Menu.hh"
 #include "Graphics/Display.hh"
 
 class App : public EventHandler<App>, public Subject

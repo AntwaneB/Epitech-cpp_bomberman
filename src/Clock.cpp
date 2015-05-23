@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <iostream>
 #include "global.hh"
-#include "Core/Clock.hpp"
+#include "Core/Clock.hh"
 
 Clock::Clock()
 	: _run(false)

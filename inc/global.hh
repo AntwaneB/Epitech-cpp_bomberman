@@ -10,7 +10,7 @@
 
 #define FPS	40
 
-#include "Core/Config.hpp"
+#include "Core/Config.hh"
 
 extern Config g_settings;
 

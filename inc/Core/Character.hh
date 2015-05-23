@@ -21,9 +21,8 @@ namespace IA
 #include <queue>
 #include <list>
 #include "Observer.hpp"
-#include "Position.hpp"
-#include "Config.hpp"
-//#include "IA.hpp"
+#include "Position.hh"
+#include "Config.hh"
 
 class Character : public EventHandler<Character>, public Subject
 {

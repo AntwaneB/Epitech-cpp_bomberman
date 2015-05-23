@@ -9,7 +9,7 @@
 #define	BOMBAMOUNTINCREASER_HH
 
 #include "BonusItem.hh"
-#include "Character.hpp"
+#include "Character.hh"
 
 class BombAmountIncreaser : public BonusItem
 {

@@ -9,7 +9,7 @@
 #define	SPEEDINCREASER_HH
 
 #include "BonusItem.hh"
-#include "Character.hpp"
+#include "Character.hh"
 
 class SpeedIncreaser : public BonusItem
 {

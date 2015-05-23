@@ -10,13 +10,13 @@
 
 #include <map>
 #include "Observer.hpp"
-#include "Clock.hpp"
-#include "Map.hpp"
-#include "Character.hpp"
+#include "Clock.hh"
+#include "Map.hh"
+#include "Character.hh"
 #include "Item.hh"
 #include "BonusItem.hh"
 #include "Bomb.hh"
-#include "Level.hpp"
+#include "Level.hh"
 
 class Level : public EventHandler<Level>, public Subject
 {

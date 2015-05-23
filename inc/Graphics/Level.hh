@@ -10,7 +10,7 @@
 
 #include "Game.hh"
 #include "Core/Observer.hpp"
-#include "Core/Level.hpp"
+#include "Core/Level.hh"
 #include "SdlContext.hh"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -23,7 +23,7 @@
 #include "Graphics/Character.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
-#include "Core/Config.hpp"
+#include "Core/Config.hh"
 #include "Core/KeyInput.hh"
 #include <vector>
 

@@ -10,10 +10,10 @@
 
 #include <iostream>
 #include "Exception.hpp"
-#include "Core/Character.hpp"
-#include "Core/App.hpp"
-#include "Core/Level.hpp"
-#include "Core/Config.hpp"
+#include "Core/Character.hh"
+#include "Core/App.hh"
+#include "Core/Level.hh"
+#include "Core/Config.hh"
 #include "Graphics/Display.hh"
 #include "Graphics/Map.hh"
 

@@ -8,7 +8,7 @@
 #include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
-#include "Core/Level.hpp"
+#include "Core/Level.hh"
 #include "Core/KeyInput.hh"
 #include "Core/RangeIncreaser.hh"
 

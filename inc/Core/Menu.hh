@@ -9,7 +9,7 @@
 #define	MENU_HPP
 
 #include "Observer.hpp"
-#include "Level.hpp"
+#include "Level.hh"
 
 class Menu : public Subject, public EventHandler<Menu>
 {

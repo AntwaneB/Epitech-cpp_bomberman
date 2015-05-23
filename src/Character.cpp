@@ -7,10 +7,10 @@
 
 #include <iostream>
 #include "global.hh"
-#include "Core/Character.hpp"
+#include "Core/Character.hh"
 #include "Exception.hpp"
-#include "Core/Clock.hpp"
-#include "Core/Level.hpp"
+#include "Core/Clock.hh"
+#include "Core/Level.hh"
 #include "Core/IA.hpp"
 #include "Core/KeyInput.hh"
 

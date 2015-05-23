@@ -16,7 +16,7 @@
 
 #include <iostream>
 #include <stdexcept>
-#include "Core/Config.hpp"
+#include "Core/Config.hh"
 #include "pugixml.hpp"
 #include "Exception.hpp"
 

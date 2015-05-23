@@ -10,8 +10,8 @@
 
 #include "Observer.hpp"
 #include "Item.hh"
-#include "Position.hpp"
-#include "Character.hpp"
+#include "Position.hh"
+#include "Character.hh"
 
 class BonusItem : public Item, public EventHandler<BonusItem>, public Subject
 {

@@ -10,9 +10,9 @@
 
 #include <vector>
 #include "Item.hh"
-#include "Position.hpp"
-#include "Config.hpp"
-#include "Character.hpp"
+#include "Position.hh"
+#include "Config.hh"
+#include "Character.hh"
 
 class Bomb : public EventHandler<Bomb>, public Subject, public Item
 {

@@ -13,8 +13,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include "Character.hpp"
-#include "Position.hpp"
+#include "Character.hh"
+#include "Position.hh"
 #include "Observer.hpp"
 #include "Block.hh"
 #include "Exception.hpp"

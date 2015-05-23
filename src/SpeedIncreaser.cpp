@@ -6,7 +6,7 @@
  */
 
 #include "global.hh"
-#include "Core/Clock.hpp"
+#include "Core/Clock.hh"
 #include "Core/SpeedIncreaser.hh"
 
 SpeedIncreaser::SpeedIncreaser(Position const & position)

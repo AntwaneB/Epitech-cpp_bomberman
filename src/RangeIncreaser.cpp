@@ -7,7 +7,7 @@
 
 #include "global.hh"
 #include "Core/RangeIncreaser.hh"
-#include "Core/Clock.hpp"
+#include "Core/Clock.hh"
 
 RangeIncreaser::RangeIncreaser(Position const & position)
 	: BonusItem(position, Item::RANGE_INCREASER)

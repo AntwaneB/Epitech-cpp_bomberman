@@ -9,8 +9,8 @@
 #define	BLOCK_HH
 
 #include "Observer.hpp"
-#include "Position.hpp"
-#include "Config.hpp"
+#include "Position.hh"
+#include "Config.hh"
 
 class Block : public EventHandler<Block>, public Subject
 {
