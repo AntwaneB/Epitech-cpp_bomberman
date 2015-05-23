@@ -216,6 +216,10 @@ Level::characterDied(Subject* entity)
 	_characters[character->position()].erase(std::find(_characters[character->position()].begin(), _characters[character->position()].end(), character));
 	_clock.removeObserver(character);
 	this->removeObserver(character);
+
+	auto it = std::find(_players.begin(), _players.end(), character);
+	if (it != _players.end())
+		_players.erase(it);
 }
 
 void
