@@ -30,6 +30,7 @@ namespace Graphics
 
 		void	runLevel(Subject* entity);
 		void	updateLevel(Subject* entity);
+		void	updateLevelPaused(Subject* entity);
 
 		void	exitGame(Subject* entity);
 

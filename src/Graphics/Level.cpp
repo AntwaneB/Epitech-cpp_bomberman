@@ -83,6 +83,30 @@ Graphics::Level::update()
 	return (true);
 }
 
+bool
+Graphics::Level::updateInput()
+{
+	if (_input.getKey(SDLK_ESCAPE) || _input.getInput(SDL_QUIT))
+	{
+		_context.stop();
+		this->notify(this, EXIT_TRIGGERED);
+	}
+	else
+	{
+		std::map<int, Input::Key> keys;
+		keys[SDLK_p] = ::Input::PAUSE;
+
+		for (auto key = keys.begin(); key != keys.end(); ++key)
+		{
+			if (_input.getKey((*key).first))
+				this->notify(new Input((*key).second), KEY_PRESSED);
+		}
+	}
+
+	_context.updateInputs(_input);
+
+	return (true);
+}
 
 void
 Graphics::Level::draw()

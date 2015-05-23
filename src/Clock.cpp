@@ -11,7 +11,7 @@
 #include "Core/Clock.hh"
 
 Clock::Clock()
-	: _run(false)
+	: _run(false), _paused(false)
 {
 	this->restart();
 	_seconds = 0;
@@ -70,7 +70,40 @@ Clock::resetSec(void)
 }
 
 void
-Clock::stop()
+Clock::togglePause()
+{
+	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
+
+	if (!_paused || std::chrono::duration_cast<std::chrono::microseconds>(now - _pausedAt).count() / 1000000 >= 0.5)
+	{
+		_paused = true;
+		_pausedAt = now;
+		std::cout << "Toggling pause" << std::endl;
+
+		if (_run)
+			this->pause();
+		else
+			this->stopPause();
+	}
+}
+
+void
+Clock::pause()
 {
 	_run = false;
+
+	while (!_run)
+	{
+		this->notify(this, CLOCK_PAUSE_TICK);
+
+		usleep(1000000 / FPS);
+	}
+
+	this->restart();
+}
+
+void
+Clock::stopPause()
+{
+	_run = true;
 }

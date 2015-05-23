@@ -26,12 +26,17 @@ public:
 	void			resetSec(void);
 	seconds_t	seconds() const;
 	seconds_t	deciseconds() const;
-	void			stop();
+	void			togglePause();
+	void			pause();
+	void			stopPause();
 
 private:
 	std::chrono::high_resolution_clock::time_point	_timer;
 	seconds_t			_seconds;
 	bool					_run;
+
+	std::chrono::high_resolution_clock::time_point	_pausedAt;
+	bool															_paused;
 };
 
 #endif	/* CLOCK_HPP */

@@ -54,10 +54,12 @@ private:
 	void	keyPressed(Subject* entity);
 	void	quitLevel(Subject* entity);
 
-	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);
+	void	pauseTick(Subject* entity);
 
-private:
+	void	charactersToConfig(Config &) const;
+
+	private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
 	std::list<Character*>								_players;

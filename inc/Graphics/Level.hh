@@ -38,6 +38,7 @@ namespace Graphics
 
 		virtual bool initialize();
 		virtual bool update();
+		virtual bool updateInput();
 		virtual void draw();
 
 	protected:

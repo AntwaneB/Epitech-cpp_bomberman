@@ -16,6 +16,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
+	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
 	_actions[CHARACTER_DIED] = &Level::characterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
@@ -132,6 +133,16 @@ Level::tick(Subject* entity)
 	}
 }
 
+void
+Level::pauseTick(Subject* entity)
+{
+	Clock* clock = safe_cast<Clock*>(entity);
+	if (clock == &_clock)
+	{
+		this->notify(this, LEVEL_PAUSE_TICK);
+	}
+}
+
 Character*
 Level::pushCharacter()
 {
@@ -220,7 +231,7 @@ Level::characterDied(Subject* entity)
 
 	auto it = std::find(_players.begin(), _players.end(), character);
 	if (it != _players.end())
-		_players.erase(it);
+		*it = NULL;
 }
 
 void
@@ -339,17 +350,22 @@ Level::keyPressed(Subject* entity)
 	{
 		auto it = _players.begin();
 		std::advance(it, 0);
-		this->notify(input, KEY_PRESSED, *it);
+		if (*it != NULL)
+			this->notify(input, KEY_PRESSED, *it);
 	}
 	else if (input->key() > Input::KEYS_P2_START && input->key() < Input::KEYS_P2_END && _players.size() >= 2)
 	{
 		auto it = _players.begin();
 		std::advance(it, 1);
-		this->notify(input, KEY_PRESSED, *it);
+		if (*it != NULL)
+			this->notify(input, KEY_PRESSED, *it);
 	}
 	else
 	{
-
+		if (input->key() == Input::PAUSE)
+		{
+			_clock.togglePause();
+		}
 	}
 }
 

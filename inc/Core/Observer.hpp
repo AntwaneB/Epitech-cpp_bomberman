@@ -22,9 +22,11 @@ enum Event
 {
 	OBSERVER_DELETED,
 	CLOCK_TICK,
+	CLOCK_PAUSE_TICK,
 
 	LEVEL_GENERATED,
 	LEVEL_UPDATED,
+	LEVEL_PAUSE_TICK,
 	LEVEL_BOMB_EXPLODED,
 	MAP_BLOCK_DESTROYED,
 	MAP_BOMB_EXPLODED,
@@ -90,7 +92,7 @@ public:
 protected:
 	void notify(Subject * entity, Event event)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED)
+		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK && event != LEVEL_PAUSE_TICK)
 			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		int i = 0;
@@ -110,7 +112,7 @@ protected:
 
 	void notify(Subject * entity, Event event, Observer* observer)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED)
+		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK)
 			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		if (observer != NULL)
@@ -132,9 +134,11 @@ private:
 	{
 		{ OBSERVER_DELETED, "OBSERVER_DELETED" },
 		{ CLOCK_TICK, "CLOCK_TICK" },
+		{ CLOCK_PAUSE_TICK, "CLOCK_PAUSE_TICK" },
 
 		{ LEVEL_GENERATED, "LEVEL_GENERATED" },
 		{ LEVEL_UPDATED, "LEVEL_UPDATED" },
+		{ LEVEL_PAUSE_TICK, "LEVEL_PAUSE_TICK" },
 		{ LEVEL_BOMB_EXPLODED, "LEVEL_BOMB_EXPLODED" },
 		{ MAP_BOMB_EXPLODED, "MAP_BOMB_EXPLODED" },
 		{ MAP_BLOCK_DESTROYED, "MAP_BLOCK_DESTROYED" },
