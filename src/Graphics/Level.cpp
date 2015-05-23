@@ -6,7 +6,7 @@
  */
 
 #include "Graphics/Level.hh"
-#include "Core/KeyInput.hh"
+#include "Core/Input.hh"
 
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
@@ -53,24 +53,24 @@ Graphics::Level::update()
 	}
 	else
 	{
-		std::map<int, KeyInput::Key> keys;
-		keys[SDLK_DOWN] = ::KeyInput::P1_DOWN;
-		keys[SDLK_UP] = ::KeyInput::P1_UP;
-		keys[SDLK_RIGHT] = ::KeyInput::P1_RIGHT;
-		keys[SDLK_LEFT] = ::KeyInput::P1_LEFT;
-		keys[SDLK_KP_0] = ::KeyInput::P1_SPACE;
-		keys[SDLK_z] = ::KeyInput::P2_UP;
-		keys[SDLK_s] = ::KeyInput::P2_DOWN;
-		keys[SDLK_q] = ::KeyInput::P2_LEFT;
-		keys[SDLK_d] = ::KeyInput::P2_RIGHT;
-		keys[SDLK_SPACE] = ::KeyInput::P2_SPACE;
+		std::map<int, Input::Key> keys;
+		keys[SDLK_DOWN] = ::Input::P1_DOWN;
+		keys[SDLK_UP] = ::Input::P1_UP;
+		keys[SDLK_RIGHT] = ::Input::P1_RIGHT;
+		keys[SDLK_LEFT] = ::Input::P1_LEFT;
+		keys[SDLK_KP_0] = ::Input::P1_SPACE;
+		keys[SDLK_z] = ::Input::P2_UP;
+		keys[SDLK_s] = ::Input::P2_DOWN;
+		keys[SDLK_q] = ::Input::P2_LEFT;
+		keys[SDLK_d] = ::Input::P2_RIGHT;
+		keys[SDLK_SPACE] = ::Input::P2_SPACE;
 
-		keys[SDLK_p] = ::KeyInput::PAUSE;
+		keys[SDLK_p] = ::Input::PAUSE;
 
 		for (auto key = keys.begin(); key != keys.end(); ++key)
 		{
 			if (_input.getKey((*key).first))
-				this->notify(new KeyInput((*key).second), KEY_PRESSED);
+				this->notify(new Input((*key).second), KEY_PRESSED);
 		}
 	}
 

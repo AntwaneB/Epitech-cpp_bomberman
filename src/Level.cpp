@@ -9,7 +9,7 @@
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
 #include "Core/Level.hh"
-#include "Core/KeyInput.hh"
+#include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
@@ -333,15 +333,15 @@ Level::blockDestroyed(Subject* entity)
 void
 Level::keyPressed(Subject* entity)
 {
-	KeyInput* input = safe_cast<KeyInput*>(entity);
+	Input* input = safe_cast<Input*>(entity);
 
-	if (input->key() > KeyInput::KEYS_P1_START && input->key() < KeyInput::KEYS_P1_END && _players.size() >= 1)
+	if (input->key() > Input::KEYS_P1_START && input->key() < Input::KEYS_P1_END && _players.size() >= 1)
 	{
 		auto it = _players.begin();
 		std::advance(it, 0);
 		this->notify(input, KEY_PRESSED, *it);
 	}
-	else if (input->key() > KeyInput::KEYS_P2_START && input->key() < KeyInput::KEYS_P2_END && _players.size() >= 2)
+	else if (input->key() > Input::KEYS_P2_START && input->key() < Input::KEYS_P2_END && _players.size() >= 2)
 	{
 		auto it = _players.begin();
 		std::advance(it, 1);

@@ -10,7 +10,7 @@
 
 #include "Observer.hpp"
 
-class KeyInput : public Subject
+class Input : public Subject
 {
 public:
 	enum Key
@@ -42,8 +42,8 @@ public:
 	};
 
 public:
-	KeyInput(Key key) : _key(key) {}
-	virtual ~KeyInput() {}
+	Input(Key key) : _key(key) {}
+	virtual ~Input() {}
 
 	Key	key() const
 	{
