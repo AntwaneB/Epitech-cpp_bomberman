@@ -33,6 +33,7 @@ public:
 	std::map<Position, std::list<Character*> > const &	characters() const;
 	std::map<Position, std::list<Bomb*> > const &		bombs() const;
 	std::map<Position, std::list<Item*> > const &		items() const;
+	std::list<Character*> const &						players() const;
 	std::vector<Character*> const charactersRaw() const;
 	std::vector<Bomb*>		const bombsRaw() const;
 	std::vector<BonusItem*>	const itemsRaw() const;

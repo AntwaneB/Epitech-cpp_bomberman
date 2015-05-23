@@ -12,7 +12,7 @@ Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
 	for (size_t i = 0; i < 2; i++)
-		_splits.push_back(new Split(level));
+		_splits.push_back(new Split(level, i));
 	_context.start(1920, 1080, "My bomberman!");
 	this->initialize();
 }
@@ -124,6 +124,7 @@ Graphics::Level::draw()
 	for (size_t i = 0; i < _splits.size(); i++)
 	{
 		glViewport(x, y, blockWidth, blockHeight);
+		_splits[i]->moveCamera();
 		_splits[i]->draw(_clock);
 		x += blockWidth;
 		if (x > 1920 - blockWidth)

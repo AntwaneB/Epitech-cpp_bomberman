@@ -89,6 +89,12 @@ Level::characters() const
 	return (_characters);
 }
 
+std::list<Character*> const &
+Level::players() const
+{
+	return (_players);
+}
+
 std::vector<Character*> const
 Level::charactersRaw() const
 {
