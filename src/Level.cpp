@@ -23,6 +23,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	_actions[BOMB_DROPPED] = &Level::bombDropped;
 	_actions[BOMB_EXPLODED] = &Level::bombExploded;
 	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
+	_actions[KEY_PRESSED] = &Level::keyPressed;
 	_actions[EXIT_TRIGGERED] = &Level::quitLevel;
 
 	_clock.addObserver(this);
@@ -321,6 +322,29 @@ Level::blockDestroyed(Subject* entity)
 
 		BonusItem* item = BonusItem::factory(type, block->position());
 		this->itemDropped(item);
+	}
+}
+
+void
+Level::keyPressed(Subject* entity)
+{
+	KeyInput* input = safe_cast<KeyInput*>(entity);
+
+	if (input->key() > KeyInput::KEYS_P1_START && input->key() < KeyInput::KEYS_P1_END && _players.size() >= 1)
+	{
+		auto it = _players.begin();
+		std::advance(it, 0);
+		this->notify(input, KEY_PRESSED, *it);
+	}
+	else if (input->key() > KeyInput::KEYS_P2_START && input->key() < KeyInput::KEYS_P2_END && _players.size() >= 2)
+	{
+		auto it = _players.begin();
+		std::advance(it, 1);
+		this->notify(input, KEY_PRESSED, *it);
+	}
+	else
+	{
+
 	}
 }
 

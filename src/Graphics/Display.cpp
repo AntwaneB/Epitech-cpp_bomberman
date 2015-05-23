@@ -54,6 +54,7 @@ Graphics::Display::runLevel(Subject* entity)
 	}
 	_level = new Graphics::Level(level);
 	_level->addObserver(this);
+	_level->addObserver(level);
 }
 
 void

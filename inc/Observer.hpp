@@ -108,6 +108,21 @@ protected:
 		}
 	}
 
+	void notify(Subject * entity, Event event, Observer* observer)
+	{
+		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED)
+			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
+
+		if (observer != NULL)
+			observer->onNotify(entity, event);
+
+		while (!_eraseQueue.empty())
+		{
+			_observers.erase(_eraseQueue.front());
+			_eraseQueue.pop();
+		}
+	}
+
 private:
 	size_t						_id;
 	std::list<Observer*>		_observers;

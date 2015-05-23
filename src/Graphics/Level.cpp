@@ -6,6 +6,7 @@
  */
 
 #include "Graphics/Level.hh"
+#include "KeyInput.hh"
 
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
@@ -50,26 +51,29 @@ Graphics::Level::update()
 		_context.stop();
 		this->notify(this, EXIT_TRIGGERED);
 	}
-	if (_input.getKey(SDLK_DOWN))
-		this->notify(new KeyInput(::KeyInput::P1_DOWN), KEY_PRESSED);
-	if (_input.getKey(SDLK_UP))
-		this->notify(new KeyInput(::KeyInput::P1_UP), KEY_PRESSED);
-	if (_input.getKey(SDLK_RIGHT))
-		this->notify(new KeyInput(::KeyInput::P1_RIGHT), KEY_PRESSED);
-	if (_input.getKey(SDLK_LEFT))
-		this->notify(new KeyInput(::KeyInput::P1_LEFT), KEY_PRESSED);
-	if (_input.getKey(SDLK_KP_0))
-		this->notify(new KeyInput(::KeyInput::P1_SPACE), KEY_PRESSED);
-	if (_input.getKey(SDLK_z))
-		this->notify(new KeyInput(::KeyInput::P2_UP), KEY_PRESSED);
-	if (_input.getKey(SDLK_s))
-		this->notify(new KeyInput(::KeyInput::P1_DOWN), KEY_PRESSED);
-	if (_input.getKey(SDLK_q))
-		this->notify(new KeyInput(::KeyInput::P1_RIGHT), KEY_PRESSED);
-	if (_input.getKey(SDLK_d))
-		this->notify(new KeyInput(::KeyInput::P1_LEFT), KEY_PRESSED);
-	if (_input.getKey(SDLK_SPACE))
-		this->notify(new KeyInput(::KeyInput::P2_SPACE), KEY_PRESSED);
+	else
+	{
+		std::map<int, KeyInput::Key> keys;
+		keys[SDLK_DOWN] = ::KeyInput::P1_DOWN;
+		keys[SDLK_UP] = ::KeyInput::P1_UP;
+		keys[SDLK_RIGHT] = ::KeyInput::P1_RIGHT;
+		keys[SDLK_LEFT] = ::KeyInput::P1_LEFT;
+		keys[SDLK_KP_0] = ::KeyInput::P1_SPACE;
+		keys[SDLK_z] = ::KeyInput::P2_UP;
+		keys[SDLK_s] = ::KeyInput::P2_DOWN;
+		keys[SDLK_q] = ::KeyInput::P2_LEFT;
+		keys[SDLK_d] = ::KeyInput::P2_RIGHT;
+		keys[SDLK_SPACE] = ::KeyInput::P2_SPACE;
+
+		keys[SDLK_p] = ::KeyInput::PAUSE;
+
+		for (auto key = keys.begin(); key != keys.end(); ++key)
+		{
+			if (_input.getKey((*key).first))
+				this->notify(new KeyInput((*key).second), KEY_PRESSED);
+		}
+	}
+
 	for (size_t i = 0; i < _splits.size(); i++)
 		_splits[i]->update(_clock, _input);
 

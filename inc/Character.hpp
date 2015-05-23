@@ -46,6 +46,7 @@ public:
 private:
 	void tick(Subject* entity);
 	void bombExploded(Subject* entity);
+	void keyPressed(Subject* entity);
 
 	void move(Action);
 	void dropBomb();

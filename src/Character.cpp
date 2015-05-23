@@ -12,12 +12,14 @@
 #include "Clock.hpp"
 #include "Level.hpp"
 #include "IA.hpp"
+#include "KeyInput.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
 	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
+	_actions[KEY_PRESSED] = &Character::keyPressed;
 
 	_attributes = g_settings["entities"]["character"];
 
@@ -106,6 +108,27 @@ Character::bombExploded(Subject* entity)
 	{ // The character got hit by the bomb
 		this->notify(this, CHARACTER_DIED);
 		delete this;
+	}
+}
+
+void
+Character::keyPressed(Subject* entity)
+{
+	KeyInput* input = safe_cast<KeyInput*>(entity);
+
+	std::map<KeyInput::Key, Character::Action> keys;
+	keys[KeyInput::UP] = Character::MOVE_UP;
+	keys[KeyInput::DOWN] = Character::MOVE_DOWN;
+	keys[KeyInput::RIGHT] = Character::MOVE_RIGHT;
+	keys[KeyInput::LEFT] = Character::MOVE_LEFT;
+	keys[KeyInput::SPACE] = Character::DROP_BOMB;
+
+	std::cout << "genericKey = " << input->genericKey() << std::endl;
+
+	if (input->genericKey() > KeyInput::KEYS_GENERIC_START && input->genericKey() < KeyInput::KEYS_GENERIC_END)
+	{
+		this->clearActions();
+		this->pushAction(keys[input->genericKey()]);
 	}
 }
 
