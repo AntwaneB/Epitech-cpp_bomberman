@@ -160,7 +160,7 @@ void Graphics::Split::draw(gdl::Clock clock)
 
 void Graphics::Split::moveCamera()
 {
-	if (_x != _player->position().x() || _y != _player->position().y())
+//	if (_x != _player->position().x() || _y != _player->position().y())
 	{
 		_x = _player->position().x();
 		_y = _player->position().y();
