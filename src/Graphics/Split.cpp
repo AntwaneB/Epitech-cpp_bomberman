@@ -2,7 +2,7 @@
 
 Graphics::Split::Split(::Level const * level, int id)
 	: _level(level),
-	_x(0), 
+	_x(0),
 	_y(0)
 {
 	_map = new Map(level->map());
@@ -29,7 +29,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	|| !_shader.load("./libgdl/shaders/basic.vp", GL_VERTEX_SHADER)
 	|| !_shader.build())
 		return false;
-	
+
 	glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
 
 	_shader.bind();
@@ -166,7 +166,7 @@ void Graphics::Split::moveCamera()
 		_y = _player->position().y();
 		double x = 1 + _x;
 		double y = 1 + _y;
-		glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(-180, 1, -180));
+		glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
 		_shader.setUniform("view", transformation);
 	}
 }
