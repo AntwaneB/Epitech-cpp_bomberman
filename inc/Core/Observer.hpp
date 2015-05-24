@@ -92,8 +92,8 @@ public:
 protected:
 	void notify(Subject * entity, Event event)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK && event != LEVEL_PAUSE_TICK)
-			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
+		//if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK && event != LEVEL_PAUSE_TICK)
+		//	std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		int i = 0;
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
@@ -112,8 +112,8 @@ protected:
 
 	void notify(Subject * entity, Event event, Observer* observer)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK)
-			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
+		//if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK)
+		//	std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		if (observer != NULL)
 			observer->onNotify(entity, event);
