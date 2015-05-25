@@ -78,7 +78,6 @@ Clock::togglePause()
 	{
 		_paused = true;
 		_pausedAt = now;
-		std::cout << "Toggling pause" << std::endl;
 
 		if (_run)
 			this->pause();

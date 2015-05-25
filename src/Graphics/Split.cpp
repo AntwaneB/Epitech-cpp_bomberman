@@ -1,9 +1,7 @@
 #include "Graphics/Split.hh"
 
-Graphics::Split::Split(::Level const * level, int id)
-	: _level(level),
-	_x(0),
-	_y(0)
+Graphics::Split::Split(::Level const * level, int id, size_t splitsCount)
+	: _level(level), _x(0), _y(0), _splitsCount(splitsCount)
 {
 	_map = new Map(level->map());
 	if (id == 0)
@@ -30,7 +28,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	|| !_shader.build())
 		return false;
 
-	glm::mat4 projection = glm::perspective(13.0f, 960.0f / 1080.0f, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(13.0f, (1920.0f / _splitsCount) / 1080.0f, 0.1f, 150.0f);
 
 	_shader.bind();
 	moveCamera();

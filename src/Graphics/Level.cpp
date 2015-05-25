@@ -11,8 +11,12 @@
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
-	for (size_t i = 0; i < 2; i++)
-		_splits.push_back(new Split(level, i));
+	size_t splitsCount = _level->players().size();
+	splitsCount = splitsCount == 0 ? 1 : splitsCount;
+
+	for (size_t i = 0; i < splitsCount; i++)
+		_splits.push_back(new Split(level, i, splitsCount));
+
 	_context.start(1920, 1080, "My bomberman!");
 	this->initialize();
 }
