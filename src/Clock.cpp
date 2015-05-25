@@ -51,6 +51,12 @@ Clock::run(void)
 	return (_seconds);
 }
 
+void
+Clock::stop()
+{
+	_run = false;
+}
+
 seconds_t
 Clock::seconds() const
 {

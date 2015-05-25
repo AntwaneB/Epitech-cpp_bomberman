@@ -25,6 +25,7 @@ public:
 
 	size_t	range() const;
 	char		progress() const;
+	const Character*	owner() const;
 
 	void		toConfig(Config &) const;
 
