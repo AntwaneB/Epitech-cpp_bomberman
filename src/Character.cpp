@@ -77,6 +77,12 @@ Character::killedBy() const
 	return (_killedBy);
 }
 
+bool
+Character::isPlayer() const
+{
+	return (_isPlayer);
+}
+
 void
 Character::tick(Subject* entity)
 {

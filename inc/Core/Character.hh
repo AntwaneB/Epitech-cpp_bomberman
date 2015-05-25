@@ -40,6 +40,7 @@ public:
 	size_t	score() const;
 	void		changeScore(int);
 	const Bomb*		killedBy() const;
+	bool		isPlayer() const;
 
 	void		clearActions();
 	void		pushAction(Character::Action);
