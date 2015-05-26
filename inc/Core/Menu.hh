@@ -17,13 +17,23 @@ public:
 	Menu(const std::string &);
 	virtual ~Menu();
 
-	void	run();
+	void											run();
 
-	void	save(void) const;
+	void											save(void) const;
+
+	std::map<std::string, Graphics::Menu::Item*>	getItems(void) const;
 
 private:
-	Config		_cfg;
-	std::string	_filename;
+	void											moveUp(void);
+	void											moveDown(void);
+	void											moveLeft(void);
+	void											moveRight(void);
+	void											select(void);
+
+private:
+	Config											_cfg;
+	std::string										_filename;
+	std::map<std::string, Graphics::Menu::Item*>	_items;
 
 };
 
