@@ -16,25 +16,10 @@
 #include "SdlContext.hh"
 #include "Game.hh"
 
-/*
-	Besoin du chemin du fichier pour la texture
-	position de l'image dans l'asset
-	de la position du sprite dans la scene
-*/
-
-
 namespace Graphics
 {
 	class Menu
 	{
-	public:
-		class	Item
-		{
-		public:
-			Item(Config);
-			~Item();
-		}
-
 	public:
 		Menu();
 		virtual ~Menu();
