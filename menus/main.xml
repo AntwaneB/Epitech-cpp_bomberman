@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 
-<main>
+<config>
 	<assets>"./assets/asset.png"</assets>
 	<arrow>
 		<texture>
@@ -51,6 +51,7 @@
 						<y>0.5f</y>
 					</scale>
 				</asset>
+				<type>bool</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -75,6 +76,7 @@
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
+				<type>bool</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -99,6 +101,7 @@
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
+				<type>bool</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -123,6 +126,7 @@
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
+				<type>bool</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -132,22 +136,23 @@
 				</arrow>
 			</exit>
 		</selectable>
-		<quote>
-			<texture>
-				<pos1>1100</pos1>
-				<pos2>600</pos2>
-				<pos3>1880</pos3>
-				<pos4>100</pos4>
-			</texture>
-			<position>
-				<x>30</x>
-				<y>450</y>
-			</position>
-			<scale>
-				<x>0.5f</x>
-				<y>0.5f</y>
-			</scale>
-			<value>false</value>
-		</quote>
+		<non-selectable>
+			<quote>
+				<texture>
+					<pos1>1100</pos1>
+					<pos2>600</pos2>
+					<pos3>1880</pos3>
+					<pos4>100</pos4>
+				</texture>
+				<position>
+					<x>30</x>
+					<y>450</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</quote>
+		</non-selectable>
 	</content>
-</main>
+</config>

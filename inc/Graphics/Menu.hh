@@ -10,32 +10,50 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <map>
+#include "Core/Menu.hh"
 #include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
+
+/*
+	Besoin du chemin du fichier pour la texture
+	position de l'image dans l'asset
+	de la position du sprite dans la scene
+*/
+
 
 namespace Graphics
 {
 	class Menu
 	{
 	public:
+		class	Item
+		{
+		public:
+			Item(Config);
+			~Item();
+		}
+
+	public:
 		Menu();
 		virtual ~Menu();
-		void	MainWin();
+		void	NewGame();
 		void	update(int, int);
 
 	private:
 		sf::RenderWindow	_window;
-		sf::Text 		_txt;
-		sf::Texture		_tBackground;
-		sf::Texture		_tArrow;
-		sf::Sprite		_background;
-		sf::Sprite		_arrow;
+
+		::Menu*				_menu;
 
 		//Textures
 		sf::Texture 	_tassets;
+		sf::Texture		_tBackground;
+		sf::Texture		_tSubBackground;
 
 		//Sprite
+		sf::Sprite		_background;
+		sf::Sprite		_subBackground;
 		sf::Sprite		_assets;
 		sf::Sprite		_newgame;
 		sf::Sprite		_loadgame;

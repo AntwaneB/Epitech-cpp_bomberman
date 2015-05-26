@@ -37,6 +37,7 @@ public:
 		LEFT,
 		RIGHT,
 		SPACE,
+		ENTER,
 		KEYS_GENERIC_END,
 		last
 	};

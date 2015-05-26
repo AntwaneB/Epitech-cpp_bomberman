@@ -113,12 +113,15 @@ public:
 //		Param const & operator [] (const char[]) const;
 
 		std::map<std::string, Param>::iterator	find(const std::string &);
+		std::map<std::string, Param>::iterator	begin(void);
 		std::map<std::string, Param>::iterator	end(void);
 //		std::map<std::string, Param>::const_iterator	find(const std::string &) const;
 //		std::map<std::string, Param>::const_iterator	end(void) const;
-		void												insert(std::map<std::string, Param>::value_type);
+		void									insert(std::map<std::string, Param>::value_type);
 
-		const std::string	toXML(void) const;
+		bool									hasChild(void) const;
+
+		const std::string						toXML(void) const;
 
 	private:
 
@@ -138,6 +141,10 @@ public:
 //	Config::Param const & operator [] (std::string const &) const;
 //	Config::Param const & operator [] (const char[]) const;
 
+	std::map<std::string, Param>::iterator	find(const std::string &);
+	std::map<std::string, Param>::iterator	begin(void);
+	std::map<std::string, Param>::iterator	end(void);
+
 	const std::string	toXML(void) const;
 
 	void	importFile(std::string const &);
@@ -151,5 +158,6 @@ private:
 };
 
 std::ostream&	operator << (std::ostream &, const Config &);
+std::ostream&	operator << (std::ostream &, const Config::Param &);
 
 #endif	/* CONFIG_HPP */
