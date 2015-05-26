@@ -8,11 +8,12 @@
 #ifndef MENU_HH
 #define	MENU_HH
 
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include "Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
+#include "Core/Menu.hh"
 
 namespace Graphics
 {
@@ -21,21 +22,22 @@ namespace Graphics
 	public:
 		Menu();
 		virtual ~Menu();
-		void	MainWin();
+		void	NewGame();
 		void	update(int, int);
 
 	private:
 		sf::RenderWindow	_window;
-		sf::Text 		_txt;
-		sf::Texture		_tBackground;
-		sf::Texture		_tArrow;
-		sf::Sprite		_background;
-		sf::Sprite		_arrow;
+
+		::Menu*				_menu;
 
 		//Textures
 		sf::Texture 	_tassets;
+		sf::Texture		_tBackground;
+		sf::Texture		_tSubBackground;
 
 		//Sprite
+		sf::Sprite		_background;
+		sf::Sprite		_subBackground;
 		sf::Sprite		_assets;
 		sf::Sprite		_newgame;
 		sf::Sprite		_loadgame;

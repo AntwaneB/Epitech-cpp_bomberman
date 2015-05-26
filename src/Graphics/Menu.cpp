@@ -9,6 +9,31 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
+void
+Graphics::Menu::NewGame()
+{
+    std::cout << "COUCOU" << std::endl;
+    _window.clear();
+    _tSubBackground.loadFromFile("./assets/bomber.png");
+    _subBackground.setTexture(_tSubBackground);
+    _subBackground.setScale(0.5f, 0.5f);
+    _window.draw(_subBackground);
+    std::cout << "COUCOU" << std::endl;
+    sf::Event event;
+
+    while (_window.isOpen())
+    {
+     while (_window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                exit(EXIT_SUCCESS);
+                _window.close();
+            }
+        }
+    }
+}
+
 Graphics::Menu::Menu()
 {
 	//son
@@ -100,11 +125,9 @@ Graphics::Menu::Menu()
                 }
                 else if (event.key.code == sf::Keyboard::Return)
                 {
-                	std::cout << y << std::endl;
                 	if (y == 338)
                 	{
-                		_window.clear();
- 						_window.display();
+                	   NewGame();
                 	}
                 	else if (y == 488)
                 	{
@@ -115,6 +138,12 @@ Graphics::Menu::Menu()
              }
         }
     }
+}
+
+void
+Graphics::Menu::displayMenu(::Menu *)
+{
+    //this->notify(new ::Input(KEY_UP), KEY_PRESSED);
 }
 
 void 		Graphics::Menu::update(int x, int y)
