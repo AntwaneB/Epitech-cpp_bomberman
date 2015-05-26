@@ -159,7 +159,8 @@ Level::tick(Subject* entity)
 			_secondsElapsed++;
 
 			for (auto it = _scores.begin(); it != _scores.end(); ++it)
-				(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
+				if ((*it)->alive())
+					(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
 		}
 
 		if (this->charactersRaw().size() <= 1)

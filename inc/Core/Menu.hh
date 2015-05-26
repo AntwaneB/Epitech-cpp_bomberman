@@ -21,8 +21,6 @@ public:
 
 	void											save(void) const;
 
-	std::map<std::string, Graphics::Menu::Item*>	getItems(void) const;
-
 private:
 	void											moveUp(void);
 	void											moveDown(void);
@@ -33,7 +31,6 @@ private:
 private:
 	Config											_cfg;
 	std::string										_filename;
-	std::map<std::string, Graphics::Menu::Item*>	_items;
 
 };
 
