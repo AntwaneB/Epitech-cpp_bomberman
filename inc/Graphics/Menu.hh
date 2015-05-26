@@ -10,10 +10,18 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <map>
 #include "Core/Menu.hh"
 #include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
+
+/*
+	Besoin du chemin du fichier pour la texture
+	position de l'image dans l'asset
+	de la position du sprite dans la scene
+*/
+
 
 namespace Graphics
 {
