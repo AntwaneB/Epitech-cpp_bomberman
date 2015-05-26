@@ -10,6 +10,7 @@
 			<param name="box">box</param>
 			<param name="void">void</param>
 		</param>
+		<param name="floor_texture">./libgdl/assets/sand.tga</param>
 	</maps>
 
 	<scores>

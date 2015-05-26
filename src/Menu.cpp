@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
+#include "Core/Input.hh"
 
 Menu::Menu(const std::string & filename) : _filename(filename)
 {
@@ -31,7 +32,7 @@ Menu::save(void) const
 void
 Menu::run()
 {
-	this->notify(this, MENU_STARTED);
+	this->notify(new Level(12, 12, 9, 1), LEVEL_GENERATED);
 }
 
 void
