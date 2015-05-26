@@ -19,6 +19,14 @@ namespace Graphics
 	class Menu
 	{
 	public:
+		class	Item
+		{
+		public:
+			Item(Config);
+			~Item();
+		}
+
+	public:
 		Menu();
 		virtual ~Menu();
 		void	MainWin();

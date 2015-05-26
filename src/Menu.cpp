@@ -11,6 +11,11 @@
 Menu::Menu(const std::string & filename) : _filename(filename)
 {
 	_cfg.importFile(_filename);
+	_actions[KEY_UP] = &Menu::moveUp;
+	_actions[KEY_DOWN] = &Menu::moveDown;
+	_actions[KEY_LEFT] = &Menu::moveLeft;
+	_actions[KEY_RIGHT] = &Menu::moveRight;
+	_actions[KEY_ENTER] = &Menu::select;
 }
 
 Menu::~Menu()
@@ -26,5 +31,42 @@ Menu::save(void) const
 void
 Menu::run()
 {
-	this->notify(new Level(12, 12, 9), LEVEL_GENERATED);
+	this->notify(this, MENU_STARTED);
+}
+
+void
+Menu::moveUp(void)
+{
+
+}
+
+void
+Menu::moveDown(void)
+{
+
+}
+
+void
+Menu::moveLeft(void)
+{
+
+}
+
+void
+Menu::moveRight(void)
+{
+
+}
+
+void
+Menu::select(void)
+{
+
+}
+
+
+std::map<std::string, Graphics::Menu::Item*>&
+Menu::getItems(void) const
+{
+	return _items;
 }

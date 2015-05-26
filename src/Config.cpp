@@ -292,6 +292,11 @@ std::map<std::string, Config::Param>::iterator	Config::Param::find(const std::st
 	return (_map.find(key));
 }
 
+std::map<std::string, Config::Param>::iterator	Config::Param::begin(void)
+{
+	return (_map.begin());
+}
+
 std::map<std::string, Config::Param>::iterator	Config::Param::end(void)
 {
 	return (_map.end());
@@ -372,6 +377,26 @@ bool Config::Param::operator > (long o) { return (static_cast<long>(*this) > o);
 bool Config::Param::operator > (double o) { return (static_cast<double>(*this) > o); }
 bool Config::Param::operator > (float o) { return (static_cast<float>(*this) > o); }
 
+bool	Config::Param::hasChild(void) const
+{
+	return (_status == VALUE);
+}
+
+std::map<std::string, Config::Param>::iterator	Config::find(const std::string & key)
+{
+	return (_params.find(key));
+}
+
+std::map<std::string, Config::Param>::iterator	Config::begin(void)
+{
+	return (_params.begin());
+}
+
+std::map<std::string, Config::Param>::iterator	Config::end(void)
+{
+	return (_params.end());
+}
+
 const std::string	Config::toXML(void) const
 {
 	return (_params.toXML());
@@ -380,6 +405,13 @@ const std::string	Config::toXML(void) const
 std::ostream&	operator << (std::ostream& os, const Config& cnf)
 {
 	os << cnf.toXML();
+
+	return (os);
+}
+
+std::ostream&	operator << (std::ostream& os, const Config::Param& prm)
+{
+	os << prm.toXML();
 
 	return (os);
 }
@@ -432,8 +464,27 @@ int	main()
 {
 	Config cfg;
 
-	cfg.importFile("./config/default.xml");
+	cfg.importFile("./menus/main.xml");
 
-	std::cout << cfg << std::endl;
+	auto locate = cfg.find("title");
+	if (locate != cfg.end())
+	{
+		std::cout << locate->first << std::endl;
+		std::cout << cfg[locate->first] << std::endl;
+	}
+
+	for (auto it = cfg.begin(); it != cfg.end(); ++it)
+	{
+		if (it->second.hasChild())
+		{
+			std::cout << "Values :";
+			std::cout << cfg[it->first] << std::endl;
+		}
+		else
+		{
+			std::cout << "Node :";
+			std::cout << it->first << std::endl;
+		}
+	}
 }
 */
