@@ -14,6 +14,7 @@ Graphics::Display::Display()
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
 	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
+	_actions[MENU_STARTED] = &Graphics::Display::runMenu;
 }
 
 Graphics::Display::~Display()
