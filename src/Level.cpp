@@ -134,13 +134,14 @@ Level::end()
 {
 	std::cout << std::endl << "#### Scores ####" << std::endl;
 
-	int i = 1;
+	int y;
+	int i = y = 0;
 	for (auto it = _scores.begin(); it != _scores.end(); ++it)
 	{
-		if ((*it)->isPlayer())
+//		if ((*it)->isPlayer())
 		{
-			std::cout << "Player " << i << " : " << (*it)->score() << " points" << std::endl;
-			i++;
+			std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
+	//		i++;
 		}
 	}
 }
