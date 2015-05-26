@@ -51,6 +51,12 @@ Clock::run(void)
 	return (_seconds);
 }
 
+void
+Clock::stop()
+{
+	_run = false;
+}
+
 seconds_t
 Clock::seconds() const
 {
@@ -78,7 +84,6 @@ Clock::togglePause()
 	{
 		_paused = true;
 		_pausedAt = now;
-		std::cout << "Toggling pause" << std::endl;
 
 		if (_run)
 			this->pause();

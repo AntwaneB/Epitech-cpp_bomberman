@@ -13,7 +13,7 @@
 #include "Core/RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
-	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount)
+	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount), _secondsElapsed(0), _charactersKills(0)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
@@ -130,12 +130,42 @@ Level::run()
 }
 
 void
+Level::end()
+{
+	std::cout << std::endl << "#### Scores ####" << std::endl;
+
+	int i = 1;
+	for (auto it = _scores.begin(); it != _scores.end(); ++it)
+	{
+		if ((*it)->isPlayer())
+		{
+			std::cout << "Player " << i << " : " << (*it)->score() << " points" << std::endl;
+			i++;
+		}
+	}
+}
+
+void
 Level::tick(Subject* entity)
 {
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
 		this->notify(this, LEVEL_UPDATED);
+
+		if (static_cast<size_t>(_clock.seconds()) > _secondsElapsed)
+		{ // Updating characters score
+			_secondsElapsed++;
+
+			for (auto it = _scores.begin(); it != _scores.end(); ++it)
+				(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
+		}
+
+		if (this->charactersRaw().size() <= 1)
+		{ // Ending game if their's only one character left
+			_clock.stop();
+			this->end();
+		}
 	}
 }
 
@@ -200,6 +230,7 @@ Level::pushCharacter()
 	Character*	character = new Character(this, nth + 1, isPlayer, charX, charY);
 	character->addObserver(this);
 
+	_scores.push_back(character);
 	_characters[Position(charX, charY)].push_back(character);
 	if (isPlayer)
 		_players.push_back(character);
@@ -223,6 +254,7 @@ Level::characterMoved(Subject* entity)
 		BonusItem* item = _items[character->position()].front();
 
 		item->applyEffect(character);
+		character->changeScore(g_settings["scores"]["item_picked"]);
 	}
 }
 
@@ -238,6 +270,14 @@ Level::characterDied(Subject* entity)
 	auto it = std::find(_players.begin(), _players.end(), character);
 	if (it != _players.end())
 		*it = NULL;
+
+	if (character->killedBy())
+	{
+		auto killer = std::find(_scores.begin(), _scores.end(), character->killedBy()->owner());
+		if (killer != _scores.end() && *killer != character)
+			(*killer)->changeScore(g_settings["scores"][_charactersKills == 0 ? "first_blood" : "character_kill"]);
+		_charactersKills++;
+	}
 }
 
 void

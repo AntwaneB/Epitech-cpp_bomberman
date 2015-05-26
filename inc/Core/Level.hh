@@ -43,6 +43,7 @@ public:
 
 private:
 	Character*	pushCharacter();
+	void			end();
 
 	void	characterMoved(Subject* entity);
 	void	characterDied(Subject* entity);
@@ -58,6 +59,7 @@ private:
 	void	tick(Subject* entity);
 	void	pauseTick(Subject* entity);
 
+private:
 	void	charactersToConfig(Config &) const;
 
 	private:
@@ -70,6 +72,10 @@ private:
 	size_t													_charactersCount;
 	size_t													_playersCount;
 	Clock														_clock;
+	size_t													_secondsElapsed;
+
+	std::list<Character*>								_scores;
+	size_t													_charactersKills;
 };
 
 #endif	/* LEVEL_HPP */

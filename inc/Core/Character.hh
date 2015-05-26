@@ -36,6 +36,11 @@ public:
 	Position	position() const;
 	Position	prevPosition() const;
 	Config&	attributes();
+	bool		alive() const;
+	size_t	score() const;
+	void		changeScore(int);
+	const Bomb*		killedBy() const;
+	bool		isPlayer() const;
 
 	void		clearActions();
 	void		pushAction(Character::Action);
@@ -58,12 +63,16 @@ private:
 	Position					_prevPosition;
 	Config					_attributes;
 	bool						_solid;
+	bool						_alive;
+	const Bomb*				_killedBy;
 
 	IA::IA<IA::HARD>*		_ia;
 
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;
 	int						_elapsedTime;
+
+	size_t					_score;
 };
 
 #endif	/* CHARACTER_HPP */

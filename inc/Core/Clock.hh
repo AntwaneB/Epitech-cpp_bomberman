@@ -21,12 +21,15 @@ public:
 	virtual ~Clock();
 
 	seconds_t	run(void);
+	void			stop(void);
 	long double	elapsedTime(void) const;
 	void			restart(void);
 	void			resetSec(void);
 	seconds_t	seconds() const;
 	seconds_t	deciseconds() const;
 	void			togglePause();
+
+private:
 	void			pause();
 	void			stopPause();
 

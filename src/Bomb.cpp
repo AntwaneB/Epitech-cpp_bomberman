@@ -44,6 +44,12 @@ Bomb::progress() const
 	return (_progress);
 }
 
+const Character*
+Bomb::owner() const
+{
+	return (_owner);
+}
+
 void
 Bomb::tick(Subject* entity)
 {

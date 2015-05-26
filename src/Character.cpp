@@ -15,7 +15,7 @@
 #include "Core/Input.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _alive(true), _killedBy(NULL), _ia(NULL), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -51,6 +51,36 @@ Config&
 Character::attributes()
 {
 	return (_attributes);
+}
+
+bool
+Character::alive() const
+{
+	return (_alive);
+}
+
+size_t
+Character::score() const
+{
+	return (_score);
+}
+
+void
+Character::changeScore(int amount)
+{
+	_score += amount;
+}
+
+const Bomb*
+Character::killedBy() const
+{
+	return (_killedBy);
+}
+
+bool
+Character::isPlayer() const
+{
+	return (_isPlayer);
 }
 
 void
@@ -106,8 +136,10 @@ Character::bombExploded(Subject* entity)
 
 	if (bomb->hasHit(_position))
 	{ // The character got hit by the bomb
+		_alive = false;
+		_killedBy = bomb;
 		this->notify(this, CHARACTER_DIED);
-		delete this;
+//		delete this;
 	}
 }
 

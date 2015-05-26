@@ -22,7 +22,7 @@ namespace Graphics
 	{
 
 	public:
-		Split(const ::Level*, int);
+		Split(const ::Level*, int id, size_t splitsCount);
 		virtual ~Split();
 
 		virtual bool initialize(std::vector<gdl::Model*>);
@@ -34,14 +34,15 @@ namespace Graphics
 	public:
 		const ::Level*							_level;
 		gdl::BasicShader						_shader;
-		const ::Character*						_player;
-		std::list<Graphics::Character*>			_characters;
-		std::list<Graphics::Bomb*>				_bombs;
-		std::list<Graphics::Item*>				_items;
+		const ::Character*					_player;
+		std::list<Graphics::Character*>	_characters;
+		std::list<Graphics::Bomb*>			_bombs;
+		std::list<Graphics::Item*>			_items;
 		Graphics::Map*							_map;
-		std::vector<gdl::Model*> 				_models;
+		std::vector<gdl::Model*> 			_models;
 		double									_x;
 		double									_y;
+		size_t									_splitsCount;
 	};
 
 };

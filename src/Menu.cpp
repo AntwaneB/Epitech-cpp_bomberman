@@ -26,5 +26,5 @@ Menu::save(void) const
 void
 Menu::run()
 {
-	this->notify(new Level(12, 12, 9, 1), LEVEL_GENERATED);
+	this->notify(new Level(12, 12, 2, 2), LEVEL_GENERATED);
 }

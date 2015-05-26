@@ -3,7 +3,9 @@
 Graphics::Map::Map(const ::Map& map)
 	: _map(&map)
 {
-
+	//load("./libgdl/assets/rock.tga")
+	//t_rock->load("./libgdl/assets/wood.tga")
+	// t_rock->load("./libgdl/assets/sand.tga")
 }
 
 Graphics::Map::~Map()
@@ -13,24 +15,29 @@ Graphics::Map::~Map()
 			delete _blocks[y][x];
 }
 
+gdl::Texture*
+Graphics::Map::loadTexture(const std::string & path)
+{
+	auto it = _textures.find(path);
+	if (it != _textures.end())
+	{
+		return (it->second);
+	}
+	else
+	{
+		gdl::Texture* texture = new gdl::Texture;
+		texture->load(path);
+		_textures[path] = texture;
+		return (_textures[path]);
+	}
+}
+
 bool Graphics::Map::initialize()
 {
 	/*Object *bomb = new Bomb();
 	if (bomb->initialize() == false)
 		return (false);
 	objects->push_back(bomb);*/
-	gdl::Texture*	t_rock = new gdl::Texture;
-	if (t_rock->load("./libgdl/assets/rock.tga") == false)
-	{
-		std::cout << "false texture" << std::endl;
-		return (false);
-	}
-	gdl::Texture*	t_wood = new gdl::Texture;
-	if (t_wood->load("./libgdl/assets/wood.tga") == false)
-	{
-		std::cout << "false texture" << std::endl;
-		return (false);
-	}
 	for (unsigned int y = 0; y < _map->height(); y++)
 	{
 		std::vector<Graphics::Object*> line;
@@ -40,20 +47,20 @@ bool Graphics::Map::initialize()
 			{
 				if (_map->map()[y][x]->texture() == "./libgdl/assets/rock.tga")
 				{
-					Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], t_rock);
+					Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 					cube->initialize();
 					line.push_back(cube);
 				}
 				else if (_map->map()[y][x]->texture() == "./libgdl/assets/wood.tga")
 				{
-					Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], t_wood);
+					Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 					cube->initialize();
 					line.push_back(cube);
 				}
 			}
 			else if (!_map->map()[y][x]->visible())
 			{
-				Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], t_wood);
+				Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], loadTexture("./libgdl/assets/sand.tga"));
 				cube->initialize();
 				line.push_back(cube);
 			}
