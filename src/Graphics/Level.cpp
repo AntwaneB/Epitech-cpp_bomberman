@@ -11,7 +11,7 @@
 Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
-	for (size_t i = 0; i < 2; i++)
+	for (size_t i = 0; i < 6; i++)
 		_splits.push_back(new Split(level, i));
 	_context.start(1920, 1080, "My bomberman!");
 	this->initialize();
