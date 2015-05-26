@@ -9,7 +9,7 @@
 #define	MENU_HPP
 
 #include "Observer.hpp"
-#include "Level.hh"
+#include "Level.hpp"
 
 class Menu : public Subject, public EventHandler<Menu>
 {
@@ -17,23 +17,23 @@ public:
 	Menu(const std::string &);
 	virtual ~Menu();
 
-	void											run();
+	void		run();
 
-	void											save(void) const;
+	void		save(void) const;
 
-	std::map<std::string, Graphics::Menu::Item*>	getItems(void) const;
-
-private:
-	void											moveUp(void);
-	void											moveDown(void);
-	void											moveLeft(void);
-	void											moveRight(void);
-	void											select(void);
+	Config&		getConfig(void) const;
 
 private:
-	Config											_cfg;
-	std::string										_filename;
-	std::map<std::string, Graphics::Menu::Item*>	_items;
+	void		keyPressed(Subject*);
+	Config&		getArrow(void) const;
+	Config&		getCurrent(void) const;
+	Config&		getPrev(Config&) const;
+	Config&		getNext(Config&) const;
+	Config&		getLast(void) const;
+
+private:
+	Config			_cfg;
+	std::string		_filename;
 
 };
 

@@ -6,16 +6,13 @@
  */
 
 #include <iostream>
+#include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
 
 Menu::Menu(const std::string & filename) : _filename(filename)
 {
 	_cfg.importFile(_filename);
-	_actions[KEY_UP] = &Menu::moveUp;
-	_actions[KEY_DOWN] = &Menu::moveDown;
-	_actions[KEY_LEFT] = &Menu::moveLeft;
-	_actions[KEY_RIGHT] = &Menu::moveRight;
-	_actions[KEY_ENTER] = &Menu::select;
+	_actions[KEY_PRESSED] = &Menu::keyPressed;
 
 	if (_cfg["content"].isEmpty())
 		throw ConfigException("File " + filename + " is not valid");
@@ -38,35 +35,39 @@ Menu::run()
 }
 
 void
-Menu::moveUp(void)
+Menu::keyPressed(Subject* entity)
 {
-	Config	arrow = getArrow();
-	Config	current = getCurrent();
-}
+	Input*	input = safe_cast<Input*>(entity);
+	Config	current;
 
-void
-Menu::moveDown(void)
-{
-	Config	arrow = getArrow();
-	Config	current = getCurrent();
-}
-
-void
-Menu::moveLeft(void)
-{
-	Config	current = getCurrent();
-}
-
-void
-Menu::moveRight(void)
-{
-	Config	current = getCurrent();
-}
-
-void
-Menu::select(void)
-{
-	Config	current = getCurrent();
+	current = getCurrent();
+	switch (input->genericKey())
+	{
+		case (Input::UP):
+		{
+			break;
+		}
+		case (Input::DOWN):
+		{
+			break;
+		}
+		case (Input::LEFT):
+		{
+			break;
+		}
+		case (Input::RIGHT):
+		{
+			break;
+		}
+		case (Input::SPACE):
+		{
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
 }
 
 Config&
@@ -80,10 +81,55 @@ Menu::getCurrent(void) const
 	Config	items;
 
 	items = _cfg["content"];
+
 	for (auto it = items.begin(); it != items.end(); ++it)
 		if ((*it)["selectable"] == "true" && (*it)["selected"] == "true")
 			return (*it);
 	return (items.end());
+}
+
+Config&
+Menu::getPrev(Config & current) const
+{
+	Config	items;
+	int	id;
+
+	id = current["order"] - 1;
+	if (id == 0)
+		return getLast();
+
+	items = _cfg["content"];
+
+	for (auto it = items.begin(); it != items.end(); ++it)
+		if ((*it)["order"] == id )
+			return (*it);
+	return (items.end());
+}
+
+Config&
+Menu::getNext(Config & current) const
+{
+	return (_cfg);
+}
+
+Config&
+Menu::getLast(void) const
+{
+	Config	items;
+	Config*	tmp;
+	int		max;
+
+	items = _cfg["content"];
+	tmp = &(items.end());
+	max = 0;
+
+	for (auto it = items.begin(); it != items.end(); ++it)
+		if ((*it)["order"] >= max)
+		{
+			max = ((*it)->second)["order"];
+			tmp = &(*it);
+		}
+	return (*tmp);
 }
 
 Config&
