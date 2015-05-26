@@ -9,8 +9,8 @@
 #include "Texture.hh"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "Position.hpp"
-#include "Character.hpp"
+#include "Core/Position.hh"
+#include "Core/Character.hh"
 
 namespace Graphics
 {

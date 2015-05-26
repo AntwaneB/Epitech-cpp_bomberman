@@ -45,6 +45,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Ground.cpp \
 		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
+		     Graphics/Item.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -54,21 +55,22 @@ OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
 INCS_DIR	  =  inc
 INCS		  =  global.hh \
 		     Exception.hpp \
-		     App.hpp \
-		     Config.hpp \
-		     Clock.hpp \
+		     Core/App.hh \
+		     Core/Config.hh \
+		     Core/Clock.hh \
 		     \
-		     Observer.hpp \
-		     Menu.hpp \
-		     Level.hpp \
-		     Character.hpp \
-		     IA.hpp \
-		     Map.hpp \
-		     Position.hpp \
-		     Item.hh \
-		     Bomb.hh \
-		     Block.hh \
-		     BonusItem.hh \
+		     Core/Observer.hpp \
+		     Core/Menu.hh \
+		     Core/Level.hh \
+		     Core/Character.hh \
+		     Core/IA.hpp \
+		     Core/Map.hh \
+		     Core/Position.hh \
+		     Core/Item.hh \
+		     Core/Bomb.hh \
+		     Core/Block.hh \
+		     Core/BonusItem.hh \
+		     Core/Input.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \
@@ -80,6 +82,7 @@ INCS		  =  global.hh \
 		     Graphics/Character.hh \
 		     Graphics/Bomb.hh \
 		     Graphics/Split.hh \
+		     Graphics/Item.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \

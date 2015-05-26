@@ -8,11 +8,11 @@
 #ifndef MENU_HH
 #define	MENU_HH
 
-#include "Observer.hpp"
-#include "SdlContext.hh"
-#include "Game.hh"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "Core/Observer.hpp"
+#include "SdlContext.hh"
+#include "Game.hh"
 
 namespace Graphics
 {

@@ -12,8 +12,8 @@
 #define	APP_HPP
 
 #include "global.hh"
-#include "Observer.hpp"
-#include "Menu.hpp"
+#include "Core/Observer.hpp"
+#include "Core/Menu.hh"
 #include "Graphics/Display.hh"
 
 class App : public EventHandler<App>, public Subject

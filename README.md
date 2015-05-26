@@ -16,6 +16,10 @@
 
 - AUCUN `define`, peu importe la raison. On utilise un `enum` à la place.
 
+- On ne fait PAS DU C, il est totalement inutile de déclarer les variables dès le début de la fonction, on les déclare quand on en a besoin, c'est tout !
+
+- Pour les types trop longs à taper, on peut utiliser le type "auto", par exemple pour remplacer "std::list<Character::Action>::iterator".
+
 
 ### Comment on code ? (syntaxe)
 
@@ -68,6 +72,10 @@ protected:
 - Pour les constructeurs, on va à la ligne avant la liste d'initialisation.
 
 - Les fichiers headers sont nommés .hpp s'ils sont templatés, .hh autrement.
+
+- Les fonctions et variables sont nommées comme suit : "nomDeLaFonction", "nomDeLaVariable".
+
+- L'indentation est faites avec des tabulations, PAS des espaces (vérifiez votre IDE, et pas d'emacs).
 
 
 ### Divers

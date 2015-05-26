@@ -8,7 +8,9 @@
 #ifndef GLOBAL_HH
 #define	GLOBAL_HH
 
-#include "Config.hpp"
+#define FPS	40
+
+#include "Core/Config.hh"
 
 extern Config g_settings;
 

@@ -13,8 +13,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include "Character.hpp"
-#include "Position.hpp"
+#include "Character.hh"
+#include "Position.hh"
 #include "Observer.hpp"
 #include "Block.hh"
 #include "Exception.hpp"
@@ -30,7 +30,7 @@ public:
 
 	size_t	width() const;
 	size_t	height() const;
-	std::vector<std::vector<Block*> > map() const;
+	std::vector<std::vector<Block*> > const & map() const;
 	Block*	at(Position const &) const;
 
 private:

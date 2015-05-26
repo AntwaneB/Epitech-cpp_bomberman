@@ -9,8 +9,8 @@
 #define	LEVEL_HH
 
 #include "Game.hh"
-#include "Observer.hpp"
-#include "Level.hpp"
+#include "Core/Observer.hpp"
+#include "Core/Level.hh"
 #include "SdlContext.hh"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -23,7 +23,8 @@
 #include "Graphics/Character.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
-#include "Config.hpp"
+#include "Core/Config.hh"
+#include "Core/Input.hh"
 #include <vector>
 
 namespace Graphics
@@ -37,6 +38,7 @@ namespace Graphics
 
 		virtual bool initialize();
 		virtual bool update();
+		virtual bool updateInput();
 		virtual void draw();
 
 	protected:
@@ -44,6 +46,7 @@ namespace Graphics
 		gdl::SdlContext					_context;
 		gdl::Input							_input;
 		gdl::Clock							_clock;
+		std::vector<gdl::Model*> 			_models;
 		std::vector<Graphics::Split*> _splits;
 	};
 
