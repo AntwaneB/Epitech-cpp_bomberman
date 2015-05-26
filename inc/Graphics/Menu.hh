@@ -10,10 +10,10 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "Observer.hpp"
+#include "Core/Menu.hh"
+#include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
-#include "Core/Menu.hh"
 
 namespace Graphics
 {

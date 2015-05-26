@@ -85,6 +85,7 @@ void
 Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	(void)clock;
+	(void)input;
 	//_position = _character->position();
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
@@ -93,7 +94,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 		translate(glm::vec3(x, 0, y));
 		_position = _character->position();
 	}
-	if (input.getKey(SDLK_DOWN))
+	/*if (input.getKey(SDLK_DOWN))
 	{
 		translate(glm::vec3(0, 0, -1));
 		//rotate(glm::vec3(0, 0, -1), getAngle(DOWN));
@@ -112,7 +113,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 	{
 		translate(glm::vec3(1, 0, 0));
 		//rotate(glm::vec3(1, 0, 0), getAngle(LEFT));
-	}
+	}*/
 	/*
 	if (input.getKey(SDLK_DOWN) || input.getKey(SDLK_UP) || input.getKey(SDLK_RIGHT) || input.getKey(SDLK_LEFT))
 		_model->setCurrentAnim(0);

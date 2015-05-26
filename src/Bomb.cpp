@@ -6,7 +6,7 @@
  */
 
 #include "global.hh"
-#include "Bomb.hh"
+#include "Core/Bomb.hh"
 
 Bomb::Bomb(Position const & position, size_t range, double duration, const Character* owner)
 	: Item(position), _range(range), _duration(duration), _owner(owner), _progress(0)
@@ -42,6 +42,12 @@ char
 Bomb::progress() const
 {
 	return (_progress);
+}
+
+const Character*
+Bomb::owner() const
+{
+	return (_owner);
 }
 
 void

@@ -7,50 +7,32 @@
 
 #include <iostream>
 #include "global.hh"
-#include "Character.hpp"
+#include "Core/Character.hh"
 #include "Exception.hpp"
-#include "Clock.hpp"
-#include "Level.hpp"
-#include "IA.hpp"
+#include "Core/Clock.hh"
+#include "Core/Level.hh"
+#include "Core/IA.hpp"
+#include "Core/Input.hh"
 
-Character::Character(const Level * level, size_t nth, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _position(x, y, z), _solid(true), _ia(NULL), _elapsedTime(-1)
+Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _alive(true), _killedBy(NULL), _ia(NULL), _elapsedTime(-1)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
+	_actions[KEY_PRESSED] = &Character::keyPressed;
 
 	_attributes = g_settings["entities"]["character"];
 
-	if (_nth != 5)
-	{
-	//	_ia = new IA::IA<IA::HARD>(_level, this);
-	}
-	else
-	{
-		_queuedActions.push(Character::MOVE_RIGHT);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_LEFT);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_RIGHT);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::MOVE_DOWN);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::DROP_BOMB);
-		_queuedActions.push(Character::MOVE_UP);
-		_queuedActions.push(Character::MOVE_LEFT);
-	}
+	if (!_isPlayer)
+		_ia = new IA::IA<IA::HARD>(_level, this);
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
 Character::~Character()
 {
+	if (_ia)
+		delete _ia;
 }
 
 Position
@@ -71,6 +53,36 @@ Character::attributes()
 	return (_attributes);
 }
 
+bool
+Character::alive() const
+{
+	return (_alive);
+}
+
+size_t
+Character::score() const
+{
+	return (_score);
+}
+
+void
+Character::changeScore(int amount)
+{
+	_score += amount;
+}
+
+const Bomb*
+Character::killedBy() const
+{
+	return (_killedBy);
+}
+
+bool
+Character::isPlayer() const
+{
+	return (_isPlayer);
+}
+
 void
 Character::tick(Subject* entity)
 {
@@ -83,7 +95,7 @@ Character::tick(Subject* entity)
 	{
 		_elapsedTime++;
 
-		if (_ia)
+		if (_ia && !_isPlayer)
 			_ia->playTurn();
 
 		if (_queuedActions.size() > 0
@@ -124,8 +136,29 @@ Character::bombExploded(Subject* entity)
 
 	if (bomb->hasHit(_position))
 	{ // The character got hit by the bomb
+		_alive = false;
+		_killedBy = bomb;
 		this->notify(this, CHARACTER_DIED);
-		delete this;
+//		delete this;
+	}
+}
+
+void
+Character::keyPressed(Subject* entity)
+{
+	Input* input = safe_cast<Input*>(entity);
+
+	std::map<Input::Key, Character::Action> keys;
+	keys[Input::UP] = Character::MOVE_UP;
+	keys[Input::DOWN] = Character::MOVE_DOWN;
+	keys[Input::RIGHT] = Character::MOVE_RIGHT;
+	keys[Input::LEFT] = Character::MOVE_LEFT;
+	keys[Input::SPACE] = Character::DROP_BOMB;
+
+	if (input->genericKey() > Input::KEYS_GENERIC_START && input->genericKey() < Input::KEYS_GENERIC_END)
+	{
+		this->clearActions();
+		this->pushAction(keys[input->genericKey()]);
 	}
 }
 

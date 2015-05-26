@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_BOMB_HPP_
-# define	GRAPHICS_BOMB_HPP_
+#ifndef GRAPHICS_ITEM_HPP_
+# define	GRAPHICS_ITEM_HPP_
 
 #include <iostream>
 #include <string>
@@ -9,25 +9,25 @@
 #include "Texture.hh"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "Core/Bomb.hh"
+#include "Core/Item.hh"
 
 namespace Graphics
 {
 
-	class Bomb : public Object
+	class Item : public Object
 	{
 	public:
-		Bomb(const ::Bomb*, gdl::Model*);
-		virtual ~Bomb();
+		Item(const ::Item*, std::vector<gdl::Model*>);
+		virtual ~Item();
 
 		virtual bool  initialize();
 		virtual void  update(gdl::Clock const &clock, gdl::Input &input);
 		virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
 
-		bool	operator==(const ::Bomb*) const;
+		bool	operator==(const ::Item*) const;
 
 	private:
-		const ::Bomb*	_bomb;
+		const ::Item*	_item;
 		gdl::Texture	_texture;
 		gdl::Model*		_model;
 	};

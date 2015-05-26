@@ -140,11 +140,19 @@ Graphics::Menu::Menu()
     }
 }
 
-void
-Graphics::Menu::displayMenu(::Menu *)
+/*void
+Graphics::Menu::initialize(::Menu* menu)
 {
+    _menu = menu;
     //this->notify(new ::Input(KEY_UP), KEY_PRESSED);
-}
+    while vector
+    {
+    _newgame.setTexture(_tassets);
+    _newgame.setTextureRect(sf::IntRect(0, 8, 566, 100));
+    _newgame.setScale(0.5f, 0.5f);
+    _newgame.setPosition(600, 330);
+    }
+}*/
 
 void 		Graphics::Menu::update(int x, int y)
 {

@@ -5,8 +5,8 @@
  * Created on April 27, 2015, 11:14 PM
  */
 
-#include "Map.hpp"
-#include "Bomb.hh"
+#include "Core/Map.hh"
+#include "Core/Bomb.hh"
 #include "pugixml.hpp"
 #include "global.hh"
 
@@ -57,7 +57,7 @@ Map::at(const Position& position) const
 	return (this->_map[position.y()][position.x()]);
 }
 
-std::vector<std::vector<Block*> >
+std::vector<std::vector<Block*> > const &
 Map::map() const
 {
 	return (this->_map);
@@ -162,7 +162,7 @@ Map::initMap()
 void
 Map::setBorders()
 {
-	for (size_t y = 0; y < _height; ++y)
+	for (size_t y = 1; y < _height - 1; ++y)
 	{
 		_map[y][0] = new Block(Position(0, y), g_settings["maps"]["default_blocks"]["wall"]);
 		_map[y][_width - 1] = new Block(Position(_width - 1, y), g_settings["maps"]["default_blocks"]["wall"]);

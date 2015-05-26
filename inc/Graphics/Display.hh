@@ -8,7 +8,7 @@
 #ifndef DISPLAY_HH
 #define	DISPLAY_HH
 
-#include "Observer.hpp"
+#include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
 
@@ -30,6 +30,7 @@ namespace Graphics
 
 		void	runLevel(Subject* entity);
 		void	updateLevel(Subject* entity);
+		void	updateLevelPaused(Subject* entity);
 
 		void	exitGame(Subject* entity);
 

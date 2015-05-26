@@ -22,28 +22,17 @@ enum Event
 {
 	OBSERVER_DELETED,
 	CLOCK_TICK,
+	CLOCK_PAUSE_TICK,
 
 	LEVEL_GENERATED,
 	LEVEL_UPDATED,
+	LEVEL_PAUSE_TICK,
 	LEVEL_BOMB_EXPLODED,
 	MAP_BLOCK_DESTROYED,
 	MAP_BOMB_EXPLODED,
 	EXIT_TRIGGERED,
 
-	KEY_PRESSED_P1_UP,
-	KEY_PRESSED_P1_DOWN,
-	KEY_PRESSED_P1_LEFT,
-	KEY_PRESSED_P1_RIGHT,
-	KEY_PRESSED_P1_SPACE,
-	KEY_PRESSED_P1_ESC,
-	KEY_PRESSED_P1_PAUSE,
-	KEY_PRESSED_P2_UP,
-	KEY_PRESSED_P2_DOWN,
-	KEY_PRESSED_P2_LEFT,
-	KEY_PRESSED_P2_RIGHT,
-	KEY_PRESSED_P2_SPACE,
-	KEY_PRESSED_P2_ESC,
-	KEY_PRESSED_P2_PAUSE,
+	KEY_PRESSED,
 
 	LEVEL_STARTED,
 
@@ -103,8 +92,8 @@ public:
 protected:
 	void notify(Subject * entity, Event event)
 	{
-		if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED)
-			std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
+		//if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK && event != LEVEL_PAUSE_TICK)
+		//	std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
 		int i = 0;
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
@@ -113,6 +102,21 @@ protected:
 				(*it)->onNotify(entity, event);
 			i++;
 		}
+
+		while (!_eraseQueue.empty())
+		{
+			_observers.erase(_eraseQueue.front());
+			_eraseQueue.pop();
+		}
+	}
+
+	void notify(Subject * entity, Event event, Observer* observer)
+	{
+		//if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK)
+		//	std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
+
+		if (observer != NULL)
+			observer->onNotify(entity, event);
 
 		while (!_eraseQueue.empty())
 		{
@@ -130,28 +134,17 @@ private:
 	{
 		{ OBSERVER_DELETED, "OBSERVER_DELETED" },
 		{ CLOCK_TICK, "CLOCK_TICK" },
+		{ CLOCK_PAUSE_TICK, "CLOCK_PAUSE_TICK" },
 
 		{ LEVEL_GENERATED, "LEVEL_GENERATED" },
 		{ LEVEL_UPDATED, "LEVEL_UPDATED" },
+		{ LEVEL_PAUSE_TICK, "LEVEL_PAUSE_TICK" },
 		{ LEVEL_BOMB_EXPLODED, "LEVEL_BOMB_EXPLODED" },
 		{ MAP_BOMB_EXPLODED, "MAP_BOMB_EXPLODED" },
 		{ MAP_BLOCK_DESTROYED, "MAP_BLOCK_DESTROYED" },
 		{ EXIT_TRIGGERED, "EXIT_TRIGGERED" },
 
-		{ KEY_PRESSED_P1_UP, "KEY_PRESSED_P1_UP" },
-		{ KEY_PRESSED_P1_DOWN, "KEY_PRESSED_P1_DOWN" },
-		{ KEY_PRESSED_P1_LEFT, "KEY_PRESSED_P1_LEFT" },
-		{ KEY_PRESSED_P1_RIGHT, "KEY_PRESSED_P1_RIGHT" },
-		{ KEY_PRESSED_P1_SPACE, "KEY_PRESSED_P1_SPACE" },
-		{ KEY_PRESSED_P1_ESC, "KEY_PRESSED_P1_ESC" },
-		{ KEY_PRESSED_P1_PAUSE, "KEY_PRESSED_P1_PAUSE" },
-		{ KEY_PRESSED_P2_UP, "KEY_PRESSED_P2_UP" },
-		{ KEY_PRESSED_P2_DOWN, "KEY_PRESSED_P2_DOWN" },
-		{ KEY_PRESSED_P2_LEFT, "KEY_PRESSED_P2_LEFT" },
-		{ KEY_PRESSED_P2_RIGHT, "KEY_PRESSED_P2_RIGHT" },
-		{ KEY_PRESSED_P2_SPACE, "KEY_PRESSED_P2_SPACE" },
-		{ KEY_PRESSED_P2_ESC, "KEY_PRESSED_P2_ESC" },
-		{ KEY_PRESSED_P2_PAUSE, "KEY_PRESSED_P2_PAUSE" },
+		{ KEY_PRESSED, "KEY_PRESSED" },
 
 		{ LEVEL_STARTED, "LEVEL_STARTED" },
 

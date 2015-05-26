@@ -10,10 +10,10 @@
 
 #include <iostream>
 #include "Exception.hpp"
-#include "Character.hpp"
-#include "App.hpp"
-#include "Level.hpp"
-#include "Config.hpp"
+#include "Core/Character.hh"
+#include "Core/App.hh"
+#include "Core/Level.hh"
+#include "Core/Config.hh"
 #include "Graphics/Display.hh"
 #include "Graphics/Map.hh"
 
@@ -58,6 +58,7 @@ App::runLevel(Subject* entity)
 	{
 		level->addObserver(_display);
 		_display->addObserver(level);
+		this->addObserver(level);
 	}
 
 	level->run();
@@ -86,7 +87,15 @@ App::run()
 		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
 			mainMenu->addObserver(_display);
 
-		mainMenu->run();
+		try
+		{
+			mainMenu->run();
+		}
+		catch (ExitException const & e)
+		{
+			delete mainMenu;
+			throw e;
+		}
 
 		delete mainMenu;
 	}

@@ -6,7 +6,7 @@
  */
 
 #include <iostream>
-#include "Menu.hpp"
+#include "Core/Menu.hh"
 
 Menu::Menu(const std::string & filename) : _filename(filename)
 {
@@ -26,5 +26,5 @@ Menu::save(void) const
 void
 Menu::run()
 {
-	this->notify(new Level(12, 12, 9), LEVEL_GENERATED);
+	this->notify(new Level(12, 12, 2, 2), LEVEL_GENERATED);
 }

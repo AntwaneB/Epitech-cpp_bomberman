@@ -10,18 +10,18 @@
 
 #include <map>
 #include "Observer.hpp"
-#include "Clock.hpp"
-#include "Map.hpp"
-#include "Character.hpp"
+#include "Clock.hh"
+#include "Map.hh"
+#include "Character.hh"
 #include "Item.hh"
 #include "BonusItem.hh"
 #include "Bomb.hh"
-#include "Level.hpp"
+#include "Level.hh"
 
 class Level : public EventHandler<Level>, public Subject
 {
 public:
-	Level(size_t width, size_t height, size_t charactersCount);
+	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount);
 	virtual ~Level();
 
 	void				run();
@@ -33,6 +33,7 @@ public:
 	std::map<Position, std::list<Character*> > const &	characters() const;
 	std::map<Position, std::list<Bomb*> > const &		bombs() const;
 	std::map<Position, std::list<Item*> > const &		items() const;
+	std::list<Character*> const &						players() const;
 	std::vector<Character*> const charactersRaw() const;
 	std::vector<Bomb*>		const bombsRaw() const;
 	std::vector<BonusItem*>	const itemsRaw() const;
@@ -42,6 +43,7 @@ public:
 
 private:
 	Character*	pushCharacter();
+	void			end();
 
 	void	characterMoved(Subject* entity);
 	void	characterDied(Subject* entity);
@@ -51,11 +53,16 @@ private:
 	void	bombDropped(Subject* entity);
 	void	bombExploded(Subject* entity);
 	void	blockDestroyed(Subject* entity);
+	void	keyPressed(Subject* entity);
+	void	quitLevel(Subject* entity);
 
-	void	charactersToConfig(Config &) const;
 	void	tick(Subject* entity);
+	void	pauseTick(Subject* entity);
 
 private:
+	void	charactersToConfig(Config &) const;
+
+	private:
 	Map														_map;
 	std::map<Position, std::list<Character*> >	_characters;
 	std::list<Character*>								_players;
@@ -63,7 +70,12 @@ private:
 	std::map<Position, std::list<BonusItem*> >	_items;
 
 	size_t													_charactersCount;
+	size_t													_playersCount;
 	Clock														_clock;
+	size_t													_secondsElapsed;
+
+	std::list<Character*>								_scores;
+	size_t													_charactersKills;
 };
 
 #endif	/* LEVEL_HPP */

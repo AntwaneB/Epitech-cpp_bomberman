@@ -5,7 +5,7 @@
  * Created on May 6, 2015, 4:07 PM
  */
 
-#include "Level.hpp"
+#include "Core/Level.hh"
 #include "Graphics/Display.hh"
 
 Graphics::Display::Display()
@@ -13,6 +13,7 @@ Graphics::Display::Display()
 {
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
+	_actions[LEVEL_PAUSE_TICK] = &Graphics::Display::updateLevelPaused;
 	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
 }
 
@@ -54,13 +55,18 @@ Graphics::Display::runLevel(Subject* entity)
 	}
 	_level = new Graphics::Level(level);
 	_level->addObserver(this);
+	_level->addObserver(level);
 }
 
 void
 Graphics::Display::updateLevel(Subject* entity __attribute__((unused)))
 {
-//	::Level*	level = safe_cast<::Level*>(entity);
-
 	_level->update();
 	_level->draw();
+}
+
+void
+Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
+{
+	_level->updateInput();
 }

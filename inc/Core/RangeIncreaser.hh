@@ -9,7 +9,7 @@
 #define	RANGEINCREASER_HH
 
 #include "BonusItem.hh"
-#include "Character.hpp"
+#include "Character.hh"
 
 class RangeIncreaser : public BonusItem
 {

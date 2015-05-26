@@ -6,7 +6,7 @@
  */
 
 #include "Exception.hpp"
-#include "Position.hpp"
+#include "Core/Position.hh"
 
 Position::Position(int x, int y, int z)
 	: _x(x), _y(y), _z(z), _isSet(true)
