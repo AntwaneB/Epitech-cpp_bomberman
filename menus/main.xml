@@ -32,9 +32,10 @@
 		</scale>
 	</background>
 	<content>
-		<selectable>
 			<start>
 				<order>1</order>
+				<selectable>true</selectable>
+				<selected>true</selected>
 				<asset>
 					<texture>
 						<pos1>0</pos1>
@@ -51,7 +52,7 @@
 						<y>0.5f</y>
 					</scale>
 				</asset>
-				<type>bool</type>
+				<type>none</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -62,6 +63,8 @@
 			</start>
 			<load>
 				<order>2</order>
+				<selectable>true</selectable>
+				<selected>false</selected>
 				<texture>
 					<pos1>0</pos1>
 					<pos2>128</pos2>
@@ -76,7 +79,7 @@
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
-				<type>bool</type>
+				<type>none</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -87,6 +90,8 @@
 			</load>
 			<settings>
 				<order>3</order>
+				<selectable>true</selectable>
+				<selected>false</selected>
 				<texture>
 					<pos1>0</pos1>
 					<pos2>242</pos2>
@@ -101,7 +106,7 @@
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
-				<type>bool</type>
+				<type>none</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -112,6 +117,8 @@
 			</settings>
 			<exit>
 				<order>4</order>
+				<selectable>true</selectable>
+				<selected>false</selected>
 				<texture>
 					<pos1>0</pos1>
 					<pos2>372</pos2>
@@ -126,7 +133,7 @@
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
-				<type>bool</type>
+				<type>none</type>
 				<value>false</value>
 				<arrow>
 					<position>
@@ -135,9 +142,8 @@
 					</position>
 				</arrow>
 			</exit>
-		</selectable>
-		<non-selectable>
 			<quote>
+				<selectable>false</selectable>
 				<texture>
 					<pos1>1100</pos1>
 					<pos2>600</pos2>
@@ -153,6 +159,5 @@
 					<y>0.5f</y>
 				</scale>
 			</quote>
-		</non-selectable>
 	</content>
 </config>

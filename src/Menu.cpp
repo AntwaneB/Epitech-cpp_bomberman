@@ -16,6 +16,10 @@ Menu::Menu(const std::string & filename) : _filename(filename)
 	_actions[Input::LEFT] = &Menu::moveLeft;
 	_actions[Input::RIGHT] = &Menu::moveRight;
 	_actions[Input::ENTER] = &Menu::select;
+	_actions[KEY_ENTER] = &Menu::select;
+
+	if (_cfg["content"].isEmpty())
+		throw ConfigException("File " + filename + " is not valid");
 }
 
 Menu::~Menu()
@@ -36,36 +40,54 @@ Menu::run()
 void
 Menu::moveUp(void)
 {
-
+	Config	arrow = getArrow();
+	Config	current = getCurrent();
 }
 
 void
 Menu::moveDown(void)
 {
-
+	Config	arrow = getArrow();
+	Config	current = getCurrent();
 }
 
 void
 Menu::moveLeft(void)
 {
-
+	Config	current = getCurrent();
 }
 
 void
 Menu::moveRight(void)
 {
-
+	Config	current = getCurrent();
 }
 
 void
 Menu::select(void)
 {
-
+	Config	current = getCurrent();
 }
 
-
-std::map<std::string, Graphics::Menu::Item*>&
-Menu::getItems(void) const
+Config&
+Menu::getArrow(void) const
 {
-	return _items;
+}
+
+Config&
+Menu::getCurrent(void) const
+{
+	Config	items;
+
+	items = _cfg["content"];
+	for (auto it = items.begin(); it != items.end(); ++it)
+		if ((*it)["selectable"] == "true" && (*it)["selected"] == "true")
+			return (*it);
+	return (items.end());
+}
+
+Config&
+Menu::getConfig(void) const
+{
+	return _cfg;
 }

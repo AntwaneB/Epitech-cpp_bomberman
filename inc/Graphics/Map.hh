@@ -37,12 +37,14 @@ namespace Graphics
 		virtual bool initialize();
 		virtual bool update();
 		virtual void draw(gdl::AShader&, gdl::Clock const&);
+		gdl::Texture* loadTexture(const std::string &);
 
 	private:
 		const ::Map* _map;
 		//std::vector<std::vector<::Block*> > _blocks;
 		std::vector<std::vector<Graphics::Object*> > _blocks;
 		Graphics::Object* _ground;
+		std::map<const std::string, gdl::Texture*>		_textures;
 	};
 
 };

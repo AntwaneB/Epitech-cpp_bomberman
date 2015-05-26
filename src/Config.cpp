@@ -301,7 +301,7 @@ std::map<std::string, Config::Param>::iterator	Config::Param::end(void)
 {
 	return (_map.end());
 }
-/*
+
 std::map<std::string, Config::Param>::const_iterator	Config::Param::find(const std::string & key) const
 {
 	return (_map.find(key));
@@ -311,7 +311,12 @@ std::map<std::string, Config::Param>::const_iterator	Config::Param::end(void) co
 {
 	return (_map.end());
 }
-*/
+
+std::map<std::string, Config::Param>::const_iterator	Config::Param::begin(void) const
+{
+	return (_map.begin());
+}
+
 void	Config::Param::insert(std::map<std::string, Param>::value_type insert)
 {
 	_map.insert(insert);
@@ -377,6 +382,11 @@ bool Config::Param::operator > (long o) { return (static_cast<long>(*this) > o);
 bool Config::Param::operator > (double o) { return (static_cast<double>(*this) > o); }
 bool Config::Param::operator > (float o) { return (static_cast<float>(*this) > o); }
 
+bool	Config::Param::isEmpty(void) const
+{
+	return (begin() == end());
+}
+
 bool	Config::Param::hasChild(void) const
 {
 	return (_status == VALUE);
@@ -395,6 +405,26 @@ std::map<std::string, Config::Param>::iterator	Config::begin(void)
 std::map<std::string, Config::Param>::iterator	Config::end(void)
 {
 	return (_params.end());
+}
+
+std::map<std::string, Config::Param>::const_iterator	Config::find(const std::string & key) const
+{
+	return (_params.find(key));
+}
+
+std::map<std::string, Config::Param>::const_iterator	Config::begin(void) const
+{
+	return (_params.begin());
+}
+
+std::map<std::string, Config::Param>::const_iterator	Config::end(void) const
+{
+	return (_params.end());
+}
+
+bool	Config::isEmpty(void) const
+{
+	return _params.isEmpty();
 }
 
 const std::string	Config::toXML(void) const
@@ -466,25 +496,27 @@ int	main()
 
 	cfg.importFile("./menus/main.xml");
 
-	auto locate = cfg.find("title");
-	if (locate != cfg.end())
-	{
-		std::cout << locate->first << std::endl;
-		std::cout << cfg[locate->first] << std::endl;
-	}
+	Config itemsCfg;
 
-	for (auto it = cfg.begin(); it != cfg.end(); ++it)
+	if ((itemsCfg = cfg["content"]).isEmpty())
+		std::cout << "File is not valid" << std::endl;
+
+	for (auto itemsIt = itemsCfg.begin(); itemsIt != itemsCfg.end(); ++itemsIt)
 	{
-		if (it->second.hasChild())
+		if (itemsIt->second.hasChild())
 		{
 			std::cout << "Values :";
-			std::cout << cfg[it->first] << std::endl;
+			std::cout << itemsCfg[itemsIt->first] << std::endl;
 		}
 		else
 		{
 			std::cout << "Node :";
-			std::cout << it->first << std::endl;
+			std::cout << itemsIt->first << std::endl;
+			std::cout << "\t Selectable : ";
+			std::cout << (itemsIt->second)["selectable"] << std::endl;
+			if ((itemsIt->second)["selectable"] == "true" && (itemsIt->second)["selected"] == "true")
+				std::cout << "OKAY!" << std::endl;
 		}
 	}
 }
-*/
+/*
