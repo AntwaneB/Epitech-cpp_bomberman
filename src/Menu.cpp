@@ -39,9 +39,9 @@ void
 Menu::keyPressed(Subject* entity)
 {
 	Input*	input = safe_cast<Input*>(entity);
-	Config	current;
+//	Config	current;
 
-	current = getCurrent();
+//	current = getCurrent();
 	switch (input->genericKey())
 	{
 		case (Input::UP):
@@ -70,51 +70,59 @@ Menu::keyPressed(Subject* entity)
 		}
 	}
 }
-
+/*
 Config&
-Menu::getArrow(void) const
+Menu::getArrow(void)
 {
+	return _cfg;
 }
 
 Config&
-Menu::getCurrent(void) const
+Menu::getCurrent(void)
 {
 	Config	items;
+	Config*	tmp;
 
 	items = _cfg["content"];
+	tmp = NULL;
 
 	for (auto it = items.begin(); it != items.end(); ++it)
-		if ((*it)["selectable"] == "true" && (*it)["selected"] == "true")
-			return (*it);
-	return (items.end());
+		if ((it->second)["selectable"] == "true" && (it->second)["selected"] == "true")
+			tmp = &(it->second);
+	if (tmp)
+		return (&tmp);
+	else
+		return (items.end())
 }
 
 Config&
-Menu::getPrev(Config & current) const
+Menu::getPrev(Config & current)
 {
 	Config	items;
-	int	id;
+	Config*	tmp;
+	int		id;
 
 	id = current["order"] - 1;
 	if (id == 0)
 		return getLast();
 
 	items = _cfg["content"];
+	tmp = &(current);
 
 	for (auto it = items.begin(); it != items.end(); ++it)
-		if ((*it)["order"] == id )
-			return (*it);
-	return (items.end());
+		if ((it->second)["order"] == id )
+			tmp = &(it->second);
+	return (&tmp);
 }
 
 Config&
-Menu::getNext(Config & current) const
+Menu::getNext(Config & current)
 {
 	return (_cfg);
 }
 
 Config&
-Menu::getLast(void) const
+Menu::getLast(void)
 {
 	Config	items;
 	Config*	tmp;
@@ -125,16 +133,16 @@ Menu::getLast(void) const
 	max = 0;
 
 	for (auto it = items.begin(); it != items.end(); ++it)
-		if ((*it)["order"] >= max)
+		if ((it->second)["order"] >= max)
 		{
-			max = ((*it)->second)["order"];
+			max = (it->second)["order"];
 			tmp = &(*it);
 		}
 	return (*tmp);
 }
-
+*/
 Config&
-Menu::getConfig(void) const
+Menu::getConfig(void)
 {
 	return _cfg;
 }

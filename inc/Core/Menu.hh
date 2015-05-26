@@ -8,8 +8,8 @@
 #ifndef MENU_HPP
 #define	MENU_HPP
 
-#include "Observer.hpp"
-#include "Level.hpp"
+#include "Core/Observer.hpp"
+#include "Core/Level.hh"
 
 class Menu : public Subject, public EventHandler<Menu>
 {
@@ -21,15 +21,15 @@ public:
 
 	void		save(void) const;
 
-	Config&		getConfig(void) const;
+	Config&		getConfig(void);
 
 private:
 	void		keyPressed(Subject*);
-	Config&		getArrow(void) const;
-	Config&		getCurrent(void) const;
-	Config&		getPrev(Config&) const;
-	Config&		getNext(Config&) const;
-	Config&		getLast(void) const;
+	// Config&		getArrow(void);
+	// Config&		getCurrent(void);
+	// Config&		getPrev(Config&);
+	// Config&		getNext(Config&);
+	// Config&		getLast(void);
 
 private:
 	Config			_cfg;
