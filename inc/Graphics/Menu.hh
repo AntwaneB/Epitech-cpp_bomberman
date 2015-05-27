@@ -21,7 +21,7 @@ namespace Graphics
 	class Menu
 	{
 	public:
-		Menu();
+		Menu(::Menu*);
 		virtual ~Menu();
 		void	NewGame();
 		void	update(int, int);

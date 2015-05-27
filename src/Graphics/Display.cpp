@@ -31,15 +31,20 @@ Graphics::Display::exitGame(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runMenu(Subject* entity)
 {
-	Menu*	menu = safe_cast<Menu*>(entity);
+	::Menu*	menu = safe_cast<::Menu*>(entity);
 
-	(void)menu;
+	if (_menu != NULL)
+	{
+		delete _menu;
+		_menu = NULL;
+	}
+	_menu = new Graphics::Menu(menu);
 }
 
 void
 Graphics::Display::updateMenu(Subject* entity)
 {
-	Menu*	menu = safe_cast<Menu*>(entity);
+	::Menu*	menu = safe_cast<::Menu*>(entity);
 
 	(void)menu;
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
 
 <config>
-	<assets>"./assets/asset.png"</assets>
+	<assets>
+		<location>"./assets/asset.png"</location>
+	</assets>
 	<arrow>
 		<texture>
 			<pos1>1100</pos1>

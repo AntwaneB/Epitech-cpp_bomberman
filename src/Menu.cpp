@@ -32,7 +32,7 @@ Menu::save(void) const
 void
 Menu::run()
 {
-	this->notify(new Level(12, 12, 9, 1), LEVEL_GENERATED);
+	this->notify(this, MENU_STARTED);
 }
 
 void
@@ -61,6 +61,7 @@ Menu::keyPressed(Subject* entity)
 			break;
 		}
 		case (Input::SPACE):
+		case (Input::ENTER):
 		{
 			break;
 		}
