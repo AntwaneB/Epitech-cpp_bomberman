@@ -8,7 +8,7 @@
 #include "Exception.hpp"
 #include "Core/Position.hh"
 
-Position::Position(int x, int y, int z)
+Position::Position(double x, double y, double z)
 	: _x(x), _y(y), _z(z), _isSet(true)
 {
 }
@@ -53,14 +53,14 @@ Position::operator!=(const Position & o) const
 }
 
 void
-Position::setZ(int z)
+Position::setZ(double z)
 {
 	this->_z = z;
 	this->_isSet = true;
 }
 
 void
-Position::incZ(int inc)
+Position::incZ(double inc)
 {
 	if (!_isSet)
 		throw PositionException("Increasing unset position.");
@@ -68,14 +68,14 @@ Position::incZ(int inc)
 }
 
 void
-Position::decZ(int dec)
+Position::decZ(double dec)
 {
 	if (!_isSet)
 		throw PositionException("Decreasing unset position.");
 	this->_z -= dec;
 }
 
-int
+double
 Position::z() const
 {
 	if (!_isSet)
@@ -84,14 +84,14 @@ Position::z() const
 }
 
 void
-Position::setY(int y)
+Position::setY(double y)
 {
 	this->_y = y;
 	this->_isSet = true;
 }
 
 void
-Position::incY(int inc)
+Position::incY(double inc)
 {
 	if (!_isSet)
 		throw PositionException("Increasing unset position.");
@@ -99,14 +99,14 @@ Position::incY(int inc)
 }
 
 void
-Position::decY(int dec)
+Position::decY(double dec)
 {
 	if (!_isSet)
 		throw PositionException("Decreasing unset position.");
 	this->_y -= dec;
 }
 
-int
+double
 Position::y() const
 {
 	if (!_isSet)
@@ -116,14 +116,14 @@ Position::y() const
 }
 
 void
-Position::setX(int x)
+Position::setX(double x)
 {
 	this->_x = x;
 	this->_isSet = true;
 }
 
 void
-Position::incX(int inc)
+Position::incX(double inc)
 {
 	if (!_isSet)
 		throw PositionException("Increasing unset position.");
@@ -131,14 +131,14 @@ Position::incX(int inc)
 }
 
 void
-Position::decX(int dec)
+Position::decX(double dec)
 {
 	if (!_isSet)
 		throw PositionException("Decreasing unset position.");
 	this->_x -= dec;
 }
 
-int
+double
 Position::x() const
 {
 	if (!_isSet)
@@ -160,7 +160,7 @@ Position::operator==(Position const & o) const
 }
 
 bool
-Position::outOfBounds(int maxX, int maxY) const
+Position::outOfBounds(double maxX, double maxY) const
 {
 	return (_x <= 0 || _x >= maxX || _y <= 0 || _y >= maxY);
 }

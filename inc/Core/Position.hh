@@ -17,7 +17,7 @@ class Position
 {
 public:
 	Position();
-	Position(int x, int y, int z = 0);
+	Position(double x, double y, double z = 0);
 	Position(const Position& orig);
 	Position& operator=(const Position& orig);
 	virtual ~Position();
@@ -26,28 +26,28 @@ public:
 	bool	operator!=(Position const & o) const;
 	bool	operator<(Position const & o) const;
 
-	void	setZ(int z);
-	void	incZ(int inc = 1);
-	void	decZ(int dec = 1);
-	int	z() const;
-	void	setY(int y);
-	void	incY(int inc = 1);
-	void	decY(int dec = 1);
-	int	y() const;
-	void	setX(int x);
-	void	incX(int inc = 1);
-	void	decX(int dec = 1);
-	int	x() const;
+	void	setZ(double z);
+	void	incZ(double inc = 1);
+	void	decZ(double dec = 1);
+	double	z() const;
+	void	setY(double y);
+	void	incY(double inc = 1);
+	void	decY(double dec = 1);
+	double	y() const;
+	void	setX(double x);
+	void	incX(double inc = 1);
+	void	decX(double dec = 1);
+	double	x() const;
 	bool	isSet() const;
-	bool	outOfBounds(int maxX, int maxY) const;
+	bool	outOfBounds(double maxX, double maxY) const;
 
 	void	toConfig(Config &) const;
 
 private:
-	int	_x;
-	int	_y;
-	int	_z;
-	bool	_isSet;
+	double	_x;
+	double	_y;
+	double	_z;
+	bool		_isSet;
 };
 
 std::ostream& operator<<(std::ostream&, const Position &);
