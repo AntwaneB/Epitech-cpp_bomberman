@@ -17,6 +17,7 @@ Graphics::Display::Display()
 	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
 	_actions[MENU_STARTED] = &Graphics::Display::runMenu;
 	_actions[MENU_UPDATED] = &Graphics::Display::updateMenu;
+	_actions[MENU_EXITED] = &Graphics::Display::exitMenu;
 }
 
 Graphics::Display::~Display()
@@ -52,22 +53,39 @@ Graphics::Display::runMenu(Subject* entity)
 }
 
 void
+Graphics::Display::exitMenu(Subject* entity)
+{
+	::Menu*	menu = safe_cast<::Menu*>(entity);
+
+	if (_menu != NULL)
+	{
+		this->notify(menu, MENU_EXITED, _menu);
+//		delete _menu;
+		_menu = NULL;
+	}
+}
+
+void
 Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 {
 //	::Menu*	menu = safe_cast<::Menu*>(entity);
-
-	_menu->update();
-	_menu->draw();
+	if (_menu)
+	{
+		_menu->update();
+		_menu->draw();
+	}
 }
 
 void
 Graphics::Display::runLevel(Subject* entity)
 {
+	/*
 	if (_menu != NULL)
 	{
 		delete _menu;
 		_menu = NULL;
 	}
+	*/
 	if (_level != NULL)
 	{
 		delete _level;

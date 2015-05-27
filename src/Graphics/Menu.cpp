@@ -13,12 +13,12 @@
 Graphics::Menu::Menu()
 	: _menu(NULL)
 {
+	_actions[MENU_EXITED] = &Menu::exited;
 }
 
 Graphics::Menu::~Menu()
 {
 	_sprites.clear();
-	_window.close();
 }
 
 void
@@ -62,8 +62,6 @@ Graphics::Menu::init(::Menu* menu)
 void
 Graphics::Menu::run()
 {
-
-
 	while (_window.isOpen())
 	{
 		this->draw();
@@ -123,4 +121,10 @@ Graphics::Menu::draw()
 	}
 
 	_window.display();
+}
+
+void
+Graphics::Menu::exited(Subject* entity __attribute__((unused)))
+{
+	_window.close();
 }

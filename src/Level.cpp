@@ -131,7 +131,6 @@ Level::end()
 	}
 
 	this->notify(this, LEVEL_ENDED);
-	delete this;
 }
 
 void
@@ -413,7 +412,7 @@ Level::keyPressed(Subject* entity)
 void
 Level::quitLevel(Subject* entity __attribute__((unused)))
 {
-	delete this;
+	this->end();
 }
 
 /*

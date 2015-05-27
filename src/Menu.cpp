@@ -130,6 +130,7 @@ void
 Menu::actionNewMenu(const std::string& param)
 {
 	(void)param;
+	this->notify(this, MENU_EXITED);
 	this->notify(new Level(13, 13, 2, 1), LEVEL_GENERATED);
 }
 

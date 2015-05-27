@@ -30,6 +30,9 @@ namespace Graphics
 		void	draw();
 
 	private:
+		void	exited(Subject*);
+
+	private:
 		sf::RenderWindow	_window;
 
 		::Menu*			_menu;
