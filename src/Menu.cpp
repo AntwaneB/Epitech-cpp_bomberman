@@ -130,8 +130,6 @@ void
 Menu::actionNewMenu(const std::string& param)
 {
 	(void)param;
-	this->notify(this, MENU_EXITED);
-	this->notify(new Level(13, 13, 2, 1), LEVEL_GENERATED);
 }
 
 void
@@ -141,9 +139,10 @@ Menu::actionLoadLevel(const std::string& param)
 }
 
 void
-Menu::actionRunLevel(const std::string& param)
+Menu::actionRunLevel(const std::string& param __attribute__((unused)))
 {
-	(void)param;
+	this->notify(this, MENU_EXITED);
+	this->notify(new Level(13, 13, 2, 1), LEVEL_GENERATED);
 }
 
 void

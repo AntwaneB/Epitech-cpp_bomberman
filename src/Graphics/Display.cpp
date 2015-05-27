@@ -60,7 +60,6 @@ Graphics::Display::exitMenu(Subject* entity)
 	if (_menu != NULL)
 	{
 		this->notify(menu, MENU_EXITED, _menu);
-//		delete _menu;
 		_menu = NULL;
 	}
 }
@@ -68,7 +67,6 @@ Graphics::Display::exitMenu(Subject* entity)
 void
 Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 {
-//	::Menu*	menu = safe_cast<::Menu*>(entity);
 	if (_menu)
 	{
 		_menu->update();
@@ -79,13 +77,6 @@ Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runLevel(Subject* entity)
 {
-	/*
-	if (_menu != NULL)
-	{
-		delete _menu;
-		_menu = NULL;
-	}
-	*/
 	if (_level != NULL)
 	{
 		delete _level;
