@@ -56,14 +56,18 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<type>none</type>
-			<value>false</value>
+			<has_value>false</has_value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/new_level.xml</param>
+			</action>
 			<cursor>
 				<position>
 					<x>565</x>
 					<y>338</y>
 				</position>
 			</cursor>
+
 		</start>
 		<load>
 			<order>2</order>
@@ -85,8 +89,11 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<type>none</type>
-			<value>false</value>
+			<has_value>false</has_value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
 			<cursor>
 				<position>
 					<x>565</x>
@@ -114,8 +121,11 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<type>none</type>
-			<value>false</value>
+			<has_value>false</has_value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/settings.xml</param>
+			</action>
 			<cursor>
 				<position>
 					<x>565</x>
@@ -143,8 +153,10 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<type>none</type>
-			<value>false</value>
+			<has_value>false</has_value>
+			<action>
+				<name>EXIT</name>
+			</action>
 			<cursor>
 				<position>
 					<x>565</x>

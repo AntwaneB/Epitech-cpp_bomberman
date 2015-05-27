@@ -27,13 +27,20 @@ private:
 private:
 	void		changeLine(Input::Key);
 	void		changeValue(Input::Key);
-	void		runLine();
-	void		quit();
+	void		runLine(Input::Key);
+	void		quit(Input::Key);
+
+	void		actionNewMenu(std::string const &);
+	void		actionRunLevel(std::string const &);
+	void		actionLoadLevel(std::string const &);
+	void		actionExit(std::string const &);
 
 private:
 	Config			_layout;
 	std::string		_filename;
 
+private:
+	std::map<std::string, void (Menu::*)(std::string const &)>	_menuActions;
 };
 
 #endif	/* MENU_HPP */

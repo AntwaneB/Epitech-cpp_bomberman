@@ -15,6 +15,21 @@ Menu::Menu(const std::string & filename)
 {
 	_actions[KEY_PRESSED] = &Menu::keyPressed;
 
+	_menuActions["NEW_MENU"] = &Menu::actionNewMenu;
+	_menuActions["RUN_LEVEL"] = &Menu::actionRunLevel;
+	_menuActions["LOAD_LEVEL"] = &Menu::actionLoadLevel;
+	_menuActions["EXIT"] = &Menu::actionExit;
+
+	/*
+	_menuActions =
+	{
+		{ "NEW_MENU", &Menu::actionNewMenu },
+		{ "RUN_LEVEL", &Menu::actionRunLevel },
+		{ "LOAD_LEVEL", &Menu::actionLoadLevel },
+		{ "EXIT", &Menu::actionExit },
+	};
+	*/
+
 	_layout.importFile(_filename);
 	if (_layout["content"].isEmpty())
 		throw ConfigException("File " + filename + " is not valid");
@@ -35,30 +50,18 @@ Menu::keyPressed(Subject* entity)
 {
 	Input*	input = safe_cast<Input*>(entity);
 
-	switch (input->genericKey())
-	{
-		case Input::UP:
-		case Input::DOWN:
-			this->changeLine(input->genericKey());
-			break;
+	std::map<Input::Key, void (Menu::*)(Input::Key)> actions;
+	actions[Input::UP] = &Menu::changeLine;
+	actions[Input::DOWN] = &Menu::changeLine;
+	actions[Input::LEFT] = &Menu::changeValue;
+	actions[Input::RIGHT] = &Menu::changeValue;
+	actions[Input::SPACE] = &Menu::runLine;
+	actions[Input::ENTER] = &Menu::runLine;
+	actions[Input::ESC] = &Menu::quit;
 
-		case Input::LEFT:
-		case Input::RIGHT:
-			this->changeValue(input->genericKey());
-			break;
+	if (actions.find(input->genericKey()) != actions.end())
+		(this->*(actions[input->genericKey()]))(input->genericKey());
 
-		case Input::SPACE:
-		case Input::ENTER:
-			this->runLine();
-			break;
-
-		case Input::ESC:
-			this->quit();
-			break;
-
-		default:
-			break;
-	}
 	this->notify(this, MENU_UPDATED);
 }
 
@@ -114,85 +117,45 @@ Menu::changeValue(Input::Key key)
 }
 
 void
-Menu::runLine()
+Menu::runLine(Input::Key key __attribute__((unused)))
 {
+	Config::Param* active;
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (it->second["selected"] == true)
+			active = &(it->second);
+	}
 
+	if (_menuActions.find((*active)["action"]["name"]) != _menuActions.end())
+		(this->*(_menuActions[(*active)["action"]["name"]]))((*active)["action"]["param"]);
 }
 
 void
-Menu::quit()
+Menu::quit(Input::Key key __attribute__((unused)))
 {
 	this->notify(this, EXIT_TRIGGERED);
 }
 
-/*
-Config&
-Menu::getArrow(void)
+void
+Menu::actionNewMenu(const std::string& param)
 {
-	return _cfg;
+	(void)param;
 }
 
-Config&
-Menu::getCurrent(void)
+void
+Menu::actionLoadLevel(const std::string& param)
 {
-	Config	items;
-	Config*	tmp;
-
-	items = _cfg["content"];
-	tmp = NULL;
-
-	for (auto it = items.begin(); it != items.end(); ++it)
-		if ((it->second)["selectable"] == "true" && (it->second)["selected"] == "true")
-			tmp = &(it->second);
-	if (tmp)
-		return (&tmp);
-	else
-		return (items.end())
+	(void)param;
 }
 
-Config&
-Menu::getPrev(Config & current)
+void
+Menu::actionRunLevel(const std::string& param)
 {
-	Config	items;
-	Config*	tmp;
-	int		id;
-
-	id = current["order"] - 1;
-	if (id == 0)
-		return getLast();
-
-	items = _cfg["content"];
-	tmp = &(current);
-
-	for (auto it = items.begin(); it != items.end(); ++it)
-		if ((it->second)["order"] == id )
-			tmp = &(it->second);
-	return (&tmp);
+	(void)param;
 }
 
-Config&
-Menu::getNext(Config & current)
+void
+Menu::actionExit(const std::string& param __attribute__((unused)))
 {
-	return (_cfg);
+	this->quit(Input::ESC);
 }
-
-Config&
-Menu::getLast(void)
-{
-	Config	items;
-	Config*	tmp;
-	int		max;
-
-	items = _cfg["content"];
-	tmp = &(items.end());
-	max = 0;
-
-	for (auto it = items.begin(); it != items.end(); ++it)
-		if ((it->second)["order"] >= max)
-		{
-			max = (it->second)["order"];
-			tmp = &(*it);
-		}
-	return (*tmp);
-}
-*/
