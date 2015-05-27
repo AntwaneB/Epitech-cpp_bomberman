@@ -69,26 +69,34 @@ Graphics::Menu::Menu(::Menu* menu)
 	_loadgame.setTextureRect(sf::IntRect(cfg["content"]["load"]["asset"]["texture"]["pos1"], cfg["content"]["load"]["asset"]["texture"]["pos2"], cfg["content"]["load"]["asset"]["texture"]["pos3"], cfg["content"]["load"]["asset"]["texture"]["pos4"]));
 	_loadgame.setScale(cfg["content"]["load"]["asset"]["scale"]["x"], cfg["content"]["load"]["asset"]["scale"]["y"]);
 	_loadgame.setPosition(cfg["content"]["load"]["asset"]["position"]["x"], cfg["content"]["load"]["asset"]["position"]["y"]);
+
+	std::cout << "SETTINGS" << std::endl;
 	//settings
 	_setting.setTexture(_tassets);
-	_setting.setTextureRect(sf::IntRect(cfg["content"]["setting"]["asset"]["texture"]["pos1"], cfg["content"]["setting"]["asset"]["texture"]["pos2"], cfg["content"]["setting"]["asset"]["texture"]["pos3"], cfg["content"]["setting"]["asset"]["texture"]["pos4"]));
-	_setting.setScale(cfg["content"]["setting"]["asset"]["scale"]["x"], cfg["content"]["setting"]["asset"]["scale"]["y"]);
-	_setting.setPosition(cfg["content"]["setting"]["asset"]["position"]["x"], cfg["content"]["setting"]["asset"]["position"]["y"]);
+	_setting.setTextureRect(sf::IntRect(cfg["content"]["settings"]["asset"]["texture"]["pos1"], cfg["content"]["settings"]["asset"]["texture"]["pos2"], cfg["content"]["settings"]["asset"]["texture"]["pos3"], cfg["content"]["settings"]["asset"]["texture"]["pos4"]));
+	_setting.setScale(cfg["content"]["settings"]["asset"]["scale"]["x"], cfg["content"]["settings"]["asset"]["scale"]["y"]);
+	_setting.setPosition(cfg["content"]["settings"]["asset"]["position"]["x"], cfg["content"]["settings"]["asset"]["position"]["y"]);
+
+	std::cout << "EXIT" << std::endl;
 	//exit
 	_exit.setTexture(_tassets);
 	_exit.setTextureRect(sf::IntRect(cfg["content"]["exit"]["asset"]["texture"]["pos1"], cfg["content"]["exit"]["asset"]["texture"]["pos2"], cfg["content"]["exit"]["asset"]["texture"]["pos3"], cfg["content"]["exit"]["asset"]["texture"]["pos4"]));
 	_exit.setScale(cfg["content"]["exit"]["asset"]["scale"]["x"], cfg["content"]["exit"]["asset"]["scale"]["y"]);
 	_exit.setPosition(cfg["content"]["exit"]["asset"]["position"]["x"], cfg["content"]["exit"]["asset"]["position"]["y"]);
+
+	std::cout << "QUOTE" << std::endl;
 	//quote
 	_quote.setTexture(_tassets);
 	_quote.setTextureRect(sf::IntRect(cfg["content"]["quote"]["asset"]["texture"]["pos1"], cfg["content"]["quote"]["asset"]["texture"]["pos2"], cfg["content"]["quote"]["asset"]["texture"]["pos3"], cfg["content"]["quote"]["asset"]["texture"]["pos4"]));
 	_quote.setScale(cfg["content"]["quote"]["asset"]["scale"]["x"], cfg["content"]["quote"]["asset"]["scale"]["y"]);
 	_quote.setPosition(cfg["content"]["quote"]["asset"]["position"]["x"], cfg["content"]["quote"]["asset"]["position"]["y"]);
+
+	std::cout << "ARROW" << std::endl;
 	//arrow
 	_rya.setTexture(_tassets);
-	_rya.setTextureRect(sf::IntRect(cfg["content"]["arrow"]["asset"]["texture"]["pos1"], cfg["content"]["arrow"]["asset"]["texture"]["pos2"], cfg["content"]["arrow"]["asset"]["texture"]["pos3"], cfg["content"]["arrow"]["asset"]["texture"]["pos4"]));
-	_rya.setScale(cfg["content"]["arrow"]["asset"]["scale"]["x"], cfg["content"]["arrow"]["asset"]["scale"]["y"]);
-	_rya.setPosition(cfg["content"]["arrow"]["asset"]["position"]["x"], cfg["content"]["arrow"]["asset"]["position"]["y"]);
+	_rya.setTextureRect(sf::IntRect(cfg["arrow"]["asset"]["texture"]["pos1"], cfg["arrow"]["asset"]["texture"]["pos2"], cfg["arrow"]["asset"]["texture"]["pos3"], cfg["arrow"]["asset"]["texture"]["pos4"]));
+	_rya.setScale(cfg["arrow"]["asset"]["scale"]["x"], cfg["arrow"]["asset"]["scale"]["y"]);
+	_rya.setPosition(cfg["arrow"]["asset"]["position"]["x"], cfg["arrow"]["asset"]["position"]["y"]);
 
 	//content (TODO)
 	/*Config	items;
@@ -97,6 +105,64 @@ Graphics::Menu::Menu(::Menu* menu)
 	{
 
 	}*/
+	int x = cfg["arrow"]["asset"]["position"]["x"];
+	int y = cfg["arrow"]["asset"]["position"]["y"];
+
+	while (_window.isOpen())
+	{
+
+        //affichage
+		_window.clear();
+		_window.draw(_background);
+		_window.draw(_newgame);
+		_window.draw(_loadgame);
+		_window.draw(_setting);
+		_window.draw(_quote);
+		_window.draw(_exit);
+		_window.draw(_rya);
+		_window.display();
+		sf::Event event;
+		while (_window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				exit(EXIT_SUCCESS);
+				_window.close();
+			}
+			else if(event.type == sf::Event::KeyPressed)
+			{
+				if(event.key.code == sf::Keyboard::Down)
+				{ 
+                //	this->notify(this, KEY_PRESSED_P1_DOWN);
+					if (y >= 488)
+						y = 338;
+					else
+						y += 50;
+					update(x, y);   
+				}
+				else if(event.key.code == sf::Keyboard::Up)
+				{ 
+					if (y <= 338)
+						y = 488;
+					else
+						y -= 50;
+					update(x, y);
+				}
+				else if (event.key.code == sf::Keyboard::Return)
+				{
+					if (y == 338)
+					{
+						NewGame();
+					}
+					else if (y == 488)
+					{
+						_window.close();
+						exit(EXIT_SUCCESS);
+					}
+				}
+			}
+		}
+	}
 }
 /*
 Graphics::Menu::Menu()

@@ -2,32 +2,34 @@
 
 <config>
 	<assets>
-		<location>"./assets/asset.png"</location>
+		<location>./assets/asset.png</location>
 	</assets>
 	<arrow>
-		<texture>
-			<pos1>1100</pos1>
-			<pos2>503</pos2>
-			<pos3>780</pos3>
-			<pos4>100</pos4>
-		</texture>
-		<scale>
-			<x>0.5f</x>
-			<y>0.5f</y>
-		</scale>
-		<position>
-			<x>565</x>
-			<y>338</y>
-		</position>
+		<asset>
+			<texture>
+				<pos1>1100</pos1>
+				<pos2>503</pos2>
+				<pos3>780</pos3>
+				<pos4>100</pos4>
+			</texture>
+			<scale>
+				<x>0.5f</x>
+				<y>0.5f</y>
+			</scale>
+			<position>
+				<x>565</x>
+				<y>338</y>
+			</position>
+		</asset>
 	</arrow>
-	<title>"Boom Clap !"</title>
+	<title>Boom Clap !</title>
 	<size>
 		<x>960</x>
 		<y>540</y>
 	</size>
-	<sound>"./assets/bomberman.wav"</sound>
+	<sound>./assets/bomberman.wav</sound>
 	<background>
-		<location>"./assets/mainmenu.png"</location>
+		<location>./assets/mainmenu.png</location>
 		<scale>
 			<x>0.5f</x>
 			<y>0.5f</y>
@@ -67,20 +69,22 @@
 				<order>2</order>
 				<selectable>true</selectable>
 				<selected>false</selected>
-				<texture>
-					<pos1>0</pos1>
-					<pos2>128</pos2>
-					<pos3>646</pos3>
-					<pos4>100</pos4>
-				</texture>
-				<position>
-					<x>600</x>
-					<y>380</y>
-				</position>
-				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
-				</scale>
+				<asset>
+					<texture>
+						<pos1>0</pos1>
+						<pos2>128</pos2>
+						<pos3>646</pos3>
+						<pos4>100</pos4>
+					</texture>
+					<position>
+						<x>600</x>
+						<y>380</y>
+					</position>
+					<scale>
+						<x>0.5f</x>
+						<y>0.5f</y>
+					</scale>
+				</asset>
 				<type>none</type>
 				<value>false</value>
 				<arrow>
@@ -94,20 +98,22 @@
 				<order>3</order>
 				<selectable>true</selectable>
 				<selected>false</selected>
-				<texture>
-					<pos1>0</pos1>
-					<pos2>242</pos2>
-					<pos3>574</pos3>
-					<pos4>130</pos4>
-				</texture>
-				<position>
-					<x>600</x>
-					<y>430</y>
-				</position>
-				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
-				</scale>
+				<asset>
+					<texture>
+						<pos1>0</pos1>
+						<pos2>242</pos2>
+						<pos3>574</pos3>
+						<pos4>130</pos4>
+					</texture>
+					<position>
+						<x>600</x>
+						<y>430</y>
+					</position>
+					<scale>
+						<x>0.5f</x>
+						<y>0.5f</y>
+					</scale>
+				</asset>
 				<type>none</type>
 				<value>false</value>
 				<arrow>
@@ -121,20 +127,22 @@
 				<order>4</order>
 				<selectable>true</selectable>
 				<selected>false</selected>
-				<texture>
-					<pos1>0</pos1>
-					<pos2>372</pos2>
-					<pos3>287</pos3>
-					<pos4>100</pos4>
-				</texture>
-				<position>
-					<x>600</x>
-					<y>480</y>
-				</position>
-				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
-				</scale>
+				<asset>
+					<texture>
+						<pos1>0</pos1>
+						<pos2>372</pos2>
+						<pos3>287</pos3>
+						<pos4>100</pos4>
+					</texture>
+					<position>
+						<x>600</x>
+						<y>480</y>
+					</position>
+					<scale>
+						<x>0.5f</x>
+						<y>0.5f</y>
+					</scale>
+				</asset>
 				<type>none</type>
 				<value>false</value>
 				<arrow>
@@ -146,20 +154,22 @@
 			</exit>
 			<quote>
 				<selectable>false</selectable>
-				<texture>
-					<pos1>1100</pos1>
-					<pos2>600</pos2>
-					<pos3>1880</pos3>
-					<pos4>100</pos4>
-				</texture>
-				<position>
-					<x>30</x>
-					<y>450</y>
-				</position>
-				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
-				</scale>
+				<asset>
+					<texture>
+						<pos1>1100</pos1>
+						<pos2>600</pos2>
+						<pos3>1880</pos3>
+						<pos4>100</pos4>
+					</texture>
+					<position>
+						<x>30</x>
+						<y>450</y>
+					</position>
+					<scale>
+						<x>0.5f</x>
+						<y>0.5f</y>
+					</scale>
+				</asset>
 			</quote>
 	</content>
 </config>
