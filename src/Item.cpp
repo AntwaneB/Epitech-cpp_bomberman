@@ -11,7 +11,7 @@
 #include "Core/SpeedIncreaser.hh"
 #include "Core/BombAmountIncreaser.hh"
 
-Item::Item(Position const & position, Type type)
+Item::Item(Position<> const & position, Type type)
 	: _position(position), _prevPosition(position), _type(type), _clockInit(false)
 {
 }
@@ -26,13 +26,13 @@ Item::type() const
 	return (_type);
 }
 
-Position
+Position<>
 Item::position() const
 {
 	return (_position);
 }
 
-Position
+Position<>
 Item::prevPosition() const
 {
 	return (_prevPosition);

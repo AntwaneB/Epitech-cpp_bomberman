@@ -1,7 +1,7 @@
 #include "Graphics/Cube.hh"
 #include <iostream>
 
-Graphics::Cube::Cube(Position const & position, Block const * block, gdl::Texture* texture)
+Graphics::Cube::Cube(Position<> const & position, Block const * block, gdl::Texture* texture)
 	: Object(position), _block(block), _texture(texture)
 {
 }

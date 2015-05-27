@@ -81,7 +81,7 @@ namespace IA
 
 		private:
 			std::vector<std::vector<Area> > _strategyMap;
-			std::list<Position>             _escapeNodes;
+			std::list<Position<> >             _escapeNodes;
 			Character*						_self;
 			const Level*					_level;
 	};
@@ -219,7 +219,7 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
                             std::cout << ". extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                          _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
-                         _escapeNodes.push_back(Position(currentX + searchX[i], currentY + searchY[i]));
+                         _escapeNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
                     }
                 }
              i++;
@@ -257,27 +257,27 @@ void IA::IA<T>::scanMap()
 		y++;
 	}
 	y = 0;
-	std::map<Position, std::list<Character*> > players = _level->characters();
-	for (std::map<Position, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
+	std::map<Position<>, std::list<Character*> > players = _level->characters();
+	for (std::map<Position<>, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
 	{
 		x = 0;
 		for (std::list<Character*>::iterator j = i->second.begin(); j != i->second.end(); ++j)
 		{
 			Character* c = *j;
-			Position posPlayer = c->position();
+			Position<> posPlayer = c->position();
 			_strategyMap[posPlayer.y()][posPlayer.x()].incEnemy();
 			x++;
 		}
 		y++;
 	}
-	std::map<Position, std::list<Bomb*> > bombs = _level->bombs();
+	std::map<Position<>, std::list<Bomb*> > bombs = _level->bombs();
 	y = 0;
-	for (std::map<Position, std::list<Bomb*> >::iterator it = bombs.begin(); it != bombs.end(); ++it)
+	for (std::map<Position<>, std::list<Bomb*> >::iterator it = bombs.begin(); it != bombs.end(); ++it)
 	{
 		x = 0;
 		for (std::list<Bomb*>::iterator i = it->second.begin(); i != it->second.end(); ++i)
 		{
-			Position p = (*i)->position();       //postion bombe
+			Position<> p = (*i)->position();       //postion bombe
 			_strategyMap[p.y()][p.x()].setBomb(true);
 			_strategyMap[p.y()][p.x()].setExplosion(true);
 			for (int i = 0; i < 8; i++)
@@ -370,7 +370,7 @@ Character::Action IA::IA<T>::escapeBomb()
             {
             counter++; //Debug
             _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
-            _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
+            _escapeNodes.push_back(Position<>(myX + searchX[i], myY + searchY[i]));
             }
         }
         i++;
@@ -443,7 +443,7 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
                             std::cout << ". Extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                         _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
-                        _escapeNodes.push_back(Position(currentX + searchX[i], currentY + searchY[i]));
+                        _escapeNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
                     }
                 }
              i++;
@@ -457,7 +457,7 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
 template<IA::Difficulty T>
 bool IA::IA<T>::BombDetection()
 {
-    Position currentPosition = _self->position();
+    Position<> currentPosition = _self->position();
     Area a = _strategyMap[currentPosition.y()][currentPosition.x()];
 
     if (a.bomb() || a.explosion())
@@ -579,7 +579,7 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
                             std::cout << ". Extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                          _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
-                         _escapeNodes.push_back(Position(currentX + searchX[i], currentY + searchY[i]));
+                         _escapeNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
                     }
                 }
              i++;

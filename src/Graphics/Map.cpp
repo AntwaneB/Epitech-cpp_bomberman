@@ -47,20 +47,20 @@ bool Graphics::Map::initialize()
 			{
 				if (_map->map()[y][x]->texture() == "./libgdl/assets/rock.tga")
 				{
-					Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
+					Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 					cube->initialize();
 					line.push_back(cube);
 				}
 				else if (_map->map()[y][x]->texture() == "./libgdl/assets/wood.tga")
 				{
-					Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
+					Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 					cube->initialize();
 					line.push_back(cube);
 				}
 			}
 			else if (!_map->map()[y][x]->visible())
 			{
-				Object *cube = new Cube(Position(x, y, 1), _map->map()[y][x], loadTexture("./libgdl/assets/sand.tga"));
+				Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture("./libgdl/assets/sand.tga"));
 				cube->initialize();
 				line.push_back(cube);
 			}
@@ -69,7 +69,7 @@ bool Graphics::Map::initialize()
 		_blocks.push_back(line);
 	}
 
-	_ground = new Ground(Position((_map->width() - 1) / 2, (_map->height() - 1) / 2, 0.4));
+	_ground = new Ground(Position<>((_map->width() - 1) / 2, (_map->height() - 1) / 2, 0.4));
 	if (_ground->initialize() == false)
 		return (false);
 	return (true);
@@ -90,5 +90,5 @@ void Graphics::Map::draw(gdl::AShader &shader, gdl::Clock const &clock)
 	for (unsigned int y = 0; y < _blocks.size(); y++)
 		for (unsigned int x = 0; x < _blocks[y].size(); x++)
 			if (_blocks[y][x])
-				_blocks[y][x]->draw(shader, clock);	
+				_blocks[y][x]->draw(shader, clock);
 }

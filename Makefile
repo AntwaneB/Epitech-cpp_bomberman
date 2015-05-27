@@ -25,7 +25,6 @@ SRCS		  =  main.cpp \
 		     Level.cpp \
 		     Character.cpp \
 		     Map.cpp \
-		     Position.cpp \
 		     Item.cpp \
 		     Bomb.cpp \
 		     Block.cpp \

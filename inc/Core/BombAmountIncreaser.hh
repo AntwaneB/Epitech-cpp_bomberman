@@ -14,7 +14,7 @@
 class BombAmountIncreaser : public BonusItem
 {
 public:
-	BombAmountIncreaser(Position const &);
+	BombAmountIncreaser(Position<> const &);
 	virtual ~BombAmountIncreaser();
 
 	virtual void applyEffect(Character*);

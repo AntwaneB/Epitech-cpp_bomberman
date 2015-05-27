@@ -15,7 +15,7 @@ namespace Graphics
 	class Object
 	{
 	public:
-		Object(Position const &);
+		Object(Position<> const &);
 		virtual ~Object();
 
 		virtual bool initialize();
@@ -23,13 +23,13 @@ namespace Graphics
 		virtual void draw(gdl::AShader &shader, gdl::Clock const &clock) = 0;
 
 		void translate(glm::vec3 const &v);
-		void translate(Position const &v);
+		void translate(Position<> const &v);
 		void rotate(glm::vec3 const& axis, float angle);
 		void scale(glm::vec3 const& scale);
 		glm::mat4 getTransformation();
 
 	protected:
-		Position		_position;
+		Position<>	_position;
 		glm::vec3	_rotation;
 		glm::vec3	_scale;
 	};

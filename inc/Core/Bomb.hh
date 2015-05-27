@@ -17,11 +17,11 @@
 class Bomb : public EventHandler<Bomb>, public Subject, public Item
 {
 public:
-	Bomb(Position const &, size_t, double, const Character*);
+	Bomb(Position<> const &, size_t, double, const Character*);
 	virtual ~Bomb();
 
-	void	setHitbox(std::vector<Position> const &);
-	bool	hasHit(Position const &) const;
+	void	setHitbox(std::vector<Position<> > const &);
+	bool	hasHit(Position<> const &) const;
 
 	size_t	range() const;
 	char		progress() const;
@@ -38,8 +38,8 @@ private:
 	double				_duration;
 	const Character*	_owner;
 
-	std::vector<Position>	_hitbox;
-	char							_progress;
+	std::vector<Position<> >	_hitbox;
+	char								_progress;
 };
 
 #endif	/* BOMB_HH */

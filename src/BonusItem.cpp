@@ -11,7 +11,7 @@
 #include "Core/SpeedIncreaser.hh"
 #include "Core/BombAmountIncreaser.hh"
 
-BonusItem::BonusItem(Position const & position, Type type)
+BonusItem::BonusItem(Position<> const & position, Type type)
 	: Item(position, type)
 {
 }
@@ -21,13 +21,13 @@ BonusItem::~BonusItem()
 }
 
 BonusItem*
-BonusItem::factory(Item::Type type, Position const & position)
+BonusItem::factory(Item::Type type, Position<> const & position)
 {
-	std::map<BonusItem::Type, BonusItem* (*)(Position const &)> _factories =
+	std::map<BonusItem::Type, BonusItem* (*)(Position<> const &)> _factories =
 	{
-		{ RANGE_INCREASER, [](Position const & position) -> BonusItem* { return (new RangeIncreaser(position)); } },
-		{ SPEED_INCREASER, [](Position const & position) -> BonusItem* { return (new SpeedIncreaser(position)); } },
-		{ BOMB_AMOUNT_INCREASER, [](Position const & position) -> BonusItem* { return (new BombAmountIncreaser(position)); } },
+		{ RANGE_INCREASER, [](Position<> const & position) -> BonusItem* { return (new RangeIncreaser(position)); } },
+		{ SPEED_INCREASER, [](Position<> const & position) -> BonusItem* { return (new SpeedIncreaser(position)); } },
+		{ BOMB_AMOUNT_INCREASER, [](Position<> const & position) -> BonusItem* { return (new BombAmountIncreaser(position)); } },
 	};
 
 	auto it = _factories.find(type);

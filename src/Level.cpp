@@ -72,7 +72,7 @@ Level::charactersCount() const
 	return (_characters.size());
 }
 
-std::map<Position, std::list<Character*> > const &
+std::map<Position<>, std::list<Character*> > const &
 Level::characters() const
 {
 	return (_characters);
@@ -87,22 +87,22 @@ Level::players() const
 std::vector<Character*> const
 Level::charactersRaw() const
 {
-	return (StdHelper::flatten<Character*, Position>(_characters));
+	return (StdHelper::flatten<Character*, Position<> >(_characters));
 }
 
 std::vector<Bomb*> const
 Level::bombsRaw() const
 {
-	return (StdHelper::flatten<Bomb*, Position>(_bombs));
+	return (StdHelper::flatten<Bomb*, Position<>>(_bombs));
 }
 
 std::vector<BonusItem*> const
 Level::itemsRaw() const
 {
-	return (StdHelper::flatten<BonusItem*, Position>(_items));
+	return (StdHelper::flatten<BonusItem*, Position<> >(_items));
 }
 
-std::map<Position, std::list<Bomb *> > const &
+std::map<Position<>, std::list<Bomb *> > const &
 Level::bombs() const
 {
 	return _bombs;
@@ -218,7 +218,7 @@ Level::pushCharacter()
 	character->addObserver(this);
 
 	_scores.push_back(character);
-	_characters[Position(charX, charY)].push_back(character);
+	_characters[Position<>(charX, charY)].push_back(character);
 	if (isPlayer)
 		_players.push_back(character);
 
@@ -319,10 +319,10 @@ Level::bombExploded(Subject* entity)
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
 	/* Setting hitbox for the bomb */
-	std::vector<Position> hitbox;
+	std::vector<Position<>> hitbox;
 	size_t	range = bomb->range();
 
-	Position explosion = bomb->position();
+	Position<> explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
 	{
 		explosion.decY();
@@ -422,14 +422,14 @@ Level::toConfig(Config & cfg) const
 	index = 0;
 	cfg["charactersCount"] = _charactersCount;
 	cfg["timeSpend"] = _clock.seconds();
-	for (std::map<Position, std::list<Character*>>::const_iterator it = _characters.begin(); it != _characters.end(); it++)
+	for (std::map<Position<>, std::list<Character*>>::const_iterator it = _characters.begin(); it != _characters.end(); it++)
 		for (std::list<Character*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++)
 			(*it)->toConfig(cfg["characters"]);
-	for (std::map<Position, std::list<Bomb*>>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++)
+	for (std::map<Position<>, std::list<Bomb*>>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++)
 		for (std::list<Bomb*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
 			(*it)->toConfig(cfg["bombs"][index]);
 	index = 0;
-	for (std::map<Position, std::list<Item*>>::const_iterator it = _items.begin(); it != _items.end(); it++)
+	for (std::map<Position<>, std::list<Item*>>::const_iterator it = _items.begin(); it != _items.end(); it++)
 		for (std::list<Item*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
 			(*it)->toConfig(cfg["items"][index]);
 }

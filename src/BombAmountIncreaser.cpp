@@ -9,7 +9,7 @@
 #include "Core/BombAmountIncreaser.hh"
 #include "Core/Clock.hh"
 
-BombAmountIncreaser::BombAmountIncreaser(Position const & position)
+BombAmountIncreaser::BombAmountIncreaser(Position<> const & position)
 	: BonusItem(position, Item::BOMB_AMOUNT_INCREASER)
 {
 	_attributes = g_settings["entities"]["bonus_item"]["bomb_amount_increase"];

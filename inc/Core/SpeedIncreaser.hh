@@ -14,7 +14,7 @@
 class SpeedIncreaser : public BonusItem
 {
 public:
-	SpeedIncreaser(Position const &);
+	SpeedIncreaser(Position<> const &);
 	virtual ~SpeedIncreaser();
 
 	virtual void applyEffect(Character*);

@@ -15,16 +15,16 @@
 class Block : public EventHandler<Block>, public Subject
 {
 public:
-	Block(Position const & position, std::string const & type);
+	Block(Position<> const & position, std::string const & type);
 	virtual ~Block();
 
-	Position		position() const;
+	Position<>	position() const;
 	bool			destructible() const;
 	bool			visible() const;
 	bool			solid() const;
 	bool			blockBombs() const;
 	std::string	texture() const;
-	void 			setBlockBombs(bool);
+	void			setBlockBombs(bool);
 	void			setVisible(bool);
 
 private:
@@ -32,7 +32,7 @@ private:
 	void bombExploded(Subject* entity);
 
 private:
-	Position		_position;
+	Position<>	_position;
 	std::string	_type;
 	Config		_attributes;
 	int			_elapsedTime;
@@ -41,7 +41,7 @@ private:
 	bool			_destructible;
 	bool			_solid;
 	bool			_blockBombs;
-	std::string _texture;
+	std::string	_texture;
 };
 
 #endif	/* BLOCK_HH */

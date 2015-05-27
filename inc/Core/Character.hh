@@ -33,14 +33,14 @@ public:
 	Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z = 0);
 	virtual ~Character();
 
-	Position	position() const;
-	Position	prevPosition() const;
-	Config&	attributes();
-	bool		alive() const;
-	size_t	score() const;
-	void		changeScore(int);
-	const Bomb*		killedBy() const;
-	bool		isPlayer() const;
+	Position<double>	position() const;
+	Position<double>	prevPosition() const;
+	Config&				attributes();
+	bool					alive() const;
+	size_t				score() const;
+	void					changeScore(int);
+	const Bomb*			killedBy() const;
+	bool					isPlayer() const;
 
 	void		clearActions();
 	void		pushAction(Character::Action);
@@ -59,8 +59,8 @@ private:
 	const Level*			_level;
 	size_t					_nth;
 	bool						_isPlayer;
-	Position					_position;
-	Position					_prevPosition;
+	Position<double>		_position;
+	Position<double>		_prevPosition;
 	Config					_attributes;
 	bool						_solid;
 	bool						_alive;

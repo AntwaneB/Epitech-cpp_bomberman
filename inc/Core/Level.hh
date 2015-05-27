@@ -30,9 +30,9 @@ public:
 	Map const &		map() const;
 	size_t			charactersCount() const;
 
-	std::map<Position, std::list<Character*> > const &	characters() const;
-	std::map<Position, std::list<Bomb*> > const &		bombs() const;
-	std::map<Position, std::list<Item*> > const &		items() const;
+	std::map<Position<>, std::list<Character*> > const &	characters() const;
+	std::map<Position<>, std::list<Bomb*> > const &		bombs() const;
+	std::map<Position<>, std::list<Item*> > const &		items() const;
 	std::list<Character*> const &						players() const;
 	std::vector<Character*> const charactersRaw() const;
 	std::vector<Bomb*>		const bombsRaw() const;
@@ -64,10 +64,10 @@ private:
 
 	private:
 	Map														_map;
-	std::map<Position, std::list<Character*> >	_characters;
+	std::map<Position<>, std::list<Character*> >	_characters;
 	std::list<Character*>								_players;
-	std::map<Position, std::list<Bomb*> >			_bombs;
-	std::map<Position, std::list<BonusItem*> >	_items;
+	std::map<Position<>, std::list<Bomb*> >		_bombs;
+	std::map<Position<>, std::list<BonusItem*> >	_items;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;

@@ -18,7 +18,7 @@ namespace Graphics
 	class Cube : public Object
 	{
 		public:
-			Cube(Position const &, Block const *, gdl::Texture*);
+			Cube(Position<> const &, Block const *, gdl::Texture*);
 			virtual ~Cube();
 
 			virtual bool initialize();

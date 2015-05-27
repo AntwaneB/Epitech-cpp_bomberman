@@ -9,7 +9,7 @@
 #include "Core/Block.hh"
 #include "Core/Bomb.hh"
 
-Block::Block(Position const & position, std::string const & type)
+Block::Block(Position<> const & position, std::string const & type)
 	: _position(position), _type(type), _elapsedTime(0)
 {
 	_actions[CLOCK_TICK] = &Block::tick;
@@ -27,7 +27,7 @@ Block::~Block()
 {
 }
 
-Position
+Position<>
 Block::position() const
 {
 	return (_position);

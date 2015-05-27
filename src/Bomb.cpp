@@ -8,7 +8,7 @@
 #include "global.hh"
 #include "Core/Bomb.hh"
 
-Bomb::Bomb(Position const & position, size_t range, double duration, const Character* owner)
+Bomb::Bomb(Position<> const & position, size_t range, double duration, const Character* owner)
 	: Item(position), _range(range), _duration(duration), _owner(owner), _progress(0)
 {
 	_actions[CLOCK_TICK] = &Bomb::tick;
@@ -21,13 +21,13 @@ Bomb::~Bomb()
 }
 
 bool
-Bomb::hasHit(Position const & position) const
+Bomb::hasHit(Position<> const & position) const
 {
 	return (std::find(_hitbox.begin(), _hitbox.end(), position) != _hitbox.end());
 }
 
 void
-Bomb::setHitbox(std::vector<Position> const & hitbox)
+Bomb::setHitbox(std::vector<Position<> > const & hitbox)
 {
 	_hitbox = hitbox;
 }

@@ -35,13 +35,13 @@ Character::~Character()
 		delete _ia;
 }
 
-Position
+Position<double>
 Character::position() const
 {
 	return (_position);
 }
 
-Position
+Position<double>
 Character::prevPosition() const
 {
 	return (_prevPosition);
@@ -98,12 +98,25 @@ Character::tick(Subject* entity)
 		if (_ia && !_isPlayer)
 			_ia->playTurn();
 
+		/*
 		if (_queuedActions.size() > 0
 			&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
 			 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
 			&& _attributes["can_move"] == true
 			&& _attributes["speed"] != 0
 			&& _elapsedTime % (1000 / static_cast<int>(_attributes["speed"])) == 0)
+		{ // Triggering movement
+			Character::Action movement = _queuedActions.front();
+			_queuedActions.pop();
+
+			this->move(movement);
+		}
+		*/
+		if (_queuedActions.size() > 0
+			&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
+			 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
+			&& _attributes["can_move"] == true
+			&& _attributes["speed"] != 0)
 		{ // Triggering movement
 			Character::Action movement = _queuedActions.front();
 			_queuedActions.pop();
@@ -165,42 +178,45 @@ Character::keyPressed(Subject* entity)
 void
 Character::move(Character::Action action)
 {
-	Position tmp = _position;
+	Position<double> tmp = _position;
+
+	double step = static_cast<int>(_attributes["speed"]) / 1000.0;
+
 	switch (action)
 	{
 		case Character::MOVE_DOWN:
-			tmp.incY();
+			tmp.incY(step);
 			break;
 		case Character::MOVE_UP:
-			tmp.decY();
+			tmp.decY(step);
 			break;
 		case Character::MOVE_LEFT:
-			tmp.decX();
+			tmp.decX(step);
 			break;
 		case Character::MOVE_RIGHT:
-			tmp.incX();
+			tmp.incX(step);
 			break;
 		default:
 			break;
 	}
 
 	auto bombs = _level->bombs();
-	if ((_level->map().at(tmp)->solid() == false && bombs[tmp].empty()) || _solid == false)
+	if ((_level->map().at(tmp)->solid() == false && (bombs[tmp].empty() || tmp.asInt() == _position.asInt())) || _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
 		_prevPosition = _position;
 		switch (action)
 		{
 			case Character::MOVE_DOWN:
-				_position.incY();
+				_position.incY(step);
 				break;
 			case Character::MOVE_UP:
-				_position.decY();
+				_position.decY(step);
 				break;
 			case Character::MOVE_LEFT:
-				_position.decX();
+				_position.decX(step);
 				break;
 			case Character::MOVE_RIGHT:
-				_position.incX();
+				_position.incX(step);
 				break;
 			default:
 				break;
@@ -216,7 +232,7 @@ Character::dropBomb()
 	double duration = g_settings["entities"]["bomb"]["duration"];
 	double duration_modifier = _attributes["bombs"]["duration_modifier"];
 
-	Bomb* bomb = new Bomb(_position, range, duration * duration_modifier, this);
+	Bomb* bomb = new Bomb(_position.asInt(), range, duration * duration_modifier, this);
 
 	_bombs.push_back(bomb);
 

@@ -31,7 +31,7 @@ public:
 	size_t	width() const;
 	size_t	height() const;
 	std::vector<std::vector<Block*> > const & map() const;
-	Block*	at(Position const &) const;
+	Block*	at(Position<int> const &) const;
 
 private:
 	void	loadFromFile(const std::string &);
@@ -42,7 +42,7 @@ private:
 	void	setDestructible();
 
 	void	bindBlocks();
-	void	replaceAt(Position const &, Block*);
+	void	replaceAt(Position<int> const &, Block*);
 
 private:
 	void	bombExploded(Subject*);

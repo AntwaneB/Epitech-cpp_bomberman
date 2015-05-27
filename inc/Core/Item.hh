@@ -19,17 +19,17 @@ public:
 	enum Type { RANGE_INCREASER, SPEED_INCREASER, BOMB_AMOUNT_INCREASER, last };
 
 public:
-	Item(Position const &, Type type = last);
+	Item(Position<> const &, Type type = last);
 	virtual ~Item() = 0;
 
 	Type		type() const;
-	Position	position() const;
-	Position	prevPosition() const;
+	Position<>	position() const;
+	Position<>	prevPosition() const;
 	void		toConfig(Config &) const;
 
 protected:
-	Position		_position;
-	Position		_prevPosition;
+	Position<>		_position;
+	Position<>		_prevPosition;
 	Type			_type;
 
 	bool			_clockInit;

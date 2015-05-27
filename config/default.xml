@@ -25,7 +25,7 @@
 	<entities>
 		<entity name="character">
 			<param name="visible">true</param>
-			<param name="speed">180</param>
+			<param name="speed">300</param>
 			<param name="can_move">true</param>
 			<param name="destructible">true</param>
 			<param name="collision">true</param>

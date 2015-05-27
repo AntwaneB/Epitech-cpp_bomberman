@@ -14,7 +14,7 @@
 class RangeIncreaser : public BonusItem
 {
 public:
-	RangeIncreaser(Position const &);
+	RangeIncreaser(Position<> const &);
 	virtual ~RangeIncreaser();
 
 	virtual void applyEffect(Character*);

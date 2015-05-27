@@ -210,7 +210,7 @@ namespace IA
 			{
 				 counter++;
 				 _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
-				 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
+				 _escapeNodes.push_back(Position<>(myX + searchX[i], myY + searchY[i]));
 			}
 		}
 		if (VERBOSE)
@@ -241,7 +241,7 @@ namespace IA
 					}
 					 counter++;
 					 _strategyMap[myY + searchY[i]][myX + searchX[i]].setDirection(searchActions[i]);
-					 _escapeNodes.push_back(Position(myX + searchX[i], myY + searchY[i]));
+					 _escapeNodes.push_back(Position<>(myX + searchX[i], myY + searchY[i]));
 				}
 	 		}
 	 		if (VERBOSE)

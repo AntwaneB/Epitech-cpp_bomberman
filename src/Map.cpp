@@ -52,7 +52,7 @@ Map::height() const
 }
 
 Block*
-Map::at(const Position& position) const
+Map::at(const Position<>& position) const
 {
 	return (this->_map[position.y()][position.x()]);
 }
@@ -94,7 +94,7 @@ Map::blockDestroyed(Subject* entity)
 }
 
 void
-Map::replaceAt(const Position& position, Block* block)
+Map::replaceAt(const Position<>& position, Block* block)
 {
 	Block* toRemove = _map[position.y()][position.x()];
 
@@ -109,13 +109,13 @@ Map::pushCharacter(const Character* character)
 	Block* block = _map[character->position().y()][character->position().x()];
 
 	if (block->solid() || block->visible())
-		this->replaceAt(Position(character->position().x(), character->position().y()), new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
+		this->replaceAt(Position<>(character->position().x(), character->position().y()), new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
 
-	std::map<std::pair<Position, Position>, bool> freePath;
-	Position up(character->position().x(), character->position().y() - 1);
-	Position down(character->position().x(), character->position().y() + 1);
-	Position left(character->position().x() - 1, character->position().y());
-	Position right(character->position().x() + 1, character->position().y());
+	std::map<std::pair<Position<>, Position<> >, bool> freePath;
+	Position<> up(character->position().x(), character->position().y() - 1);
+	Position<> down(character->position().x(), character->position().y() + 1);
+	Position<> left(character->position().x() - 1, character->position().y());
+	Position<> right(character->position().x() + 1, character->position().y());
 
 	if (up.y() > 0 && right.x() < (int)_width - 1)
 		freePath[{ up, right }] = false;
@@ -139,8 +139,8 @@ Map::pushCharacter(const Character* character)
 
 	if (count == 0)
 	{
-		Position first = (*(freePath.begin())).first.first;
-		Position second = (*(freePath.begin())).first.second;
+		Position<> first = (*(freePath.begin())).first.first;
+		Position<> second = (*(freePath.begin())).first.second;
 
 		this->replaceAt(first, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
 		this->replaceAt(second, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
@@ -164,13 +164,13 @@ Map::setBorders()
 {
 	for (size_t y = 1; y < _height - 1; ++y)
 	{
-		_map[y][0] = new Block(Position(0, y), g_settings["maps"]["default_blocks"]["wall"]);
-		_map[y][_width - 1] = new Block(Position(_width - 1, y), g_settings["maps"]["default_blocks"]["wall"]);
+		_map[y][0] = new Block(Position<>(0, y), g_settings["maps"]["default_blocks"]["wall"]);
+		_map[y][_width - 1] = new Block(Position<>(_width - 1, y), g_settings["maps"]["default_blocks"]["wall"]);
 	}
 	for (size_t x = 0; x < _width; ++x)
 	{
-		_map[0][x] = new Block(Position(x, 0), g_settings["maps"]["default_blocks"]["wall"]);
-		_map[_height - 1][x] = new Block(Position(x, _height - 1), g_settings["maps"]["default_blocks"]["wall"]);
+		_map[0][x] = new Block(Position<>(x, 0), g_settings["maps"]["default_blocks"]["wall"]);
+		_map[_height - 1][x] = new Block(Position<>(x, _height - 1), g_settings["maps"]["default_blocks"]["wall"]);
 	}
 }
 
@@ -182,7 +182,7 @@ Map::setSolid()
 		for (size_t x = 2; x < _width - 1; x += 2)
 		{
 			if (y % 2 == 0 && x % 2 == 0)
-				_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["wall"]);
+				_map[y][x] = new Block(Position<>(x, y), g_settings["maps"]["default_blocks"]["wall"]);
 		}
 	}
 }
@@ -197,9 +197,9 @@ Map::setDestructible()
 			if (_map[y][x] == NULL)
 			{
 				if (rand() % 100 < 75)
-					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["box"]);
+					_map[y][x] = new Block(Position<>(x, y), g_settings["maps"]["default_blocks"]["box"]);
 				else
-					_map[y][x] = new Block(Position(x, y), g_settings["maps"]["default_blocks"]["void"]);
+					_map[y][x] = new Block(Position<>(x, y), g_settings["maps"]["default_blocks"]["void"]);
 			}
 		}
 	}
@@ -240,7 +240,7 @@ Map::loadFromFile(const std::string & mapFile)
 			for (pugi::xml_node block = row.child("case"); block; block = block.next_sibling("case"))
 			{
 				std::string entity = block.attribute("entity").value();
-				_map[y][x] = new Block(Position(x, y), entity);
+				_map[y][x] = new Block(Position<>(x, y), entity);
 				x++;
 			}
 			y++;
