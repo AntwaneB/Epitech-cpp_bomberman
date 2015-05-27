@@ -21,18 +21,13 @@ public:
 
 	void		save(void) const;
 
-	Config&		getConfig(void);
+	Config&	layout(void);
 
 private:
 	void		keyPressed(Subject*);
-	// Config&		getArrow(void);
-	// Config&		getCurrent(void);
-	// Config&		getPrev(Config&);
-	// Config&		getNext(Config&);
-	// Config&		getLast(void);
 
 private:
-	Config			_cfg;
+	Config			_layout;
 	std::string		_filename;
 
 };

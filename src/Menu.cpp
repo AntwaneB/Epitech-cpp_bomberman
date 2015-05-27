@@ -10,12 +10,13 @@
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
 
-Menu::Menu(const std::string & filename) : _filename(filename)
+Menu::Menu(const std::string & filename)
+	: _filename(filename)
 {
-	_cfg.importFile(_filename);
 	_actions[KEY_PRESSED] = &Menu::keyPressed;
 
-	if (_cfg["content"].isEmpty())
+	_layout.importFile(_filename);
+	if (_layout["content"].isEmpty())
 		throw ConfigException("File " + filename + " is not valid");
 }
 
@@ -26,7 +27,7 @@ Menu::~Menu()
 void
 Menu::save(void) const
 {
-	_cfg.exportFile(_filename);
+	_layout.exportFile(_filename);
 }
 
 void
@@ -71,6 +72,13 @@ Menu::keyPressed(Subject* entity)
 		}
 	}
 }
+
+Config&
+Menu::layout(void)
+{
+	return _layout;
+}
+
 /*
 Config&
 Menu::getArrow(void)
@@ -142,8 +150,3 @@ Menu::getLast(void)
 	return (*tmp);
 }
 */
-Config&
-Menu::getConfig(void)
-{
-	return _cfg;
-}

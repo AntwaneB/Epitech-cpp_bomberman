@@ -18,20 +18,32 @@
 
 namespace Graphics
 {
-	class Menu
+	class Menu : public EventHandler<Graphics::Menu>, public Subject
 	{
 	public:
-		Menu(::Menu*);
+		Menu();
 		virtual ~Menu();
-		void	NewGame();
-		void	update(int, int);
+
+		void	init(::Menu *);
+		void	run();
+		void	update();
+		void	draw();
 
 	private:
 		sf::RenderWindow	_window;
 
-		::Menu*				_menu;
+		::Menu*			_menu;
 
 		//Textures
+		sf::Texture		_assetsTexture;
+		sf::Texture		_backgroundTexture;
+
+		//Sprite
+		std::list<sf::Sprite>	_sprites;
+		sf::Sprite					_background;
+		sf::Sprite					_cursor;
+
+		/*
 		sf::Texture 	_tassets;
 		sf::Texture		_tBackground;
 		sf::Texture		_tSubBackground;
@@ -46,7 +58,7 @@ namespace Graphics
 		sf::Sprite		_exit;
 		sf::Sprite		_quote;
 		sf::Sprite		_rya;
-
+		*/
 	};
 };
 #endif	/* MENU_HH */

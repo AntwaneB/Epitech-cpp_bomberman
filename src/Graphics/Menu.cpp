@@ -9,33 +9,10 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
-void
-Graphics::Menu::NewGame()
+Graphics::Menu::Menu()
+	: _menu(NULL)
 {
-	std::cout << "COUCOU" << std::endl;
-	_window.clear();
-	_tSubBackground.loadFromFile("./assets/bomber.png");
-	_subBackground.setTexture(_tSubBackground);
-	_subBackground.setScale(0.5f, 0.5f);
-	_window.draw(_subBackground);
-	std::cout << "COUCOU" << std::endl;
-	sf::Event event;
-
-	while (_window.isOpen())
-	{
-		while (_window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				exit(EXIT_SUCCESS);
-				_window.close();
-			}
-		}
-	}
-}
-
-Graphics::Menu::Menu(::Menu* menu)
-{
+	/*
 	Config	cfg;
 
 	cfg = menu->getConfig();
@@ -98,13 +75,12 @@ Graphics::Menu::Menu(::Menu* menu)
 	_rya.setScale(cfg["arrow"]["asset"]["scale"]["x"], cfg["arrow"]["asset"]["scale"]["y"]);
 	_rya.setPosition(cfg["arrow"]["asset"]["position"]["x"], cfg["arrow"]["asset"]["position"]["y"]);
 
-	//content (TODO)
-	/*Config	items;
-	items = cfg["content"];
-	for (auto it = items.begin(); it != items.end(); ++it)
-	{
-
-	}*/
+	//Config	items;
+	//	items = cfg["content"];
+	//for (auto it = items.begin(); it != items.end(); ++it)
+	//{
+	//
+	//}
 	int x = cfg["arrow"]["asset"]["position"]["x"];
 	int y = cfg["arrow"]["asset"]["position"]["y"];
 
@@ -132,16 +108,16 @@ Graphics::Menu::Menu(::Menu* menu)
 			else if(event.type == sf::Event::KeyPressed)
 			{
 				if(event.key.code == sf::Keyboard::Down)
-				{ 
+				{
                 //	this->notify(this, KEY_PRESSED_P1_DOWN);
 					if (y >= 488)
 						y = 338;
 					else
 						y += 50;
-					update(x, y);   
+					update(x, y);
 				}
 				else if(event.key.code == sf::Keyboard::Up)
-				{ 
+				{
 					if (y <= 338)
 						y = 488;
 					else
@@ -163,7 +139,115 @@ Graphics::Menu::Menu(::Menu* menu)
 			}
 		}
 	}
+	*/
 }
+
+Graphics::Menu::~Menu()
+{
+	_sprites.clear();
+	_window.close();
+}
+
+void
+Graphics::Menu::init(::Menu* menu)
+{
+	_menu = menu;
+
+	_window.create(sf::VideoMode(_menu->layout()["size"]["x"], _menu->layout()["size"]["y"]), std::string(_menu->layout()["title"]));
+
+	// Screen background
+	_backgroundTexture.loadFromFile(_menu->layout()["background"]["location"]);
+	_background.setTexture(_backgroundTexture);
+	_background.setScale(_menu->layout()["background"]["scale"]["x"], _menu->layout()["background"]["scale"]["y"]);
+
+	// Text and buttons assets
+	_assetsTexture.loadFromFile(_menu->layout()["assets"]["location"]);
+
+	_cursor.setTexture(_assetsTexture);
+	_cursor.setTextureRect(sf::IntRect(_menu->layout()["cursor"]["asset"]["texture"]["start_x"], _menu->layout()["cursor"]["asset"]["texture"]["start_y"], _menu->layout()["cursor"]["asset"]["texture"]["end_x"], _menu->layout()["cursor"]["asset"]["texture"]["end_y"]));
+	_cursor.setScale(_menu->layout()["cursor"]["asset"]["scale"]["x"], _menu->layout()["cursor"]["asset"]["scale"]["y"]);
+
+	_sprites.clear();
+	for (auto it = _menu->layout()["content"].begin(); it != _menu->layout()["content"].end(); ++it)
+	{
+		Config::Param& param = it->second;
+
+		sf::Sprite sprite;
+		sprite.setTexture(_assetsTexture);
+		sprite.setTextureRect(sf::IntRect(param["asset"]["texture"]["start_x"], param["asset"]["texture"]["start_y"], param["asset"]["texture"]["end_x"], param["asset"]["texture"]["end_y"]));
+		sprite.setScale(param["asset"]["scale"]["x"], param["asset"]["scale"]["y"]);
+		sprite.setPosition(param["asset"]["position"]["x"], param["asset"]["position"]["y"]);
+		_sprites.push_back(sprite);
+
+		if (param["selected"] == true)
+		{
+			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
+		}
+	}
+}
+
+void
+Graphics::Menu::run()
+{
+	while (_window.isOpen())
+	{
+		this->draw();
+		sf::Event event;
+		while (_window.pollEvent(event))
+		{
+
+		}
+	}
+}
+
+void
+Graphics::Menu::update()
+{
+}
+
+void
+Graphics::Menu::draw()
+{
+	_window.clear();
+
+	_window.draw(_background);
+	_window.draw(_cursor);
+
+	for (auto it = _sprites.begin(); it != _sprites.end(); ++it)
+	{
+		_window.draw(*it);
+	}
+
+	_window.display();
+}
+
+/*
+void
+Graphics::Menu::NewGame()
+{
+	std::cout << "COUCOU" << std::endl;
+	_window.clear();
+	_tSubBackground.loadFromFile("./assets/bomber.png");
+	_subBackground.setTexture(_tSubBackground);
+	_subBackground.setScale(0.5f, 0.5f);
+	_window.draw(_subBackground);
+	std::cout << "COUCOU" << std::endl;
+	sf::Event event;
+
+	while (_window.isOpen())
+	{
+		while (_window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				exit(EXIT_SUCCESS);
+				_window.close();
+			}
+		}
+	}
+}
+*/
+
 /*
 Graphics::Menu::Menu()
 {
@@ -238,16 +322,16 @@ Graphics::Menu::Menu()
             else if(event.type == sf::Event::KeyPressed)
              {
                 if(event.key.code == sf::Keyboard::Down)
-                { 
+                {
                 //	this->notify(this, KEY_PRESSED_P1_DOWN);
              		if (y >= 488)
             			y = 338;
             		else
             			y += 50;
-            		update(x, y);   
+            		update(x, y);
                 }
                 else if(event.key.code == sf::Keyboard::Up)
-                { 
+                {
              		if (y <= 338)
             			y = 488;
             		else
@@ -285,6 +369,7 @@ Graphics::Menu::initialize(::Menu* menu)
     }
 }*/
 
+/*
 void 		Graphics::Menu::update(int x, int y)
 {
 	_window.clear();
@@ -303,3 +388,4 @@ Graphics::Menu::~Menu()
 {
 	_window.close();
 }
+*/

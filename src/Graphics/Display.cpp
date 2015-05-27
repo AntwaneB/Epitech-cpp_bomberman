@@ -31,14 +31,23 @@ Graphics::Display::exitGame(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runMenu(Subject* entity)
 {
+	if (_level != NULL)
+	{
+		delete _level;
+		_level = NULL;
+	}
+
 	::Menu*	menu = safe_cast<::Menu*>(entity);
 
-	if (_menu != NULL)
+	if (_menu == NULL)
 	{
-		delete _menu;
-		_menu = NULL;
+		_menu = new Graphics::Menu();
+		_menu->addObserver(this);
+		_menu->addObserver(menu);
 	}
-	_menu = new Graphics::Menu(menu);
+
+	_menu->init(menu);
+	_menu->run();
 }
 
 void
@@ -47,18 +56,25 @@ Graphics::Display::updateMenu(Subject* entity)
 	::Menu*	menu = safe_cast<::Menu*>(entity);
 
 	(void)menu;
+	_menu->update();
 }
 
 void
 Graphics::Display::runLevel(Subject* entity)
 {
-	::Level*	level = safe_cast<::Level*>(entity);
-
+	if (_menu != NULL)
+	{
+		delete _menu;
+		_menu = NULL;
+	}
 	if (_level != NULL)
 	{
 		delete _level;
 		_level = NULL;
 	}
+
+	::Level*	level = safe_cast<::Level*>(entity);
+
 	_level = new Graphics::Level(level);
 	_level->addObserver(this);
 	_level->addObserver(level);

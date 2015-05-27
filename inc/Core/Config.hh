@@ -126,7 +126,7 @@ public:
 
 		bool											hasChild(void) const;
 
-		const std::string								toXML(void) const;
+		const std::string							toXML(void) const;
 
 	private:
 
