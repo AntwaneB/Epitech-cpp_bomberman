@@ -37,17 +37,6 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
-
-	/* Pushing a lot of elements to test graphical perfs
-	for (size_t y = 0; y < _map.height(); ++y)
-	{
-		for (size_t x = 0; x < _map.width(); ++x)
-		{
-			_items[Position(x, y)].push_back(new RangeIncreaser(Position(x, y)));
-			_bombs[Position(x, y)].push_back(new Bomb(Position(x, y), 2, 4, NULL));
-		}
-	}
-	*/
 }
 
 Level::~Level()
@@ -138,11 +127,7 @@ Level::end()
 	int i = y = 0;
 	for (auto it = _scores.begin(); it != _scores.end(); ++it)
 	{
-//		if ((*it)->isPlayer())
-		{
-			std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
-	//		i++;
-		}
+		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
 }
 
@@ -276,8 +261,13 @@ Level::characterDied(Subject* entity)
 	if (character->killedBy())
 	{
 		auto killer = std::find(_scores.begin(), _scores.end(), character->killedBy()->owner());
-		if (killer != _scores.end() && *killer != character)
-			(*killer)->changeScore(g_settings["scores"][_charactersKills == 0 ? "first_blood" : "character_kill"]);
+		if (killer != _scores.end())
+		{
+			if (*killer != character)
+				(*killer)->changeScore(g_settings["scores"][_charactersKills == 0 ? "first_blood" : "character_kill"]);
+			else
+				(*killer)->changeScore(g_settings["scores"]["self_kill"]);
+		}
 		_charactersKills++;
 	}
 }

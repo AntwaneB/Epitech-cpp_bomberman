@@ -183,7 +183,9 @@ Character::move(Character::Action action)
 		default:
 			break;
 	}
-	if (_level->map().at(tmp)->solid() == false || _solid == false)
+
+	auto bombs = _level->bombs();
+	if ((_level->map().at(tmp)->solid() == false && bombs[tmp].empty()) || _solid == false)
 	{ // The block where we want to move isn't solid
 		_prevPosition = _position;
 		switch (action)

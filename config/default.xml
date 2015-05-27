@@ -19,6 +19,7 @@
 		<param name="monster_kill">50</param>
 		<param name="item_picked">3</param>
 		<param name="second_elapsed">1</param>
+		<param name="self_kill">-150</param>
 	</scores>
 
 	<entities>
