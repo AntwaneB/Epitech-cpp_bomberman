@@ -37,7 +37,7 @@ public:
 	Position<double>	prevPosition() const;
 	Config&				attributes();
 	bool					alive() const;
-	size_t				score() const;
+	int					score() const;
 	void					changeScore(int);
 	const Bomb*			killedBy() const;
 	bool					isPlayer() const;
@@ -72,7 +72,7 @@ private:
 	std::queue<Action>	_queuedActions;
 	int						_elapsedTime;
 
-	size_t					_score;
+	int						_score;
 };
 
 #endif	/* CHARACTER_HPP */

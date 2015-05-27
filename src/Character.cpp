@@ -15,7 +15,9 @@
 #include "Core/Input.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _alive(true), _killedBy(NULL), _ia(NULL), _elapsedTime(-1)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z),
+	  _solid(true), _alive(true), _killedBy(NULL), _ia(NULL), _elapsedTime(-1),
+	  _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -59,7 +61,7 @@ Character::alive() const
 	return (_alive);
 }
 
-size_t
+int
 Character::score() const
 {
 	return (_score);
