@@ -40,9 +40,7 @@ void
 Menu::keyPressed(Subject* entity)
 {
 	Input*	input = safe_cast<Input*>(entity);
-//	Config	current;
 
-//	current = getCurrent();
 	switch (input->genericKey())
 	{
 		case (Input::UP):

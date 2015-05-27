@@ -17,6 +17,7 @@ public:
 	{
 		PAUSE = 0,
 		ESC,
+		ENTER,
 		KEYS_P1_START,
 		P1_UP,
 		P1_DOWN,
@@ -37,7 +38,6 @@ public:
 		LEFT,
 		RIGHT,
 		SPACE,
-		ENTER,
 		KEYS_GENERIC_END,
 		last
 	};

@@ -5,9 +5,10 @@
  * Created on May 6, 2015, 9:20 PM
  */
 
-#include "Graphics/Menu.hh"
-#include <SFML/Audio.hpp>
 #include <iostream>
+#include <SFML/Audio.hpp>
+#include "Graphics/Menu.hh"
+#include "Core/Input.hh"
 
 Graphics::Menu::Menu()
 	: _menu(NULL)
@@ -189,13 +190,35 @@ Graphics::Menu::init(::Menu* menu)
 void
 Graphics::Menu::run()
 {
+
+
 	while (_window.isOpen())
 	{
 		this->draw();
 		sf::Event event;
 		while (_window.pollEvent(event))
 		{
+			if (event.type == sf::Event::KeyPressed)
+			{
+				std::map<sf::Keyboard::Key, Input::Key> keys;
+				keys[sf::Keyboard::Up] = ::Input::UP;
+				keys[sf::Keyboard::Down] = ::Input::DOWN;
+				keys[sf::Keyboard::Right] = ::Input::RIGHT;
+				keys[sf::Keyboard::Left] = ::Input::LEFT;
+				keys[sf::Keyboard::Z] = ::Input::UP;
+				keys[sf::Keyboard::S] = ::Input::DOWN;
+				keys[sf::Keyboard::Q] = ::Input::LEFT;
+				keys[sf::Keyboard::D] = ::Input::RIGHT;
+				keys[sf::Keyboard::Space] = ::Input::ENTER;
+				keys[sf::Keyboard::Return] = ::Input::ENTER;
+				keys[sf::Keyboard::Return] = ::Input::ENTER;
+				keys[sf::Keyboard::Escape] = ::Input::ESC;
 
+				if (keys.find(event.key.code) != keys.end())
+				{
+					this->notify(new Input(keys.find(event.key.code)->second), KEY_PRESSED);
+				}
+			}
 		}
 	}
 }
@@ -203,6 +226,15 @@ Graphics::Menu::run()
 void
 Graphics::Menu::update()
 {
+	for (auto it = _menu->layout()["content"].begin(); it != _menu->layout()["content"].end(); ++it)
+	{
+		Config::Param& param = it->second;
+
+		if (param["selected"] == true)
+		{
+			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
+		}
+	}
 }
 
 void

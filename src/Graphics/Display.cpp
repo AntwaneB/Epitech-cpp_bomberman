@@ -16,6 +16,7 @@ Graphics::Display::Display()
 	_actions[LEVEL_PAUSE_TICK] = &Graphics::Display::updateLevelPaused;
 	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
 	_actions[MENU_STARTED] = &Graphics::Display::runMenu;
+	_actions[MENU_UPDATED] = &Graphics::Display::updateMenu;
 }
 
 Graphics::Display::~Display()
@@ -43,20 +44,20 @@ Graphics::Display::runMenu(Subject* entity)
 	{
 		_menu = new Graphics::Menu();
 		_menu->addObserver(this);
-		_menu->addObserver(menu);
 	}
 
+	_menu->addObserver(menu);
 	_menu->init(menu);
 	_menu->run();
 }
 
 void
-Graphics::Display::updateMenu(Subject* entity)
+Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 {
-	::Menu*	menu = safe_cast<::Menu*>(entity);
+//	::Menu*	menu = safe_cast<::Menu*>(entity);
 
-	(void)menu;
 	_menu->update();
+	_menu->draw();
 }
 
 void
