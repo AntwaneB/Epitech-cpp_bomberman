@@ -58,7 +58,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
+				<name>RUN_LEVEL</name>
 				<param>./menus/new_level.xml</param>
 			</action>
 			<cursor>
