@@ -44,4 +44,5 @@ namespace Graphics
 		sf::Sprite					_cursor;
 	};
 };
+
 #endif	/* MENU_HH */
