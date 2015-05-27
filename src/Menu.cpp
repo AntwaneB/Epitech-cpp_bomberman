@@ -20,16 +20,6 @@ Menu::Menu(const std::string & filename)
 	_menuActions["LOAD_LEVEL"] = &Menu::actionLoadLevel;
 	_menuActions["EXIT"] = &Menu::actionExit;
 
-	/*
-	_menuActions =
-	{
-		{ "NEW_MENU", &Menu::actionNewMenu },
-		{ "RUN_LEVEL", &Menu::actionRunLevel },
-		{ "LOAD_LEVEL", &Menu::actionLoadLevel },
-		{ "EXIT", &Menu::actionExit },
-	};
-	*/
-
 	_layout.importFile(_filename);
 	if (_layout["content"].isEmpty())
 		throw ConfigException("File " + filename + " is not valid");
