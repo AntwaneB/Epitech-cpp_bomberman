@@ -120,6 +120,8 @@ public:
 		std::map<std::string, Param>::const_iterator	begin(void) const;
 		std::map<std::string, Param>::const_iterator	end(void) const;
 
+		size_t													size() const;
+
 		void											insert(std::map<std::string, Param>::value_type);
 
 		bool											isEmpty(void) const;

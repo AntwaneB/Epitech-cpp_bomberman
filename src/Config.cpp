@@ -317,6 +317,12 @@ std::map<std::string, Config::Param>::const_iterator	Config::Param::begin(void) 
 	return (_map.begin());
 }
 
+size_t
+Config::Param::size() const
+{
+	return (_map.size());
+}
+
 void	Config::Param::insert(std::map<std::string, Param>::value_type insert)
 {
 	_map.insert(insert);

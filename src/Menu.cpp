@@ -45,10 +45,53 @@ Menu::keyPressed(Subject* entity)
 	{
 		case (Input::UP):
 		{
+			//_layout["content"].size();
+			size_t count = 0;
+
+			Config::Param* active;
+			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+			{
+				if (it->second["selected"] == true)
+					active = &(it->second);
+				if (it->second["selectable"] == true)
+					count++;
+			}
+
+			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+			{
+				if (&(it->second) != active
+					&& it->second["selectable"] == true
+					&& (it->second["order"] == static_cast<int>((*active)["order"]) - 1 || ((*active)["order"] == 1 && static_cast<size_t>(it->second["order"]) == count)))
+				{
+					it->second["selected"] = true;
+				}
+			}
+			(*active)["selected"] = false;
 			break;
 		}
 		case (Input::DOWN):
 		{
+			size_t count = 0;
+
+			Config::Param* active;
+			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+			{
+				if (it->second["selected"] == true)
+					active = &(it->second);
+				if (it->second["selectable"] == true)
+					count++;
+			}
+
+			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+			{
+				if (&(it->second) != active
+					&& it->second["selectable"] == true
+					&& (it->second["order"] == static_cast<int>((*active)["order"]) + 1 || (static_cast<size_t>((*active)["order"]) == count && static_cast<size_t>(it->second["order"]) == 1)))
+				{
+					it->second["selected"] = true;
+				}
+			}
+			(*active)["selected"] = false;
 			break;
 		}
 		case (Input::LEFT):
@@ -69,6 +112,7 @@ Menu::keyPressed(Subject* entity)
 			break;
 		}
 	}
+	this->notify(this, MENU_UPDATED);
 }
 
 Config&
