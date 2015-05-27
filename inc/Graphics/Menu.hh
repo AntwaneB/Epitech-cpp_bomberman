@@ -24,7 +24,7 @@ namespace Graphics
 		Menu();
 		virtual ~Menu();
 
-		void	init(::Menu *);
+		void	init(::Menu*);
 		void	run();
 		void	update();
 		void	draw();
@@ -42,23 +42,6 @@ namespace Graphics
 		std::list<sf::Sprite>	_sprites;
 		sf::Sprite					_background;
 		sf::Sprite					_cursor;
-
-		/*
-		sf::Texture 	_tassets;
-		sf::Texture		_tBackground;
-		sf::Texture		_tSubBackground;
-
-		//Sprite
-		sf::Sprite		_background;
-		sf::Sprite		_subBackground;
-		sf::Sprite		_assets;
-		sf::Sprite		_newgame;
-		sf::Sprite		_loadgame;
-		sf::Sprite		_setting;
-		sf::Sprite		_exit;
-		sf::Sprite		_quote;
-		sf::Sprite		_rya;
-		*/
 	};
 };
 #endif	/* MENU_HH */

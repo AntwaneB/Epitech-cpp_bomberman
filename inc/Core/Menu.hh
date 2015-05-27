@@ -9,6 +9,7 @@
 #define	MENU_HPP
 
 #include "Core/Observer.hpp"
+#include "Core/Input.hh"
 #include "Core/Level.hh"
 
 class Menu : public Subject, public EventHandler<Menu>
@@ -18,13 +19,16 @@ public:
 	virtual ~Menu();
 
 	void		run();
-
-	void		save(void) const;
-
 	Config&	layout(void);
 
 private:
 	void		keyPressed(Subject*);
+
+private:
+	void		changeLine(Input::Key);
+	void		changeValue(Input::Key);
+	void		runLine();
+	void		quit();
 
 private:
 	Config			_layout;

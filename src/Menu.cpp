@@ -25,12 +25,6 @@ Menu::~Menu()
 }
 
 void
-Menu::save(void) const
-{
-	_layout.exportFile(_filename);
-}
-
-void
 Menu::run()
 {
 	this->notify(this, MENU_STARTED);
@@ -43,74 +37,27 @@ Menu::keyPressed(Subject* entity)
 
 	switch (input->genericKey())
 	{
-		case (Input::UP):
-		{
-			//_layout["content"].size();
-			size_t count = 0;
+		case Input::UP:
+		case Input::DOWN:
+			this->changeLine(input->genericKey());
+			break;
 
-			Config::Param* active;
-			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
-			{
-				if (it->second["selected"] == true)
-					active = &(it->second);
-				if (it->second["selectable"] == true)
-					count++;
-			}
+		case Input::LEFT:
+		case Input::RIGHT:
+			this->changeValue(input->genericKey());
+			break;
 
-			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
-			{
-				if (&(it->second) != active
-					&& it->second["selectable"] == true
-					&& (it->second["order"] == static_cast<int>((*active)["order"]) - 1 || ((*active)["order"] == 1 && static_cast<size_t>(it->second["order"]) == count)))
-				{
-					it->second["selected"] = true;
-				}
-			}
-			(*active)["selected"] = false;
+		case Input::SPACE:
+		case Input::ENTER:
+			this->runLine();
 			break;
-		}
-		case (Input::DOWN):
-		{
-			size_t count = 0;
 
-			Config::Param* active;
-			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
-			{
-				if (it->second["selected"] == true)
-					active = &(it->second);
-				if (it->second["selectable"] == true)
-					count++;
-			}
+		case Input::ESC:
+			this->quit();
+			break;
 
-			for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
-			{
-				if (&(it->second) != active
-					&& it->second["selectable"] == true
-					&& (it->second["order"] == static_cast<int>((*active)["order"]) + 1 || (static_cast<size_t>((*active)["order"]) == count && static_cast<size_t>(it->second["order"]) == 1)))
-				{
-					it->second["selected"] = true;
-				}
-			}
-			(*active)["selected"] = false;
-			break;
-		}
-		case (Input::LEFT):
-		{
-			break;
-		}
-		case (Input::RIGHT):
-		{
-			break;
-		}
-		case (Input::SPACE):
-		case (Input::ENTER):
-		{
-			break;
-		}
 		default:
-		{
 			break;
-		}
 	}
 	this->notify(this, MENU_UPDATED);
 }
@@ -119,6 +66,63 @@ Config&
 Menu::layout(void)
 {
 	return _layout;
+}
+
+void
+Menu::changeLine(Input::Key key)
+{
+	size_t count = 0;
+
+	Config::Param* active;
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (it->second["selected"] == true)
+			active = &(it->second);
+		if (it->second["selectable"] == true)
+			count++;
+	}
+
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (key == Input::UP)
+		{
+			if (&(it->second) != active
+				&& it->second["selectable"] == true
+				&& (it->second["order"] == static_cast<int>((*active)["order"]) - 1 || ((*active)["order"] == 1 && static_cast<size_t>(it->second["order"]) == count)))
+			{
+				it->second["selected"] = true;
+			}
+		}
+		else if (key == Input::DOWN)
+		{
+			if (&(it->second) != active
+					&& it->second["selectable"] == true
+					&& (it->second["order"] == static_cast<int>((*active)["order"]) + 1 || (static_cast<size_t>((*active)["order"]) == count
+																												  && static_cast<size_t>(it->second["order"]) == 1)))
+			{
+				it->second["selected"] = true;
+			}
+		}
+	}
+	(*active)["selected"] = false;
+}
+
+void
+Menu::changeValue(Input::Key key)
+{
+	(void)key;
+}
+
+void
+Menu::runLine()
+{
+
+}
+
+void
+Menu::quit()
+{
+	this->notify(this, EXIT_TRIGGERED);
 }
 
 /*
