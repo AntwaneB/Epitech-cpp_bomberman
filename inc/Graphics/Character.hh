@@ -28,13 +28,16 @@ namespace Graphics
       virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
 
       int	getAngle(direction);
-		bool	operator==(const ::Character*) const;
+      void  setAnim(bool);
+	bool	operator==(const ::Character*) const;
 
 	private:
       gdl::Texture            _texture;
       direction               _pos = UP;
       const ::Character*      _character;
       gdl::Model*             _model;
+      int                     _frame = 20;
+      bool                     _anim = false;
 	};
 };
 

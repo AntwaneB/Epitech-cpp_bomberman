@@ -158,8 +158,8 @@ void Graphics::Split::draw(gdl::Clock clock)
 
 void Graphics::Split::moveCamera()
 {
-	_x = _player->position().x();
-	_y = _player->position().y();
+	_x = (int)(_player->position().x());
+	_y = (int)(_player->position().y());
 	double x = 1 + _x;
 	double y = 1 + _y;
 	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
