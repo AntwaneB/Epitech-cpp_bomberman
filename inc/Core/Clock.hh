@@ -27,6 +27,7 @@ public:
 	void			resetSec(void);
 	seconds_t	seconds() const;
 	seconds_t	deciseconds() const;
+	seconds_t	centiseconds() const;
 	void			togglePause();
 
 private:

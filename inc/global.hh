@@ -8,7 +8,7 @@
 #ifndef GLOBAL_HH
 #define	GLOBAL_HH
 
-#define FPS	40
+#define FPS	60
 
 #include "Core/Config.hh"
 
