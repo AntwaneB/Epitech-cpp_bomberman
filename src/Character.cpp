@@ -15,9 +15,8 @@
 #include "Core/Input.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z),
-	  _solid(true), _alive(true), _killedBy(NULL), _ia(NULL), _elapsedTime(-1),
-	  _score(0)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _alive(true),
+	  _killedBy(NULL), _ia(NULL), _elapsedTime(-1), _moving(false), _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -85,6 +84,12 @@ Character::isPlayer() const
 	return (_isPlayer);
 }
 
+bool
+Character::moving() const
+{
+	return (_moving);
+}
+
 void
 Character::tick(Subject* entity)
 {
@@ -93,6 +98,14 @@ Character::tick(Subject* entity)
 	if (_elapsedTime == -1)
 		_elapsedTime = clock->deciseconds();
 
+	// Managing animations
+	if (_moving && clock->seconds() >= _movingUntil)
+	{
+		_moving = false;
+	}
+	std::cout << "Character " << _nth << "is " << (_moving ? "moving" : "not moving") << std::endl;
+
+	// Managing actions
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
 	{
 		_elapsedTime++;
@@ -123,7 +136,7 @@ Character::tick(Subject* entity)
 			Character::Action movement = _queuedActions.front();
 			_queuedActions.pop();
 
-			this->move(movement);
+			this->move(movement, *clock);
 		}
 
 		if (_queuedActions.size() > 0 && _queuedActions.front() == Character::DROP_BOMB)
@@ -178,7 +191,7 @@ Character::keyPressed(Subject* entity)
 }
 
 void
-Character::move(Character::Action action)
+Character::move(Character::Action action, const Clock & clock)
 {
 	Position<double> tmp = _position;
 
@@ -223,6 +236,10 @@ Character::move(Character::Action action)
 			default:
 				break;
 		}
+
+		_moving = true;
+		_movingUntil = clock.seconds() + step * 2;
+
 		this->notify(this, CHARACTER_MOVED);
 	}
 }

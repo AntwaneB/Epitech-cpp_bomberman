@@ -20,8 +20,9 @@ namespace IA
 
 #include <queue>
 #include <list>
-#include "Observer.hpp"
-#include "Position.hh"
+#include "Core/Observer.hpp"
+#include "Core/Position.hh"
+#include "Core/Clock.hh"
 #include "Config.hh"
 
 class Character : public EventHandler<Character>, public Subject
@@ -41,6 +42,7 @@ public:
 	void					changeScore(int);
 	const Bomb*			killedBy() const;
 	bool					isPlayer() const;
+	bool					moving() const;
 
 	void		clearActions();
 	void		pushAction(Character::Action);
@@ -52,7 +54,7 @@ private:
 	void bombExploded(Subject* entity);
 	void keyPressed(Subject* entity);
 
-	void move(Action);
+	void move(Action, const Clock &);
 	void dropBomb();
 
 private:
@@ -71,6 +73,9 @@ private:
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;
 	int						_elapsedTime;
+
+	bool						_moving;
+	seconds_t				_movingUntil;
 
 	int						_score;
 };
