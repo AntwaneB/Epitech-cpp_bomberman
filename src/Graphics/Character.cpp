@@ -18,7 +18,6 @@ Graphics::Character::initialize()
   	_model->createSubAnim(0, "START", 20, 30);
   	_model->createSubAnim(0, "RUN", 37, 53);
   	_model->createSubAnim(0, "END", 54, 100);
-  	_anim = true;
 	return (true);
 }
 
