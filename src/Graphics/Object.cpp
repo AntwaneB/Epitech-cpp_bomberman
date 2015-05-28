@@ -23,10 +23,10 @@ void Graphics::Object::update(gdl::Clock const &clock, gdl::Input &input)
 
 void Graphics::Object::translate(glm::vec3 const &v)
 {
-	_position = _position + Position<>(v[0], v[2], v[1]);
+	_position = _position + Position<double>(v[0], v[2], v[1]);
 }
 
-void Graphics::Object::translate(Position<> const &v)
+void Graphics::Object::translate(Position<double> const &v)
 {
 	_position = _position + v;
 }

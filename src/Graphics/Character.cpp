@@ -92,9 +92,13 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 	//_position = _character->position();
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
-		int x = _character->position().x() - _position.x();
-		int y = _character->position().y() - _position.y();
-		translate(glm::vec3(x, 0, y));
+		//double x = _character->position().x() - _position.x();
+		//double y = _character->position().y() - _position.y();
+		//translate(glm::vec3(x, 0, y));
+		/*glm::vec3 position;
+		position[0] = _character->position().x();
+		position[1] = _character->position().z();
+		position[2] = _character->position().y();*/
 		_position = _character->position();
 	}
 	setAnim(_character->moving());

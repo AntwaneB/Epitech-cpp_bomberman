@@ -1,7 +1,7 @@
 #include "Graphics/Ground.hh"
 #include <iostream>
 
-Graphics::Ground::Ground(Position<> const & position)
+Graphics::Ground::Ground(Position<double> const & position)
 	: Object(position), _width((position.x() * 2) + 1), _height((position.y() * 2) + 1)
 {
 }

@@ -15,7 +15,7 @@ namespace Graphics
 	class Ground : public Object
 	{
 		public:
-			Ground(Position<> const &);
+			Ground(Position<double> const &);
 			virtual ~Ground();
 
 			virtual bool initialize();

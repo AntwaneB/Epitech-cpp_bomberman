@@ -251,7 +251,7 @@ Character::dropBomb()
 	double duration = g_settings["entities"]["bomb"]["duration"];
 	double duration_modifier = _attributes["bombs"]["duration_modifier"];
 
-	Bomb* bomb = new Bomb(_position.asInt(), range, duration * duration_modifier, this);
+	Bomb* bomb = new Bomb(_position, range, duration * duration_modifier, this);
 
 	_bombs.push_back(bomb);
 
