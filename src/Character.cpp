@@ -100,13 +100,17 @@ Character::tick(Subject* entity)
 	if (_elapsedCentiseconds == -1)
 		_elapsedCentiseconds = clock->centiseconds();
 
+	// Capping speed
+	if (_attributes["speed"] > static_cast<int>(_attributes["max_speed"]))
+		_attributes["speed"] = static_cast<int>(_attributes["max_speed"]);
+
 	// Managing animations
 	if (_moving && clock->seconds() >= _movingUntil)
 	{
 		_moving = false;
 	}
 
-	// Managing actions
+	// Updating clocks
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
 	{
 		_elapsedTime++;
@@ -114,30 +118,12 @@ Character::tick(Subject* entity)
 		if (_ia && !_isPlayer)
 			_ia->playTurn();
 	}
-
-//	int centiseconds = static_cast<int>(clock->centiseconds()) - _elapsedCentiseconds;
 	if (static_cast<int>(clock->centiseconds()) - _elapsedCentiseconds >= 1)
 	{
 		_elapsedCentiseconds += static_cast<int>(clock->centiseconds()) - _elapsedCentiseconds;
 	}
 
-	/*
-	if (_queuedActions.size() > 0
-		&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
-		 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
-		&& _attributes["can_move"] == true
-		&& _attributes["speed"] != 0
-		&& _elapsedTime % (1000 / static_cast<int>(_attributes["speed"])) == 0)
-	{ // Triggering movement
-		Character::Action movement = _queuedActions.front();
-		_queuedActions.pop();
-
-		this->move(movement);
-	}
-	*/
-	if (_attributes["speed"] > static_cast<int>(_attributes["max_speed"]))
-		_attributes["speed"] = static_cast<int>(_attributes["max_speed"]);
-
+	// Managing actions
 	if (_queuedActions.size() > 0
 		&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
 		 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
