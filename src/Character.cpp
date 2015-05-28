@@ -103,7 +103,7 @@ Character::tick(Subject* entity)
 	{
 		_moving = false;
 	}
-	std::cout << "Character " << _nth << "is " << (_moving ? "moving" : "not moving") << std::endl;
+//	std::cout << "Character " << _nth << "is " << (_moving ? "moving" : "not moving") << std::endl;
 
 	// Managing actions
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)

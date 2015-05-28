@@ -152,8 +152,8 @@ Level::tick(Subject* entity)
 
 		if (this->charactersRaw().size() <= 1)
 		{ // Ending game if their's only one character left
-		//	_clock.stop();
-		//	this->end();
+			_clock.stop();
+			this->end();
 		}
 	}
 }
