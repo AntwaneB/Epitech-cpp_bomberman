@@ -28,7 +28,6 @@ Graphics::Menu::init(::Menu* menu)
 {
 	if (_menu)
 	{
-		std::cout << "coucou" << std::endl;
 		this->removeObserver(_menu);
 		_menu->removeObserver(this);
 	}
