@@ -57,6 +57,12 @@ Map::at(const Position<>& position) const
 	return (this->_map[position.y()][position.x()]);
 }
 
+Block*
+Map::at(int x, int y) const
+{
+	return (this->_map[y][x]);
+}
+
 std::vector<std::vector<Block*> > const &
 Map::map() const
 {

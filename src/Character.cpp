@@ -15,7 +15,7 @@
 #include "Core/Input.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z), _solid(true), _alive(true),
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
 	  _killedBy(NULL), _ia(NULL), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false), _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
@@ -191,33 +191,36 @@ Character::keyPressed(Subject* entity)
 void
 Character::move(Character::Action action, const Clock & clock)
 {
-	Position<double> tmp = _position;
+	Position<double> newPos = _position;
 
 	double step = 0.001 * static_cast<int>(_attributes["speed"]);
 
-	double duration = 300.0 / 1000.0;
+	double duration = 0.0 / 1000.0;
 
 	switch (action)
 	{
 		case Character::MOVE_DOWN:
-			tmp.incY(step);
+			newPos.incY(step);
 			break;
 		case Character::MOVE_UP:
-			tmp.decY(step);
+			newPos.decY(step);
 			break;
 		case Character::MOVE_LEFT:
-			tmp.decX(step);
+			newPos.decX(step);
 			break;
 		case Character::MOVE_RIGHT:
-			tmp.incX(step);
+			newPos.incX(step);
 			break;
 		default:
 			break;
 	}
 
 	auto bombs = _level->bombs();
-	if ((_level->map().at(tmp)->solid() == false && (bombs[tmp].empty() || tmp.asInt() == _position.asInt())) || _solid == false)
+	if ((_level->map().at(newPos)->solid() == false
+		&& (bombs[newPos].empty() || newPos.asInt() == _position.asInt()))
+		|| _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
+
 		_prevPosition = _position;
 		switch (action)
 		{
