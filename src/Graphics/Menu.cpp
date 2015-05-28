@@ -26,6 +26,13 @@ Graphics::Menu::~Menu()
 void
 Graphics::Menu::init(::Menu* menu)
 {
+	if (_menu)
+	{
+		std::cout << "coucou" << std::endl;
+		this->removeObserver(_menu);
+		_menu->removeObserver(this);
+	}
+
 	_menu = menu;
 
 	if (!_window.isOpen())
@@ -73,7 +80,7 @@ Graphics::Menu::run()
 	{
 		this->draw();
 		sf::Event event;
-		while (_window.pollEvent(event) && _run)
+		while (_run && _window.pollEvent(event))
 		{
 			if (event.type == sf::Event::KeyPressed)
 			{
@@ -93,7 +100,7 @@ Graphics::Menu::run()
 
 				if (keys.find(event.key.code) != keys.end())
 				{
-					this->notify(new Input(keys.find(event.key.code)->second), KEY_PRESSED);
+					this->notify(new Input(keys.find(event.key.code)->second), KEY_PRESSED, _menu);
 				}
 			}
 		}
@@ -133,5 +140,6 @@ Graphics::Menu::draw()
 void
 Graphics::Menu::exited(Subject* entity __attribute__((unused)))
 {
-	delete this;
+	_run = false;
+	_window.close();
 }
