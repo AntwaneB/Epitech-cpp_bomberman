@@ -14,7 +14,10 @@ Graphics::Character::~Character()
 bool
 Graphics::Character::initialize()
 {
-	_model->setCurrentAnim(0);
+	_model->createSubAnim(0, "RESET", 0, 0);
+  	_model->createSubAnim(0, "START", 20, 30);
+  	_model->createSubAnim(0, "RUN", 37, 53);
+  	_model->createSubAnim(0, "END", 54, 100);
 	return (true);
 }
 
@@ -94,31 +97,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 		translate(glm::vec3(x, 0, y));
 		_position = _character->position();
 	}
-	/*if (input.getKey(SDLK_DOWN))
-	{
-		translate(glm::vec3(0, 0, -1));
-		//rotate(glm::vec3(0, 0, -1), getAngle(DOWN));
-	}
-	if (input.getKey(SDLK_UP))
-	{
-		translate(glm::vec3(0, 0, 1));
-		//rotate(glm::vec3(0, 0, 1), getAngle(UP));
-	}
-	if (input.getKey(SDLK_RIGHT))
-	{
-		translate(glm::vec3(-1, 0, 0));
-		//rotate(glm::vec3(-1, 0, 0), getAngle(RIGHT));
-	}
-	if (input.getKey(SDLK_LEFT))
-	{
-		translate(glm::vec3(1, 0, 0));
-		//rotate(glm::vec3(1, 0, 0), getAngle(LEFT));
-	}*/
-	/*
-	if (input.getKey(SDLK_DOWN) || input.getKey(SDLK_UP) || input.getKey(SDLK_RIGHT) || input.getKey(SDLK_LEFT))
-		_model->setCurrentAnim(0);
-		_model->setCurrentAnim(1);
-	*/
+	setAnim(_character->moving());
 }
 
 void
@@ -126,5 +105,41 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	_texture.bind();
 	_model->draw(shader, getTransformation(), GL_QUADS);
+	if (_anim == true)
+	{
+		if (_frame == 20 || _frame > 45)
+		{
+			if (_frame > 45)
+				_frame = 21;
+			_model->setCurrentSubAnim("START");
+		}
+		if (_frame == 30)
+			_model->setCurrentSubAnim("RUN");
+		if (_frame == 45)
+			_frame = 30;
+		_frame += 1;
+	}
+    if (_anim == false)
+    {
+		if (_frame > 20 && _frame < 46)
+		{
+			_model->setCurrentSubAnim("END");
+			_frame = 46;
+		}
+		if (_frame >= 46 && _frame <= 93)
+			_frame += 1;
+		if (_frame >= 93)
+		{
+			_model->setCurrentSubAnim("RESET");
+			_frame = 20;
+		}
+		if (_frame != 20)
+			_frame += 1;
+	}
 	(void)clock;
+}
+
+void Graphics::Character::setAnim(bool anim)
+{
+	_anim = anim;
 }
