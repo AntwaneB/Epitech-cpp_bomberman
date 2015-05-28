@@ -48,7 +48,7 @@ Graphics::Menu::init(::Menu* menu)
 	_assetsTexture.loadFromFile(_menu->layout()["assets"]["location"]);
 
 	_cursor.setTexture(_assetsTexture);
-	_cursor.setTextureRect(sf::IntRect(_menu->layout()["cursor"]["asset"]["texture"]["start_x"], _menu->layout()["cursor"]["asset"]["texture"]["start_y"], _menu->layout()["cursor"]["asset"]["texture"]["end_x"], _menu->layout()["cursor"]["asset"]["texture"]["end_y"]));
+	_cursor.setTextureRect(sf::IntRect(_menu->layout()["cursor"]["asset"]["texture"]["start_x"], _menu->layout()["cursor"]["asset"]["texture"]["start_y"], _menu->layout()["cursor"]["asset"]["texture"]["width"], _menu->layout()["cursor"]["asset"]["texture"]["height"]));
 	_cursor.setScale(_menu->layout()["cursor"]["asset"]["scale"]["x"], _menu->layout()["cursor"]["asset"]["scale"]["y"]);
 
 	_sprites.clear();
@@ -58,7 +58,7 @@ Graphics::Menu::init(::Menu* menu)
 
 		sf::Sprite sprite;
 		sprite.setTexture(_assetsTexture);
-		sprite.setTextureRect(sf::IntRect(param["asset"]["texture"]["start_x"], param["asset"]["texture"]["start_y"], param["asset"]["texture"]["end_x"], param["asset"]["texture"]["end_y"]));
+		sprite.setTextureRect(sf::IntRect(param["asset"]["texture"]["start_x"], param["asset"]["texture"]["start_y"], param["asset"]["texture"]["width"], param["asset"]["texture"]["height"]));
 		sprite.setScale(param["asset"]["scale"]["x"], param["asset"]["scale"]["y"]);
 		sprite.setPosition(param["asset"]["position"]["x"], param["asset"]["position"]["y"]);
 		_sprites.push_back(sprite);
