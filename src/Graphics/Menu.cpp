@@ -9,9 +9,10 @@
 #include <SFML/Audio.hpp>
 #include "Graphics/Menu.hh"
 #include "Core/Input.hh"
+#include "Core/Menu.hh"
 
 Graphics::Menu::Menu()
-	: _menu(NULL)
+	: _menu(NULL), _run(false)
 {
 	_actions[MENU_EXITED] = &Menu::exited;
 }
@@ -19,6 +20,7 @@ Graphics::Menu::Menu()
 Graphics::Menu::~Menu()
 {
 	_sprites.clear();
+	_window.close();
 }
 
 void
@@ -26,7 +28,10 @@ Graphics::Menu::init(::Menu* menu)
 {
 	_menu = menu;
 
-	_window.create(sf::VideoMode(_menu->layout()["size"]["x"], _menu->layout()["size"]["y"]), std::string(_menu->layout()["title"]));
+	if (!_window.isOpen())
+		_window.create(sf::VideoMode(_menu->layout()["size"]["x"], _menu->layout()["size"]["y"]), std::string(_menu->layout()["title"]));
+	else
+		_window.clear();
 
 	// Screen background
 	_backgroundTexture.loadFromFile(_menu->layout()["background"]["location"]);
@@ -57,16 +62,18 @@ Graphics::Menu::init(::Menu* menu)
 			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
 		}
 	}
+
+	_run = true;
 }
 
 void
 Graphics::Menu::run()
 {
-	while (_window.isOpen())
+	while (_window.isOpen() && _run)
 	{
 		this->draw();
 		sf::Event event;
-		while (_window.pollEvent(event))
+		while (_window.pollEvent(event) && _run)
 		{
 			if (event.type == sf::Event::KeyPressed)
 			{
@@ -126,5 +133,5 @@ Graphics::Menu::draw()
 void
 Graphics::Menu::exited(Subject* entity __attribute__((unused)))
 {
-	_window.close();
+	delete this;
 }

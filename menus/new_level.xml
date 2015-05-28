@@ -164,24 +164,5 @@
 				</position>
 			</cursor>
 		</exit>
-		<quote>
-			<selectable>false</selectable>
-			<asset>
-				<texture>
-					<start_x>1100</start_x>
-					<start_y>600</start_y>
-					<end_x>1880</end_x>
-					<end_y>100</end_y>
-				</texture>
-				<position>
-					<x>30</x>
-					<y>450</y>
-				</position>
-				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
-				</scale>
-			</asset>
-		</quote>
 	</content>
 </config>

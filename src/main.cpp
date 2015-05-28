@@ -12,6 +12,7 @@ int	main(int ac, char **av)
 		app = new App(ac, av);
 
 		int ret = app->run();
+
 		delete app;
 
 		return (ret);
