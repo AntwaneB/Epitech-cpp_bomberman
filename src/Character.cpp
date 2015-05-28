@@ -195,7 +195,7 @@ Character::move(Character::Action action, const Clock & clock)
 
 	double step = 0.001 * static_cast<int>(_attributes["speed"]);
 
-	double duration = static_cast<int>(_attributes["speed"]) / 1000.0;
+	double duration = 300.0 / 1000.0;
 
 	switch (action)
 	{
