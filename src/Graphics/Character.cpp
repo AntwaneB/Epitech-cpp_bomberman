@@ -80,6 +80,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	(void)clock;
 	(void)input;
+
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
 		_position = _character->position();
@@ -110,8 +111,8 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 			_frame = 15;
 		_frame += 1;
 	}
-    if (_anim == false)
-    {
+	if (_anim == false)
+	{
 		if (_frame > 0 && _frame < 8)
 		{
 			_model->setCurrentSubAnim("END");
