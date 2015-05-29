@@ -90,9 +90,9 @@
 				<max>100</max>
 				<min>10</min>
 				<value>10</value>
-				<size>55</size>
+				<size>50</size>
 				<x>730</x>
-				<y>82</y>
+				<y>85</y>
 			</value>
 			<action>
 				<name>RUN_LEVEL</name>
@@ -177,7 +177,15 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+				<size>50</size>
+				<x>730</x>
+				<y>151</y>
+			</value>
 			<action>
 				<name>RUN_LEVEL</name>
 			</action>
@@ -262,7 +270,15 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>2</max>
+				<min>0</min>
+				<value>1</value>
+				<size>50</size>
+				<x>745</x>
+				<y>215</y>
+			</value>
 			<action>
 				<name>RUN_LEVEL</name>
 			</action>
@@ -347,7 +363,15 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>10</max>
+				<min>0</min>
+				<value>3</value>
+				<size>50</size>
+				<x>745</x>
+				<y>285</y>
+			</value>
 			<action>
 				<name>EXIT</name>
 			</action>
