@@ -141,7 +141,6 @@ Menu::quit(Input::Key key __attribute__((unused)))
 void
 Menu::actionNewMenu(const std::string& param)
 {
-//	this->notify(this, MENU_EXITED);
 	this->notify(new Menu(param), MENU_STARTED);
 }
 
