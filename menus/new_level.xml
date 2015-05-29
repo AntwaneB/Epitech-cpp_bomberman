@@ -85,10 +85,14 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
+			<has_value>true</has_value>
 			<value>
-				<max>100</max>
+				<max>99</max>
 				<min>10</min>
 				<value>10</value>
+				<size>50</size>
+				<x>730</x>
+				<y>85</y>
 			</value>
 			<action>
 				<name>RUN_LEVEL</name>
@@ -121,14 +125,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
-			<action>
-				<name>RUN_LEVEL</name>
-			</action>
+			<has_value>false</has_value>
 		</leftcursor1>
 
 		<rightcursor1>
@@ -151,14 +148,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
-			<action>
-				<name>RUN_LEVEL</name>
-			</action>
+			<has_value>false</has_value>
 		</rightcursor1>
 
 		<height>
@@ -181,7 +171,15 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>99</max>
+				<min>10</min>
+				<value>10</value>
+				<size>50</size>
+				<x>730</x>
+				<y>151</y>
+			</value>
 			<action>
 				<name>RUN_LEVEL</name>
 			</action>
@@ -194,7 +192,6 @@
 		</height>
 
 		<leftcursor2>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -213,18 +210,10 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
-			<action>
-				<name>RUN_LEVEL</name>
-			</action>
+			<has_value>false</has_value>
 		</leftcursor2>
 
 		<rightcursor2>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -243,14 +232,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
-			<action>
-				<name>RUN_LEVEL</name>
-			</action>
+			<has_value>false</has_value>
 		</rightcursor2>
 
 
@@ -274,7 +256,15 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>2</max>
+				<min>0</min>
+				<value>1</value>
+				<size>50</size>
+				<x>745</x>
+				<y>215</y>
+			</value>
 			<action>
 				<name>RUN_LEVEL</name>
 			</action>
@@ -306,11 +296,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 		</leftcursor3>
 
 		<rightcursor3>
@@ -332,11 +318,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 		</rightcursor3>
 
 		<ias>
@@ -359,9 +341,17 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>30</max>
+				<min>0</min>
+				<value>3</value>
+				<size>50</size>
+				<x>745</x>
+				<y>285</y>
+			</value>
 			<action>
-				<name>EXIT</name>
+				<name>RUN_LEVEL</name>
 			</action>
 			<cursor>
 				<position>
@@ -391,11 +381,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 		</leftcursor4>
 
 		<rightcursor4>
@@ -417,11 +403,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 		</rightcursor4>
 
 		<difficulty>
@@ -444,9 +426,17 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<value>
+				<max>3</max>
+				<min>1</min>
+				<value>2</value>
+				<size>50</size>
+				<x>745</x>
+				<y>355</y>
+			</value>
 			<action>
-				<name>EXIT</name>
+				<name>RUN_LEVEL</name>
 			</action>
 			<cursor>
 				<position>
@@ -475,11 +465,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 		</leftcursor5>
 
 		<rightcursor5>
@@ -501,11 +487,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 		</rightcursor5>
 
 	</content>

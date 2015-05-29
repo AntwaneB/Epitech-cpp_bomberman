@@ -103,7 +103,19 @@ Menu::changeLine(Input::Key key)
 void
 Menu::changeValue(Input::Key key)
 {
-	(void)key;
+	Config::Param* active;
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (it->second["selected"] == true)
+			active = &(it->second);
+	}
+
+	int newValue = (*active)["value"]["value"];
+	newValue = key == Input::LEFT ? newValue - 1 : newValue + 1;
+	newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
+	newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
+
+	(*active)["value"]["value"] = newValue;
 }
 
 void
@@ -129,7 +141,6 @@ Menu::quit(Input::Key key __attribute__((unused)))
 void
 Menu::actionNewMenu(const std::string& param)
 {
-//	this->notify(this, MENU_EXITED);
 	this->notify(new Menu(param), MENU_STARTED);
 }
 
@@ -142,9 +153,19 @@ Menu::actionLoadLevel(const std::string& param)
 void
 Menu::actionRunLevel(const std::string& param __attribute__((unused)))
 {
-	this->notify(this, MENU_EXITED);
-	this->notify(new Level(13, 13, 2, 2), LEVEL_GENERATED);
+	size_t width = _layout["content"]["width"]["value"]["value"];
+	size_t height = _layout["content"]["height"]["value"]["value"];
+	size_t iaCount = _layout["content"]["ias"]["value"]["value"];
+	size_t playerCount = _layout["content"]["players"]["value"]["value"];
 
+	std::cout << "Generating new level with settings :" << std::endl;
+	std::cout << "- Width : " << width << std::endl;
+	std::cout << "- Height : " <<  height << std::endl;
+	std::cout << "- IA Count : " <<  iaCount << std::endl;
+	std::cout << "- Player Count : " <<  playerCount << std::endl;
+
+	this->notify(this, MENU_EXITED);
+	this->notify(new Level(width, height, iaCount + playerCount, playerCount), LEVEL_GENERATED);
 }
 
 void

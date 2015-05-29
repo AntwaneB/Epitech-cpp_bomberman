@@ -232,7 +232,6 @@ Character::move(Character::Action action, const Clock & clock)
 	if ((_level->map().at(newPosLeftUp)->solid() == false && _level->map().at(newPosRightDown)->solid() == false
 		&& ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
 			|| (!bombs[_position].empty())))
-			//|| (newPosLeftUp.asInt() == _position.asInt() || newPosRightDown.asInt() == _position.asInt())))
 		|| _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
 

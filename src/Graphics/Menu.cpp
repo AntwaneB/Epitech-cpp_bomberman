@@ -52,6 +52,9 @@ Graphics::Menu::init(::Menu* menu)
 	_cursor.setScale(_menu->layout()["cursor"]["asset"]["scale"]["x"], _menu->layout()["cursor"]["asset"]["scale"]["y"]);
 
 	_sprites.clear();
+
+	_font.loadFromFile("./assets/ocraextended.ttf");
+
 	for (auto it = _menu->layout()["content"].begin(); it != _menu->layout()["content"].end(); ++it)
 	{
 		Config::Param& param = it->second;
@@ -63,9 +66,33 @@ Graphics::Menu::init(::Menu* menu)
 		sprite.setPosition(param["asset"]["position"]["x"], param["asset"]["position"]["y"]);
 		_sprites.push_back(sprite);
 
+
 		if (param["selected"] == true)
 		{
 			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
+		}
+
+		if (param["has_value"] == true)
+		{
+			sf::Text text;
+			text.setFont(_font);
+			/*
+			if (param["has_enum"] == true)
+			{
+				if (param["value"]["value"] == 1)
+					txt.setString("Easy");
+				else if (param["value"]["value"] == 2)
+					txt.setString("Normal");
+				else
+					txt.setString("Hard");
+			}
+			else
+			*/
+			text.setString(static_cast<std::string>(param["value"]["value"]));
+			text.setCharacterSize(param["value"]["size"]);
+			text.setColor(sf::Color(254, 221, 0));
+			text.setPosition(param["value"]["x"], param["value"]["y"]);
+			_texts[&param] = text;
 		}
 	}
 
@@ -117,6 +144,10 @@ Graphics::Menu::update()
 		{
 			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
 		}
+		if (param["has_value"] == true)
+		{
+			_texts[&param].setString(static_cast<std::string>(param["value"]["value"]));
+		}
 	}
 }
 
@@ -131,6 +162,10 @@ Graphics::Menu::draw()
 	for (auto it = _sprites.begin(); it != _sprites.end(); ++it)
 	{
 		_window.draw(*it);
+	}
+	for (auto it = _texts.begin(); it != _texts.end(); ++it)
+	{
+		_window.draw(it->second);
 	}
 
 	_window.display();
