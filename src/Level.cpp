@@ -321,8 +321,8 @@ Level::bombExploded(Subject* entity)
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
 	/* Setting hitbox for the bomb */
-	std::vector<Position<>> hitbox;
-	size_t	range = bomb->range();
+	std::vector<Position<> > hitbox;
+	size_t range = bomb->range();
 
 	Position<> explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -331,6 +331,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -339,6 +341,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -347,6 +351,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -355,6 +361,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	hitbox.push_back(bomb->position());
 	bomb->setHitbox(hitbox);

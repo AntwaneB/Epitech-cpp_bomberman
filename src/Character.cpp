@@ -16,7 +16,7 @@
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
 	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
-	  _killedBy(NULL), _ia(NULL), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false),
+	  _killedBy(NULL), _ia(NULL), _previousBomb(-1), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false),
 	  _direction(MOVE_DOWN), _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
@@ -150,8 +150,10 @@ Character::tick(Subject* entity)
 		_queuedActions.pop();
 
 		if (_attributes["bombs"]["available"] == true
-			&& _bombs.size() < static_cast<size_t>(_attributes["bombs"]["amount"]))
+			&& _bombs.size() < static_cast<size_t>(_attributes["bombs"]["amount"])
+			&& clock->seconds() - _previousBomb > 0.2)
 		{
+			_previousBomb = clock->seconds();
 			this->dropBomb();
 		}
 	}
