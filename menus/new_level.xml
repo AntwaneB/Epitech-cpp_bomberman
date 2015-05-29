@@ -462,9 +462,9 @@
 				<max>3</max>
 				<min>1</min>
 				<value>2</value>
-				<size>40</size>
-				<x>695</x>
-				<y>365</y>
+				<size>50</size>
+				<x>745</x>
+				<y>355</y>
 			</value>
 			<action>
 				<name>EXIT</name>
