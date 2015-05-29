@@ -87,7 +87,7 @@
 			</asset>
 			<has_value>true</has_value>
 			<value>
-				<max>100</max>
+				<max>99</max>
 				<min>10</min>
 				<value>10</value>
 				<size>50</size>
@@ -179,7 +179,7 @@
 			</asset>
 			<has_value>true</has_value>
 			<value>
-				<max>100</max>
+				<max>99</max>
 				<min>10</min>
 				<value>10</value>
 				<size>50</size>
@@ -365,7 +365,7 @@
 			</asset>
 			<has_value>true</has_value>
 			<value>
-				<max>10</max>
+				<max>30</max>
 				<min>0</min>
 				<value>3</value>
 				<size>50</size>
@@ -457,7 +457,6 @@
 				</scale>
 			</asset>
 			<has_value>true</has_value>
-			<has_enum>true</has_enum>
 			<value>
 				<max>3</max>
 				<min>1</min>

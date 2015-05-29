@@ -103,7 +103,19 @@ Menu::changeLine(Input::Key key)
 void
 Menu::changeValue(Input::Key key)
 {
-	(void)key;
+	Config::Param* active;
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (it->second["selected"] == true)
+			active = &(it->second);
+	}
+
+	int newValue = (*active)["value"]["value"];
+	newValue = key == Input::LEFT ? newValue - 1 : newValue + 1;
+	newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
+	newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
+
+	(*active)["value"]["value"] = newValue;
 }
 
 void
