@@ -36,7 +36,7 @@ namespace Graphics
       direction               _pos = UP;
       const ::Character*      _character;
       gdl::Model*             _model;
-      int                     _frame = 20;
+      int                     _frame = 0;
       bool                     _anim = false;
 	};
 };
