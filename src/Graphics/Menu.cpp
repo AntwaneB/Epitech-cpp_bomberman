@@ -76,9 +76,21 @@ Graphics::Menu::init(::Menu* menu)
 		{
 			sf::Text text;
 			text.setFont(_font);
+			/*
+			if (param["has_enum"] == true)
+			{
+				if (param["value"]["value"] == 1)
+					txt.setString("Easy");
+				else if (param["value"]["value"] == 2)
+					txt.setString("Normal");
+				else
+					txt.setString("Hard");
+			}
+			else
+			*/
 			text.setString(static_cast<std::string>(param["value"]["value"]));
 			text.setCharacterSize(param["value"]["size"]);
-			text.setColor(sf::Color(254, 221, 0));
+			text.setColor(sf::Color::White);
 			text.setPosition(param["value"]["x"], param["value"]["y"]);
 			_texts[&param] = text;
 		}

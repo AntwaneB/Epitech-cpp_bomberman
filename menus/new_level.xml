@@ -456,7 +456,16 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<has_value>false</has_value>
+			<has_value>true</has_value>
+			<has_enum>true</has_enum>
+			<value>
+				<max>3</max>
+				<min>1</min>
+				<value>2</value>
+				<size>40</size>
+				<x>695</x>
+				<y>365</y>
+			</value>
 			<action>
 				<name>EXIT</name>
 			</action>
