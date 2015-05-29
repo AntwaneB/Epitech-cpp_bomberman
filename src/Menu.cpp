@@ -154,9 +154,19 @@ Menu::actionLoadLevel(const std::string& param)
 void
 Menu::actionRunLevel(const std::string& param __attribute__((unused)))
 {
-	this->notify(this, MENU_EXITED);
-	this->notify(new Level(13, 13, 2, 2), LEVEL_GENERATED);
+	size_t width = _layout["content"]["width"]["value"]["value"];
+	size_t height = _layout["content"]["height"]["value"]["value"];
+	size_t iaCount = _layout["content"]["ias"]["value"]["value"];
+	size_t playerCount = _layout["content"]["players"]["value"]["value"];
 
+	std::cout << "Generating new level with settings :" << std::endl;
+	std::cout << "- Width : " << width << std::endl;
+	std::cout << "- Height : " <<  height << std::endl;
+	std::cout << "- IA Count : " <<  iaCount << std::endl;
+	std::cout << "- Player Count : " <<  playerCount << std::endl;
+
+	this->notify(this, MENU_EXITED);
+	this->notify(new Level(width, height, iaCount + playerCount, playerCount), LEVEL_GENERATED);
 }
 
 void
