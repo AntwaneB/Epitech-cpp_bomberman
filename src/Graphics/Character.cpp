@@ -20,7 +20,7 @@ Graphics::Character::initialize()
   	_model->createSubAnim(0, "START", 20, 30);
   	_model->createSubAnim(0, "RUN", 37, 53);
   	_model->createSubAnim(0, "END", 54, 100);
-	return (true);
+  	return (true);
 }
 
 bool
@@ -30,60 +30,49 @@ Graphics::Character::operator==(const ::Character* other) const
 }
 
 int
-Graphics::Character::getAngle(direction key)
+Graphics::Character::getAngle(const::Character::Action key)
 {
-	switch(_pos)
-	{
-		case UP:
-			switch(key)
-			{
-				case UP:
-					return (0);
-				case DOWN:
-					return (180);
-				case LEFT:
-					return (-90);
-				case RIGHT:
-					return (90);
-			}
-		case DOWN:
-			switch(key)
-			{
-				case UP:
-					return (180);
-				case DOWN:
-					return (0);
-				case LEFT:
-					return (90);
-				case RIGHT:
-					return (-90);
-			}
-		case LEFT:
-			switch(key)
-			{
-				case UP:
-					return (90);
-				case DOWN:
-					return (-90);
-				case LEFT:
-					return (0);
-				case RIGHT:
-					return (180);
-			}
-		case RIGHT:
-			switch(key)
-			{
-				case UP:
-					return (-90);
-				case DOWN:
-					return (90);
-				case LEFT:
-					return (180);
-				case RIGHT:
-					return (0);
-			}
-	}
+	switch(key)
+		{
+			case ::Character::Action::MOVE_UP:
+				return (180);
+			case ::Character::Action::MOVE_DOWN:
+				return (0);
+			case ::Character::Action::MOVE_LEFT:
+				return (-90);
+			case ::Character::Action::MOVE_RIGHT:
+				return (90);
+			case ::Character::Action::DROP_BOMB:
+				return (0);
+			case ::Character::Action::WAIT:
+				return (0);
+		}
 	return (0);
+}
+
+void
+Graphics::Character::irotate(int angle)
+{
+	_rotation = glm::vec3(0, angle, 0);
+	if (angle == 0)
+		return;
+	if (angle == 90)
+		{
+			double position = _position.x();
+			_position.setX(_position.y() * -1 + 1);
+			_position.setY(position);
+		}
+	else if (angle == -90)
+		{
+			double position = _position.x();
+			_position.setX(_position.y());
+			_position.setY(position * -1 + 1);
+		}
+	else
+		{
+			_position.setX(_position.x() * -1 + 1);
+			_position.setY(_position.y() * -1 + 1);
+		}
 }
 
 void
@@ -94,6 +83,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
 		_position = _character->position();
+		irotate(getAngle(_character->direction()));
 		_position.decX(0.5);
 		_position.decY(0.5);
 	}

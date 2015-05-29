@@ -16,9 +16,6 @@ namespace Graphics
 {
 	class Character : public Object
 	{
-   public:
-      enum direction {UP, LEFT, DOWN, RIGHT};
-
 	public:
       Character(::Character const *, gdl::Model*);
       virtual ~Character();
@@ -27,13 +24,13 @@ namespace Graphics
       virtual void  update(gdl::Clock const &clock, gdl::Input &input);
       virtual void  draw(gdl::AShader &shader, gdl::Clock const &clock);
 
-      int	getAngle(direction);
+      int	getAngle(const::Character::Action);
       void  setAnim(bool);
+      void  irotate(int);
 	bool	operator==(const ::Character*) const;
 
 	private:
       gdl::Texture            _texture;
-      direction               _pos = UP;
       const ::Character*      _character;
       gdl::Model*             _model;
       int                     _frame = 0;
