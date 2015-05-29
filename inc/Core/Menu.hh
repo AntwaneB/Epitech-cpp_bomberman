@@ -11,6 +11,7 @@
 #include "Core/Observer.hpp"
 #include "Core/Input.hh"
 #include "Core/Level.hh"
+#include "Core/Config.hh"
 
 class Menu : public Subject, public EventHandler<Menu>
 {
@@ -25,6 +26,9 @@ private:
 	void		keyPressed(Subject*);
 
 private:
+	void		init();
+	void		buildFilesCollection(Config::Param&);
+
 	void		changeLine(Input::Key);
 	void		changeValue(Input::Key);
 	void		runLine(Input::Key);

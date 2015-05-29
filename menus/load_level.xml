@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+
+<config>
+	<assets>
+		<location>./assets/asset.png</location>
+	</assets>
+	<cursor>
+		<asset>
+			<texture>
+				<start_x>1100</start_x>
+				<start_y>503</start_y>
+				<width>780</width>
+				<height>100</height>
+			</texture>
+			<scale>
+				<x>0.5f</x>
+				<y>0.5f</y>
+			</scale>
+			<position>
+				<x>565</x>
+				<y>338</y>
+			</position>
+		</asset>
+	</cursor>
+	<title>Bomberman !</title>
+	<size>
+		<x>960</x>
+		<y>540</y>
+	</size>
+	<sound>./assets/bomberman.wav</sound>
+	<background>
+		<location>./assets/bomber.png</location>
+		<scale>
+			<x>0.5f</x>
+			<y>0.5f</y>
+		</scale>
+	</background>
+	<content>
+
+		<saves>
+			<selected>true</selected>
+			<selectable>false</selectable>
+			<id>saves</id>
+			<is_collection>true</is_collection>
+			<cols>3</cols>
+			<collection>
+				<type>files</type>
+				<folder>./saves/</folder>
+				<files_ext>xml</files_ext>
+				<font_size>50</font_size>
+			</collection>
+			<position>
+				<min_x>50</min_x>
+				<min_y>115</min_y>
+				<max_x>945</max_x>
+				<max_y>500</max_y>
+			</position>
+		</saves>
+
+	</content>
+</config>

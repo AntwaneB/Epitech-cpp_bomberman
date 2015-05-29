@@ -59,40 +59,44 @@ Graphics::Menu::init(::Menu* menu)
 	{
 		Config::Param& param = it->second;
 
-		sf::Sprite sprite;
-		sprite.setTexture(_assetsTexture);
-		sprite.setTextureRect(sf::IntRect(param["asset"]["texture"]["start_x"], param["asset"]["texture"]["start_y"], param["asset"]["texture"]["width"], param["asset"]["texture"]["height"]));
-		sprite.setScale(param["asset"]["scale"]["x"], param["asset"]["scale"]["y"]);
-		sprite.setPosition(param["asset"]["position"]["x"], param["asset"]["position"]["y"]);
-		_sprites.push_back(sprite);
-
-
-		if (param["selected"] == true)
+		if (param["is_collection"] == false)
 		{
-			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
-		}
-
-		if (param["has_value"] == true)
-		{
-			sf::Text text;
-			text.setFont(_font);
-			/*
-			if (param["has_enum"] == true)
+			if (param["type"] != "value_only")
 			{
-				if (param["value"]["value"] == 1)
-					txt.setString("Easy");
-				else if (param["value"]["value"] == 2)
-					txt.setString("Normal");
-				else
-					txt.setString("Hard");
+				sf::Sprite sprite;
+				sprite.setTexture(_assetsTexture);
+				sprite.setTextureRect(sf::IntRect(param["asset"]["texture"]["start_x"], param["asset"]["texture"]["start_y"], param["asset"]["texture"]["width"], param["asset"]["texture"]["height"]));
+				sprite.setScale(param["asset"]["scale"]["x"], param["asset"]["scale"]["y"]);
+				sprite.setPosition(param["asset"]["position"]["x"], param["asset"]["position"]["y"]);
+				_sprites.push_back(sprite);
 			}
-			else
-			*/
-			text.setString(static_cast<std::string>(param["value"]["value"]));
-			text.setCharacterSize(param["value"]["size"]);
-			text.setColor(sf::Color(254, 221, 0));
-			text.setPosition(param["value"]["x"], param["value"]["y"]);
-			_texts[&param] = text;
+
+			if (param["selected"] == true)
+				_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
+
+			if (param["has_value"] == true)
+			{
+				sf::Text text;
+				text.setFont(_font);
+				text.setString(static_cast<std::string>(param["value"]["value"]));
+				text.setCharacterSize(param["value"]["size"]);
+				text.setColor(param["type"] != "value_only" ? sf::Color(254, 221, 0) : sf::Color::White);
+				text.setPosition(param["value"]["x"], param["value"]["y"]);
+				_texts[&param] = text;
+			}
+		}
+		else
+		{
+			for (auto value = param["collection"]["values"].begin(); value != param["collection"]["values"].end(); ++value)
+			{
+				sf::Text text;
+				text.setFont(_font);
+				text.setString(static_cast<std::string>(value->second));
+				text.setCharacterSize(param["collection"]["font_size"]);
+				text.setColor(sf::Color(254, 221, 0));
+				text.setPosition(param["position"]["min_x"], static_cast<int>(param["position"]["min_y"]) + std::stoi(value->first) * (5 + static_cast<int>(param["collection"]["font_size"])));
+				_collections[&param].push_back(text);
+			}
 		}
 	}
 
@@ -140,13 +144,12 @@ Graphics::Menu::update()
 	{
 		Config::Param& param = it->second;
 
-		if (param["selected"] == true)
+		if (param["is_collection"] == false)
 		{
-			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
-		}
-		if (param["has_value"] == true)
-		{
-			_texts[&param].setString(static_cast<std::string>(param["value"]["value"]));
+			if (param["selected"] == true)
+				_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
+			if (param["has_value"] == true)
+				_texts[&param].setString(static_cast<std::string>(param["value"]["value"]));
 		}
 	}
 }
@@ -166,6 +169,11 @@ Graphics::Menu::draw()
 	for (auto it = _texts.begin(); it != _texts.end(); ++it)
 	{
 		_window.draw(it->second);
+	}
+	for (auto it = _collections.begin(); it != _collections.end(); ++it)
+	{
+		for (auto yt = it->second.begin(); yt != it->second.end(); ++yt)
+			_window.draw(*yt);
 	}
 
 	_window.display();
