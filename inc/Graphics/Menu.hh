@@ -42,6 +42,7 @@ namespace Graphics
 		//Textures
 		sf::Texture		_assetsTexture;
 		sf::Texture		_backgroundTexture;
+		sf::Font _font;
 
 		//Sprite
 		std::list<sf::Sprite>	_sprites;

@@ -53,8 +53,8 @@ Graphics::Menu::init(::Menu* menu)
 
 	_sprites.clear();
 	
-	sf::Font font;
-	font.loadFromFile("./assets/ocraextended.ttf");
+	//sf::Font font;
+	_font.loadFromFile("./assets/ocraextended.ttf");
 	
 	for (auto it = _menu->layout()["content"].begin(); it != _menu->layout()["content"].end(); ++it)
 	{
@@ -75,7 +75,7 @@ Graphics::Menu::init(::Menu* menu)
 		if (param["has_value"] == true)
 		{
 			sf::Text txt;
-			txt.setFont(font);
+			txt.setFont(_font);
 			txt.setString(static_cast<std::string>(param["value"]["value"]));
 			txt.setCharacterSize(param["value"]["size"]);
 			txt.setColor(sf::Color::White);
@@ -149,7 +149,7 @@ Graphics::Menu::draw()
 	}
 	for (auto it = _texts.begin(); it != _texts.end(); ++it)
 	{
-		//_window.draw(it->second);	
+		_window.draw(it->second);	
 	}
 
 	_window.display();
