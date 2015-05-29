@@ -90,7 +90,7 @@ Graphics::Menu::init(::Menu* menu)
 			*/
 			text.setString(static_cast<std::string>(param["value"]["value"]));
 			text.setCharacterSize(param["value"]["size"]);
-			text.setColor(sf::Color::White);
+			text.setColor(sf::Color(254, 221, 0));
 			text.setPosition(param["value"]["x"], param["value"]["y"]);
 			_texts[&param] = text;
 		}
