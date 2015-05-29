@@ -90,9 +90,9 @@
 				<max>100</max>
 				<min>10</min>
 				<value>10</value>
-				<size>50</size>
-				<x>0</x>
-				<y>100</y>
+				<size>55</size>
+				<x>730</x>
+				<y>82</y>
 			</value>
 			<action>
 				<name>RUN_LEVEL</name>
