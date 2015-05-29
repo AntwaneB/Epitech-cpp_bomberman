@@ -86,6 +86,7 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 		irotate(getAngle(_character->direction()));
 		_position.decX(0.5);
 		_position.decY(0.5);
+		_position.incZ(0.5);
 	}
 	_anim = _character->moving();
 }
@@ -94,8 +95,6 @@ void
 Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	//Couleur
-	//int i = rand() % 1000;
-	//shader.setUniform("color", glm::vec4(i, i, i, i));
 	_texture.bind();
 	if (_anim == true)
 	{
@@ -128,7 +127,8 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 		if (_frame != 0)
 			_frame += 1;
 	}
-	(void)clock;
+	int i = rand() % 4 + 1;
+	shader.setUniform("color", glm::vec4(i, i, 0, 1));
 	_model->draw(shader, getTransformation(), clock.getElapsed());
 }
 
