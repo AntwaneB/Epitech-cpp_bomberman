@@ -86,10 +86,14 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
+			<has_value>true</has_value>
 			<value>
 				<max>100</max>
 				<min>10</min>
 				<value>10</value>
+				<size>50</size>
+				<x>0</x>
+				<y>100</y>
 			</value>
 			<action>
 				<name>NEW_MENU</name>
@@ -123,11 +127,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -154,11 +154,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -218,11 +214,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -249,11 +241,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -314,11 +302,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -345,11 +329,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -409,11 +389,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -440,11 +416,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -503,11 +475,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>
@@ -534,11 +502,7 @@
 					<y>0.5f</y>
 				</scale>
 			</asset>
-			<value>
-				<max>100</max>
-				<min>10</min>
-				<value>10</value>
-			</value>
+			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
 				<param>./menus/load_level.xml</param>

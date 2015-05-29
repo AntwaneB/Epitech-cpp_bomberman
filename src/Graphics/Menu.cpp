@@ -52,6 +52,10 @@ Graphics::Menu::init(::Menu* menu)
 	_cursor.setScale(_menu->layout()["cursor"]["asset"]["scale"]["x"], _menu->layout()["cursor"]["asset"]["scale"]["y"]);
 
 	_sprites.clear();
+	
+	sf::Font font;
+	font.loadFromFile("./assets/ocraextended.ttf");
+	
 	for (auto it = _menu->layout()["content"].begin(); it != _menu->layout()["content"].end(); ++it)
 	{
 		Config::Param& param = it->second;
@@ -63,9 +67,20 @@ Graphics::Menu::init(::Menu* menu)
 		sprite.setPosition(param["asset"]["position"]["x"], param["asset"]["position"]["y"]);
 		_sprites.push_back(sprite);
 
+
 		if (param["selected"] == true)
 		{
 			_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
+		}
+		if (param["has_value"] == true)
+		{
+			sf::Text txt;
+			txt.setFont(font);
+			txt.setString(static_cast<std::string>(param["value"]["value"]));
+			txt.setCharacterSize(param["value"]["size"]);
+			txt.setColor(sf::Color::White);
+			txt.setPosition(param["value"]["x"], param["value"]["y"]);
+			_texts[&param] = txt;
 		}
 	}
 
@@ -131,6 +146,10 @@ Graphics::Menu::draw()
 	for (auto it = _sprites.begin(); it != _sprites.end(); ++it)
 	{
 		_window.draw(*it);
+	}
+	for (auto it = _texts.begin(); it != _texts.end(); ++it)
+	{
+		//_window.draw(*it);	
 	}
 
 	_window.display();
