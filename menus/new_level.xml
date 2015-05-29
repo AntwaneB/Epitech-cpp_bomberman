@@ -55,8 +55,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/new_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 			<cursor>
 				<position>
@@ -96,8 +95,7 @@
 				<y>100</y>
 			</value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/load_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 			<cursor>
 				<position>
@@ -129,8 +127,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/load_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 		</leftcursor1>
 
@@ -156,8 +153,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/load_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 		</rightcursor1>
 
@@ -183,8 +179,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/load_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 			<cursor>
 				<position>
@@ -216,8 +211,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/load_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 		</leftcursor2>
 
@@ -243,8 +237,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/load_level.xml</param>
+				<name>RUN_LEVEL</name>
 			</action>
 		</rightcursor2>
 
@@ -271,7 +264,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>EXIT</name>
+				<name>RUN_LEVEL</name>
 			</action>
 			<cursor>
 				<position>
@@ -283,7 +276,6 @@
 
 
 		<leftcursor3>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -310,7 +302,6 @@
 		</leftcursor3>
 
 		<rightcursor3>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -370,7 +361,6 @@
 
 
 		<leftcursor4>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -397,7 +387,6 @@
 		</leftcursor4>
 
 		<rightcursor4>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -456,7 +445,6 @@
 		</difficulty>
 
 		<leftcursor5>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>
@@ -483,7 +471,6 @@
 		</leftcursor5>
 
 		<rightcursor5>
-			<order>6</order>
 			<selectable>false</selectable>
 			<selected>false</selected>
 			<asset>

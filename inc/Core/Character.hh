@@ -36,6 +36,7 @@ public:
 
 	Position<double>	position() const;
 	Position<double>	prevPosition() const;
+	Character::Action	direction() const;
 	Config&				attributes();
 	bool					alive() const;
 	int					score() const;
@@ -78,6 +79,7 @@ private:
 
 	bool						_moving;
 	seconds_t				_movingUntil;
+	Action					_direction;
 
 	int						_score;
 };

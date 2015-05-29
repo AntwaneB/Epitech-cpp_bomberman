@@ -149,7 +149,7 @@ Graphics::Menu::draw()
 	}
 	for (auto it = _texts.begin(); it != _texts.end(); ++it)
 	{
-		//_window.draw(*it);	
+		//_window.draw(it->second);	
 	}
 
 	_window.display();

@@ -91,21 +91,13 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	(void)clock;
 	(void)input;
-	//_position = _character->position();
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
-		//double x = _character->position().x() - _position.x();
-		//double y = _character->position().y() - _position.y();
-		//translate(glm::vec3(x, 0, y));
-		/*glm::vec3 position;
-		position[0] = _character->position().x();
-		position[1] = _character->position().z();
-		position[2] = _character->position().y();*/
 		_position = _character->position();
 		_position.decX(0.5);
 		_position.decY(0.5);
 	}
-	setAnim(_character->moving());
+	_anim = _character->moving();
 }
 
 void
@@ -115,33 +107,33 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 	_model->draw(shader, getTransformation(), GL_QUADS);
 	if (_anim == true)
 	{
-		if (_frame == 20 || _frame > 45)
+		if (_frame == 0 || _frame > 25)
 		{
-			if (_frame > 45)
-				_frame = 21;
+			if (_frame > 25)
+				_frame = 1;
 			_model->setCurrentSubAnim("START");
 		}
-		if (_frame == 30)
+		if (_frame == 10)
 			_model->setCurrentSubAnim("RUN");
-		if (_frame == 45)
-			_frame = 30;
+		if (_frame == 25)
+			_frame = 25;
 		_frame += 1;
 	}
     if (_anim == false)
     {
-		if (_frame > 20 && _frame < 46)
+		if (_frame > 0 && _frame < 8)
 		{
 			_model->setCurrentSubAnim("END");
-			_frame = 46;
+			_frame = 8;
 		}
-		if (_frame >= 46 && _frame <= 93)
+		if (_frame >= 8 && _frame <= 20)
 			_frame += 1;
-		if (_frame >= 93)
+		if (_frame >= 20)
 		{
 			_model->setCurrentSubAnim("RESET");
-			_frame = 20;
+			_frame = 0;
 		}
-		if (_frame != 20)
+		if (_frame != 0)
 			_frame += 1;
 	}
 	(void)clock;

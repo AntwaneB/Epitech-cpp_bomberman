@@ -16,7 +16,8 @@
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
 	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
-	  _killedBy(NULL), _ia(NULL), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false), _score(0)
+	  _killedBy(NULL), _ia(NULL), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false),
+	  _direction(MOVE_DOWN), _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -88,6 +89,12 @@ bool
 Character::moving() const
 {
 	return (_moving);
+}
+
+Character::Action
+Character::direction() const
+{
+	return (_direction);
 }
 
 void
@@ -214,16 +221,17 @@ Character::move(Character::Action action, const Clock & clock)
 		default:
 			break;
 	}
-	Position<double> newPos2(newPos);
-	newPos2.incX(0.25);
-	newPos2.incY(0.25);
-	newPos.decX(0.25);
-	newPos.decY(0.25);
+	Position<double> newPosRightDown(newPos);
+	newPosRightDown.incX(0.25);
+	newPosRightDown.incY(0.25);
+	Position<double> newPosLeftUp(newPos);
+	newPosLeftUp.decX(0.25);
+	newPosLeftUp.decY(0.25);
 
 	auto bombs = _level->bombs();
-	if ((_level->map().at(newPos)->solid() == false && _level->map().at(newPos2)->solid() == false
-		&& (bombs[newPos].empty() || newPos.asInt() == _position.asInt())
-		&& (bombs[newPos2].empty() || newPos2.asInt() == _position.asInt()))
+	if ((_level->map().at(newPosLeftUp)->solid() == false && _level->map().at(newPosRightDown)->solid() == false
+		&& ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
+			|| (!bombs[_position].empty())))
 		|| _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
 
@@ -248,6 +256,7 @@ Character::move(Character::Action action, const Clock & clock)
 
 		_moving = true;
 		_movingUntil = clock.seconds() + duration * 2;
+		_direction = action;
 
 		this->notify(this, CHARACTER_MOVED);
 	}
