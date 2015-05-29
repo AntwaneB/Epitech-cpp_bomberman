@@ -13,7 +13,8 @@
 #include "Core/RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
-	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount), _secondsElapsed(0), _charactersKills(0)
+	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
+	  _secondsElapsed(0), _charactersKills(0)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
