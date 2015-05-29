@@ -129,9 +129,8 @@ Menu::quit(Input::Key key __attribute__((unused)))
 void
 Menu::actionNewMenu(const std::string& param)
 {
-	this->notify(this, MENU_EXITED);
+//	this->notify(this, MENU_EXITED);
 	this->notify(new Menu(param), MENU_STARTED);
-	(void)param;
 }
 
 void
@@ -144,7 +143,8 @@ void
 Menu::actionRunLevel(const std::string& param __attribute__((unused)))
 {
 	this->notify(this, MENU_EXITED);
-	this->notify(new Level(13, 13, 5, 1), LEVEL_GENERATED);
+	this->notify(new Level(13, 13, 2, 2), LEVEL_GENERATED);
+
 }
 
 void

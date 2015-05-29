@@ -24,6 +24,7 @@ App::App(int ac, char** av)
 {
 	_actions[LEVEL_GENERATED] = &App::runLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
+	_actions[MENU_STARTED] = &App::menuStarted;
 
 	for (int i = 0; i < _ac; i++)
 		_av.push_back(av[i]);
@@ -70,6 +71,16 @@ App::exit(Subject* entity __attribute__((unused)))
 	throw ExitException("Exiting normally");
 }
 
+void
+App::menuStarted(Subject* entity)
+{
+	Menu* menu = safe_cast<Menu*>(entity);
+
+	menu->addObserver(this);
+	menu->addObserver(_display);
+	_display->addObserver(menu);
+}
+
 int
 App::run()
 {
@@ -96,8 +107,6 @@ App::run()
 			delete mainMenu;
 			throw e;
 		}
-
-		delete mainMenu;
 	}
 	catch (ExitException const & e)
 	{

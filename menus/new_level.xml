@@ -9,8 +9,8 @@
 			<texture>
 				<start_x>1100</start_x>
 				<start_y>503</start_y>
-				<end_x>780</end_x>
-				<end_y>100</end_y>
+				<width>780</width>
+				<height>100</height>
 			</texture>
 			<scale>
 				<x>0.5f</x>
@@ -29,27 +29,24 @@
 	</size>
 	<sound>./assets/bomberman.wav</sound>
 	<background>
-		<location>./assets/mainmenu.png</location>
+		<location>./assets/bomber.png</location>
 		<scale>
 			<x>0.5f</x>
 			<y>0.5f</y>
 		</scale>
 	</background>
 	<content>
-		<start>
-			<order>1</order>
-			<selectable>true</selectable>
-			<selected>true</selected>
+		<title>
 			<asset>
 				<texture>
 					<start_x>0</start_x>
-					<start_y>8</start_y>
-					<end_x>566</end_x>
-					<end_y>100</end_y>
+					<start_y>500</start_y>
+					<width>566</width>
+					<height>100</height>
 				</texture>
 				<position>
-					<x>600</x>
-					<y>330</y>
+					<x>338</x>
+					<y>10</y>
 				</position>
 				<scale>
 					<x>0.5f</x>
@@ -67,22 +64,59 @@
 					<y>338</y>
 				</position>
 			</cursor>
+		</title>
 
-		</start>
-		<load>
+		<width>
+			<order>1</order>
+			<selectable>true</selectable>
+			<selected>true</selected>
+			<asset>
+				<texture>
+					<start_x>0</start_x>
+					<start_y>612</start_y>
+					<width>500</width>
+					<height>113</height>
+				</texture>
+				<position>
+					<x>50</x>
+					<y>100</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+			<cursor>
+				<position>
+					<x>15</x>
+					<y>105</y>
+				</position>
+			</cursor>
+		</width>
+
+		<height>
 			<order>2</order>
 			<selectable>true</selectable>
 			<selected>false</selected>
 			<asset>
 				<texture>
 					<start_x>0</start_x>
-					<start_y>128</start_y>
-					<end_x>646</end_x>
-					<end_y>100</end_y>
+					<start_y>725</start_y>
+					<width>570</width>
+					<height>113</height>
 				</texture>
 				<position>
-					<x>600</x>
-					<y>380</y>
+					<x>50</x>
+					<y>166</y>
 				</position>
 				<scale>
 					<x>0.5f</x>
@@ -96,57 +130,26 @@
 			</action>
 			<cursor>
 				<position>
-					<x>565</x>
-					<y>388</y>
+					<x>15</x>
+					<y>171</y>
 				</position>
 			</cursor>
-		</load>
-		<settings>
+		</height>
+
+		<players>
 			<order>3</order>
 			<selectable>true</selectable>
 			<selected>false</selected>
 			<asset>
 				<texture>
 					<start_x>0</start_x>
-					<start_y>242</start_y>
-					<end_x>574</end_x>
-					<end_y>130</end_y>
+					<start_y>838</start_y>
+					<width>1010</width>
+					<height>115</height>
 				</texture>
 				<position>
-					<x>600</x>
-					<y>430</y>
-				</position>
-				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
-				</scale>
-			</asset>
-			<has_value>false</has_value>
-			<action>
-				<name>NEW_MENU</name>
-				<param>./menus/settings.xml</param>
-			</action>
-			<cursor>
-				<position>
-					<x>565</x>
-					<y>438</y>
-				</position>
-			</cursor>
-		</settings>
-		<exit>
-			<order>4</order>
-			<selectable>true</selectable>
-			<selected>false</selected>
-			<asset>
-				<texture>
-					<start_x>0</start_x>
-					<start_y>372</start_y>
-					<end_x>287</end_x>
-					<end_y>100</end_y>
-				</texture>
-				<position>
-					<x>600</x>
-					<y>480</y>
+					<x>50</x>
+					<y>230</y>
 				</position>
 				<scale>
 					<x>0.5f</x>
@@ -159,29 +162,74 @@
 			</action>
 			<cursor>
 				<position>
-					<x>565</x>
-					<y>488</y>
+					<x>15</x>
+					<y>238</y>
 				</position>
 			</cursor>
-		</exit>
-		<quote>
-			<selectable>false</selectable>
+		</players>
+
+		<ias>
+			<order>4</order>
+			<selectable>true</selectable>
+			<selected>false</selected>
 			<asset>
 				<texture>
-					<start_x>1100</start_x>
-					<start_y>600</start_y>
-					<end_x>1880</end_x>
-					<end_y>100</end_y>
+					<start_x>1090</start_x>
+					<start_y>8</start_y>
+					<width>710</width>
+					<height>105</height>
 				</texture>
 				<position>
-					<x>30</x>
-					<y>450</y>
+					<x>50</x>
+					<y>300</y>
 				</position>
 				<scale>
 					<x>0.5f</x>
 					<y>0.5f</y>
 				</scale>
 			</asset>
-		</quote>
+			<has_value>false</has_value>
+			<action>
+				<name>EXIT</name>
+			</action>
+			<cursor>
+				<position>
+					<x>15</x>
+					<y>308</y>
+				</position>
+			</cursor>
+		</ias>
+
+		<difficulty>
+			<order>5</order>
+			<selectable>true</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>0</start_x>
+					<start_y>957</start_y>
+					<width>865</width>
+					<height>120</height>
+				</texture>
+				<position>
+					<x>50</x>
+					<y>370</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<has_value>false</has_value>
+			<action>
+				<name>EXIT</name>
+			</action>
+			<cursor>
+				<position>
+					<x>15</x>
+					<y>378</y>
+				</position>
+			</cursor>
+		</difficulty>
 	</content>
 </config>

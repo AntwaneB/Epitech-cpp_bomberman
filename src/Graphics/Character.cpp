@@ -3,6 +3,8 @@
 Graphics::Character::Character(::Character const * character, gdl::Model* model)
 	: Object(character->position()), _character(character), _model(model)
 {
+	_position.decX(0.5);
+	_position.decY(0.5);
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
 }
 
@@ -100,6 +102,8 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 		position[1] = _character->position().z();
 		position[2] = _character->position().y();*/
 		_position = _character->position();
+		_position.decX(0.5);
+		_position.decY(0.5);
 	}
 	_anim = _character->moving();
 }

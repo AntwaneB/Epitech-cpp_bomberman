@@ -36,6 +36,7 @@ namespace Graphics
 		sf::RenderWindow	_window;
 
 		::Menu*			_menu;
+		bool				_run;
 
 		//Textures
 		sf::Texture		_assetsTexture;

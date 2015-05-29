@@ -98,12 +98,10 @@ protected:
 		//if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK && event != LEVEL_PAUSE_TICK)
 		//	std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
 
-		int i = 0;
 		for (std::list<Observer*>::iterator it = _observers.begin(); it != _observers.end(); ++it)
 		{
 			if (*it != NULL)
 				(*it)->onNotify(entity, event);
-			i++;
 		}
 
 		while (!_eraseQueue.empty())
@@ -115,17 +113,8 @@ protected:
 
 	void notify(Subject * entity, Event event, Observer* observer)
 	{
-		//if (event != LEVEL_UPDATED && event != CLOCK_TICK && event != EXIT_TRIGGERED && event != KEY_PRESSED && event != CLOCK_PAUSE_TICK)
-		//	std::cout << "Event happened (" << _id << ") : " << _events[event] << std::endl;
-
 		if (observer != NULL)
 			observer->onNotify(entity, event);
-
-		while (!_eraseQueue.empty())
-		{
-			_observers.erase(_eraseQueue.front());
-			_eraseQueue.pop();
-		}
 	}
 
 private:
