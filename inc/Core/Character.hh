@@ -73,6 +73,7 @@ private:
 
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;
+	seconds_t				_previousBomb;
 	int						_elapsedTime;
 	int						_elapsedCentiseconds;
 	int						_prevMovement;
