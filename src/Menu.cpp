@@ -83,7 +83,7 @@ Menu::buildFilesCollection(Config::Param& collection)
 				element["value"]["x"] = x;
 				element["cursor"]["position"]["x"] = static_cast<int>(element["value"]["x"]) - 35;
 				element["cursor"]["position"]["y"] = static_cast<int>(element["value"]["y"]) + 20;
-				element["action"]["name"] = "LOAD_LEVEL";
+				element["action"]["name"] = static_cast<std::string>(collection["action"]["name"]);
 				element["action"]["param"] = folder + filename;
 
 				std::string key = collection["id"];

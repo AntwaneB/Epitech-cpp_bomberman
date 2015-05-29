@@ -43,6 +43,9 @@
 			<id>saves</id>
 			<is_collection>true</is_collection>
 			<cols>3</cols>
+			<action>
+				<name>LOAD_LEVEL</name>
+			</action>
 			<collection>
 				<type>files</type>
 				<folder>./saves/</folder>
