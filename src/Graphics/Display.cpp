@@ -65,7 +65,6 @@ Graphics::Display::exitMenu(Subject* entity)
 		this->removeObserver(_menu);
 		menu->removeObserver(_menu);
 
-		delete _menu;
 		_menu = NULL;
 	}
 }
