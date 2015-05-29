@@ -103,6 +103,68 @@
 			</cursor>
 		</width>
 
+		<leftcursor1>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>146</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>650</x>
+					<y>105</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</leftcursor1>
+
+		<rightcursor1>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>265</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>850</x>
+					<y>105</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</rightcursor1>
+
 		<height>
 			<order>2</order>
 			<selectable>true</selectable>
@@ -136,6 +198,69 @@
 			</cursor>
 		</height>
 
+		<leftcursor2>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>146</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>650</x>
+					<y>171</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</leftcursor2>
+
+		<rightcursor2>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>265</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>850</x>
+					<y>171</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</rightcursor2>
+
+
 		<players>
 			<order>3</order>
 			<selectable>true</selectable>
@@ -167,6 +292,69 @@
 				</position>
 			</cursor>
 		</players>
+
+
+		<leftcursor3>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>146</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>650</x>
+					<y>235</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</leftcursor3>
+
+		<rightcursor3>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>265</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>850</x>
+					<y>235</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</rightcursor3>
 
 		<ias>
 			<order>4</order>
@@ -200,6 +388,69 @@
 			</cursor>
 		</ias>
 
+
+		<leftcursor4>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>146</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>650</x>
+					<y>305</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</leftcursor4>
+
+		<rightcursor4>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>265</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>850</x>
+					<y>305</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</rightcursor4>
+
 		<difficulty>
 			<order>5</order>
 			<selectable>true</selectable>
@@ -231,5 +482,68 @@
 				</position>
 			</cursor>
 		</difficulty>
+
+		<leftcursor5>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>146</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>650</x>
+					<y>375</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</leftcursor5>
+
+		<rightcursor5>
+			<order>6</order>
+			<selectable>false</selectable>
+			<selected>false</selected>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>265</start_y>
+					<width>70</width>
+					<height>80</height>
+				</texture>
+				<position>
+					<x>850</x>
+					<y>375</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<value>
+				<max>100</max>
+				<min>10</min>
+				<value>10</value>
+			</value>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/load_level.xml</param>
+			</action>
+		</rightcursor5>
+
 	</content>
 </config>
