@@ -1,16 +1,16 @@
 #include "Graphics/Item.hh"
 
-Graphics::Item::Item(const ::Item* item, std::vector<gdl::Model*> models)
+Graphics::Item::Item(const ::Item* item, std::vector<gdl::Model*> models, size_t nb)
 	: Object(item->position()), _item(item)
 {
  	scale(glm::vec3(0.010, 0.010, 0.010));
 	translate(glm::vec3(0, 1, 0));
 	if (item->type() == ::Item::RANGE_INCREASER)
-		_model = models[2];
+		_model = models[nb + 1];
 	else if (item->type() == ::Item::SPEED_INCREASER)
-		_model = models[3];
+		_model = models[nb + 2];
 	else
-		_model = models[4];
+		_model = models[nb + 3];
 }
 
 Graphics::Item::~Item()

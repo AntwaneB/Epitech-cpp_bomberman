@@ -1,7 +1,7 @@
 #include "Graphics/Split.hh"
 
-Graphics::Split::Split(::Level const * level, int id, size_t splitsCount)
-	: _level(level), _x(0), _y(0), _splitsCount(splitsCount)
+Graphics::Split::Split(::Level const * level, int id, size_t splitsCount, size_t size)
+	: _level(level), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
 {
 	_map = new Map(level->map());
 	if (id == 0)
@@ -36,11 +36,12 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 
 	_map->initialize();
 
-	for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it)
+	size_t i = 0;
+	for (auto it = _level->characters().begin(); it != _level->characters().end(); ++it, ++i)
 	{
 		for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
 		{
-			Character* character = new Graphics::Character(*iit, _models[0]);
+			Character* character = new Graphics::Character(*iit, _models[i]);
 			character->initialize();
 			_characters.push_back(character);
 		}
@@ -62,7 +63,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 
 		if (!found)
 		{
-			Bomb* bomb = new Graphics::Bomb(*it, _models[1]);
+			Bomb* bomb = new Graphics::Bomb(*it, _models[_size]);
 			bomb->initialize();
 			_bombs.push_back(bomb);
 		}
@@ -78,7 +79,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 
 		if (!found)
 		{
-			Item* item = new Graphics::Item(*it, _models);
+			Item* item = new Graphics::Item(*it, _models, _size);
 			item->initialize();
 			_items.push_back(item);
 		}
