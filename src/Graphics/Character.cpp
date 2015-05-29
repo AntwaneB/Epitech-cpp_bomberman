@@ -93,8 +93,10 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 void
 Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
+	//Couleur
+	//int i = rand() % 1000;
+	//shader.setUniform("color", glm::vec4(i, i, i, i));
 	_texture.bind();
-	_model->draw(shader, getTransformation(), GL_QUADS);
 	if (_anim == true)
 	{
 		if (_frame == 0 || _frame > 25)
@@ -106,7 +108,7 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 		if (_frame == 10)
 			_model->setCurrentSubAnim("RUN");
 		if (_frame == 25)
-			_frame = 25;
+			_frame = 15;
 		_frame += 1;
 	}
     if (_anim == false)
@@ -127,6 +129,7 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 			_frame += 1;
 	}
 	(void)clock;
+	_model->draw(shader, getTransformation(), clock.getElapsed());
 }
 
 void Graphics::Character::setAnim(bool anim)
