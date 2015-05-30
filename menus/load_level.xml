@@ -36,6 +36,34 @@
 		</scale>
 	</background>
 	<content>
+		<title>
+			<asset>
+				<texture>
+					<start_x>1099</start_x>
+					<start_y>857</start_y>
+					<width>705</width>
+					<height>87</height>
+				</texture>
+				<position>
+					<x>338</x>
+					<y>10</y>
+				</position>
+				<scale>
+					<x>0.5f</x>
+					<y>0.5f</y>
+				</scale>
+			</asset>
+			<has_value>false</has_value>
+			<action>
+				<name>RUN_LEVEL</name>
+			</action>
+			<cursor>
+				<position>
+					<x>565</x>
+					<y>338</y>
+				</position>
+			</cursor>
+		</title>
 
 		<saves>
 			<selected>true</selected>
