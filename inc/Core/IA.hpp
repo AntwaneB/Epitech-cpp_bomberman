@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE true
+#define VERBOSE false
 
 namespace IA
 {
