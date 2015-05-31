@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE false
+#define VERBOSE true
 
 namespace IA
 {
@@ -76,7 +76,8 @@ namespace IA
 			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
          void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
          void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
-			Character::Action 	checkAlignment(Character::Action &) const;
+         	Character::Action 	checkDestinationSafe(Character::Action) const;
+			Character::Action 	checkAlignment(Character::Action) const;
 			Character::Action     Move();
 			Character::Action     escapeBomb();
 
@@ -308,21 +309,15 @@ void IA::IA<T>::scanMap()
 template<IA::Difficulty T>
 void IA::IA<T>::playTurn()
 {
-    // int     myX = _self->position().x();
-    // int     myY = _self->position().y();
-
-    refreshPosition();
 	if (VERBOSE)
 	{
 		std::cout << "BEGIN IA" << std::endl;
-  //       std::cout << "myPosition stocked: " << _self->position().x() << "/" << _self->position().y() << std::endl;
     }
-    //_strategyMap[_myY][_myX].incHistory();
+    refreshPosition();
+    //_strategyMap[_myY][_myX].incHistory(); // A REMETTRE (MEDIUM)
 	scanMap();
     bool isInDanger = BombDetection();
-
 	Character::Action action;
-	Character::Action finalAction;
 
 	if (isInDanger)
 	{
@@ -337,14 +332,18 @@ void IA::IA<T>::playTurn()
 		else
 			action = Move();
 	}
-	finalAction = checkAlignment(action);
-	_self->pushAction(finalAction);
+	if (isInDanger == false)
+	{	
+		action = checkDestinationSafe(action);
+	}
+	action = checkAlignment(action);
+	_self->pushAction(action);
     if (VERBOSE)
     {
         debugStrategieMap();
         debugStrategieMapDirections();
         std::cout << "  END IA with finalAction : ";
-        displayAction(finalAction);
+        displayAction(action);
         std::cout << std::endl << std::endl;
     }
     _escapeNodes.clear();
@@ -511,27 +510,27 @@ void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOV
 	{
 		if(action == Character::MOVE_UP)
 		{
-		 std::cout << "MOVE_UP";
+			std::cout << "MOVE_UP";
 		}
-		else if(action == Character::MOVE_LEFT)
+		else if(action == Character::MOVE_RIGHT)
 		{
-		 std::cout << "MOVE_LEFT";
+			std::cout << "MOVE_RIGHT";
 		}
 		else if(action == Character::MOVE_DOWN)
 		{
-		 std::cout << "MOVE_DOWN";
+			std::cout << "MOVE_DOWN";
 		}
 		else if(action == Character::MOVE_LEFT)
 		{
-		 std::cout << "MOVE_LEFT";
+			std::cout << "MOVE_LEFT";
 		}
 		else if(action == Character::WAIT)
 		{
-		 std::cout << "WAIT";
+			std::cout << "WAIT";
 		}
 		else if(action == Character::DROP_BOMB)
 		{
-		 std::cout << "DROP_BOMB";
+			std::cout << "DROP_BOMB";
 		}
 		else
 		{
@@ -667,7 +666,7 @@ if (VERBOSE)
 }
 
 template<IA::Difficulty T>
-Character::Action IA::IA<T>::checkAlignment(Character::Action & suggestedAction) const
+Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) const
 {
 	if (VERBOSE)
 	{
@@ -691,13 +690,17 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action & suggestedAction)
 		else if ((_self->position().x() - static_cast<long>(_self->position().x())) < 0.5) // si l IA est trop a gauche ou a droite pour se depl sur laxe x
 		{
 			if (VERBOSE)
-				std::cout << "checkAlignment() : need alignment before movement. x = " << _self->position().x() << std::endl;
+			{
+				std::cout << "checkAlignment() : need alignment before movement. x = " << _self->position().x() << ". Action corrected to MOVE_RIGHT" << std::endl;
+			}
 			return (Character::MOVE_RIGHT);
 		}
 		else
 		{
 			if (VERBOSE)
-				std::cout << "checkAlignment() : need alignment before movement x = " << _self->position().x() << std::endl;
+			{
+				std::cout << "checkAlignment() : need alignment before movement. x = " << _self->position().x() << ". Action corrected to MOVE_LEFT" << std::endl;
+			}
 			return (Character::MOVE_LEFT);
 		}
 	}
@@ -719,14 +722,16 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action & suggestedAction)
 		{
 			if (VERBOSE)
 			{
-				std::cout << "checkAlignment() : need alignment before movement. y = " << _self->position().y() << std::endl;
+				std::cout << "checkAlignment() : need alignment before movement. y = " << _self->position().y() << ". Action corrected to MOVE_DOWN" << std::endl;
 			}
 			return (Character::MOVE_DOWN);
 		}
 		else
 		{
 			if (VERBOSE)
-				std::cout << "checkAlignment() : need alignment before movement. y = " << _self->position().y() << std::endl;
+			{
+				std::cout << "checkAlignment() : need alignment before movement. y = " << _self->position().y() << ". Action corrected to MOVE_UP"<< std::endl;
+			}
 			return (Character::MOVE_UP);
 		}
 	}
@@ -762,6 +767,37 @@ bool IA::IA<T>::isAroundSafe() const
     	i++;
     }
     return (false);
+}
+
+template<IA::Difficulty T>
+Character::Action IA::IA<T>::checkDestinationSafe(Character::Action suggestedAction) const
+{
+	std::map<Character::Action, Position<int>> 				directions;
+	std::map<Character::Action, Position<int>>::iterator 	directionIterator;
+	Position<int> 											pointedPosition;
+	int                     mapHeight = _level->map().height();
+    int                     mapWidth = _level->map().width();
+
+	directions[Character::MOVE_UP] = Position<int>(_myX, _myY - 1);
+	directions[Character::MOVE_RIGHT] = Position<int>(_myX + 1, _myY);
+	directions[Character::MOVE_DOWN] = Position<int>(_myX, _myY + 1);
+	directions[Character::MOVE_LEFT] = Position<int>(_myX - 1, _myY);
+	if (suggestedAction == Character::DROP_BOMB || suggestedAction == Character::WAIT)
+	{
+		return (suggestedAction);
+	}
+	directionIterator = directions.find(suggestedAction);
+	if (directionIterator != directions.end())
+	{
+		pointedPosition = directionIterator->second;
+		if (pointedPosition.x() >= 0 && pointedPosition.x() < mapWidth && pointedPosition.y() >= 0 && pointedPosition.y() <mapHeight
+			&& (_strategyMap[pointedPosition.y()][pointedPosition.x()].explosion() == true
+			|| _strategyMap[pointedPosition.y()][pointedPosition.x()].bomb() == true))
+		{
+			return (Character::WAIT);
+		}
+	}
+	return (suggestedAction);
 }
 
 #endif	/* IA_HPP */

@@ -269,17 +269,12 @@ namespace IA
 				}
 			}
 		}
-		// if (finalAction == Character::WAIT && possibleDirections.size() > 0)
-		// {
-		// 	finalAction = possibleDirections[rand() % possibleDirections.size()];
-		// }
 		if (VERBOSE)
 		{
 			std::cout << "MOVE(HARD) now finished with :";
 			displayAction(finalAction);
 			std::cout << std::endl;
 		}
-		//_escapeNodes.clear();
 		return finalAction;
 	}
 }
