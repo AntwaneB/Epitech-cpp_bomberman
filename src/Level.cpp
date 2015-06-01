@@ -140,6 +140,15 @@ Level::tick(Subject* entity)
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
+		for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
+		{
+			if (_clock.seconds() >= it->first)
+			{
+				it = _explosions.erase(it);
+				--it;
+			}
+		}
+
 		this->notify(this, LEVEL_UPDATED);
 
 		if (static_cast<size_t>(_clock.seconds()) > _secondsElapsed)
@@ -372,6 +381,12 @@ Level::bombExploded(Subject* entity)
 	this->removeObserver(bomb);
 	if (std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb) != _bombs[bomb->position()].end())
 		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
+
+	std::pair<seconds_t, std::vector<Position<>> > pair;
+	pair.first = _clock.seconds() + 1;
+	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
+		pair.second.push_back(*it);
+	_explosions.push_back(pair);
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }

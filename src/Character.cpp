@@ -26,7 +26,9 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, s
 	_attributes = g_settings["entities"]["character"];
 
 	if (!_isPlayer)
+	{
 		_ia = new IA::IA<IA::HARD>(_level, this);
+	}
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
@@ -229,11 +231,18 @@ Character::move(Character::Action action, const Clock & clock)
 	Position<double> newPosLeftUp(newPos);
 	newPosLeftUp.decX(0.25);
 	newPosLeftUp.decY(0.25);
+	Position<double> newPosLeftDown(newPos);
+	newPosLeftDown.decX(0.25);
+	newPosLeftDown.incY(0.25);
+	Position<double> newPosRightUp(newPos);
+	newPosRightUp.incX(0.25);
+	newPosRightUp.decY(0.25);
 
 	auto bombs = _level->bombs();
 	if ((_level->map().at(newPosLeftUp)->solid() == false && _level->map().at(newPosRightDown)->solid() == false
-		&& ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
-			|| (!bombs[_position].empty())))
+		 && _level->map().at(newPosLeftDown)->solid() == false && _level->map().at(newPosRightUp)->solid() == false
+		 && ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
+			 || (!bombs[_position].empty())))
 		|| _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
 

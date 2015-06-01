@@ -11,6 +11,7 @@
 #include <map>
 #include "Observer.hpp"
 #include "Clock.hh"
+#include "Position.hh"
 #include "Map.hh"
 #include "Character.hh"
 #include "Item.hh"
@@ -68,6 +69,7 @@ private:
 	std::list<Character*>								_players;
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
+	std::list<std::pair<seconds_t, std::vector<Position<> > > >	_explosions;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;
