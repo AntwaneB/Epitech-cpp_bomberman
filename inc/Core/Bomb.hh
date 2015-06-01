@@ -16,6 +16,8 @@
 
 class Bomb : public EventHandler<Bomb>, public Subject, public Item
 {
+	friend class	Save;
+
 public:
 	Bomb(Position<> const &, size_t, double, const Character*);
 	virtual ~Bomb();
@@ -27,7 +29,7 @@ public:
 	char		progress() const;
 	const Character*	owner() const;
 
-	void		toConfig(Config &) const;
+	void		toConfig(Config::Param &) const;
 
 private:
 	virtual void tick(Subject*);

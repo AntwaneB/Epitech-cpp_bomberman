@@ -254,18 +254,3 @@ Character::clearActions()
 	while (!_queuedActions.empty())
 		_queuedActions.pop();
 }
-
-/*
-void
-Character::toConfig(Config & cfg) const
-{
-	int	index;
-
-	index = 0;
-	_position.toConfig(cfg[_nth]["position"]);
-	_prevPosition.toConfig(cfg[_nth]["prevPosition"]);
-	cfg[_nth]["attributes"] = _attributes;
-	for (std::list<Bomb*>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++; index++)
-		(*it)->toConfig(cfg[_nth]["bombs"][index]);
-}
-*/

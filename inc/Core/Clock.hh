@@ -16,6 +16,8 @@ typedef long double	seconds_t;
 
 class Clock : public Subject, public EventHandler<Clock>
 {
+	friend class	Save;
+
 public:
 	Clock();
 	virtual ~Clock();

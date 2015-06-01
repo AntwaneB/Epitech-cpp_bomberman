@@ -25,7 +25,7 @@ public:
 	Type		type() const;
 	Position<>	position() const;
 	Position<>	prevPosition() const;
-	void		toConfig(Config &) const;
+	void		toConfig(Config::Param &) const;
 
 protected:
 	Position<>		_position;

@@ -20,6 +20,8 @@
 
 class Level : public EventHandler<Level>, public Subject
 {
+	friend class	Save;
+
 public:
 	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount);
 	virtual ~Level();
@@ -38,9 +40,6 @@ public:
 	std::vector<Bomb*>		const bombsRaw() const;
 	std::vector<BonusItem*>	const itemsRaw() const;
 
-	void	exportFile(const std::string &) const;
-	void	toConfig(Config & cfg) const;
-
 private:
 	Character*	pushCharacter();
 	void			end();
@@ -58,9 +57,6 @@ private:
 
 	void	tick(Subject* entity);
 	void	pauseTick(Subject* entity);
-
-private:
-	void	charactersToConfig(Config &) const;
 
 	private:
 	Map														_map;

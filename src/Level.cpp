@@ -414,34 +414,3 @@ Level::quitLevel(Subject* entity __attribute__((unused)))
 {
 	this->end();
 }
-
-/*
-void
-Level::toConfig(Config & cfg) const
-{
-	int	index;
-
-	index = 0;
-	cfg["charactersCount"] = _charactersCount;
-	cfg["timeSpend"] = _clock.seconds();
-	for (std::map<Position<>, std::list<Character*>>::const_iterator it = _characters.begin(); it != _characters.end(); it++)
-		for (std::list<Character*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++)
-			(*it)->toConfig(cfg["characters"]);
-	for (std::map<Position<>, std::list<Bomb*>>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++)
-		for (std::list<Bomb*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
-			(*it)->toConfig(cfg["bombs"][index]);
-	index = 0;
-	for (std::map<Position<>, std::list<Item*>>::const_iterator it = _items.begin(); it != _items.end(); it++)
-		for (std::list<Item*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
-			(*it)->toConfig(cfg["items"][index]);
-}
-
-void
-Level::exportFile(const std::string & filename) const
-{
-	Config	cfg;
-
-	toConfig(cfg);
-	cfg.exportFile(filename);
-}
-*/

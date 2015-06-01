@@ -47,7 +47,10 @@ public:
 		operator unsigned short () const;
 		operator unsigned int () const;
 		operator unsigned long () const;
+//		operator size_t () const;
 
+		Param& operator = (Config const &);
+		Param& operator = (Param const &);
 		Param& operator = (bool);
 		Param& operator = (char);
 		Param& operator = (short);
@@ -57,6 +60,8 @@ public:
 		Param& operator = (float);
 		Param& operator = (std::string const &);
 		Param& operator = (const char[]);
+		Param& operator = (size_t);
+		Param& operator = (long double);
 
 		bool operator == (bool);
 		bool operator == (char);
@@ -140,6 +145,7 @@ public:
 
 public:
 	Config();
+	Config& operator=(Config const &);
 	Config& operator=(Config::Param const &);
 	virtual ~Config();
 

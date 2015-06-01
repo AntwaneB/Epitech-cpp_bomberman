@@ -26,6 +26,8 @@ namespace IA
 
 class Character : public EventHandler<Character>, public Subject
 {
+	friend class	Save;
+
 public:
 	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DROP_BOMB, WAIT };
 
@@ -44,8 +46,6 @@ public:
 
 	void		clearActions();
 	void		pushAction(Character::Action);
-
-	void		toConfig(Config &) const;
 
 private:
 	void tick(Subject* entity);
