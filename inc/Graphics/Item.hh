@@ -17,7 +17,7 @@ namespace Graphics
 	class Item : public Object
 	{
 	public:
-		Item(const ::Item*, std::vector<gdl::Model*>);
+		Item(const ::Item*, std::vector<gdl::Model*>, size_t);
 		virtual ~Item();
 
 		virtual bool  initialize();

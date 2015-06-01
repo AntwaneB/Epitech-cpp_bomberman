@@ -34,6 +34,7 @@ public:
 	size_t	height() const;
 	std::vector<std::vector<Block*> > const & map() const;
 	Block*	at(Position<int> const &) const;
+	Block*	at(int, int) const;
 
 private:
 	void	loadFromFile(const std::string &);

@@ -11,6 +11,7 @@
 #include <map>
 #include "Observer.hpp"
 #include "Clock.hh"
+#include "Position.hh"
 #include "Map.hh"
 #include "Character.hh"
 #include "Item.hh"
@@ -32,13 +33,22 @@ public:
 	Map const &		map() const;
 	size_t			charactersCount() const;
 
-	std::map<Position<>, std::list<Character*> > const &	characters() const;
-	std::map<Position<>, std::list<Bomb*> > const &		bombs() const;
-	std::map<Position<>, std::list<Item*> > const &		items() const;
-	std::list<Character*> const &						players() const;
-	std::vector<Character*> const charactersRaw() const;
-	std::vector<Bomb*>		const bombsRaw() const;
-	std::vector<BonusItem*>	const itemsRaw() const;
+	std::map<Position<>, std::list<Character*> > const &
+	characters() const;
+	std::map<Position<>, std::list<Bomb*> > const &
+	bombs() const;
+	std::map<Position<>, std::list<Item*> > const &
+	items() const;
+	std::list<Character*> const &
+	players() const;
+	std::vector<Character*> const
+	charactersRaw() const;
+	std::vector<Bomb*>		const
+	bombsRaw() const;
+	std::vector<BonusItem*>	const
+	itemsRaw() const;
+	std::list<std::pair<seconds_t, std::vector<Position<> > > >
+	explosions() const;
 
 private:
 	Character*	pushCharacter();
@@ -64,6 +74,7 @@ private:
 	std::list<Character*>								_players;
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
+	std::list<std::pair<seconds_t, std::vector<Position<> > > >	_explosions;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;

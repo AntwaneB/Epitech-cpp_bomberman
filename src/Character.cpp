@@ -15,9 +15,9 @@
 #include "Core/Input.hh"
 
 Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x, y, z),
-	  _solid(true), _alive(true), _killedBy(NULL), _ia(NULL), _elapsedTime(-1),
-	  _score(0)
+	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
+	  _killedBy(NULL), _ia(NULL), _previousBomb(-1), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false),
+	  _direction(MOVE_DOWN), _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -26,7 +26,9 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, s
 	_attributes = g_settings["entities"]["character"];
 
 	if (!_isPlayer)
+	{
 		_ia = new IA::IA<IA::HARD>(_level, this);
+	}
 
 	this->notify(this, CHARACTER_SPAWNED);
 }
@@ -85,6 +87,18 @@ Character::isPlayer() const
 	return (_isPlayer);
 }
 
+bool
+Character::moving() const
+{
+	return (_moving);
+}
+
+Character::Action
+Character::direction() const
+{
+	return (_direction);
+}
+
 void
 Character::tick(Subject* entity)
 {
@@ -92,52 +106,60 @@ Character::tick(Subject* entity)
 
 	if (_elapsedTime == -1)
 		_elapsedTime = clock->deciseconds();
+	if (_elapsedCentiseconds == -1)
+		_elapsedCentiseconds = clock->centiseconds();
 
+	// Capping speed
+	if (_attributes["speed"] > static_cast<int>(_attributes["max_speed"]))
+		_attributes["speed"] = static_cast<int>(_attributes["max_speed"]);
+
+	// Managing animations
+	if (_moving && clock->seconds() >= _movingUntil)
+	{
+		_moving = false;
+	}
+
+	// Updating clocks
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
 	{
 		_elapsedTime++;
 
 		if (_ia && !_isPlayer)
 			_ia->playTurn();
-
-		/*
-		if (_queuedActions.size() > 0
-			&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
-			 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
-			&& _attributes["can_move"] == true
-			&& _attributes["speed"] != 0
-			&& _elapsedTime % (1000 / static_cast<int>(_attributes["speed"])) == 0)
-		{ // Triggering movement
-			Character::Action movement = _queuedActions.front();
-			_queuedActions.pop();
-
-			this->move(movement);
-		}
-		*/
-		if (_queuedActions.size() > 0
-			&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
-			 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
-			&& _attributes["can_move"] == true
-			&& _attributes["speed"] != 0)
-		{ // Triggering movement
-			Character::Action movement = _queuedActions.front();
-			_queuedActions.pop();
-
-			this->move(movement);
-		}
-
-		if (_queuedActions.size() > 0 && _queuedActions.front() == Character::DROP_BOMB)
-		{ // Dropping a bomb
-			_queuedActions.pop();
-
-			if (_attributes["bombs"]["available"] == true
-				&& _bombs.size() < static_cast<size_t>(_attributes["bombs"]["amount"]))
-			{
-				this->dropBomb();
-			}
-		}
-
 	}
+	if (static_cast<int>(clock->centiseconds()) - _elapsedCentiseconds >= 1)
+	{
+		_elapsedCentiseconds += static_cast<int>(clock->centiseconds()) - _elapsedCentiseconds;
+	}
+
+	// Managing actions
+	if (_queuedActions.size() > 0
+		&& (_queuedActions.front() == Character::MOVE_UP || _queuedActions.front() == Character::MOVE_DOWN
+		 || _queuedActions.front() == Character::MOVE_LEFT || _queuedActions.front() == Character::MOVE_RIGHT)
+		&& _attributes["can_move"] == true
+		&& _attributes["speed"] != 0
+		&& _elapsedCentiseconds / (static_cast<int>(_attributes["max_speed"]) / static_cast<int>(_attributes["speed"])) > _prevMovement)
+	{ // Triggering movement
+		_prevMovement = _elapsedCentiseconds / (static_cast<int>(_attributes["max_speed"]) / static_cast<int>(_attributes["speed"]));
+		Character::Action movement = _queuedActions.front();
+		_queuedActions.pop();
+
+		this->move(movement, *clock);
+	}
+
+	if (_queuedActions.size() > 0 && _queuedActions.front() == Character::DROP_BOMB)
+	{ // Dropping a bomb
+		_queuedActions.pop();
+
+		if (_attributes["bombs"]["available"] == true
+			&& _bombs.size() < static_cast<size_t>(_attributes["bombs"]["amount"])
+			&& clock->seconds() - _previousBomb > 0.2)
+		{
+			_previousBomb = clock->seconds();
+			this->dropBomb();
+		}
+	}
+
 }
 
 void
@@ -178,33 +200,52 @@ Character::keyPressed(Subject* entity)
 }
 
 void
-Character::move(Character::Action action)
+Character::move(Character::Action action, const Clock & clock)
 {
-	Position<double> tmp = _position;
+	Position<double> newPos = _position;
 
-	double step = static_cast<int>(_attributes["speed"]) / 1000.0;
+	double step = 0.001 * static_cast<int>(_attributes["speed"]);
+
+	double duration = 0.0 / 1000.0;
 
 	switch (action)
 	{
 		case Character::MOVE_DOWN:
-			tmp.incY(step);
+			newPos.incY(step);
 			break;
 		case Character::MOVE_UP:
-			tmp.decY(step);
+			newPos.decY(step);
 			break;
 		case Character::MOVE_LEFT:
-			tmp.decX(step);
+			newPos.decX(step);
 			break;
 		case Character::MOVE_RIGHT:
-			tmp.incX(step);
+			newPos.incX(step);
 			break;
 		default:
 			break;
 	}
+	Position<double> newPosRightDown(newPos);
+	newPosRightDown.incX(0.25);
+	newPosRightDown.incY(0.25);
+	Position<double> newPosLeftUp(newPos);
+	newPosLeftUp.decX(0.25);
+	newPosLeftUp.decY(0.25);
+	Position<double> newPosLeftDown(newPos);
+	newPosLeftDown.decX(0.25);
+	newPosLeftDown.incY(0.25);
+	Position<double> newPosRightUp(newPos);
+	newPosRightUp.incX(0.25);
+	newPosRightUp.decY(0.25);
 
 	auto bombs = _level->bombs();
-	if ((_level->map().at(tmp)->solid() == false && (bombs[tmp].empty() || tmp.asInt() == _position.asInt())) || _solid == false)
+	if ((_level->map().at(newPosLeftUp)->solid() == false && _level->map().at(newPosRightDown)->solid() == false
+		 && _level->map().at(newPosLeftDown)->solid() == false && _level->map().at(newPosRightUp)->solid() == false
+		 && ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
+			 || (!bombs[_position].empty())))
+		|| _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
+
 		_prevPosition = _position;
 		switch (action)
 		{
@@ -223,6 +264,11 @@ Character::move(Character::Action action)
 			default:
 				break;
 		}
+
+		_moving = true;
+		_movingUntil = clock.seconds() + duration * 2;
+		_direction = action;
+
 		this->notify(this, CHARACTER_MOVED);
 	}
 }
@@ -234,7 +280,7 @@ Character::dropBomb()
 	double duration = g_settings["entities"]["bomb"]["duration"];
 	double duration_modifier = _attributes["bombs"]["duration_modifier"];
 
-	Bomb* bomb = new Bomb(_position.asInt(), range, duration * duration_modifier, this);
+	Bomb* bomb = new Bomb(_position, range, duration * duration_modifier, this);
 
 	_bombs.push_back(bomb);
 
@@ -244,8 +290,8 @@ Character::dropBomb()
 void
 Character::pushAction(Character::Action action)
 {
-	if (_queuedActions.size() == 0)
-		_queuedActions.push(action);
+	clearActions();
+	_queuedActions.push(action);
 }
 
 void

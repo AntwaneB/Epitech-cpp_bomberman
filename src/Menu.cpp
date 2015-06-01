@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <dirent.h>
 #include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
@@ -23,6 +24,8 @@ Menu::Menu(const std::string & filename)
 	_layout.importFile(_filename);
 	if (_layout["content"].isEmpty())
 		throw ConfigException("File " + filename + " is not valid");
+
+	this->init();
 }
 
 Menu::~Menu()
@@ -33,6 +36,72 @@ void
 Menu::run()
 {
 	this->notify(this, MENU_STARTED);
+}
+
+void
+Menu::init()
+{
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (it->second["is_collection"] == true)
+		{
+			Config::Param& collection = it->second;
+
+			if (collection["collection"]["type"] == "files")
+				this->buildFilesCollection(collection);
+		}
+	}
+}
+
+void
+Menu::buildFilesCollection(Config::Param& collection)
+{
+	std::string folder = collection["collection"]["folder"];
+
+	DIR* dir;
+	if ((dir = opendir(folder.c_str())) != NULL)
+	{
+		int i = 0;
+
+		int y = collection["position"]["min_y"];
+		int x = collection["position"]["min_x"];
+		struct dirent* file;
+		while ((file = readdir(dir)) != NULL)
+		{
+			std::string filename = file->d_name;
+			if (filename.substr(filename.find_last_of(".") + 1) == static_cast<std::string>(collection["collection"]["files_ext"]))
+			{
+				Config::Param element;
+				element["type"] = "value_only";
+				element["order"] = i + 1;
+				element["selectable"] = true;
+				element["selected"] = collection["selected"] == true && i == 0 ? true : false;
+				element["has_value"] = true;
+				element["value"]["value"] = filename.substr(0, filename.find_last_of("."));
+				element["value"]["size"] = collection["collection"]["font_size"];
+				element["value"]["y"] = y;
+				element["value"]["x"] = x;
+				element["cursor"]["position"]["x"] = static_cast<int>(element["value"]["x"]) - 35;
+				element["cursor"]["position"]["y"] = static_cast<int>(element["value"]["y"]) + 20;
+				element["action"]["name"] = static_cast<std::string>(collection["action"]["name"]);
+				element["action"]["param"] = folder + filename;
+
+				std::string key = collection["id"];
+				key += std::to_string(++i);
+				_layout["content"].insert(std::map<std::string, Config::Param>::value_type(key, element));
+
+				y = y + static_cast<int>(collection["collection"]["font_size"]);
+				if (y >= static_cast<int>(collection["position"]["max_y"]))
+				{
+					x = static_cast<int>(collection["position"]["min_x"])
+						+ (static_cast<int>(collection["position"]["max_x"]) - static_cast<int>(collection["position"]["min_x"])) / static_cast<int>(collection["cols"]);
+					y = collection["position"]["min_y"];
+				}
+			}
+		}
+		closedir(dir);
+	}
+	collection["selected"] = false;
 }
 
 void
@@ -103,7 +172,19 @@ Menu::changeLine(Input::Key key)
 void
 Menu::changeValue(Input::Key key)
 {
-	(void)key;
+	Config::Param* active;
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		if (it->second["selected"] == true)
+			active = &(it->second);
+	}
+
+	int newValue = (*active)["value"]["value"];
+	newValue = key == Input::LEFT ? newValue - 1 : newValue + 1;
+	newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
+	newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
+
+	(*active)["value"]["value"] = newValue;
 }
 
 void
@@ -129,20 +210,33 @@ Menu::quit(Input::Key key __attribute__((unused)))
 void
 Menu::actionNewMenu(const std::string& param)
 {
-	(void)param;
+	this->notify(new Menu(param), MENU_STARTED);
 }
 
 void
 Menu::actionLoadLevel(const std::string& param)
 {
+	std::cout << "Loading level " << param << std::endl;
 	(void)param;
 }
 
 void
 Menu::actionRunLevel(const std::string& param __attribute__((unused)))
 {
+	size_t width = _layout["content"]["width"]["value"]["value"];
+	size_t height = _layout["content"]["height"]["value"]["value"];
+	size_t iaCount = _layout["content"]["ias"]["value"]["value"];
+	size_t playerCount = _layout["content"]["players"]["value"]["value"];
+
+	std::cout << "Generating new level with the following settings :" << std::endl;
+	std::cout << "- Width : " << width << std::endl;
+	std::cout << "- Height : " <<  height << std::endl;
+	std::cout << "- IA Count : " <<  iaCount << std::endl;
+	std::cout << "- Player Count : " <<  playerCount << std::endl;
+	std::cout << std::endl;
+
 	this->notify(this, MENU_EXITED);
-	this->notify(new Level(13, 13, 2, 1), LEVEL_GENERATED);
+	this->notify(new Level(width, height, iaCount + playerCount, playerCount), LEVEL_GENERATED);
 }
 
 void

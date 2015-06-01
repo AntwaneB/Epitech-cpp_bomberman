@@ -48,6 +48,7 @@ namespace Graphics
 		gdl::Clock							_clock;
 		std::vector<gdl::Model*> 			_models;
 		std::vector<Graphics::Split*> _splits;
+		size_t								_size;
 	};
 
 }

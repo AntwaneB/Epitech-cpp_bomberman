@@ -3,6 +3,8 @@
 Graphics::Character::Character(::Character const * character, gdl::Model* model)
 	: Object(character->position()), _character(character), _model(model)
 {
+	_position.decX(0.5);
+	_position.decY(0.5);
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
 }
 
@@ -14,8 +16,11 @@ Graphics::Character::~Character()
 bool
 Graphics::Character::initialize()
 {
-	_model->setCurrentAnim(0);
-	return (true);
+	_model->createSubAnim(0, "RESET", 0, 0);
+  	_model->createSubAnim(0, "START", 20, 30);
+  	_model->createSubAnim(0, "RUN", 37, 53);
+  	_model->createSubAnim(0, "END", 54, 100);
+  	return (true);
 }
 
 bool
@@ -25,60 +30,49 @@ Graphics::Character::operator==(const ::Character* other) const
 }
 
 int
-Graphics::Character::getAngle(direction key)
+Graphics::Character::getAngle(const::Character::Action key)
 {
-	switch(_pos)
-	{
-		case UP:
-			switch(key)
-			{
-				case UP:
-					return (0);
-				case DOWN:
-					return (180);
-				case LEFT:
-					return (-90);
-				case RIGHT:
-					return (90);
-			}
-		case DOWN:
-			switch(key)
-			{
-				case UP:
-					return (180);
-				case DOWN:
-					return (0);
-				case LEFT:
-					return (90);
-				case RIGHT:
-					return (-90);
-			}
-		case LEFT:
-			switch(key)
-			{
-				case UP:
-					return (90);
-				case DOWN:
-					return (-90);
-				case LEFT:
-					return (0);
-				case RIGHT:
-					return (180);
-			}
-		case RIGHT:
-			switch(key)
-			{
-				case UP:
-					return (-90);
-				case DOWN:
-					return (90);
-				case LEFT:
-					return (180);
-				case RIGHT:
-					return (0);
-			}
-	}
+	switch(key)
+		{
+			case ::Character::Action::MOVE_UP:
+				return (180);
+			case ::Character::Action::MOVE_DOWN:
+				return (0);
+			case ::Character::Action::MOVE_LEFT:
+				return (-90);
+			case ::Character::Action::MOVE_RIGHT:
+				return (90);
+			case ::Character::Action::DROP_BOMB:
+				return (0);
+			case ::Character::Action::WAIT:
+				return (0);
+		}
 	return (0);
+}
+
+void
+Graphics::Character::irotate(int angle)
+{
+	_rotation = glm::vec3(0, angle, 0);
+	if (angle == 0)
+		return;
+	if (angle == 90)
+		{
+			double position = _position.x();
+			_position.setX(_position.y() * -1 + 1);
+			_position.setY(position);
+		}
+	else if (angle == -90)
+		{
+			double position = _position.x();
+			_position.setX(_position.y());
+			_position.setY(position * -1 + 1);
+		}
+	else
+		{
+			_position.setX(_position.x() * -1 + 1);
+			_position.setY(_position.y() * -1 + 1);
+		}
 }
 
 void
@@ -86,45 +80,60 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 {
 	(void)clock;
 	(void)input;
-	//_position = _character->position();
+
 	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
 	{
-		int x = _character->position().x() - _position.x();
-		int y = _character->position().y() - _position.y();
-		translate(glm::vec3(x, 0, y));
 		_position = _character->position();
+		irotate(getAngle(_character->direction()));
+		_position.decX(0.5);
+		_position.decY(0.5);
+		_position.incZ(0.5);
 	}
-	/*if (input.getKey(SDLK_DOWN))
-	{
-		translate(glm::vec3(0, 0, -1));
-		//rotate(glm::vec3(0, 0, -1), getAngle(DOWN));
-	}
-	if (input.getKey(SDLK_UP))
-	{
-		translate(glm::vec3(0, 0, 1));
-		//rotate(glm::vec3(0, 0, 1), getAngle(UP));
-	}
-	if (input.getKey(SDLK_RIGHT))
-	{
-		translate(glm::vec3(-1, 0, 0));
-		//rotate(glm::vec3(-1, 0, 0), getAngle(RIGHT));
-	}
-	if (input.getKey(SDLK_LEFT))
-	{
-		translate(glm::vec3(1, 0, 0));
-		//rotate(glm::vec3(1, 0, 0), getAngle(LEFT));
-	}*/
-	/*
-	if (input.getKey(SDLK_DOWN) || input.getKey(SDLK_UP) || input.getKey(SDLK_RIGHT) || input.getKey(SDLK_LEFT))
-		_model->setCurrentAnim(0);
-		_model->setCurrentAnim(1);
-	*/
+	_anim = _character->moving();
 }
 
 void
 Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
+	//Couleur
 	_texture.bind();
-	_model->draw(shader, getTransformation(), GL_QUADS);
-	(void)clock;
+	if (_anim == true)
+	{
+		if (_frame == 0 || _frame > 25)
+		{
+			if (_frame > 25)
+				_frame = 1;
+			_model->setCurrentSubAnim("START");
+		}
+		if (_frame == 10)
+			_model->setCurrentSubAnim("RUN");
+		if (_frame == 25)
+			_frame = 15;
+		_frame += 1;
+	}
+	if (_anim == false)
+	{
+		if (_frame > 0 && _frame < 8)
+		{
+			_model->setCurrentSubAnim("END");
+			_frame = 8;
+		}
+		if (_frame >= 8 && _frame <= 20)
+			_frame += 1;
+		if (_frame >= 20)
+		{
+			_model->setCurrentSubAnim("RESET");
+			_frame = 0;
+		}
+		if (_frame != 0)
+			_frame += 1;
+	}
+	int i = rand() % 4 + 1;
+	shader.setUniform("color", glm::vec4(i, i, 0, 1));
+	_model->draw(shader, getTransformation(), clock.getElapsed());
+}
+
+void Graphics::Character::setAnim(bool anim)
+{
+	_anim = anim;
 }

@@ -13,7 +13,8 @@
 #include "Core/RangeIncreaser.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
-	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount), _secondsElapsed(0), _charactersKills(0)
+	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
+	  _secondsElapsed(0), _charactersKills(0)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
@@ -108,6 +109,12 @@ Level::bombs() const
 	return _bombs;
 }
 
+std::list<std::pair<seconds_t, std::vector<Position<> > > >
+Level::explosions() const
+{
+	return (_explosions);
+}
+
 void
 Level::run()
 {
@@ -139,6 +146,15 @@ Level::tick(Subject* entity)
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
+		for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
+		{
+			if (_clock.seconds() >= it->first)
+			{
+				it = _explosions.erase(it);
+				--it;
+			}
+		}
+
 		this->notify(this, LEVEL_UPDATED);
 
 		if (static_cast<size_t>(_clock.seconds()) > _secondsElapsed)
@@ -321,8 +337,8 @@ Level::bombExploded(Subject* entity)
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
 	/* Setting hitbox for the bomb */
-	std::vector<Position<>> hitbox;
-	size_t	range = bomb->range();
+	std::vector<Position<> > hitbox;
+	size_t range = bomb->range();
 
 	Position<> explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -331,6 +347,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -339,6 +357,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -347,6 +367,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	explosion = bomb->position();
 	for (size_t i = 0; i < range; i++)
@@ -355,6 +377,8 @@ Level::bombExploded(Subject* entity)
 		if (explosion.outOfBounds(_map.width(), _map.height()) || _map.at(explosion)->blockBombs())
 			break;
 		hitbox.push_back(explosion);
+		if (_map.at(explosion)->solid())
+			break;
 	}
 	hitbox.push_back(bomb->position());
 	bomb->setHitbox(hitbox);
@@ -363,6 +387,12 @@ Level::bombExploded(Subject* entity)
 	this->removeObserver(bomb);
 	if (std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb) != _bombs[bomb->position()].end())
 		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
+
+	std::pair<seconds_t, std::vector<Position<>> > pair;
+	pair.first = _clock.seconds() + 1;
+	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
+		pair.second.push_back(*it);
+	_explosions.push_back(pair);
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }

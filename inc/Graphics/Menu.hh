@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include "Core/Menu.hh"
+#include "Core/Config.hh"
 #include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
@@ -36,15 +37,19 @@ namespace Graphics
 		sf::RenderWindow	_window;
 
 		::Menu*			_menu;
+		bool				_run;
 
 		//Textures
 		sf::Texture		_assetsTexture;
 		sf::Texture		_backgroundTexture;
+		sf::Font			_font;
 
 		//Sprite
-		std::list<sf::Sprite>	_sprites;
-		sf::Sprite					_background;
-		sf::Sprite					_cursor;
+		std::list<sf::Sprite>					_sprites;
+		std::map<Config::Param*, sf::Text>	_texts;
+		std::map<Config::Param*, std::list<sf::Text> >	_collections;
+		sf::Sprite									_background;
+		sf::Sprite									_cursor;
 	};
 };
 

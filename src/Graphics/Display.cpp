@@ -60,6 +60,11 @@ Graphics::Display::exitMenu(Subject* entity)
 	if (_menu != NULL)
 	{
 		this->notify(menu, MENU_EXITED, _menu);
+
+		this->removeObserver(menu);
+		this->removeObserver(_menu);
+		menu->removeObserver(_menu);
+
 		_menu = NULL;
 	}
 }

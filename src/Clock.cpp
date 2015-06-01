@@ -69,6 +69,12 @@ Clock::deciseconds() const
 	return (_seconds * 10);
 }
 
+seconds_t
+Clock::centiseconds() const
+{
+	return (_seconds * 100);
+}
+
 void
 Clock::resetSec(void)
 {

@@ -44,7 +44,9 @@ public:
 	bool	outOfBounds(T maxX, T maxY) const;
 
 	Position<int> asInt() const;
+	Position<double> asDouble() const;
 	operator Position<int>() const;
+	operator Position<double>() const;
 
 	void	toConfig(Config &) const;
 
@@ -252,6 +254,18 @@ template <typename T>
 Position<T>::operator Position<int>() const
 {
 	return (Position<int>(static_cast<int>(_x), static_cast<int>(_y), static_cast<int>(_z)));
+}
+
+template <typename T>
+Position<double>
+Position<T>::asDouble() const
+{
+	return (Position<double>(static_cast<double>(_x), static_cast<double>(_y), static_cast<double>(_z)));
+}
+template <typename T>
+Position<T>::operator Position<double>() const
+{
+	return (Position<double>(static_cast<double>(_x), static_cast<double>(_y), static_cast<double>(_z)));
 }
 
 template <typename T>

@@ -29,6 +29,7 @@ private:
 
 	void	exit(Subject * entity);
 	void	runLevel(Subject * entity);
+	void	menuStarted(Subject * entity);
 
 private:
 	int								_ac;

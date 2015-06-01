@@ -9,8 +9,8 @@
 			<texture>
 				<start_x>1100</start_x>
 				<start_y>503</start_y>
-				<end_x>780</end_x>
-				<end_y>100</end_y>
+				<width>780</width>
+				<height>100</height>
 			</texture>
 			<scale>
 				<x>0.5f</x>
@@ -22,7 +22,7 @@
 			</position>
 		</asset>
 	</cursor>
-	<title>Boom Clap !</title>
+	<title>Bomberman !</title>
 	<size>
 		<x>960</x>
 		<y>540</y>
@@ -44,8 +44,8 @@
 				<texture>
 					<start_x>0</start_x>
 					<start_y>8</start_y>
-					<end_x>566</end_x>
-					<end_y>100</end_y>
+					<width>566</width>
+					<height>100</height>
 				</texture>
 				<position>
 					<x>600</x>
@@ -58,7 +58,7 @@
 			</asset>
 			<has_value>false</has_value>
 			<action>
-				<name>RUN_LEVEL</name>
+				<name>NEW_MENU</name>
 				<param>./menus/new_level.xml</param>
 			</action>
 			<cursor>
@@ -77,8 +77,8 @@
 				<texture>
 					<start_x>0</start_x>
 					<start_y>128</start_y>
-					<end_x>646</end_x>
-					<end_y>100</end_y>
+					<width>646</width>
+					<height>100</height>
 				</texture>
 				<position>
 					<x>600</x>
@@ -101,20 +101,20 @@
 				</position>
 			</cursor>
 		</load>
-		<settings>
+		<score>
 			<order>3</order>
 			<selectable>true</selectable>
 			<selected>false</selected>
 			<asset>
 				<texture>
-					<start_x>0</start_x>
-					<start_y>242</start_y>
-					<end_x>574</end_x>
-					<end_y>130</end_y>
+					<start_x>1099</start_x>
+					<start_y>976</start_y>
+					<width>349</width>
+					<height>89</height>
 				</texture>
 				<position>
 					<x>600</x>
-					<y>430</y>
+					<y>433</y>
 				</position>
 				<scale>
 					<x>0.5f</x>
@@ -128,11 +128,11 @@
 			</action>
 			<cursor>
 				<position>
-					<x>565</x>
+					<x>560</x>
 					<y>438</y>
 				</position>
 			</cursor>
-		</settings>
+		</score>
 		<exit>
 			<order>4</order>
 			<selectable>true</selectable>
@@ -141,8 +141,8 @@
 				<texture>
 					<start_x>0</start_x>
 					<start_y>372</start_y>
-					<end_x>287</end_x>
-					<end_y>100</end_y>
+					<width>287</width>
+					<height>100</height>
 				</texture>
 				<position>
 					<x>600</x>
@@ -170,8 +170,8 @@
 				<texture>
 					<start_x>1100</start_x>
 					<start_y>600</start_y>
-					<end_x>1880</end_x>
-					<end_y>100</end_y>
+					<width>1880</width>
+					<height>100</height>
 				</texture>
 				<position>
 					<x>30</x>

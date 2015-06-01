@@ -1,35 +1,36 @@
-#ifndef GROUND_HH
-#define	GROUND_HH
+#ifndef TARGET_HH
+#define	TARGET_HH
 
+#include <ostream>
+#include <string>
 #include "Graphics/Object.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "glm/glm.hpp"
+
 #include "glm/gtc/matrix_transform.hpp"
-#include <ostream>
-#include <string>
+#include "Core/Position.hh"
+#include "Core/Block.hh"
 
 namespace Graphics
 {
 
-	class Ground : public Object
+	class Target : public Object
 	{
 		public:
-			Ground(Position<double> const &);
-			virtual ~Ground();
+			Target(Position<> const &, Block const *, gdl::Texture*);
+			virtual ~Target();
 
 			virtual bool initialize();
 			virtual void update(gdl::Clock const &clock, gdl::Input &input);
 			virtual void draw(gdl::AShader &shader, gdl::Clock const &clock);
 
 		private:
-			gdl::Texture	_texture;
 			gdl::Geometry	_geometry;
-			float				_speed;
 
-			int				_width;
-			int				_height;
+			const Block*	_block;
+			gdl::Texture*	_texture;
 	};
 };
 
-#endif	/* GROUND_HH */
+#endif	/* TARGET_HH */
