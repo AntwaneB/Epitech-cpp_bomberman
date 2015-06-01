@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE false
+#define VERBOSE true
 
 namespace IA
 {
@@ -647,7 +647,7 @@ void IA::IA<T>::refreshPosition()
 	double	xDiff = (_self->position().x() - 0.5) - static_cast<long>(_self->position().x());
 	double 	yDiff = (_self->position().y() - 0.5) - static_cast<long>(_self->position().y());
 
-	if (xDiff <= 0.1 && xDiff >= -0.1)
+	if (xDiff <= 0.15 && xDiff >= -0.15)
 	{
 		_xCentered = true;
 	}
@@ -655,7 +655,7 @@ void IA::IA<T>::refreshPosition()
 	{
 		_xCentered = false;
 	}
-	if (yDiff <= 0.1 && yDiff >= -0.1)
+	if (yDiff <= 0.15 && yDiff >= -0.15)
 	{
 		_yCentered = true;
 	}

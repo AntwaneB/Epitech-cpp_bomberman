@@ -290,8 +290,8 @@ Character::dropBomb()
 void
 Character::pushAction(Character::Action action)
 {
-	if (_queuedActions.size() == 0)
-		_queuedActions.push(action);
+	clearActions();
+	_queuedActions.push(action);
 }
 
 void
