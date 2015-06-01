@@ -109,6 +109,12 @@ Level::bombs() const
 	return _bombs;
 }
 
+std::list<std::pair<seconds_t, std::vector<Position<> > > >
+Level::explosions()
+{
+	return (_explosions);
+}
+
 void
 Level::run()
 {
