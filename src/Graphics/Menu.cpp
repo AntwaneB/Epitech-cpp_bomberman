@@ -38,7 +38,8 @@ Graphics::Menu::init(::Menu* menu)
 		_window.create(sf::VideoMode(_menu->layout()["size"]["x"], _menu->layout()["size"]["y"]), std::string(_menu->layout()["title"]));
 	else
 		_window.clear();
-
+	_window.setPosition(sf::Vector2i(1920/4, 1080/4));
+	
 	// Screen background
 	_backgroundTexture.loadFromFile(_menu->layout()["background"]["location"]);
 	_background.setTexture(_backgroundTexture);
