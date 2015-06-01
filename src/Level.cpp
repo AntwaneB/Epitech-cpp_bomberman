@@ -110,7 +110,7 @@ Level::bombs() const
 }
 
 std::list<std::pair<seconds_t, std::vector<Position<> > > >
-Level::explosions()
+Level::explosions() const
 {
 	return (_explosions);
 }
