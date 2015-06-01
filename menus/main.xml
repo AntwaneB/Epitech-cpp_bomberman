@@ -101,20 +101,20 @@
 				</position>
 			</cursor>
 		</load>
-		<settings>
+		<score>
 			<order>3</order>
 			<selectable>true</selectable>
 			<selected>false</selected>
 			<asset>
 				<texture>
-					<start_x>0</start_x>
-					<start_y>242</start_y>
-					<width>574</width>
-					<height>130</height>
+					<start_x>1099</start_x>
+					<start_y>976</start_y>
+					<width>349</width>
+					<height>89</height>
 				</texture>
 				<position>
 					<x>600</x>
-					<y>430</y>
+					<y>433</y>
 				</position>
 				<scale>
 					<x>0.5f</x>
@@ -128,11 +128,11 @@
 			</action>
 			<cursor>
 				<position>
-					<x>565</x>
+					<x>560</x>
 					<y>438</y>
 				</position>
 			</cursor>
-		</settings>
+		</score>
 		<exit>
 			<order>4</order>
 			<selectable>true</selectable>
