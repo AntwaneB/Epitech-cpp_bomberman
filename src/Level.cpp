@@ -109,7 +109,7 @@ Level::bombs() const
 	return _bombs;
 }
 
-std::list<std::pair<seconds_t, std::vector<Position<> > > >
+std::list<Bomb::Explosion>
 Level::explosions() const
 {
 	return (_explosions);
@@ -148,7 +148,7 @@ Level::tick(Subject* entity)
 	{
 		for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
 		{
-			if (_clock.seconds() >= it->first)
+			if (_clock.seconds() >= it->lastUntil)
 			{
 				it = _explosions.erase(it);
 				--it;
@@ -388,11 +388,8 @@ Level::bombExploded(Subject* entity)
 	if (std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb) != _bombs[bomb->position()].end())
 		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
 
-	std::pair<seconds_t, std::vector<Position<>> > pair;
-	pair.first = _clock.seconds() + 1;
-	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
-		pair.second.push_back(*it);
-	_explosions.push_back(pair);
+	//Bomb::Explosion explosion(_clock.seconds() + 1, hitbox);
+	_explosions.push_back(Bomb::Explosion(_clock.seconds() + 1, hitbox));
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }
