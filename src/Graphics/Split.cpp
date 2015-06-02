@@ -215,6 +215,6 @@ void Graphics::Split::moveCamera()
 	_y = _player->position().y();
 	double x = 1 + _x;
 	double y = 1 + _y;
-	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
+	glm::mat4 transformation = glm::lookAt(glm::vec3(x, 90, y), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
 	_shader.setUniform("view", transformation);
 }
