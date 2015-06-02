@@ -69,7 +69,7 @@ private:
 	bool						_alive;
 	const Bomb*				_killedBy;
 
-	IA::IA<IA::HARD>*		_ia;
+	IA::IA<IA::EASY>*		_ia;
 
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;

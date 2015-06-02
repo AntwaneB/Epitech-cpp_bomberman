@@ -26,7 +26,7 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, s
 	_attributes = g_settings["entities"]["character"];
 
 	if (!_isPlayer)
-		_ia = new IA::IA<IA::HARD>(_level, this);
+		_ia = new IA::IA<IA::EASY>(_level, this);
 
 	this->notify(this, CHARACTER_SPAWNED);
 }

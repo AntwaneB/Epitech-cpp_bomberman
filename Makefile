@@ -46,7 +46,9 @@ SRCS		  =  main.cpp \
 		     Graphics/Bomb.cpp \
 		     Graphics/Item.cpp \
 		     \
-		     misc/pugixml.cpp
+		     misc/pugixml.cpp \
+		     \
+		     Lua.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -85,7 +87,9 @@ INCS		  =  global.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \
-		     misc/pugixml.hpp
+		     misc/pugixml.hpp \
+		     \
+		     Core/Lua.hh
 
 LGDL_DIR	  =  libgdl
 
@@ -98,6 +102,8 @@ CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 GDLFLAGS	  += -L$(LGDL_DIR)/libs
 GDLFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
+LUAFLAGS	  = -I./_Ressources/lua/ -L./_Ressources/ -llua -ldl
+
 CXXFLAGS	  += -g
 
 
@@ -106,7 +112,7 @@ CXXFLAGS	  += -g
 #######################
 
 $(NAME):		   $(OBJS)
-			   $(CXX) $(OBJS) $(CXXFLAGS) $(GDLFLAGS) -o $(NAME)
+			   $(CXX) $(OBJS) $(CXXFLAGS) $(GDLFLAGS) $(LUAFLAGS) -o $(NAME)
 
 all:			   $(NAME)
 
@@ -116,7 +122,7 @@ $(OBJS_DIR)/%.o:	   $(SRCS_DIR)/%.cpp $(DEPS)
 			   @$(MKDIR) $(OBJS_DIR)
 			   @$(MKDIR) $(OBJS_DIR)/Graphics
 			   @$(MKDIR) $(OBJS_DIR)/misc
-			   $(CXX) $(CXXFLAGS) -c -o $@ $<
+			   $(CXX) $(LUAFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 ################
 ## MISC RULES ##

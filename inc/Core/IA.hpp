@@ -15,6 +15,7 @@
 #include "Position.hh"
 #include "Map.hh"
 #include "Block.hh"
+#include "Core/Lua.hh"
 
 class Bomb;
 class Item;
@@ -74,8 +75,8 @@ namespace IA
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
 			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
-         void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
-         void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
+         	void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
+         	void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
          	Character::Action 	checkDestinationSafe(Character::Action) const;
 			Character::Action 	checkAlignment(Character::Action) const;
 			Character::Action     Move();
@@ -90,6 +91,7 @@ namespace IA
 			std::list<Position<> >             _escapeNodes;
 			Character*						_self;
 			const Level*					_level;
+			lua_State* 						_L;
 	};
 }
 
@@ -106,7 +108,7 @@ IA::IA<T>::IA(Level const* level, Character* character):
 template<IA::Difficulty T>
 IA::IA<T>::~IA()
 {
-
+	lua_close(_L);
 }
 
 template<IA::Difficulty T>
