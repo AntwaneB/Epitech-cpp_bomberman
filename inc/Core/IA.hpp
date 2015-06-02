@@ -19,7 +19,7 @@
 class Bomb;
 class Item;
 
-#define VERBOSE true
+#define VERBOSE false
 
 namespace IA
 {
@@ -73,6 +73,7 @@ namespace IA
 			bool	BombOpportunity();
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
+			bool	simulateEscape();
 			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
         	void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
         	void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
@@ -214,6 +215,8 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
         {
             if ((currentX + searchX[i]) >= 0 && (currentX + searchX[i]) < mapWidth && (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT)
                 {
 	            if (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
@@ -334,7 +337,7 @@ void IA::IA<T>::playTurn()
 	}
 	else
 	{
-		if (BombOpportunity() && escapeBomb() != Character::WAIT)
+		if (BombOpportunity() && simulateEscape() != Character::WAIT)
 			action = Character::DROP_BOMB;
 		else
 			action = Move();
@@ -608,6 +611,8 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
             	&& (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
                 && (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
                     || _strategyMap[currentY + searchY[i]][currentX + searchX[i]].destructible() == true))
                 {
@@ -806,6 +811,22 @@ Character::Action IA::IA<T>::checkDestinationSafe(Character::Action suggestedAct
 		}
 	}
 	return (suggestedAction);
+}
+
+template<IA::Difficulty T>
+bool IA::IA<T>::simulateEscape()
+{
+	_strategyMap[_myY][_myX].setBomb(true);
+	scanMap();
+	if (escapeBomb() == Character::WAIT)
+	{
+		_strategyMap[_myY][_myX].setBomb(false);
+		scanMap();
+		return (false);
+	}
+	_strategyMap[_myY][_myX].setBomb(false);
+	scanMap();
+	return (true);
 }
 
 #endif	/* IA_HPP */

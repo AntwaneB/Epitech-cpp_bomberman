@@ -125,7 +125,7 @@ namespace IA
 namespace IA
 {
     template<>
-    Character::Action IA<MEDIUM>::Move() //fonction amelioree : new : pose une bombe si impasse destructible
+    Character::Action IA<MEDIUM>::Move()
     {
         std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
         std::vector<int>                searchX = {0, 1, 0, -1};
@@ -162,7 +162,7 @@ namespace IA
             }
             i++;
         }
-        if (freePath == 1 && destructibleDirections >= 1 && escapeBomb() != Character::WAIT) //pose un bombe si cest une impasse destructible
+        if (freePath == 1 && destructibleDirections >= 1 && simulateEscape() != Character::WAIT) //pose un bombe si cest une impasse destructible
         {
         	if (VERBOSE)
         		std::cout << "MOVE(MEDIUM) END: dropping BOMB to extend path to enemy" << std::endl;
@@ -203,6 +203,7 @@ namespace IA
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == false
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
+					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
 			{
 				 counter++;
@@ -232,6 +233,7 @@ namespace IA
 					&& (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
 					|| _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true )
 					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
+					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
 					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
 				{
 					if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true)
@@ -249,7 +251,7 @@ namespace IA
 	 		{
 				enemyDirectionFound = scanMapForEnemyThroughDestructible(finalAction);
 			}
-			if (destructibleDirections.size() > 0 && escapeBomb() != Character::WAIT)//verif si le prochain path est destr. et si on peut s'echapp.
+			if (destructibleDirections.size() > 0 && simulateEscape() == true)//verif si le prochain path est destr. et si on peut s'echapp.
 			{
 				if (VERBOSE)
 					std::cout << "Now comparing with destructibleDirections..." << std::endl;
