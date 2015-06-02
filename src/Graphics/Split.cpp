@@ -73,14 +73,29 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 	auto explosions = _level->explosions();
 	for (auto it = explosions.begin(); it != explosions.end(); ++it)
 	{
-		gdl::Texture* texture = new gdl::Texture;
-		if (texture->load("./libgdl/assets/fire.tga") == false)
-			std::cout << "LOL" << std::endl;
-		std::cout << ((*it).second)[1].x() << " " << ((*it).second)[1].y() << std::endl;
-		Object *explosion = new Explosion(((*it).second)[1], texture);
-		explosion->initialize();
-		_explosions.push_back(explosion);
-		//_bombs.push_back(bomb);
+		bool exist = false;
+		for (auto itt = _explosions.begin(); itt != _explosions.end(); ++itt)
+			{
+				if ((*it).id == (*itt).first)
+					exist = true;
+			}
+		if (exist == false)
+		{
+			gdl::Texture* texture = new gdl::Texture;
+			if (texture->load("./libgdl/assets/fire.tga") == false)
+				std::cout << "LOL" << std::endl;
+			size_t id = (*it).id;
+			std::list<Graphics::Object*> explosions2;
+			for (auto itt = (*it).positions.begin(); itt != (*it).positions.end(); ++itt)
+			{
+				//std::cout << v.x() << " " << ((*it).second)[1].y() << std::endl;
+				Object *explosion = new Explosion((*itt), texture);
+				explosion->initialize();
+				explosions2.push_back(explosion);
+			}
+			std::pair<size_t, std::list<Graphics::Object*> > paire (id, explosions2);
+			_explosions.push_back(paire);
+		}
 	}
 
 	// Creating new items
@@ -116,6 +131,25 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 		else
 			(*it)->update(clock, input);
+	}
+
+	//Updating explosion
+	for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
+	{
+		auto explosions = _level->explosions();
+		bool exist = false;
+		for (auto itt = explosions.begin(); itt != explosions.end(); ++itt)
+			{
+				if ((*it).first == (*itt).id)
+					exist = true;
+			}
+		if (exist == false)
+		{
+			for (auto itt = (*it).second.begin(); itt != (*it).second.end(); ++itt)
+				delete (*itt);
+			it = _explosions.erase(it);
+			--it;
+		}
 	}
 
 	// Updating items
@@ -169,7 +203,8 @@ void Graphics::Split::draw(gdl::Clock clock)
 	for (auto it = _items.begin(); it != _items.end(); ++it)
 		(*it)->draw(_shader, clock);
 	for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
-		(*it)->draw(_shader, clock);
+		for (auto itt = (*it).second.begin(); itt != (*it).second.end(); ++itt)
+			(*itt)->draw(_shader, clock);
 }
 
 void Graphics::Split::moveCamera()
