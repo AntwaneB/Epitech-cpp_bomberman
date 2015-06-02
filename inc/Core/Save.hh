@@ -6,12 +6,12 @@
 #include "Core/Level.hh"
 #include "Core/Map.hh"
 #include "Core/Clock.hh"
+#include "Core/Item.hh"
+#include "Core/BonusItem.hh"
+#include "Core/Position.hh"
 
 class	Save
 {
-//	friend class	Position<>;
-//	friend class	BonusItem;
-
 public:
 	Save();
 	~Save();
@@ -22,6 +22,10 @@ private:
 	Config			saveBlock(const Block*);
 	Config			saveClock(const Clock*);
 	Config			saveBomb(const Bomb*);
+	Config			saveBonusItem(const BonusItem*);
+	Config			savePosition(const Position<int>*);
+	Config			savePosition(const Position<double>*);
+//	Config			saveIA(const IA::IA*);
 
 public:
 	void			save(const Level*, const std::string);

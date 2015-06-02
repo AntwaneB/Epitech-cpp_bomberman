@@ -15,6 +15,8 @@
 
 class Item
 {
+	friend class	Save;
+
 public:
 	enum Type { RANGE_INCREASER, SPEED_INCREASER, BOMB_AMOUNT_INCREASER, last };
 

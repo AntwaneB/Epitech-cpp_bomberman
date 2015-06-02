@@ -13,14 +13,14 @@ Save::save(const Level* level, const std::string filename)
 {
 	Config	cfg;
 
-//	cfg["map"] = this->saveMap(level->_map);
+	cfg["map"] = this->saveMap(&level->_map);
 	int	index;
 	index = 0;
 	for (auto it = level->_characters.begin(); it != level->_characters.end(); ++it)
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-//			cfg["characters"][std::to_string(index)]["position"] = this->savePosition(it->first);
+			cfg["characters"][std::to_string(index)]["position"] = this->savePosition(&it->first);
 			cfg["characters"][std::to_string(index)]["character"] = this->saveCharacter(*subIt);
 			++index;
 		}
@@ -36,8 +36,8 @@ Save::save(const Level* level, const std::string filename)
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-//			cfg["bombs"][std::to_string(index)]["position"] = this->savePosition(it->first);
-//			cfg["bombs"][std::to_string(index)]["bomb"] = this->saveBomb(*subIt);
+			cfg["bombs"][std::to_string(index)]["position"] = this->savePosition(&it->first);
+			cfg["bombs"][std::to_string(index)]["bomb"] = this->saveBomb(*subIt);
 			++index;
 		}
 	}
@@ -46,8 +46,8 @@ Save::save(const Level* level, const std::string filename)
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-//			cfg["items"][std::to_string(index)]["position"] = this->savePosition(it->first);
-//			cfg["items"][std::to_string(index)]["item"] = this->saveItem(*subIt);
+			cfg["items"][std::to_string(index)]["position"] = this->savePosition(&it->first);
+			cfg["items"][std::to_string(index)]["item"] = this->saveBonusItem(*subIt);
 			++index;
 		}
 	}
@@ -72,18 +72,18 @@ Save::saveCharacter(const Character* character)
 
 	cfg["nth"] = character->_nth;
 	cfg["isPlayer"] = character->_isPlayer;
-//	cfg["position"] = this->savePosition(character->_position);
-//	cfg["prevPosition"] = this->savePosition(character->_prevPosition);
+	cfg["position"] = this->savePosition(&character->_position);
+	cfg["prevPosition"] = this->savePosition(&character->_prevPosition);
 	cfg["atributes"] = character->_attributes;
 	cfg["solid"] = character->_solid;
 	cfg["alive"] = character->_alive;
-//	cfg["killedBy"] = this->saveBomb(character->_killedBy);
+	cfg["killedBy"] = this->saveBomb(character->_killedBy);
 //	cfg["ia"] = this->saveIA(character->_ia);
 	int	index;
 	index = 0;
 	for (auto it = character->_bombs.begin(); it != character->_bombs.end(); ++it)
 	{
-//		cfg["bombs"][index] = this->saveBomb(*it);
+		cfg["bombs"][std::to_string(index)] = this->saveBomb(*it);
 		++index;
 	}
 //queuedActions
@@ -108,7 +108,7 @@ Save::saveMap(const Map* map)
 	{
 		for (auto subIt = it->begin(); subIt != it->end(); ++subIt)
 		{
-//			cfg["map"][std::to_string(posY)][std::to_string(posX)] = this->saveBlock(*it);
+			cfg["map"][std::to_string(posY)][std::to_string(posX)] = this->saveBlock(*subIt);
 			++posX;
 		}
 		++posY;
@@ -121,7 +121,7 @@ Save::saveBlock(const Block* block)
 {
 	Config	cfg;
 
-//	cfg["position"] = this->savePosition(block->_position);
+	cfg["position"] = this->savePosition(&block->_position);
 	cfg["type"] = block->_type;
 	cfg["attributes"] = block->_attributes;
 	cfg["elapsedTime"] = block->_elapsedTime;
@@ -139,7 +139,7 @@ Save::saveClock(const Clock* clock)
 	Config	cfg;
 
 //	cfg["timer"]
-//	cfg["seconds"]
+	cfg["seconds"] = clock->_seconds;
 	cfg["run"] = clock->_run;
 //	cfg["pausedAt"]
 	cfg["paused"] = clock->_paused;
@@ -153,5 +153,48 @@ Save::saveBomb(const Bomb* bomb)
 
 	cfg["attributes"] = bomb->_attributes;
 	cfg["range"] = bomb->_range;
+	cfg["position"] = this->savePosition(&bomb->_position);
+	cfg["prevPosition"] = this->savePosition(&bomb->_prevPosition);
+	cfg["prevPosition"] = bomb->_type;
+	cfg["clockInit"] = bomb->_clockInit;
+	cfg["spawnTime"] = bomb->_spawnTime;
+	return (cfg);
+}
+
+Config
+Save::saveBonusItem(const BonusItem* bonus)
+{
+	Config	cfg;
+
+	cfg["attributes"] = bonus->_attributes;
+	cfg["position"] = this->savePosition(&bonus->_position);
+	cfg["prevPosition"] = this->savePosition(&bonus->_prevPosition);
+	cfg["prevPosition"] = bonus->_type;
+	cfg["clockInit"] = bonus->_clockInit;
+	cfg["spawnTime"] = bonus->_spawnTime;
+	return (cfg);
+}
+
+Config
+Save::savePosition(const Position<int>* position)
+{
+	Config	cfg;
+
+	cfg["x"] = position->_x;
+	cfg["y"] = position->_y;
+	cfg["z"] = position->_z;
+	cfg["isSet"] = position->_isSet;
+	return (cfg);
+}
+
+Config
+Save::savePosition(const Position<double>* position)
+{
+	Config	cfg;
+
+	cfg["x"] = position->_x;
+	cfg["y"] = position->_y;
+	cfg["z"] = position->_z;
+	cfg["isSet"] = position->_isSet;
 	return (cfg);
 }
