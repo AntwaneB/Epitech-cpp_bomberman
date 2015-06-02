@@ -12,9 +12,9 @@
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
 
-Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
+Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty difficulty)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
-	  _secondsElapsed(0), _charactersKills(0)
+	  _secondsElapsed(0), _charactersKills(0), _difficulty(difficulty)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
@@ -232,7 +232,7 @@ Level::pushCharacter()
 	}
 
 	// Creating new character
-	Character*	character = new Character(this, nth + 1, isPlayer, charX, charY);
+	Character*	character = new Character(this, nth + 1, isPlayer, _difficulty, charX, charY);
 	character->addObserver(this);
 
 	_scores.push_back(character);

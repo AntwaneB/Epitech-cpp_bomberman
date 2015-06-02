@@ -24,7 +24,7 @@ class Level : public EventHandler<Level>, public Subject
 	friend class	Save;
 
 public:
-	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount);
+	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty);
 	virtual ~Level();
 
 	void				run();
@@ -83,6 +83,8 @@ private:
 
 	std::list<Character*>								_scores;
 	size_t													_charactersKills;
+
+	IA::Difficulty											_difficulty;
 };
 
 #endif	/* LEVEL_HPP */
