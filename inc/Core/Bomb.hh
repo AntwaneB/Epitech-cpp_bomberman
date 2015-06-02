@@ -19,6 +19,22 @@ class Bomb : public EventHandler<Bomb>, public Subject, public Item
 	friend class	Save;
 
 public:
+	struct Explosion
+	{
+		Explosion(seconds_t time, std::vector<Position<> > const & pos)
+			: lastUntil(time), positions(pos)
+		{
+			static size_t	_id = 0;
+
+			id = ++_id;
+		}
+
+		size_t							id;
+		seconds_t						lastUntil;
+		std::vector<Position<> >	positions;
+	};
+
+public:
 	Bomb(Position<> const &, size_t, double, const Character*);
 	virtual ~Bomb();
 

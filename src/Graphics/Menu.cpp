@@ -39,7 +39,7 @@ Graphics::Menu::init(::Menu* menu)
 	else
 		_window.clear();
 	_window.setPosition(sf::Vector2i(1920/4, 1080/4));
-	
+
 	// Screen background
 	_backgroundTexture.loadFromFile(_menu->layout()["background"]["location"]);
 	_background.setTexture(_backgroundTexture);

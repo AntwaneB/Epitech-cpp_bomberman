@@ -15,6 +15,8 @@
 #include "Core/Observer.hpp"
 #include "Core/Menu.hh"
 #include "Graphics/Display.hh"
+#include "Core/Thread.hh"
+#include "Core/ThreadPool.hpp"
 
 class App : public EventHandler<App>, public Subject
 {

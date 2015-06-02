@@ -99,7 +99,6 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 	}
 
-
 	// Updating bombs
 	bombs = _level->bombsRaw();
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)

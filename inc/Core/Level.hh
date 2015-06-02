@@ -24,7 +24,7 @@ class Level : public EventHandler<Level>, public Subject
 	friend class	Save;
 
 public:
-	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount);
+	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty);
 	virtual ~Level();
 
 	void				run();
@@ -39,16 +39,11 @@ public:
 	bombs() const;
 	std::map<Position<>, std::list<Item*> > const &
 	items() const;
-	std::list<Character*> const &
-	players() const;
-	std::vector<Character*> const
-	charactersRaw() const;
-	std::vector<Bomb*>		const
-	bombsRaw() const;
-	std::vector<BonusItem*>	const
-	itemsRaw() const;
-	std::list<std::pair<seconds_t, std::vector<Position<> > > >
-	explosions() const;
+	std::list<Character*> const &	players() const;
+	std::vector<Character*> const	charactersRaw() const;
+	std::vector<Bomb*> const		bombsRaw() const;
+	std::vector<BonusItem*>	const	itemsRaw() const;
+	std::list<Bomb::Explosion>		explosions() const;
 
 private:
 	Character*	pushCharacter();
@@ -74,7 +69,7 @@ private:
 	std::list<Character*>								_players;
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
-	std::list<std::pair<seconds_t, std::vector<Position<> > > >	_explosions;
+	std::list<Bomb::Explosion>							_explosions;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;
@@ -83,6 +78,8 @@ private:
 
 	std::list<Character*>								_scores;
 	size_t													_charactersKills;
+
+	IA::Difficulty											_difficulty;
 };
 
 #endif	/* LEVEL_HPP */
