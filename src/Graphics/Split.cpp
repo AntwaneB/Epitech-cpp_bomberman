@@ -69,6 +69,20 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 	}
 
+	//Creating explosion
+	auto explosions = _level->explosions();
+	for (auto it = explosions.begin(); it != explosions.end(); ++it)
+	{
+		gdl::Texture* texture = new gdl::Texture;
+		if (texture->load("./libgdl/assets/fire.tga") == false)
+			std::cout << "LOL" << std::endl;
+		std::cout << ((*it).second)[1].x() << " " << ((*it).second)[1].y() << std::endl;
+		Object *explosion = new Explosion(((*it).second)[1], texture);
+		explosion->initialize();
+		_explosions.push_back(explosion);
+		//_bombs.push_back(bomb);
+	}
+
 	// Creating new items
 	auto items = _level->itemsRaw();
 	for (auto it = items.begin(); it != items.end(); ++it)
@@ -154,6 +168,8 @@ void Graphics::Split::draw(gdl::Clock clock)
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
 		(*it)->draw(_shader, clock);
 	for (auto it = _items.begin(); it != _items.end(); ++it)
+		(*it)->draw(_shader, clock);
+	for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
 		(*it)->draw(_shader, clock);
 }
 

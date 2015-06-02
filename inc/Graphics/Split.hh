@@ -9,6 +9,7 @@
 #include "Graphics/Item.hh"
 #include "Graphics/Map.hh"
 #include "Graphics/Cube.hh"
+#include "Graphics/Explosion.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "Core/Config.hh"
@@ -38,6 +39,7 @@ namespace Graphics
 		std::list<Graphics::Character*>			_characters;
 		std::list<Graphics::Bomb*>				_bombs;
 		std::list<Graphics::Item*>				_items;
+		std::list<Graphics::Object*>			_explosions;
 		Graphics::Map*							_map;
 		std::vector<gdl::Model*> 				_models;
 		size_t									_size;
