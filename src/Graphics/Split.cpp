@@ -46,6 +46,11 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 			_characters.push_back(character);
 		}
 	}
+
+	gdl::Texture* texture = new gdl::Texture;
+	if (texture->load("./libgdl/assets/fire.tga") == false)
+		std::cout << "LOL" << std::endl;
+	_texture = texture;
 	return (true);
 }
 
@@ -81,15 +86,12 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			}
 		if (exist == false)
 		{
-			gdl::Texture* texture = new gdl::Texture;
-			if (texture->load("./libgdl/assets/fire.tga") == false)
-				std::cout << "LOL" << std::endl;
 			size_t id = (*it).id;
 			std::list<Graphics::Object*> explosions2;
 			for (auto itt = (*it).positions.begin(); itt != (*it).positions.end(); ++itt)
 			{
 				//std::cout << v.x() << " " << ((*it).second)[1].y() << std::endl;
-				Object *explosion = new Explosion((*itt), texture);
+				Object *explosion = new Explosion((*itt), _texture);
 				explosion->initialize();
 				explosions2.push_back(explosion);
 			}
