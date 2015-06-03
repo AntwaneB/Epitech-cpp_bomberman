@@ -11,9 +11,9 @@
 #include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
-
 #include "Graphics/Level.hh"
 #include "Graphics/Menu.hh"
+#include "Graphics/Audio.hh"
 
 namespace Graphics
 {
@@ -38,6 +38,8 @@ namespace Graphics
 	private:
 		Graphics::Level*	_level;
 		Graphics::Menu*	_menu;
+
+		Audio::Manager		_audioManager;
 	};
 
 }

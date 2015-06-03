@@ -5,11 +5,12 @@
  * Created on May 6, 2015, 4:07 PM
  */
 
+#include <unistd.h>
 #include "Core/Level.hh"
 #include "Graphics/Display.hh"
 
 Graphics::Display::Display()
-	: _level(NULL), _menu(NULL)
+	: _level(NULL), _menu(NULL), _audioManager(10)
 {
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
@@ -33,6 +34,8 @@ Graphics::Display::exitGame(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runMenu(Subject* entity)
 {
+	_audioManager.playMusic("./assets/sounds/acdc_tnt.ogg", false);
+
 	if (_level != NULL)
 	{
 		delete _level;
@@ -82,6 +85,8 @@ Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runLevel(Subject* entity)
 {
+	_audioManager.playMusic("./assets/sounds/plants_vs_zombies.ogg", true);
+
 	if (_level != NULL)
 	{
 		delete _level;

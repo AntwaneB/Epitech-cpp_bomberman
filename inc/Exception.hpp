@@ -31,6 +31,14 @@ protected:
 	std::string	_message;
 };
 
+class AssetException : public Exception
+{
+public:
+	AssetException(std::string const & s) : Exception(s) {}
+
+	virtual ~AssetException() throw() {}
+};
+
 class ArgumentsException : public Exception
 {
 public:
