@@ -191,6 +191,11 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		else
 			(*it)->update(clock, input);
 	}
+
+	if (input.getKey(SDLK_KP_PLUS) && _height > 30)
+		_height -= 2;
+	if (input.getKey(SDLK_KP_MINUS) && _height < 150)
+		_height += 2;
 }
 
 void Graphics::Split::draw(gdl::Clock clock)
@@ -213,8 +218,6 @@ void Graphics::Split::moveCamera()
 {
 	_x = _player->position().x();
 	_y = _player->position().y();
-	double x = 1 + _x;
-	double y = 1 + _y;
-	glm::mat4 transformation = glm::lookAt(glm::vec3(x, 90, y), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
+	glm::mat4 transformation = glm::lookAt(glm::vec3(_x, _height, _y), glm::vec3(_x, 0, _y), glm::vec3(0, 1, -180));
 	_shader.setUniform("view", transformation);
 }
