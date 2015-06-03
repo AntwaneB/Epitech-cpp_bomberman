@@ -16,7 +16,7 @@
 class Menu : public Subject, public EventHandler<Menu>
 {
 public:
-	Menu(const std::string &);
+	Menu(const std::string &, const Level * level = NULL);
 	virtual ~Menu();
 
 	void		run();
@@ -45,6 +45,7 @@ private:
 
 private:
 	std::map<std::string, void (Menu::*)(std::string const &)>	_menuActions;
+	const Level* _level;
 };
 
 #endif	/* MENU_HPP */

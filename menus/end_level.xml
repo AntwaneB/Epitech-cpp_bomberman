@@ -40,9 +40,9 @@
 			<asset>
 				<texture>
 					<start_x>1099</start_x>
-					<start_y>857</start_y>
-					<width>705</width>
-					<height>87</height>
+					<start_y>725</start_y>
+					<width>570</width>
+					<height>113</height>
 				</texture>
 				<position>
 					<x>338</x>
@@ -56,19 +56,18 @@
 			<has_value>false</has_value>
 		</title>
 
-		<saves>
+		<scores>
 			<selected>true</selected>
 			<selectable>false</selectable>
-			<id>saves</id>
+			<id>scores</id>
 			<is_collection>true</is_collection>
-			<cols>3</cols>
+			<cols>1</cols>
 			<action>
-				<name>LOAD_LEVEL</name>
+				<name>SAVE_SCORES</name>
 			</action>
 			<collection>
-				<type>files</type>
-				<folder>./saves/</folder>
-				<files_ext>xml</files_ext>
+				<type>from_level</type>
+				<attribute>scores</attribute>
 				<font_size>50</font_size>
 			</collection>
 			<position>
@@ -77,7 +76,7 @@
 				<max_x>945</max_x>
 				<max_y>500</max_y>
 			</position>
-		</saves>
+		</scores>
 
 	</content>
 </config>

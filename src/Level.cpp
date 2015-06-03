@@ -139,7 +139,6 @@ Level::end()
 	}
 
 	this->notify(this, LEVEL_ENDED);
-	this->notify(new Menu("menus/main.xml"), MENU_STARTED);
 }
 
 void

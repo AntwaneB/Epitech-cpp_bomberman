@@ -11,8 +11,8 @@
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
 
-Menu::Menu(const std::string & filename)
-	: _filename(filename)
+Menu::Menu(const std::string & filename, const Level * level)
+	: _filename(filename), _level(level)
 {
 	_actions[KEY_PRESSED] = &Menu::keyPressed;
 
