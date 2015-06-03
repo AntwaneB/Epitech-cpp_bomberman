@@ -1,13 +1,16 @@
 #include "Graphics/Split.hh"
 
 Graphics::Split::Split(::Level const * level, int id, size_t splitsCount, size_t size)
-	: _level(level), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
+	: _level(level), _player(NULL), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
 {
 	_map = new Map(level->map());
-	if (id == 0)
-		_player = _level->players().front();
-	else
-		_player = _level->players().back();
+	if (_level->players().size() > 0)
+	{
+		if (id == 0)
+			_player = _level->players().front();
+		else
+			_player = _level->players().back();
+	}
 }
 
 Graphics::Split::~Split()
@@ -209,8 +212,16 @@ void Graphics::Split::draw(gdl::Clock clock)
 
 void Graphics::Split::moveCamera()
 {
-	_x = _player->position().x();
-	_y = _player->position().y();
+	if (_player)
+	{
+		_x = _player->position().x();
+		_y = _player->position().y();
+	}
+	else
+	{
+		_x = _level->map().width() / 2;
+		_y = _level->map().height() / 2;
+	}
 	double x = 1 + _x;
 	double y = 1 + _y;
 	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));

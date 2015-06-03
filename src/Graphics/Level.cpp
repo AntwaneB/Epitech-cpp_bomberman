@@ -12,7 +12,7 @@ Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
 	size_t splitsCount = _level->players().size();
-	splitsCount = splitsCount == 0 ? 1 : splitsCount;
+	splitsCount = splitsCount < 1 ? 1 : splitsCount;
 
 	for (size_t i = 0; i < splitsCount; i++)
 		_splits.push_back(new Split(level, i, splitsCount, _level->characters().size()));
