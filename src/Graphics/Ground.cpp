@@ -1,5 +1,6 @@
-#include "Graphics/Ground.hh"
 #include <iostream>
+#include "Graphics/Ground.hh"
+#include "global.hh"
 
 Graphics::Ground::Ground(Position<double> const & position)
 	: Object(position), _width((position.x() * 2) + 1), _height((position.y() * 2) + 1)
@@ -14,7 +15,7 @@ Graphics::Ground::~Ground()
 bool Graphics::Ground::initialize()
 {
 	_speed = 50.0f;
-	std::string path = "./libgdl/assets/sand.tga";
+	std::string path = g_settings["maps"]["floor_texture"];// "./assets/textures/sand.tga";
 	if(_texture.load(path) == false)
 	{
 		std::cout << "false texture" << std::endl;

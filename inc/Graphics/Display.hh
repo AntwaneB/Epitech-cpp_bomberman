@@ -11,9 +11,9 @@
 #include "Core/Observer.hpp"
 #include "SdlContext.hh"
 #include "Game.hh"
-
 #include "Graphics/Level.hh"
 #include "Graphics/Menu.hh"
+#include "Graphics/Audio.hh"
 
 namespace Graphics
 {
@@ -35,9 +35,13 @@ namespace Graphics
 		void	exitGame(Subject* entity);
 		void	exitMenu(Subject* entity);
 
+		void	bombExploded(Subject* entity);
+
 	private:
 		Graphics::Level*	_level;
 		Graphics::Menu*	_menu;
+
+		Audio::Manager		_audioManager;
 	};
 
 }

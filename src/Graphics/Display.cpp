@@ -5,11 +5,12 @@
  * Created on May 6, 2015, 4:07 PM
  */
 
+#include <unistd.h>
 #include "Core/Level.hh"
 #include "Graphics/Display.hh"
 
 Graphics::Display::Display()
-	: _level(NULL), _menu(NULL)
+	: _level(NULL), _menu(NULL), _audioManager(10)
 {
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
@@ -18,6 +19,8 @@ Graphics::Display::Display()
 	_actions[MENU_STARTED] = &Graphics::Display::runMenu;
 	_actions[MENU_UPDATED] = &Graphics::Display::updateMenu;
 	_actions[MENU_EXITED] = &Graphics::Display::exitMenu;
+
+	_actions[LEVEL_BOMB_EXPLODED] = &Graphics::Display::bombExploded;
 }
 
 Graphics::Display::~Display()
@@ -82,6 +85,8 @@ Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runLevel(Subject* entity)
 {
+	_audioManager.playMusic("./assets/sounds/plants_vs_zombies.wav", true);
+
 	if (_level != NULL)
 	{
 		delete _level;
@@ -106,4 +111,10 @@ void
 Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
 {
 	_level->updateInput();
+}
+
+void
+Graphics::Display::bombExploded(Subject* entity __attribute__((unused)))
+{
+	_audioManager.playSound("./assets/sounds/explosion.wav");
 }

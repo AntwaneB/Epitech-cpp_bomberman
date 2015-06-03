@@ -10,7 +10,7 @@
 			<param name="box">box</param>
 			<param name="void">void</param>
 		</param>
-		<param name="floor_texture">./libgdl/assets/sand.tga</param>
+		<param name="floor_texture">./assets/textures/sand.tga</param>
 	</maps>
 
 	<scores>
@@ -70,7 +70,7 @@
 				<param name="collision">true</param>
 				<param name="destructible">false</param>
 				<param name="block_bombs">true</param>
-				<param name="texture">./libgdl/assets/rock.tga</param>
+				<param name="texture">./assets/textures/rock.tga</param>
 			</block>
 
 			<block name="box">
@@ -78,7 +78,7 @@
 				<param name="collision">true</param>
 				<param name="destructible">true</param>
 				<param name="block_bombs">false</param>
-				<param name="texture">./libgdl/assets/wood.tga</param>
+				<param name="texture">./assets/textures/wood.tga</param>
 			</block>
 
 			<block name="void">
@@ -93,7 +93,7 @@
 				<param name="collision">false</param>
 				<param name="destructible">false</param>
 				<param name="block_bombs">false</param>
-				<param name="texture">./libgdl/assets/sand.tga</param>
+				<param name="texture">./assets/textures/sand.tga</param>
 			</block>
 		</category>
 

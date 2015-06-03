@@ -45,9 +45,9 @@ ThreadPool<T>::~ThreadPool()
 {
 	for (auto thread = _threads.begin(); thread != _threads.end(); ++thread)
 	{
-		if ((*thread)->getStatus() != Thread::DEAD)
+		if ((*thread)->getStatus() == Thread::RUNNING)
 		{
-			(*thread)->stop(NULL);
+			(*thread)->wait();
 		}
 	}
 }
