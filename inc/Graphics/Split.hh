@@ -45,7 +45,9 @@ namespace Graphics
 		size_t									_size;
 		double									_x;
 		double									_y;
+		size_t									_height = 90;
 		size_t									_splitsCount;
+		gdl::Texture* 							_texture;
 	};
 
 };

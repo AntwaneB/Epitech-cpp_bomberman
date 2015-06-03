@@ -49,6 +49,11 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 			_characters.push_back(character);
 		}
 	}
+
+	gdl::Texture* texture = new gdl::Texture;
+	if (texture->load("./libgdl/assets/fire.tga") == false)
+		std::cout << "LOL" << std::endl;
+	_texture = texture;
 	return (true);
 }
 
@@ -84,15 +89,12 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			}
 		if (exist == false)
 		{
-			gdl::Texture* texture = new gdl::Texture;
-			if (texture->load("./libgdl/assets/fire.tga") == false)
-				std::cout << "LOL" << std::endl;
 			size_t id = (*it).id;
 			std::list<Graphics::Object*> explosions2;
 			for (auto itt = (*it).positions.begin(); itt != (*it).positions.end(); ++itt)
 			{
 				//std::cout << v.x() << " " << ((*it).second)[1].y() << std::endl;
-				Object *explosion = new Explosion((*itt), texture);
+				Object *explosion = new Explosion((*itt), _texture);
 				explosion->initialize();
 				explosions2.push_back(explosion);
 			}
@@ -192,6 +194,11 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		else
 			(*it)->update(clock, input);
 	}
+
+	if (input.getKey(SDLK_KP_PLUS) && _height > 30)
+		_height -= 2;
+	if (input.getKey(SDLK_KP_MINUS) && _height < 150)
+		_height += 2;
 }
 
 void Graphics::Split::draw(gdl::Clock clock)
@@ -222,8 +229,6 @@ void Graphics::Split::moveCamera()
 		_x = _level->map().width() / 2;
 		_y = _level->map().height() / 2;
 	}
-	double x = 1 + _x;
-	double y = 1 + _y;
-	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
+	glm::mat4 transformation = glm::lookAt(glm::vec3(_x, _height, _y), glm::vec3(_x, 0, _y), glm::vec3(0, 1, -180));
 	_shader.setUniform("view", transformation);
 }
