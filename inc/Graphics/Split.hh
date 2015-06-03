@@ -34,8 +34,8 @@ namespace Graphics
 
 	public:
 		const ::Level*							_level;
+		const ::Character*					_player;
 		gdl::BasicShader						_shader;
-		const ::Character*						_player;
 		std::list<Graphics::Character*>			_characters;
 		std::list<Graphics::Bomb*>				_bombs;
 		std::list<Graphics::Item*>				_items;

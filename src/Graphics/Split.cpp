@@ -51,7 +51,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	}
 
 	gdl::Texture* texture = new gdl::Texture;
-	if (texture->load("./libgdl/assets/fire.tga") == false)
+	if (texture->load("./assets/textures/fire.tga") == false)
 		std::cout << "LOL" << std::endl;
 	_texture = texture;
 	return (true);

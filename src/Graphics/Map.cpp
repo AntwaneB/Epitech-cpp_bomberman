@@ -45,18 +45,20 @@ bool Graphics::Map::initialize()
 		{
 			if (_map->map()[y][x] && _map->map()[y][x]->visible())
 			{
-				if (_map->map()[y][x]->texture() == "./libgdl/assets/rock.tga")
+//				if (_map->map()[y][x]->texture() == "./libgdl/assets/rock.tga")
 				{
 					Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 					cube->initialize();
 					line.push_back(cube);
 				}
+				/*
 				else if (_map->map()[y][x]->texture() == "./libgdl/assets/wood.tga")
 				{
 					Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 					cube->initialize();
 					line.push_back(cube);
 				}
+				*/
 			}
 			else if (!_map->map()[y][x]->visible())
 			{

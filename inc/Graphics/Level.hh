@@ -46,7 +46,7 @@ namespace Graphics
 		gdl::SdlContext					_context;
 		gdl::Input							_input;
 		gdl::Clock							_clock;
-		std::vector<gdl::Model*> 			_models;
+		std::vector<gdl::Model*> 		_models;
 		std::vector<Graphics::Split*> _splits;
 		size_t								_size;
 	};
