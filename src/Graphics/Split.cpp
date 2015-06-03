@@ -33,7 +33,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	_shader.bind();
 	moveCamera();
 	_shader.setUniform("projection", projection);
-
+	_shader.setUniform("color", glm::vec4(1, 1, 1, 1));
 	_map->initialize();
 
 	size_t i = 0;

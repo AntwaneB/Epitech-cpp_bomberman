@@ -72,7 +72,7 @@ Graphics::Level::update()
 		keys[SDLK_UP] = ::Input::P1_UP;
 		keys[SDLK_RIGHT] = ::Input::P1_RIGHT;
 		keys[SDLK_LEFT] = ::Input::P1_LEFT;
-		keys[SDLK_KP_0] = ::Input::P1_SPACE;
+		keys[SDLK_RSHIFT] = ::Input::P1_SPACE;
 		keys[SDLK_z] = ::Input::P2_UP;
 		keys[SDLK_s] = ::Input::P2_DOWN;
 		keys[SDLK_q] = ::Input::P2_LEFT;
