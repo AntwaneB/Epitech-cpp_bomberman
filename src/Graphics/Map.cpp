@@ -1,11 +1,9 @@
 #include "Graphics/Map.hh"
+#include "global.hh"
 
 Graphics::Map::Map(const ::Map& map)
 	: _map(&map)
 {
-	//load("./libgdl/assets/rock.tga")
-	//t_rock->load("./libgdl/assets/wood.tga")
-	// t_rock->load("./libgdl/assets/sand.tga")
 }
 
 Graphics::Map::~Map()
@@ -34,10 +32,6 @@ Graphics::Map::loadTexture(const std::string & path)
 
 bool Graphics::Map::initialize()
 {
-	/*Object *bomb = new Bomb();
-	if (bomb->initialize() == false)
-		return (false);
-	objects->push_back(bomb);*/
 	for (unsigned int y = 0; y < _map->height(); y++)
 	{
 		std::vector<Graphics::Object*> line;
@@ -45,28 +39,16 @@ bool Graphics::Map::initialize()
 		{
 			if (_map->map()[y][x] && _map->map()[y][x]->visible())
 			{
-//				if (_map->map()[y][x]->texture() == "./libgdl/assets/rock.tga")
-				{
-					Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
-					cube->initialize();
-					line.push_back(cube);
-				}
-				/*
-				else if (_map->map()[y][x]->texture() == "./libgdl/assets/wood.tga")
-				{
-					Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
-					cube->initialize();
-					line.push_back(cube);
-				}
-				*/
-			}
-			else if (!_map->map()[y][x]->visible())
-			{
-				Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture("./libgdl/assets/sand.tga"));
+				Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(_map->map()[y][x]->texture()));
 				cube->initialize();
 				line.push_back(cube);
 			}
-
+			else if (_map->map()[y][x] && !_map->map()[y][x]->visible())
+			{
+				Object *cube = new Cube(Position<>(x, y, 1), _map->map()[y][x], loadTexture(g_settings["maps"]["floor_texture"]));
+				cube->initialize();
+				line.push_back(cube);
+			}
 		}
 		_blocks.push_back(line);
 	}
