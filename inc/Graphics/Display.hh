@@ -29,6 +29,7 @@ namespace Graphics
 		void	updateMenu(Subject* entity);
 
 		void	runLevel(Subject* entity);
+		void	endLevel(Subject* entity);
 		void	updateLevel(Subject* entity);
 		void	updateLevelPaused(Subject* entity);
 

@@ -26,6 +26,8 @@ Graphics::Level::~Level()
 {
 	for (size_t i = 0; i < _splits.size(); i++)
 		delete _splits[i];
+
+	_context.stop();
 }
 
 bool

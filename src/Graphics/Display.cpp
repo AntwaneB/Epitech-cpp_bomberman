@@ -14,6 +14,7 @@ Graphics::Display::Display()
 	: _level(NULL), _menu(NULL), _audioManager(10)
 {
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
+	_actions[LEVEL_ENDED] = &Graphics::Display::endLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
 	_actions[LEVEL_PAUSE_TICK] = &Graphics::Display::updateLevelPaused;
 	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
@@ -102,6 +103,18 @@ Graphics::Display::runLevel(Subject* entity)
 	_level = new Graphics::Level(level);
 	_level->addObserver(this);
 	_level->addObserver(level);
+}
+
+void
+Graphics::Display::endLevel(Subject* entity __attribute__((unused)))
+{
+	if (_level != NULL)
+	{
+		delete _level;
+		_level = NULL;
+	}
+
+	_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
 }
 
 void
