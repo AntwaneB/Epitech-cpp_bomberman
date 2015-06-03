@@ -13,6 +13,14 @@
 		<param name="floor_texture">./assets/textures/sand.tga</param>
 	</maps>
 
+	<sounds>
+		<bomb_exploded>./assets/sounds/explosion.wav</bomb_exploded>
+		<level_started>./assets/sounds/plants_vs_zombies.wav</level_started>
+		<menu_started>./assets/sounds/acdc_tnt.ogg</menu_started>
+		<bonus_picked>./assets/sounds/bonus.ogg</bonus_picked>
+		<character_died>./assets/sounds/dead.ogg</character_died>
+	</sounds>
+
 	<scores>
 		<param name="first_blood">250</param>
 		<param name="character_kill">100</param>

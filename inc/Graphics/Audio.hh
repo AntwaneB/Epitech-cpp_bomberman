@@ -54,7 +54,6 @@ namespace Audio
 		void	playMusic(std::string const &, bool loop = false);
 		void	playSound(std::string const &, bool loop = false);
 		void	stopMusic(std::string const &);
-		void	stopSound(std::string const &);
 
 	private:
 		::ThreadPool<PThread>							_threads;

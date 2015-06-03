@@ -6,6 +6,7 @@
  */
 
 #include <unistd.h>
+#include "global.hh"
 #include "Core/Level.hh"
 #include "Graphics/Display.hh"
 
@@ -50,6 +51,8 @@ Graphics::Display::runMenu(Subject* entity)
 		_menu->addObserver(this);
 	}
 
+	_audioManager.playMusic(g_settings["sounds"]["menu_started"], true);
+
 	_menu->addObserver(menu);
 	_menu->init(menu);
 	_menu->run();
@@ -85,13 +88,14 @@ Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runLevel(Subject* entity)
 {
-	_audioManager.playMusic("./assets/sounds/plants_vs_zombies.wav", true);
-
 	if (_level != NULL)
 	{
 		delete _level;
 		_level = NULL;
 	}
+
+	_audioManager.stopMusic(g_settings["sounds"]["menu_started"]);
+	_audioManager.playMusic(g_settings["sounds"]["level_started"], true);
 
 	::Level*	level = safe_cast<::Level*>(entity);
 
@@ -116,5 +120,5 @@ Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::bombExploded(Subject* entity __attribute__((unused)))
 {
-	_audioManager.playSound("./assets/sounds/explosion.wav");
+	_audioManager.playSound(g_settings["sounds"]["bomb_exploded"]);
 }

@@ -93,3 +93,14 @@ Audio::Manager::playSound(const std::string& path, bool loop)
 	_threads.pushTask(new Audio::Sound(sound, loop));
 	_threads.runTasks();
 }
+
+void
+Audio::Manager::stopMusic(const std::string& path)
+{
+	auto music = _musics.find(path);
+
+	if (music != _musics.end())
+	{
+		_musics[path]->stop();
+	}
+}
