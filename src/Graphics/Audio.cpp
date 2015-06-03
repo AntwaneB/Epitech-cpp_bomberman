@@ -26,6 +26,7 @@ Audio::Sound::execute()
 	_sound->setVolume(20);
 	_sound->setLoop(_loop);
 	_sound->play();
+	delete this;
 }
 
 Audio::Music::Music(sf::Music* music, bool loop)
@@ -43,7 +44,7 @@ Audio::Music::execute()
 	_music->setVolume(100);
 	_music->setLoop(_loop);
 	_music->play();
-	std::cout << "coucou" << std::endl;
+	delete this;
 }
 
 Audio::Manager::Manager(size_t channels)
