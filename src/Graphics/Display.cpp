@@ -85,7 +85,7 @@ Graphics::Display::updateMenu(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runLevel(Subject* entity)
 {
-	_audioManager.playMusic("./assets/sounds/plants_vs_zombies.ogg", true);
+	_audioManager.playMusic("./assets/sounds/plants_vs_zombies.wav", true);
 
 	if (_level != NULL)
 	{
@@ -116,5 +116,5 @@ Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::bombExploded(Subject* entity __attribute__((unused)))
 {
-	_audioManager.playSound("./assets/sounds/explosion.ogg");
+	_audioManager.playSound("./assets/sounds/explosion.wav");
 }
