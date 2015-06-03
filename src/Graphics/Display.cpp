@@ -19,6 +19,8 @@ Graphics::Display::Display()
 	_actions[MENU_STARTED] = &Graphics::Display::runMenu;
 	_actions[MENU_UPDATED] = &Graphics::Display::updateMenu;
 	_actions[MENU_EXITED] = &Graphics::Display::exitMenu;
+
+	_actions[LEVEL_BOMB_EXPLODED] = &Graphics::Display::bombExploded;
 }
 
 Graphics::Display::~Display()
@@ -34,8 +36,6 @@ Graphics::Display::exitGame(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::runMenu(Subject* entity)
 {
-	_audioManager.playMusic("./assets/sounds/acdc_tnt.ogg", false);
-
 	if (_level != NULL)
 	{
 		delete _level;
@@ -111,4 +111,10 @@ void
 Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
 {
 	_level->updateInput();
+}
+
+void
+Graphics::Display::bombExploded(Subject* entity __attribute__((unused)))
+{
+	_audioManager.playSound("./assets/sounds/explosion.ogg");
 }

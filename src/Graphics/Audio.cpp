@@ -23,7 +23,7 @@ Audio::Sound::~Sound()
 void
 Audio::Sound::execute()
 {
-	_sound->setVolume(100);
+	_sound->setVolume(20);
 	_sound->setLoop(_loop);
 	_sound->play();
 }
@@ -43,6 +43,7 @@ Audio::Music::execute()
 	_music->setVolume(100);
 	_music->setLoop(_loop);
 	_music->play();
+	std::cout << "coucou" << std::endl;
 }
 
 Audio::Manager::Manager(size_t channels)
@@ -72,5 +73,22 @@ Audio::Manager::playMusic(const std::string& path, bool loop)
 			throw AssetException(path + ": couldn't load file.");
 	}
 	_threads.pushTask(new Audio::Music(_musics[path], loop));
+	_threads.runTasks();
+}
+
+void
+Audio::Manager::playSound(const std::string& path, bool loop)
+{
+	auto buffer = _buffers.find(path);
+
+	if (buffer == _buffers.end())
+	{
+		_buffers[path] = new sf::SoundBuffer;
+		if (!_buffers[path]->loadFromFile(path))
+			throw AssetException(path + ": couldn't load file.");
+	}
+	sf::Sound* sound = new sf::Sound;
+	sound->setBuffer(*(_buffers[path]));
+	_threads.pushTask(new Audio::Sound(sound, loop));
 	_threads.runTasks();
 }

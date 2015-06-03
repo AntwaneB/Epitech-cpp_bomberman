@@ -51,8 +51,8 @@ namespace Audio
 		Manager(size_t channels);
 		~Manager();
 
-		void	playMusic(std::string const &, bool loop);
-		void	playSound(std::string const &, bool loop);
+		void	playMusic(std::string const &, bool loop = false);
+		void	playSound(std::string const &, bool loop = false);
 		void	stopMusic(std::string const &);
 		void	stopSound(std::string const &);
 

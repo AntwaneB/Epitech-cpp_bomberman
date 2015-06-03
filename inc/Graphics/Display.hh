@@ -35,6 +35,8 @@ namespace Graphics
 		void	exitGame(Subject* entity);
 		void	exitMenu(Subject* entity);
 
+		void	bombExploded(Subject* entity);
+
 	private:
 		Graphics::Level*	_level;
 		Graphics::Menu*	_menu;
