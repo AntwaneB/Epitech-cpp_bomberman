@@ -129,6 +129,7 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 			_frame += 1;
 	}
 	shader.bind();
+	//shader.setUniform("color", glm::vec4(3, 3, 0, 1));
 	/*if (shader.setUniform("COLOR", glm::vec3(5, 5, 5)) == false)
 		std::cout << "Color false" << std::endl;*/
 	_model->draw(shader, getTransformation(), clock.getElapsed());
