@@ -74,19 +74,21 @@ namespace IA
 			bool	BombOpportunity();
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
+			bool	simulateEscape();
 			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
          	void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
          	void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
          	Character::Action 	checkDestinationSafe(Character::Action) const;
 			Character::Action 	checkAlignment(Character::Action) const;
-			Character::Action     Move();
-			Character::Action     escapeBomb();
+			Character::Action 	Move();
+			Character::Action 	escapeBomb();
 
 		private:
 			int 	 _myX;
 		 	int 	 _myY;
 		 	bool	 _xCentered;
 		 	bool 	 _yCentered;
+
 			std::vector<std::vector<Area> > _strategyMap;
 			std::list<Position<> >             _escapeNodes;
 			Character*						_self;
@@ -99,10 +101,18 @@ template<IA::Difficulty T>
 IA::IA<T>::IA(Level const* level, Character* character):
 		_level(level)
 {
+	if (VERBOSE)
+	{
+		std::cout << "Starting IA constructor..." << std::endl;
+	}
 	_self = character;
 	_xCentered = false;
 	_yCentered = false;
 	scanMap();
+	if (VERBOSE)
+	{
+		std::cout << "END IA constructor" << std::endl;
+	}
 }
 
 template<IA::Difficulty T>
@@ -208,6 +218,8 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
         {
             if ((currentX + searchX[i]) >= 0 && (currentX + searchX[i]) < mapWidth && (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT)
                 {
 	            if (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
@@ -244,22 +256,21 @@ void IA::IA<T>::scanMap()
 	std::vector<std::vector<Block*> > map = _level->map().map();
 	std::vector<int> searchX = {0, 1, 0, -1, 0, 2, 0, -2};
 	std::vector<int> searchY = {1, 0, -1, 0, 2, 0, -2, 0};
-	int y;
-	int x;
+	unsigned int y = 0;
+	unsigned int x = 0;
 
 	if (VERBOSE)
-		std::cout << "Starting scanMap()" << std::endl;
-	y = 0;
-	_strategyMap.resize(_level->map().height());
-	for (std::vector<std::vector<Block*> >::iterator i = map.begin(); i != map.end(); ++i)
 	{
+		std::cout << "Starting scanMap()..." << std::endl;
+	}
+	_strategyMap.resize(_level->map().height());
+	while (y < _level->map().height())
+	{
+		_strategyMap[y].resize(_level->map().width());
 		x = 0;
-		for (std::vector<Block*>::iterator j = i->begin(); j != i->end(); ++j)
+		while (x < _level->map().width())
 		{
-			_strategyMap[x].resize(_level->map().width());
-			Block *b = *j;
-			_strategyMap[y][x] = Area(b->destructible(), b->solid());
-			_strategyMap[y][x].setExplosion(false);
+			_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid());
 			x++;
 		}
 		y++;
@@ -316,7 +327,7 @@ void IA::IA<T>::playTurn()
 		std::cout << "BEGIN IA" << std::endl;
     }
     refreshPosition();
-    //_strategyMap[_myY][_myX].incHistory(); // A REMETTRE (MEDIUM)
+
 	scanMap();
     bool isInDanger = BombDetection();
 	Character::Action action;
@@ -329,7 +340,7 @@ void IA::IA<T>::playTurn()
 	}
 	else
 	{
-		if (BombOpportunity() && escapeBomb() != Character::WAIT)
+		if (BombOpportunity() && simulateEscape() != Character::WAIT)
 			action = Character::DROP_BOMB;
 		else
 			action = Move();
@@ -339,6 +350,10 @@ void IA::IA<T>::playTurn()
 		action = checkDestinationSafe(action);
 	}
 	action = checkAlignment(action);
+	if (action != Character::WAIT && action != Character::DROP_BOMB)
+	{
+		_strategyMap[_myY][_myX].incHistory();
+	}
 	_self->pushAction(action);
     if (VERBOSE)
     {
@@ -388,17 +403,16 @@ Character::Action IA::IA<T>::escapeBomb()
             if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false)
             {
                 if (VERBOSE)
-                { 
+                {
                     std::cout << "  escapeBomb() END : success with i:" << i <<" action: ";
                     displayAction(searchActions[i]);
                     std::cout << "with x/y block found: " <<  _myX + searchX[i] << "/" <<_myY + searchY[i] <<std::endl;
                 }
-                //_escapeNodes.clear();
                 return (searchActions[i]);
             }
             else
             {
-            counter++; //Debug
+            counter++;
             _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
             _escapeNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
             }
@@ -411,7 +425,6 @@ Character::Action IA::IA<T>::escapeBomb()
     {
          escapeDirectionFound = scanMapForEscape(finalAction);
     }
-    //_escapeNodes.clear();
     if (VERBOSE)
         std::cout << "  escapeBomb() END" << std::endl;
     return finalAction;
@@ -487,10 +500,8 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
 template<IA::Difficulty T>
 bool IA::IA<T>::BombDetection()
 {
-   // Position<> currentPosition = _self->position();
     if (VERBOSE)
     	std::cout << "Starting BombDetection() : " << _myX << "/" << _myY << std::endl;
- //   Area a = _strategyMap[_myY][_myX];
     if (_strategyMap[_myY][_myX].explosion() == true || _strategyMap[_myY][_myX].bomb() == true)
     {
     	if (VERBOSE)
@@ -508,36 +519,33 @@ bool IA::IA<T>::BombDetection()
 template<IA::Difficulty T>
 void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOVE when finished
 {
-	if (VERBOSE)
+	if(action == Character::MOVE_UP)
 	{
-		if(action == Character::MOVE_UP)
-		{
-			std::cout << "MOVE_UP";
-		}
-		else if(action == Character::MOVE_RIGHT)
-		{
-			std::cout << "MOVE_RIGHT";
-		}
-		else if(action == Character::MOVE_DOWN)
-		{
-			std::cout << "MOVE_DOWN";
-		}
-		else if(action == Character::MOVE_LEFT)
-		{
-			std::cout << "MOVE_LEFT";
-		}
-		else if(action == Character::WAIT)
-		{
-			std::cout << "WAIT";
-		}
-		else if(action == Character::DROP_BOMB)
-		{
-			std::cout << "DROP_BOMB";
-		}
-		else
-		{
-			std::cout << "ERROR NOT AN ACTION***********" << std::endl;
-		}
+		std::cout << "MOVE_UP";
+	}
+	else if(action == Character::MOVE_RIGHT)
+	{
+		std::cout << "MOVE_RIGHT";
+	}
+	else if(action == Character::MOVE_DOWN)
+	{
+		std::cout << "MOVE_DOWN";
+	}
+	else if(action == Character::MOVE_LEFT)
+	{
+		std::cout << "MOVE_LEFT";
+	}
+	else if(action == Character::WAIT)
+	{
+		std::cout << "WAIT";
+	}
+	else if(action == Character::DROP_BOMB)
+	{
+		std::cout << "DROP_BOMB";
+	}
+	else
+	{
+		std::cout << "ERROR NOT AN ACTION***********" << std::endl;
 	}
 }
 
@@ -603,6 +611,8 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
             	&& (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
+                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
                 && (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
                     || _strategyMap[currentY + searchY[i]][currentX + searchX[i]].destructible() == true))
                 {
@@ -642,7 +652,7 @@ void IA::IA<T>::refreshPosition()
 	double	xDiff = (_self->position().x() - 0.5) - static_cast<long>(_self->position().x());
 	double 	yDiff = (_self->position().y() - 0.5) - static_cast<long>(_self->position().y());
 
-	if (xDiff <= 0.1 && xDiff >= -0.1)
+	if (xDiff <= 0.15 && xDiff >= -0.15)
 	{
 		_xCentered = true;
 	}
@@ -650,7 +660,7 @@ void IA::IA<T>::refreshPosition()
 	{
 		_xCentered = false;
 	}
-	if (yDiff <= 0.1 && yDiff >= -0.1)
+	if (yDiff <= 0.15 && yDiff >= -0.15)
 	{
 		_yCentered = true;
 	}
@@ -688,12 +698,13 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 				displayAction(suggestedAction);
 				std::cout << " is validated for final Action" << std::endl;
 			}
+			return(suggestedAction);
 		}
 		else if ((_self->position().x() - static_cast<long>(_self->position().x())) < 0.5) // si l IA est trop a gauche ou a droite pour se depl sur laxe x
 		{
 			if (VERBOSE)
 			{
-				std::cout << "checkAlignment() : need alignment before movement. x = " << _self->position().x() << ". Action corrected to MOVE_RIGHT" << std::endl;
+				std::cout << "    checkAlignment() : need alignment before movement. x = " << _self->position().x() << ". Action corrected to MOVE_RIGHT" << std::endl;
 			}
 			return (Character::MOVE_RIGHT);
 		}
@@ -701,7 +712,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 		{
 			if (VERBOSE)
 			{
-				std::cout << "checkAlignment() : need alignment before movement. x = " << _self->position().x() << ". Action corrected to MOVE_LEFT" << std::endl;
+				std::cout << "    checkAlignment() : need alignment before movement. x = " << _self->position().x() << ". Action corrected to MOVE_LEFT" << std::endl;
 			}
 			return (Character::MOVE_LEFT);
 		}
@@ -712,7 +723,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 		{
 			if (VERBOSE)
 			{
-				std::cout << "checkAlignment() END : y axis is centered. y = ";
+				std::cout << "    checkAlignment() END : y axis is centered. y = ";
 				std::cout << (_self->position().y());
 				std::cout << ". ";
 				displayAction(suggestedAction);
@@ -724,7 +735,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 		{
 			if (VERBOSE)
 			{
-				std::cout << "checkAlignment() : need alignment before movement. y = " << _self->position().y() << ". Action corrected to MOVE_DOWN" << std::endl;
+				std::cout << "    checkAlignment() : need alignment before movement. y = " << _self->position().y() << ". Action corrected to MOVE_DOWN" << std::endl;
 			}
 			return (Character::MOVE_DOWN);
 		}
@@ -732,7 +743,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 		{
 			if (VERBOSE)
 			{
-				std::cout << "checkAlignment() : need alignment before movement. y = " << _self->position().y() << ". Action corrected to MOVE_UP"<< std::endl;
+				std::cout << "    scheckAlignment() : need alignment before movement. y = " << _self->position().y() << ". Action corrected to MOVE_UP"<< std::endl;
 			}
 			return (Character::MOVE_UP);
 		}
@@ -800,6 +811,22 @@ Character::Action IA::IA<T>::checkDestinationSafe(Character::Action suggestedAct
 		}
 	}
 	return (suggestedAction);
+}
+
+template<IA::Difficulty T>
+bool IA::IA<T>::simulateEscape()
+{
+	_strategyMap[_myY][_myX].setBomb(true);
+	scanMap();
+	if (escapeBomb() == Character::WAIT)
+	{
+		_strategyMap[_myY][_myX].setBomb(false);
+		scanMap();
+		return (false);
+	}
+	_strategyMap[_myY][_myX].setBomb(false);
+	scanMap();
+	return (true);
 }
 
 #endif	/* IA_HPP */

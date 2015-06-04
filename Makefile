@@ -20,6 +20,7 @@ SRCS		  =  main.cpp \
 		     App.cpp \
 		     Config.cpp \
 		     Clock.cpp \
+		     Thread.cpp \
 		     \
 		     Menu.cpp \
 		     Level.cpp \
@@ -59,6 +60,8 @@ INCS		  =  global.hh \
 		     Core/App.hh \
 		     Core/Config.hh \
 		     Core/Clock.hh \
+		     Core/Thread.hh \
+		     Core/ThreadPool.hpp \
 		     \
 		     Core/Observer.hpp \
 		     Core/Menu.hh \

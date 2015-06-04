@@ -12,9 +12,9 @@
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
 
-Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount)
+Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty difficulty)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
-	  _secondsElapsed(0), _charactersKills(0)
+	  _secondsElapsed(0), _charactersKills(0), _difficulty(difficulty)
 {
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
@@ -109,6 +109,12 @@ Level::bombs() const
 	return _bombs;
 }
 
+std::list<Bomb::Explosion>
+Level::explosions() const
+{
+	return (_explosions);
+}
+
 void
 Level::run()
 {
@@ -140,6 +146,15 @@ Level::tick(Subject* entity)
 	Clock* clock = safe_cast<Clock*>(entity);
 	if (clock == &_clock)
 	{
+		for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
+		{
+			if (_clock.seconds() >= it->lastUntil)
+			{
+				it = _explosions.erase(it);
+				--it;
+			}
+		}
+
 		this->notify(this, LEVEL_UPDATED);
 
 		if (static_cast<size_t>(_clock.seconds()) > _secondsElapsed)
@@ -217,7 +232,7 @@ Level::pushCharacter()
 	}
 
 	// Creating new character
-	Character*	character = new Character(this, nth + 1, isPlayer, charX, charY);
+	Character*	character = new Character(this, nth + 1, isPlayer, _difficulty, charX, charY);
 	character->addObserver(this);
 
 	_scores.push_back(character);
@@ -373,6 +388,9 @@ Level::bombExploded(Subject* entity)
 	if (std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb) != _bombs[bomb->position()].end())
 		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
 
+	//Bomb::Explosion explosion(_clock.seconds() + 1, hitbox);
+	_explosions.push_back(Bomb::Explosion(_clock.seconds() + 1, hitbox));
+
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }
 
@@ -423,34 +441,3 @@ Level::quitLevel(Subject* entity __attribute__((unused)))
 {
 	this->end();
 }
-
-/*
-void
-Level::toConfig(Config & cfg) const
-{
-	int	index;
-
-	index = 0;
-	cfg["charactersCount"] = _charactersCount;
-	cfg["timeSpend"] = _clock.seconds();
-	for (std::map<Position<>, std::list<Character*>>::const_iterator it = _characters.begin(); it != _characters.end(); it++)
-		for (std::list<Character*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++)
-			(*it)->toConfig(cfg["characters"]);
-	for (std::map<Position<>, std::list<Bomb*>>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++)
-		for (std::list<Bomb*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
-			(*it)->toConfig(cfg["bombs"][index]);
-	index = 0;
-	for (std::map<Position<>, std::list<Item*>>::const_iterator it = _items.begin(); it != _items.end(); it++)
-		for (std::list<Item*>::const_iterator subIt = it->second.begin(); subIt != it->second.end(); subIt++; index++)
-			(*it)->toConfig(cfg["items"][index]);
-}
-
-void
-Level::exportFile(const std::string & filename) const
-{
-	Config	cfg;
-
-	toConfig(cfg);
-	cfg.exportFile(filename);
-}
-*/

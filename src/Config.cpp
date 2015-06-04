@@ -25,6 +25,14 @@ Config::Config()
 }
 
 Config&
+Config::operator=(Config const & o)
+{
+	_params = o._params;
+
+	return (*this);
+}
+
+Config&
 Config::operator=(Config::Param const & o)
 {
 	_params = o;
@@ -100,6 +108,25 @@ Config::Param const & Config::Param::operator [](const char key[]) const
 	return (this->operator[](std::string(key)));
 }
 */
+
+Config::Param&
+Config::Param::operator=(Config const & o)
+{
+	_status = o._params._status;
+	_value = o._params._value;
+	_map = o._params._map;
+	return (*this);
+}
+
+Config::Param&
+Config::Param::operator=(Config::Param const & o)
+{
+	_status = o._status;
+	_value = o._value;
+	_map = o._map;
+	return (*this);
+}
+
 Config::Param& Config::Param::operator = (bool value)
 {
 	_map.clear();
@@ -186,6 +213,26 @@ Config::Param& Config::Param::operator = (const char value[])
 	_status = Config::Param::VALUE;
 
 	_value = value;
+
+	return (*this);
+}
+
+Config::Param& Config::Param::operator = (size_t value)
+{
+	_map.clear();
+	_status = Config::Param::VALUE;
+
+	_value = std::to_string(value);
+
+	return (*this);
+}
+
+Config::Param& Config::Param::operator = (long double value)
+{
+	_map.clear();
+	_status = Config::Param::VALUE;
+
+	_value = std::to_string(value);
 
 	return (*this);
 }

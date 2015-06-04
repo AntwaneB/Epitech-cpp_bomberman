@@ -115,11 +115,13 @@ namespace IA
 	Character::Action IA<EASY>::Move()
 	{
 		lua_getglobal(_L, "move");
-		lua_pushnumber(_L, _level->map().height());
 		lua_pushnumber(_L, _level->map().width());
-		lua_pcall(_L, 2, 1, 0);
+		lua_pushnumber(_L, _level->map().height());
+		lua_pushnumber(_L, _myX);
+		lua_pushnumber(_L, _myY);
+		lua_pcall(_L, 4, 1, 0);
 		Character::Action move =  static_cast<Character::Action>(lua_tonumber(_L, -1));
-		lua_pop(_L, 2);
+		lua_pop(_L, 1);
 		switch (move)
 		{
 			case Character::MOVE_UP :
@@ -130,7 +132,12 @@ namespace IA
 				break;
 			case Character::MOVE_RIGHT :
 				break;
+			case Character::WAIT :
+				break;
+			case Character::DROP_BOMB :
+				break;
 			default :
+				displayAction(move);
 				throw ScriptingException("Script invalid return value is not a move");
 		}
 		return move;
@@ -140,7 +147,7 @@ namespace IA
 namespace IA
 {
     template<>
-    Character::Action IA<MEDIUM>::Move() //fonction amelioree : new : pose une bombe si impasse destructible
+    Character::Action IA<MEDIUM>::Move()
     {
         std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
         std::vector<int>                searchX = {0, 1, 0, -1};
@@ -177,7 +184,7 @@ namespace IA
             }
             i++;
         }
-        if (freePath == 1 && destructibleDirections >= 1 && escapeBomb() != Character::WAIT) //pose un bombe si cest une impasse destructible
+        if (freePath == 1 && destructibleDirections >= 1 && simulateEscape() != Character::WAIT) //pose un bombe si cest une impasse destructible
         {
         	if (VERBOSE)
         		std::cout << "MOVE(MEDIUM) END: dropping BOMB to extend path to enemy" << std::endl;
@@ -218,6 +225,7 @@ namespace IA
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == false
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
+					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
 			{
 				 counter++;
@@ -247,6 +255,7 @@ namespace IA
 					&& (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
 					|| _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true )
 					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
+					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
 					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
 				{
 					if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true)
@@ -264,7 +273,7 @@ namespace IA
 	 		{
 				enemyDirectionFound = scanMapForEnemyThroughDestructible(finalAction);
 			}
-			if (destructibleDirections.size() > 0 && escapeBomb() != Character::WAIT)//verif si le prochain path est destr. et si on peut s'echapp.
+			if (destructibleDirections.size() > 0 && simulateEscape() == true)//verif si le prochain path est destr. et si on peut s'echapp.
 			{
 				if (VERBOSE)
 					std::cout << "Now comparing with destructibleDirections..." << std::endl;

@@ -37,7 +37,6 @@ Item::prevPosition() const
 {
 	return (_prevPosition);
 }
-
 /*
 void
 Item::toConfig(Config & cfg) const

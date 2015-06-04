@@ -11,6 +11,7 @@
 #include <map>
 #include "Observer.hpp"
 #include "Clock.hh"
+#include "Position.hh"
 #include "Map.hh"
 #include "Character.hh"
 #include "Item.hh"
@@ -20,8 +21,10 @@
 
 class Level : public EventHandler<Level>, public Subject
 {
+	friend class	Save;
+
 public:
-	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount);
+	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty);
 	virtual ~Level();
 
 	void				run();
@@ -30,16 +33,17 @@ public:
 	Map const &		map() const;
 	size_t			charactersCount() const;
 
-	std::map<Position<>, std::list<Character*> > const &	characters() const;
-	std::map<Position<>, std::list<Bomb*> > const &		bombs() const;
-	std::map<Position<>, std::list<Item*> > const &		items() const;
-	std::list<Character*> const &						players() const;
-	std::vector<Character*> const charactersRaw() const;
-	std::vector<Bomb*>		const bombsRaw() const;
-	std::vector<BonusItem*>	const itemsRaw() const;
-
-	void	exportFile(const std::string &) const;
-	void	toConfig(Config & cfg) const;
+	std::map<Position<>, std::list<Character*> > const &
+	characters() const;
+	std::map<Position<>, std::list<Bomb*> > const &
+	bombs() const;
+	std::map<Position<>, std::list<Item*> > const &
+	items() const;
+	std::list<Character*> const &	players() const;
+	std::vector<Character*> const	charactersRaw() const;
+	std::vector<Bomb*> const		bombsRaw() const;
+	std::vector<BonusItem*>	const	itemsRaw() const;
+	std::list<Bomb::Explosion>		explosions() const;
 
 private:
 	Character*	pushCharacter();
@@ -59,15 +63,13 @@ private:
 	void	tick(Subject* entity);
 	void	pauseTick(Subject* entity);
 
-private:
-	void	charactersToConfig(Config &) const;
-
 	private:
 	Map														_map;
 	std::map<Position<>, std::list<Character*> >	_characters;
 	std::list<Character*>								_players;
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
+	std::list<Bomb::Explosion>							_explosions;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;
@@ -76,6 +78,8 @@ private:
 
 	std::list<Character*>								_scores;
 	size_t													_charactersKills;
+
+	IA::Difficulty											_difficulty;
 };
 
 #endif	/* LEVEL_HPP */

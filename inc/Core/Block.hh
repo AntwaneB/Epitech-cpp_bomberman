@@ -14,6 +14,8 @@
 
 class Block : public EventHandler<Block>, public Subject
 {
+	friend class	Save;
+
 public:
 	Block(Position<> const & position, std::string const & type);
 	virtual ~Block();

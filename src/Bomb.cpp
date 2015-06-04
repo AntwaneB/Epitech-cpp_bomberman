@@ -75,7 +75,6 @@ Bomb::tick(Subject* entity)
 		}
 	}
 }
-
 /*
 void
 Bomb::toConfig(Config & cfg) const

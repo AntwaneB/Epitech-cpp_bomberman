@@ -15,6 +15,8 @@
 
 class Item
 {
+	friend class	Save;
+
 public:
 	enum Type { RANGE_INCREASER, SPEED_INCREASER, BOMB_AMOUNT_INCREASER, last };
 
@@ -25,7 +27,7 @@ public:
 	Type		type() const;
 	Position<>	position() const;
 	Position<>	prevPosition() const;
-	void		toConfig(Config &) const;
+	void		toConfig(Config::Param &) const;
 
 protected:
 	Position<>		_position;

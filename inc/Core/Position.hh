@@ -17,6 +17,8 @@ enum Direction { UP, DOWN, LEFT, RIGHT };
 template <typename T = int>
 class Position
 {
+	friend class	Save;
+
 public:
 	Position();
 	Position(T x, T y, T z = 0);
@@ -47,8 +49,6 @@ public:
 	Position<double> asDouble() const;
 	operator Position<int>() const;
 	operator Position<double>() const;
-
-	void	toConfig(Config &) const;
 
 private:
 	T	_x;
@@ -275,16 +275,6 @@ operator<<(std::ostream& os, const Position<T> & position)
 	os << "[" << position.x() << "/" << position.y() << "/" << position.z() << "]";
 
 	return (os);
-}
-
-template <typename T>
-void
-Position<T>::toConfig(Config & cfg) const
-{
-	cfg["x"] = _x;
-	cfg["y"] = _y;
-	cfg["z"] = _z;
-	cfg["isSet"] = _isSet;
 }
 
 template <typename T>

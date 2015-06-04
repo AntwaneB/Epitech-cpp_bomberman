@@ -15,6 +15,8 @@
 
 class BonusItem : public Item, public EventHandler<BonusItem>, public Subject
 {
+	friend class	Save;
+
 public:
 	BonusItem(Position<> const &, Item::Type type);
 	virtual ~BonusItem();

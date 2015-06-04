@@ -21,6 +21,8 @@
 
 class Map :  public EventHandler<Map>, public Subject
 {
+	friend class	Save;
+
 public:
 	Map(size_t, size_t);
 	Map(std::string const & mapFile);

@@ -12,7 +12,7 @@ class Level;
 class Bomb;
 namespace IA
 {
-	enum Difficulty { EASY, MEDIUM, HARD };
+	enum Difficulty { EASY = 1, MEDIUM = 2, HARD = 3 };
 
 	template<Difficulty T>
 	class IA;
@@ -27,11 +27,13 @@ namespace IA
 
 class Character : public EventHandler<Character>, public Subject
 {
+	friend class	Save;
+
 public:
 	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DROP_BOMB, WAIT };
 
 public:
-	Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z = 0);
+	Character(const Level * level, size_t nth, bool isPlayer, IA::Difficulty, size_t x, size_t y, size_t z = 0);
 	virtual ~Character();
 
 	Position<double>	position() const;
@@ -47,8 +49,6 @@ public:
 
 	void		clearActions();
 	void		pushAction(Character::Action);
-
-	void		toConfig(Config &) const;
 
 private:
 	void tick(Subject* entity);
@@ -69,7 +69,9 @@ private:
 	bool						_alive;
 	const Bomb*				_killedBy;
 
-	IA::IA<IA::EASY>*		_ia;
+	IA::IA<IA::HARD>*		_iaHard;
+	IA::IA<IA::MEDIUM>*	_iaMedium;
+	IA::IA<IA::EASY>*		_iaEasy;
 
 	std::list<Bomb*>		_bombs;
 	std::queue<Action>	_queuedActions;

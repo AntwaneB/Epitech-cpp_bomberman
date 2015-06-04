@@ -14,10 +14,10 @@
 #include "Core/IA.hpp"
 #include "Core/Input.hh"
 
-Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, size_t y, size_t z)
+Character::Character(const Level * level, size_t nth, bool isPlayer, IA::Difficulty difficulty, size_t x, size_t y, size_t z)
 	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
-	  _killedBy(NULL), _ia(NULL), _previousBomb(-1), _elapsedTime(-1), _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false),
-	  _direction(MOVE_DOWN), _score(0)
+	  _killedBy(NULL), _iaHard(NULL), _iaMedium(NULL), _iaEasy(NULL), _previousBomb(-1), _elapsedTime(-1),
+	  _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false), _direction(MOVE_DOWN), _score(0)
 {
 	_actions[CLOCK_TICK] = &Character::tick;
 	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
@@ -26,15 +26,28 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, size_t x, s
 	_attributes = g_settings["entities"]["character"];
 
 	if (!_isPlayer)
-		_ia = new IA::IA<IA::EASY>(_level, this);
-
+	{
+		switch (difficulty)
+		{
+			case IA::HARD:
+				_iaHard = new IA::IA<IA::HARD>(_level, this);
+			case IA::MEDIUM:
+				_iaMedium = new IA::IA<IA::MEDIUM>(_level, this);
+			default:
+				_iaEasy = new IA::IA<IA::EASY>(_level, this);
+		}
+	}
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
 Character::~Character()
 {
-	if (_ia)
-		delete _ia;
+	if (_iaHard)
+		delete _iaHard;
+	if (_iaMedium)
+		delete _iaMedium;
+	if (_iaEasy)
+		delete _iaEasy;
 }
 
 Position<double>
@@ -117,13 +130,20 @@ Character::tick(Subject* entity)
 		_moving = false;
 	}
 
-	// Updating clocks
+	// Updating clocks & running IA
 	if (static_cast<int>(clock->deciseconds()) - _elapsedTime >= 1)
 	{
 		_elapsedTime++;
 
-		if (_ia && !_isPlayer)
-			_ia->playTurn();
+		if ((_iaHard || _iaMedium || _iaEasy) && !_isPlayer)
+		{
+			if (_iaHard != NULL)
+				_iaHard->playTurn();
+			else if (_iaMedium)
+				_iaMedium->playTurn();
+			else
+				_iaEasy->playTurn();
+		}
 	}
 	if (static_cast<int>(clock->centiseconds()) - _elapsedCentiseconds >= 1)
 	{
@@ -229,11 +249,18 @@ Character::move(Character::Action action, const Clock & clock)
 	Position<double> newPosLeftUp(newPos);
 	newPosLeftUp.decX(0.25);
 	newPosLeftUp.decY(0.25);
+	Position<double> newPosLeftDown(newPos);
+	newPosLeftDown.decX(0.25);
+	newPosLeftDown.incY(0.25);
+	Position<double> newPosRightUp(newPos);
+	newPosRightUp.incX(0.25);
+	newPosRightUp.decY(0.25);
 
 	auto bombs = _level->bombs();
 	if ((_level->map().at(newPosLeftUp)->solid() == false && _level->map().at(newPosRightDown)->solid() == false
-		&& ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
-			|| (!bombs[_position].empty())))
+		 && _level->map().at(newPosLeftDown)->solid() == false && _level->map().at(newPosRightUp)->solid() == false
+		 && ((bombs[newPosLeftUp].empty() && bombs[newPosRightDown].empty())
+			 || (!bombs[_position].empty())))
 		|| _solid == false)
 	{ // The block where we want to move isn't solid and their's no bomb there
 
@@ -281,8 +308,8 @@ Character::dropBomb()
 void
 Character::pushAction(Character::Action action)
 {
-	if (_queuedActions.size() == 0)
-		_queuedActions.push(action);
+	clearActions();
+	_queuedActions.push(action);
 }
 
 void
@@ -291,18 +318,3 @@ Character::clearActions()
 	while (!_queuedActions.empty())
 		_queuedActions.pop();
 }
-
-/*
-void
-Character::toConfig(Config & cfg) const
-{
-	int	index;
-
-	index = 0;
-	_position.toConfig(cfg[_nth]["position"]);
-	_prevPosition.toConfig(cfg[_nth]["prevPosition"]);
-	cfg[_nth]["attributes"] = _attributes;
-	for (std::list<Bomb*>::const_iterator it = _bombs.begin(); it != _bombs.end(); it++; index++)
-		(*it)->toConfig(cfg[_nth]["bombs"][index]);
-}
-*/
