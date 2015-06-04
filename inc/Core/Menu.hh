@@ -21,6 +21,7 @@ public:
 
 	void		run();
 	Config&	layout(void);
+	bool		hasSelectable() const;
 
 private:
 	void		keyPressed(Subject*);
@@ -45,7 +46,8 @@ private:
 
 private:
 	std::map<std::string, void (Menu::*)(std::string const &)>	_menuActions;
-	const Level* _level;
+	const Level*	_level;
+	bool				_hasSelectable;
 };
 
 #endif	/* MENU_HPP */
