@@ -1,13 +1,16 @@
 #include "Graphics/Split.hh"
 
 Graphics::Split::Split(::Level const * level, int id, size_t splitsCount, size_t size)
-	: _level(level), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
+	: _level(level), _player(NULL), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
 {
 	_map = new Map(level->map());
-	if (id == 0)
-		_player = _level->players().front();
-	else
-		_player = _level->players().back();
+	if (_level->players().size() > 0)
+	{
+		if (id == 0)
+			_player = _level->players().front();
+		else
+			_player = _level->players().back();
+	}
 }
 
 Graphics::Split::~Split()
@@ -33,7 +36,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	_shader.bind();
 	moveCamera();
 	_shader.setUniform("projection", projection);
-
+	_shader.setUniform("color", glm::vec4(1, 1, 1, 1));
 	_map->initialize();
 
 	size_t i = 0;
@@ -46,6 +49,11 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 			_characters.push_back(character);
 		}
 	}
+
+	gdl::Texture* texture = new gdl::Texture;
+	if (texture->load("./assets/textures/fire.tga") == false)
+		std::cout << "LOL" << std::endl;
+	_texture = texture;
 	return (true);
 }
 
@@ -66,6 +74,32 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 			Bomb* bomb = new Graphics::Bomb(*it, _models[_size]);
 			bomb->initialize();
 			_bombs.push_back(bomb);
+		}
+	}
+
+	//Creating explosion
+	auto explosions = _level->explosions();
+	for (auto it = explosions.begin(); it != explosions.end(); ++it)
+	{
+		bool exist = false;
+		for (auto itt = _explosions.begin(); itt != _explosions.end(); ++itt)
+			{
+				if ((*it).id == (*itt).first)
+					exist = true;
+			}
+		if (exist == false)
+		{
+			size_t id = (*it).id;
+			std::list<Graphics::Object*> explosions2;
+			for (auto itt = (*it).positions.begin(); itt != (*it).positions.end(); ++itt)
+			{
+				//std::cout << v.x() << " " << ((*it).second)[1].y() << std::endl;
+				Object *explosion = new Explosion((*itt), _texture);
+				explosion->initialize();
+				explosions2.push_back(explosion);
+			}
+			std::pair<size_t, std::list<Graphics::Object*> > paire (id, explosions2);
+			_explosions.push_back(paire);
 		}
 	}
 
@@ -102,6 +136,25 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 		else
 			(*it)->update(clock, input);
+	}
+
+	//Updating explosion
+	for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
+	{
+		auto explosions = _level->explosions();
+		bool exist = false;
+		for (auto itt = explosions.begin(); itt != explosions.end(); ++itt)
+			{
+				if ((*it).first == (*itt).id)
+					exist = true;
+			}
+		if (exist == false)
+		{
+			for (auto itt = (*it).second.begin(); itt != (*it).second.end(); ++itt)
+				delete (*itt);
+			it = _explosions.erase(it);
+			--it;
+		}
 	}
 
 	// Updating items
@@ -141,6 +194,11 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		else
 			(*it)->update(clock, input);
 	}
+
+	if (input.getKey(SDLK_KP_PLUS) && _height > 30)
+		_height -= 2;
+	if (input.getKey(SDLK_KP_MINUS) && _height < 150)
+		_height += 2;
 }
 
 void Graphics::Split::draw(gdl::Clock clock)
@@ -154,14 +212,23 @@ void Graphics::Split::draw(gdl::Clock clock)
 		(*it)->draw(_shader, clock);
 	for (auto it = _items.begin(); it != _items.end(); ++it)
 		(*it)->draw(_shader, clock);
+	for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
+		for (auto itt = (*it).second.begin(); itt != (*it).second.end(); ++itt)
+			(*itt)->draw(_shader, clock);
 }
 
 void Graphics::Split::moveCamera()
 {
-	_x = _player->position().x();
-	_y = _player->position().y();
-	double x = 1 + _x;
-	double y = 1 + _y;
-	glm::mat4 transformation = glm::lookAt(glm::vec3(0, 90, 0), glm::vec3(x, 0, y), glm::vec3(0, 1, -180));
+	if (_player)
+	{
+		_x = _player->position().x();
+		_y = _player->position().y();
+	}
+	else
+	{
+		_x = _level->map().width() / 2;
+		_y = _level->map().height() / 2;
+	}
+	glm::mat4 transformation = glm::lookAt(glm::vec3(_x, _height, _y), glm::vec3(_x, 0, _y), glm::vec3(0, 1, -180));
 	_shader.setUniform("view", transformation);
 }

@@ -11,8 +11,8 @@
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
 
-Menu::Menu(const std::string & filename)
-	: _filename(filename)
+Menu::Menu(const std::string & filename, const Level * level)
+	: _filename(filename), _level(level), _hasSelectable(false)
 {
 	_actions[KEY_PRESSED] = &Menu::keyPressed;
 
@@ -32,6 +32,18 @@ Menu::~Menu()
 {
 }
 
+Config&
+Menu::layout(void)
+{
+	return _layout;
+}
+
+bool
+Menu::hasSelectable() const
+{
+	return (_hasSelectable);
+}
+
 void
 Menu::run()
 {
@@ -43,6 +55,7 @@ Menu::init()
 {
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
+		_hasSelectable = it->second["selectable"] || it->second["selected"] ? true : _hasSelectable;
 		if (it->second["is_collection"] == true)
 		{
 			Config::Param& collection = it->second;
@@ -124,15 +137,12 @@ Menu::keyPressed(Subject* entity)
 	this->notify(this, MENU_UPDATED);
 }
 
-Config&
-Menu::layout(void)
-{
-	return _layout;
-}
-
 void
 Menu::changeLine(Input::Key key)
 {
+	if (!_hasSelectable)
+		return;
+
 	size_t count = 0;
 
 	Config::Param* active;
@@ -172,19 +182,22 @@ Menu::changeLine(Input::Key key)
 void
 Menu::changeValue(Input::Key key)
 {
-	Config::Param* active;
+	Config::Param* active = NULL;
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
 		if (it->second["selected"] == true)
 			active = &(it->second);
 	}
 
-	int newValue = (*active)["value"]["value"];
-	newValue = key == Input::LEFT ? newValue - 1 : newValue + 1;
-	newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
-	newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
+	if (active && (*active)["has_value"] == true)
+	{
+		int newValue = (*active)["value"]["value"];
+		newValue = key == Input::LEFT ? newValue - 1 : newValue + 1;
+		newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
+		newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
 
-	(*active)["value"]["value"] = newValue;
+		(*active)["value"]["value"] = newValue;
+	}
 }
 
 void

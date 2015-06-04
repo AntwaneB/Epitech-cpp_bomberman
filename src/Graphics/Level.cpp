@@ -12,7 +12,7 @@ Graphics::Level::Level(::Level const * level)
 	: _level(level)
 {
 	size_t splitsCount = _level->players().size();
-	splitsCount = splitsCount == 0 ? 1 : splitsCount;
+	splitsCount = splitsCount < 1 ? 1 : splitsCount;
 
 	for (size_t i = 0; i < splitsCount; i++)
 		_splits.push_back(new Split(level, i, splitsCount, _level->characters().size()));
@@ -26,6 +26,8 @@ Graphics::Level::~Level()
 {
 	for (size_t i = 0; i < _splits.size(); i++)
 		delete _splits[i];
+
+	_context.stop();
 }
 
 bool
@@ -37,17 +39,17 @@ Graphics::Level::initialize()
 		_models.push_back(new gdl::Model);
 		if (i < _size)
 		{
-			if (_models[i]->load("./libgdl/assets/marvin.fbx") == false)
+			if (_models[i]->load("./assets/models/character/marvin.fbx") == false)
 				{
 					std::cout << "Cannot load model" << std::endl;
 					return (false);
 				}
 		}
 	}
-	if (_models[_size]->load("./libgdl/assets/a bomb/a_bomb.fbx") == false
-		|| _models[_size + 1]->load("./libgdl/assets/ball_01.fbx") == false
-		|| _models[_size + 2]->load("./libgdl/assets/ball_02.fbx") == false
-		|| _models[_size + 3]->load("./libgdl/assets/ball_03.fbx") == false)
+	if (_models[_size]->load("./assets/models/bomb/a_bomb.fbx") == false
+		|| _models[_size + 1]->load("./assets/models/bonus/ball_01.fbx") == false
+		|| _models[_size + 2]->load("./assets/models/bonus/ball_02.fbx") == false
+		|| _models[_size + 3]->load("./assets/models/bonus/ball_03.fbx") == false)
 	{
 		std::cout << "Cannot load model" << std::endl;
 		return (false);
@@ -72,7 +74,7 @@ Graphics::Level::update()
 		keys[SDLK_UP] = ::Input::P1_UP;
 		keys[SDLK_RIGHT] = ::Input::P1_RIGHT;
 		keys[SDLK_LEFT] = ::Input::P1_LEFT;
-		keys[SDLK_KP_0] = ::Input::P1_SPACE;
+		keys[SDLK_RSHIFT] = ::Input::P1_SPACE;
 		keys[SDLK_z] = ::Input::P2_UP;
 		keys[SDLK_s] = ::Input::P2_DOWN;
 		keys[SDLK_q] = ::Input::P2_LEFT;

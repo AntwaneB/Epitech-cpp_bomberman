@@ -9,6 +9,7 @@
 #include "Graphics/Item.hh"
 #include "Graphics/Map.hh"
 #include "Graphics/Cube.hh"
+#include "Graphics/Explosion.hh"
 #include "Geometry.hh"
 #include "Texture.hh"
 #include "Core/Config.hh"
@@ -33,17 +34,20 @@ namespace Graphics
 
 	public:
 		const ::Level*							_level;
+		const ::Character*					_player;
 		gdl::BasicShader						_shader;
-		const ::Character*						_player;
 		std::list<Graphics::Character*>			_characters;
 		std::list<Graphics::Bomb*>				_bombs;
 		std::list<Graphics::Item*>				_items;
+		std::list<std::pair<size_t, std::list<Graphics::Object*> > >	_explosions;
 		Graphics::Map*							_map;
 		std::vector<gdl::Model*> 				_models;
 		size_t									_size;
 		double									_x;
 		double									_y;
+		size_t									_height = 90;
 		size_t									_splitsCount;
+		gdl::Texture* 							_texture;
 	};
 
 };

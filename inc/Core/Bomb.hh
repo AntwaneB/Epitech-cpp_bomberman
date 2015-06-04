@@ -27,7 +27,7 @@ public:
 			static size_t	_id = 0;
 
 			id = ++_id;
-		}
+		};
 
 		size_t							id;
 		seconds_t						lastUntil;

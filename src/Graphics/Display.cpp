@@ -5,19 +5,24 @@
  * Created on May 6, 2015, 4:07 PM
  */
 
+#include <unistd.h>
+#include "global.hh"
 #include "Core/Level.hh"
 #include "Graphics/Display.hh"
 
 Graphics::Display::Display()
-	: _level(NULL), _menu(NULL)
+	: _level(NULL), _menu(NULL), _audioManager(10)
 {
 	_actions[LEVEL_STARTED] = &Graphics::Display::runLevel;
+	_actions[LEVEL_ENDED] = &Graphics::Display::endLevel;
 	_actions[LEVEL_UPDATED] = &Graphics::Display::updateLevel;
 	_actions[LEVEL_PAUSE_TICK] = &Graphics::Display::updateLevelPaused;
 	_actions[EXIT_TRIGGERED] = &Graphics::Display::exitGame;
 	_actions[MENU_STARTED] = &Graphics::Display::runMenu;
 	_actions[MENU_UPDATED] = &Graphics::Display::updateMenu;
 	_actions[MENU_EXITED] = &Graphics::Display::exitMenu;
+
+	_actions[LEVEL_BOMB_EXPLODED] = &Graphics::Display::bombExploded;
 }
 
 Graphics::Display::~Display()
@@ -46,6 +51,8 @@ Graphics::Display::runMenu(Subject* entity)
 		_menu = new Graphics::Menu();
 		_menu->addObserver(this);
 	}
+
+	_audioManager.playMusic(g_settings["sounds"]["menu_started"], true);
 
 	_menu->addObserver(menu);
 	_menu->init(menu);
@@ -88,11 +95,26 @@ Graphics::Display::runLevel(Subject* entity)
 		_level = NULL;
 	}
 
+	_audioManager.stopMusic(g_settings["sounds"]["menu_started"]);
+	_audioManager.playMusic(g_settings["sounds"]["level_started"], true);
+
 	::Level*	level = safe_cast<::Level*>(entity);
 
 	_level = new Graphics::Level(level);
 	_level->addObserver(this);
 	_level->addObserver(level);
+}
+
+void
+Graphics::Display::endLevel(Subject* entity __attribute__((unused)))
+{
+	if (_level != NULL)
+	{
+		delete _level;
+		_level = NULL;
+	}
+
+	_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
 }
 
 void
@@ -106,4 +128,10 @@ void
 Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
 {
 	_level->updateInput();
+}
+
+void
+Graphics::Display::bombExploded(Subject* entity __attribute__((unused)))
+{
+	_audioManager.playSound(g_settings["sounds"]["bomb_exploded"]);
 }

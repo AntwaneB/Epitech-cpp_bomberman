@@ -11,6 +11,7 @@
 #include "Core/Level.hh"
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
+#include "Core/Menu.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty difficulty)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
@@ -166,7 +167,9 @@ Level::tick(Subject* entity)
 					(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
 		}
 
-		if (this->charactersRaw().size() <= 1)
+		if (this->charactersRaw().size() <= 1
+			|| (std::count_if(_players.begin(), _players.end(), [](Character* ptr) { return (ptr == NULL); }) == static_cast<int>(_players.size())
+				&& _players.size() != 0))
 		{ // Ending game if their's only one character left
 			_clock.stop();
 			this->end();

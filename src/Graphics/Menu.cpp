@@ -48,9 +48,12 @@ Graphics::Menu::init(::Menu* menu)
 	// Text and buttons assets
 	_assetsTexture.loadFromFile(_menu->layout()["assets"]["location"]);
 
-	_cursor.setTexture(_assetsTexture);
-	_cursor.setTextureRect(sf::IntRect(_menu->layout()["cursor"]["asset"]["texture"]["start_x"], _menu->layout()["cursor"]["asset"]["texture"]["start_y"], _menu->layout()["cursor"]["asset"]["texture"]["width"], _menu->layout()["cursor"]["asset"]["texture"]["height"]));
-	_cursor.setScale(_menu->layout()["cursor"]["asset"]["scale"]["x"], _menu->layout()["cursor"]["asset"]["scale"]["y"]);
+	if (_menu->hasSelectable())
+	{
+		_cursor.setTexture(_assetsTexture);
+		_cursor.setTextureRect(sf::IntRect(_menu->layout()["cursor"]["asset"]["texture"]["start_x"], _menu->layout()["cursor"]["asset"]["texture"]["start_y"], _menu->layout()["cursor"]["asset"]["texture"]["width"], _menu->layout()["cursor"]["asset"]["texture"]["height"]));
+		_cursor.setScale(_menu->layout()["cursor"]["asset"]["scale"]["x"], _menu->layout()["cursor"]["asset"]["scale"]["y"]);
+	}
 
 	_sprites.clear();
 
@@ -72,7 +75,7 @@ Graphics::Menu::init(::Menu* menu)
 				_sprites.push_back(sprite);
 			}
 
-			if (param["selected"] == true)
+			if (_menu->hasSelectable() && param["selected"] == true)
 				_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
 
 			if (param["has_value"] == true)
@@ -147,7 +150,7 @@ Graphics::Menu::update()
 
 		if (param["is_collection"] == false)
 		{
-			if (param["selected"] == true)
+			if (_menu->hasSelectable() && param["selected"] == true)
 				_cursor.setPosition(param["cursor"]["position"]["x"], param["cursor"]["position"]["y"]);
 			if (param["has_value"] == true)
 				_texts[&param].setString(static_cast<std::string>(param["value"]["value"]));
@@ -161,7 +164,8 @@ Graphics::Menu::draw()
 	_window.clear();
 
 	_window.draw(_background);
-	_window.draw(_cursor);
+	if (_menu->hasSelectable())
+		_window.draw(_cursor);
 
 	for (auto it = _sprites.begin(); it != _sprites.end(); ++it)
 	{
