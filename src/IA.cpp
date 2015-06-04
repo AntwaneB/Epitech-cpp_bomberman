@@ -105,7 +105,7 @@ namespace IA
 
 	    int erred = luaL_dofile(_L, "scripts/easy.lua");
 	    if(erred)
-	        std::cout << "Lua error: " << luaL_checkstring(_L, -1) << std::endl;
+	    	throw ScriptingException(luaL_checkstring(_L, -1));
 	}
 }
 
@@ -137,7 +137,6 @@ namespace IA
 			case Character::DROP_BOMB :
 				break;
 			default :
-				displayAction(move);
 				throw ScriptingException("Script invalid return value is not a move");
 		}
 		return move;
@@ -308,7 +307,24 @@ namespace IA
     template<>
     bool IA<EASY>::BombDetection()
     {
-        return (false);
+		lua_getglobal(_L, "BombDetection");
+		lua_pushnumber(_L, _level->map().width());
+		lua_pushnumber(_L, _level->map().height());
+		lua_pushnumber(_L, _myX);
+		lua_pushnumber(_L, _myY);
+		lua_pcall(_L, 4, 1, 0);
+		bool danger = lua_toboolean(_L, -1);
+		lua_pop(_L, 1);
+		switch (danger)
+		{
+			case true :
+				break;
+			case false :
+				break;
+			default :
+				throw ScriptingException("Script invalid return must be boolean");
+		}
+		return danger;
     }
 }
 
@@ -318,27 +334,23 @@ namespace IA
 	template<>
 	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
 	{
-	std::vector<int>    searchX = {0, 2, 0, -2};
-	std::vector<int>    searchY = {-2, 0, 2, 0};
-	int                 mapHeight = _level->map().height();
-	int                 mapWidth = _level->map().width();
-	int                 i = 0;
-
-	if (VERBOSE)
-		std::cout << "Starting BombOpportunity()..." << std::endl;
-	while (i < 4)
-	{
-		if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight
-			&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].enemy() == true)
+		lua_getglobal(_L, "BombOpportunity");
+		lua_pushnumber(_L, _level->map().width());
+		lua_pushnumber(_L, _level->map().height());
+		lua_pushnumber(_L, _myX);
+		lua_pushnumber(_L, _myY);
+		lua_pcall(_L, 4, 1, 0);
+		bool danger = lua_toboolean(_L, -1);
+		lua_pop(_L, 1);
+		switch (danger)
 		{
-			if (VERBOSE)
-				std::cout << "BombOpportunity() END : advise to DROP_BOMB!" << std::endl;
-			return (true);
+			case true :
+				break;
+			case false :
+				break;
+			default :
+				throw ScriptingException("Script invalid return must be boolean");
 		}
-		i++;
-	}
-	if (VERBOSE)
-		std::cout << "BombOpportunity() END : useless to drom bomb here" << std::endl;
-	return (false);
+		return danger;
 	}
 }
