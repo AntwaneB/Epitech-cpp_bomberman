@@ -52,7 +52,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 
 	gdl::Texture* texture = new gdl::Texture;
 	if (texture->load("./assets/textures/fire.tga") == false)
-		std::cout << "LOL" << std::endl;
+		std::cout << "Error: fire texture not found." << std::endl;
 	_texture = texture;
 	return (true);
 }
@@ -60,7 +60,6 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 {
 	_map->update();
-
 	// Creating new bombs
 	auto bombs = _level->bombsRaw();
 	for (auto it = bombs.begin(); it != bombs.end(); ++it)

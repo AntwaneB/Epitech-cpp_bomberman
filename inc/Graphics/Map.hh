@@ -19,6 +19,7 @@
 #include "Graphics/Object.hh"
 #include "Graphics/Cube.hh"
 #include "Graphics/Ground.hh"
+#include "Graphics/Skybox.hh" 
 #include "Graphics/Bomb.hh"
 #include "Core/Block.hh"
 #include "Geometry.hh"
@@ -44,6 +45,7 @@ namespace Graphics
 		//std::vector<std::vector<::Block*> > _blocks;
 		std::vector<std::vector<Graphics::Object*> > _blocks;
 		Graphics::Object* _ground;
+		Graphics::Object* _skybox;
 		std::map<const std::string, gdl::Texture*>		_textures;
 	};
 

@@ -56,6 +56,9 @@ bool Graphics::Map::initialize()
 	_ground = new Ground(Position<>((_map->width() - 1) / 2, (_map->height() - 1) / 2, 0.4));
 	if (_ground->initialize() == false)
 		return (false);
+	_skybox = new Skybox();
+	if (_skybox->initialize() == false)
+		return (false);
 	return (true);
 }
 
@@ -71,6 +74,7 @@ bool Graphics::Map::update()
 void Graphics::Map::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	_ground->draw(shader, clock);
+	_skybox->draw(shader, clock);
 	for (unsigned int y = 0; y < _blocks.size(); y++)
 		for (unsigned int x = 0; x < _blocks[y].size(); x++)
 			if (_blocks[y][x])

@@ -47,6 +47,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
 		     Graphics/Item.cpp \
+		     Graphics/Skybox.cpp \
 		     Graphics/Explosion.cpp \
 		     Graphics/Audio.cpp \
 		     \
@@ -89,6 +90,7 @@ INCS		  =  global.hh \
 		     Graphics/Bomb.hh \
 		     Graphics/Split.hh \
 		     Graphics/Item.hh \
+		     Graphics/Skybox.hh \
 		     Graphics/Explosion.hh \
 		     Graphics/Audio.hh \
 		     \
