@@ -170,7 +170,7 @@ Level::tick(Subject* entity)
 		if (this->charactersRaw().size() <= 1
 			|| (std::count_if(_players.begin(), _players.end(), [](Character* ptr) { return (ptr == NULL); }) == static_cast<int>(_players.size())
 				&& _players.size() != 0))
-		{ // Ending game if their's only one character left
+		{ // Ending game if their's only one character or no player left
 			_clock.stop();
 			this->end();
 		}

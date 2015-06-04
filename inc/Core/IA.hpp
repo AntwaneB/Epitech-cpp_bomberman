@@ -203,7 +203,7 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
         std::cout << "Starting scanMapForEnemy()" << std::endl;
         debugStrategieMap();
         debugStrategieMapDirections();
- 	}   
+ 	}
     if (_searchNodes.size() == 0)
     {
         if (VERBOSE)
@@ -361,7 +361,7 @@ void IA::IA<T>::playTurn()
 			action = Move();
 	}
 	if (isInDanger == false)
-	{	
+	{
 		action = checkDestinationSafe(action);
 	}
 	action = checkAlignment(action);
@@ -534,33 +534,22 @@ bool IA::IA<T>::BombDetection()
 template<IA::Difficulty T>
 void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOVE when finished
 {
-	if(action == Character::MOVE_UP)
+	if (VERBOSE)
 	{
-		std::cout << "MOVE_UP";
-	}
-	else if(action == Character::MOVE_RIGHT)
-	{
-		std::cout << "MOVE_RIGHT";
-	}
-	else if(action == Character::MOVE_DOWN)
-	{
-		std::cout << "MOVE_DOWN";
-	}
-	else if(action == Character::MOVE_LEFT)
-	{
-		std::cout << "MOVE_LEFT";
-	}
-	else if(action == Character::WAIT)
-	{
-		std::cout << "WAIT";
-	}
-	else if(action == Character::DROP_BOMB)
-	{
-		std::cout << "DROP_BOMB";
-	}
-	else
-	{
-		std::cout << "ERROR NOT AN ACTION***********" << std::endl;
+		if(action == Character::MOVE_UP)
+			std::cout << "MOVE_UP";
+		else if(action == Character::MOVE_RIGHT)
+			std::cout << "MOVE_RIGHT";
+		else if(action == Character::MOVE_DOWN)
+			std::cout << "MOVE_DOWN";
+		else if(action == Character::MOVE_LEFT)
+			std::cout << "MOVE_LEFT";
+		else if(action == Character::WAIT)
+			std::cout << "WAIT";
+		else if(action == Character::DROP_BOMB)
+			std::cout << "DROP_BOMB";
+		else
+			std::cout << "ERROR NOT AN ACTION***********" << std::endl;
 	}
 }
 
@@ -624,8 +613,8 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
         currentDirection = (_strategyMap[currentY][currentX]).direction();
         while (i < 4)
         {
-            if ((currentX + searchX[i]) >= 0 
-            	&& (currentX + searchX[i]) < mapWidth 
+            if ((currentX + searchX[i]) >= 0
+            	&& (currentX + searchX[i]) < mapWidth
             	&& (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT
@@ -780,11 +769,11 @@ bool IA::IA<T>::isAroundSafe() const
 	int 	currentX = _myX;
     int 	i = 0;
 
-	
+
     while (i < 4)
     {
-    	if ((currentX + searchX[i]) >= 0 
-        	&& (currentX + searchX[i]) < mapWidth 
+    	if ((currentX + searchX[i]) >= 0
+        	&& (currentX + searchX[i]) < mapWidth
         	&& (currentY + searchY[i]) >= 0
             && (currentY + searchY[i]) < mapHeight
             && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false

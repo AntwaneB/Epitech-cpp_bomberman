@@ -124,7 +124,7 @@
 			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
-				<param>./menus/player_loose.xml</param>
+				<param>./menus/player_win.xml</param>
 			</action>
 			<cursor>
 				<position>

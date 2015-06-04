@@ -130,6 +130,7 @@
 				<size>100</size>
 				<x>250</x>
 				<y>210</y>
+				<color>default</color>
 			</value>
 			<cursor>
 				<position>
@@ -137,6 +138,9 @@
 					<y>410</y>
 				</position>
 			</cursor>
+			<action>
+				<name>SAVE_SCORE</name>
+			</action>
 		</value1>
 
 		<toparrow2>
@@ -192,6 +196,7 @@
 				<size>100</size>
 				<x>450</x>
 				<y>210</y>
+				<color>default</color>
 			</value>
 			<cursor>
 				<position>
@@ -199,6 +204,9 @@
 					<y>410</y>
 				</position>
 			</cursor>
+			<action>
+				<name>SAVE_SCORE</name>
+			</action>
 		</value2>
 
 		<toparrow3>
@@ -254,6 +262,7 @@
 				<size>100</size>
 				<x>650</x>
 				<y>210</y>
+				<color>default</color>
 			</value>
 			<cursor>
 				<position>
@@ -261,6 +270,9 @@
 					<y>410</y>
 				</position>
 			</cursor>
+			<action>
+				<name>SAVE_SCORE</name>
+			</action>
 		</value3>
 
 	</content>

@@ -84,7 +84,7 @@ Graphics::Menu::init(::Menu* menu)
 				text.setFont(_font);
 				text.setString(static_cast<std::string>(param["value"]["value"]));
 				text.setCharacterSize(param["value"]["size"]);
-				text.setColor(param["type"] != "value_only" ? sf::Color(254, 221, 0) : sf::Color::White);
+				text.setColor(param["type"] != "value_only" || param["value"]["color"] == "default" ? sf::Color(254, 221, 0) : sf::Color::White);
 				text.setPosition(param["value"]["x"], param["value"]["y"]);
 				_texts[&param] = text;
 			}

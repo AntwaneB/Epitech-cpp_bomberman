@@ -250,7 +250,10 @@ Config::Param::operator char (void) const
 	if (_status == Config::Param::MAP)
 		throw std::runtime_error("Current index is not a valid value");
 
-	return (std::stoi(_value));
+	if (_value[0] < '0' || _value[0] > '9')
+		return (_value[0]);
+	else
+		return (std::stoi(_value));
 }
 
 Config::Param::operator short (void) const
