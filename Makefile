@@ -25,6 +25,7 @@ SRCS		  =  main.cpp \
 		     Menu.cpp \
 		     Level.cpp \
 		     Character.cpp \
+		     Monster.cpp \
 		     Map.cpp \
 		     Item.cpp \
 		     Bomb.cpp \
@@ -69,6 +70,7 @@ INCS		  =  global.hh \
 		     Core/Menu.hh \
 		     Core/Level.hh \
 		     Core/Character.hh \
+		     Core/Monster.hh \
 		     Core/IA.hpp \
 		     Core/Map.hh \
 		     Core/Position.hh \

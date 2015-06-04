@@ -12,6 +12,7 @@
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
 #include "Core/Menu.hh"
+#include "Core/Monster.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty difficulty)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
@@ -21,6 +22,8 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
 	_actions[CHARACTER_DIED] = &Level::characterDied;
+	_actions[MONSTER_MOVED] = &Level::monsterMoved;
+	_actions[MONSTER_DIED] = &Level::monsterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
 	_actions[ITEM_MOVED] = &Level::itemMoved;
 	_actions[ITEM_DESTROYED] = &Level::itemDestroyed;
@@ -80,6 +83,12 @@ Level::characters() const
 	return (_characters);
 }
 
+std::map<Position<>, std::list<Monster*> > const &
+Level::monsters() const
+{
+	return (_monsters);
+}
+
 std::list<Character*> const &
 Level::players() const
 {
@@ -90,6 +99,12 @@ std::vector<Character*> const
 Level::charactersRaw() const
 {
 	return (StdHelper::flatten<Character*, Position<> >(_characters));
+}
+
+std::vector<Monster*> const
+Level::monstersRaw() const
+{
+	return (StdHelper::flatten<Monster*, Position<> >(_monsters));
 }
 
 std::vector<Bomb*> const
@@ -291,6 +306,34 @@ Level::characterDied(Subject* entity)
 				(*killer)->changeScore(g_settings["scores"]["self_kill"]);
 		}
 		_charactersKills++;
+	}
+}
+
+void
+Level::monsterMoved(Subject* entity)
+{
+	Monster* monster = safe_cast<Monster*>(entity);
+
+	_monsters[monster->prevPosition()].erase(std::find(_monsters[monster->prevPosition()].begin(), _monsters[monster->prevPosition()].end(), monster));
+	_monsters[monster->position()].push_back(monster);
+}
+
+void
+Level::monsterDied(Subject* entity)
+{
+	Monster* monster = safe_cast<Monster*>(entity);
+
+	_monsters[monster->position()].erase(std::find(_monsters[monster->position()].begin(), _monsters[monster->position()].end(), monster));
+	_clock.removeObserver(monster);
+	this->removeObserver(monster);
+
+	if (monster->killedBy())
+	{
+		auto killer = std::find(_scores.begin(), _scores.end(), monster->killedBy()->owner());
+		if (killer != _scores.end())
+		{
+			(*killer)->changeScore(g_settings["scores"]["monster_kill"]);
+		}
 	}
 }
 

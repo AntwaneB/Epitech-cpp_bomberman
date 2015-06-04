@@ -8,16 +8,17 @@
 #ifndef LEVEL_HPP
 #define	LEVEL_HPP
 
+class Monster;
+
 #include <map>
-#include "Observer.hpp"
-#include "Clock.hh"
-#include "Position.hh"
-#include "Map.hh"
-#include "Character.hh"
-#include "Item.hh"
-#include "BonusItem.hh"
-#include "Bomb.hh"
-#include "Level.hh"
+#include "Core/Observer.hpp"
+#include "Core/Clock.hh"
+#include "Core/Position.hh"
+#include "Core/Map.hh"
+#include "Core/Character.hh"
+#include "Core/Item.hh"
+#include "Core/BonusItem.hh"
+#include "Core/Bomb.hh"
 
 class Level : public EventHandler<Level>, public Subject
 {
@@ -39,18 +40,24 @@ public:
 	bombs() const;
 	std::map<Position<>, std::list<Item*> > const &
 	items() const;
+	std::map<Position<>, std::list<Monster*> > const &
+	monsters() const;
 	std::list<Character*> const &	players() const;
 	std::vector<Character*> const	charactersRaw() const;
 	std::vector<Bomb*> const		bombsRaw() const;
 	std::vector<BonusItem*>	const	itemsRaw() const;
+	std::vector<Monster*>	const	monstersRaw() const;
 	std::list<Bomb::Explosion>		explosions() const;
 
 private:
 	Character*	pushCharacter();
+	Monster*		pushMonster();
 	void			end();
 
 	void	characterMoved(Subject* entity);
 	void	characterDied(Subject* entity);
+	void	monsterMoved(Subject* entity);
+	void	monsterDied(Subject* entity);
 	void	itemDropped(Subject* entity);
 	void	itemMoved(Subject* entity);
 	void	itemDestroyed(Subject* entity);
@@ -70,6 +77,7 @@ private:
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
 	std::list<Bomb::Explosion>							_explosions;
+	std::map<Position<>, std::list<Monster*> >	_monsters;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;

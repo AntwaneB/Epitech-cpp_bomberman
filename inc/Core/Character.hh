@@ -30,7 +30,7 @@ class Character : public EventHandler<Character>, public Subject
 	friend class	Save;
 
 public:
-	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, DROP_BOMB, WAIT };
+	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, end_move, DROP_BOMB, WAIT };
 
 public:
 	Character(const Level * level, size_t nth, bool isPlayer, IA::Difficulty, size_t x, size_t y, size_t z = 0);

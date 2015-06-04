@@ -46,6 +46,15 @@
 			</param>
 		</entity>
 
+		<entity name="monster">
+			<param name="visible">true</param>
+			<param name="speed">100</param>
+			<param name="max_speed">1500</param>
+			<param name="can_move">true</param>
+			<param name="destructible">true</param>
+			<param name="collision">false</param>
+		</entity>
+
 		<entity name="bomb">
 			<param name="visible">true</param>
 			<param name="destructible">false</param>

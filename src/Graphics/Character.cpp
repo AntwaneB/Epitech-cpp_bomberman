@@ -45,9 +45,7 @@ Graphics::Character::getAngle(const::Character::Action key)
 				return (-90);
 			case ::Character::Action::MOVE_RIGHT:
 				return (90);
-			case ::Character::Action::DROP_BOMB:
-				return (0);
-			case ::Character::Action::WAIT:
+			default:
 				return (0);
 		}
 	return (0);
