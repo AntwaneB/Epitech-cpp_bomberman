@@ -476,7 +476,8 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
         {
             if ((currentX + searchX[i]) >= 0 && (currentX + searchX[i]) < mapWidth && (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
-                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT)
+                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT
+                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].bomb() == false)
                 {
                 if (VERBOSE)
                     std::cout << "  scanMapForEscape() checking if " << currentX + searchX[i] << "/" << currentY + searchY[i] << "is explosion-free" << std::endl;
@@ -829,15 +830,27 @@ Character::Action IA::IA<T>::checkDestinationSafe(Character::Action suggestedAct
 template<IA::Difficulty T>
 bool IA::IA<T>::simulateEscape()
 {
+	std::vector<int>   searchX = {0, 1, 0, -1, 0, 2, 0, -2};
+	std::vector<int>   searchY = {-1, 0, 1, 0, -2, 0, 2, 0};
+	int                mapHeight = _level->map().height();
+	int                mapWidth = _level->map().width();
+	int                i = 0;
+
 	_strategyMap[_myY][_myX].setBomb(true);
-	scanMap();
+	while (i < 8)
+	{
+      if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0
+            && (_myY + searchY[i]) < mapHeight)
+     	{
+     		_strategyMap[_myY + searchY[i]][_myX + searchX[i]].setExplosion(true);
+     	}
+     	i++;
+	}
 	if (escapeBomb() == Character::WAIT)
 	{
-		_strategyMap[_myY][_myX].setBomb(false);
 		scanMap();
 		return (false);
 	}
-	_strategyMap[_myY][_myX].setBomb(false);
 	scanMap();
 	return (true);
 }
