@@ -34,7 +34,7 @@ bool
 Graphics::Level::initialize()
 {
 	glEnable(GL_DEPTH_TEST);
-	for (size_t i = 0; i < _size + 4; i++)
+	for (size_t i = 0; i < _size + 5; i++)
 	{
 		_models.push_back(new gdl::Model);
 		if (i < _size)
