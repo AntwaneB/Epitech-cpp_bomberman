@@ -15,8 +15,6 @@ Graphics::Menu::Menu()
 	: _menu(NULL), _run(false)
 {
 	_actions[MENU_EXITED] = &Menu::exited;
-
-	std::cout << "Graphics::Menu::Menu()" << std::endl;
 }
 
 Graphics::Menu::~Menu()
