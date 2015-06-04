@@ -196,8 +196,6 @@ Monster::move(Character::Action action, const Clock & clock)
 		_movingUntil = clock.seconds() + duration * 2;
 		_direction = action;
 
-		std::cout << "Monster moved to " << _position << std::endl;
-
 		this->notify(this, MONSTER_MOVED);
 	}
 }
