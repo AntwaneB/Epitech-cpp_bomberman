@@ -52,6 +52,7 @@ Graphics::Display::runMenu(Subject* entity)
 		_menu->addObserver(this);
 	}
 
+	_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
 	_audioManager.playMusic(g_settings["sounds"]["menu_started"], true);
 
 	_menu->addObserver(menu);
