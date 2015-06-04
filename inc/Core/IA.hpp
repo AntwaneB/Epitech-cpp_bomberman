@@ -199,7 +199,11 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
     int                     i = 0;
 
     if (VERBOSE)
+	{
         std::cout << "Starting scanMapForEnemy()" << std::endl;
+        debugStrategieMap();
+        debugStrategieMapDirections();
+ 	}   
     if (_searchNodes.size() == 0)
     {
         if (VERBOSE)
@@ -217,19 +221,21 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
         {
             if ((currentX + searchX[i]) >= 0 && (currentX + searchX[i]) < mapWidth && (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
-                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
-                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
+                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].bomb() == false
+                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].explosion() == false
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT)
                 {
 	            if (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
+	            	&& _strategyMap[currentY + searchY[i]][currentX + searchX[i]].explosion() == false
 	                    && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].enemy() > 0)
                     {
                         if (VERBOSE)
-                            std::cout << "  scanMapForEnemy() END: direction to nearest enemy found !" << std::endl;
+                            std::cout << "  scanMapForEnemy() END: direction to nearest enemy found at " << currentX + searchX[i] << "/" << currentY + searchY[i]<< std::endl;
                         action = currentDirection;
                         return (true);
                     }
 	            else if (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
+	            	&& _strategyMap[currentY + searchY[i]][currentX + searchX[i]].explosion() == false
 	                            && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].enemy() == 0)
                     {
                         if (VERBOSE)
@@ -253,10 +259,12 @@ template<IA::Difficulty T>
 void IA::IA<T>::scanMap()
 {
 	std::vector<std::vector<Block*> > map = _level->map().map();
-	std::vector<int> searchX = {0, 1, 0, -1, 0, 2, 0, -2, 0, 3, 0, -3, 0, 4, 0, -4};
-	std::vector<int> searchY = {1, 0, -1, 0, 2, 0, -2, 0, 3, 0, -3, 0, 4, 0, -4, 0};
-	unsigned int y = 0;
-	unsigned int x = 0;
+	std::vector<int> searchX = {0, 1, 0, -1};
+	std::vector<int> searchY = {1, 0, -1, 0};
+	unsigned int 	y = 0;
+	unsigned int 	x = 0;
+	int 			iRange = 1;
+	int 			iSearch = 0;
 
 	if (VERBOSE)
 	{
@@ -305,13 +313,20 @@ void IA::IA<T>::scanMap()
 			}
 			_strategyMap[bombY][bombX].setBomb(true);
 			_strategyMap[bombY][bombX].setExplosion(true);
-			for (int i = 0; i < (4 * bombRange); i++)
+			iRange = 0;
+			while (iRange <= bombRange)
 			{
-				if ((bombX + searchX[i]) > 0 && (bombX + searchX[i]) < static_cast<int>(_level->map().width())
-					&& (bombY + searchY[i]) > 0 && (bombY + searchY[i]) < static_cast<int>(_level->map().height()))
+				iSearch = 0;
+				while (iSearch < 4)
 				{
-					_strategyMap[bombY + searchY[i]][bombX + searchX[i]].setExplosion(true);
+					if ((bombX + (searchX[iSearch] * iRange)) > 0 && (bombX + (searchX[iSearch] * iRange)) < static_cast<int>(_level->map().width())
+					&& (bombY + (searchY[iSearch] * iRange)) > 0 && (bombY + (searchY[iSearch] * iRange)) < static_cast<int>(_level->map().height()))
+					{
+						_strategyMap[bombY + (searchY[iSearch] * iRange)][bombX + (searchX[iSearch] * iRange)].setExplosion(true);
+					}
+					iSearch++;
 				}
+				iRange++;
 			}
 		}
 	}
@@ -350,7 +365,7 @@ void IA::IA<T>::playTurn()
 		action = checkDestinationSafe(action);
 	}
 	action = checkAlignment(action);
-	if (action != Character::WAIT && action != Character::DROP_BOMB)
+	if (action != Character::WAIT && action != Character::DROP_BOMB && _yCentered && _xCentered)
 	{
 		_strategyMap[_myY][_myX].incHistory();
 	}
@@ -595,7 +610,10 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
     {
         if (VERBOSE)
             std::cout << "  scanMapForEnemyThroughDestructible() END : No possible path to enemy !" << std::endl;
-        action = Character::WAIT;
+        if (_strategyMap[_myY][_myX].enemy() > 1) // le dernier ennemi est sur la meme case!
+        	action = Character::DROP_BOMB;
+        else
+        	action = Character::WAIT;
         return (true);
     }
     else
@@ -611,8 +629,8 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
             	&& (currentY + searchY[i]) >= 0
                 && (currentY + searchY[i]) < mapHeight
                 && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].direction() == Character::WAIT
-                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
-                && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false
+                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].bomb() == false
+                && _strategyMap[currentY + searchY[i]][currentX + searchX[i]].explosion() == false
                 && (_strategyMap[currentY + searchY[i]][currentX + searchX[i]].wall() == false
                     || _strategyMap[currentY + searchY[i]][currentX + searchX[i]].destructible() == true))
                 {
@@ -807,6 +825,12 @@ Character::Action IA::IA<T>::checkDestinationSafe(Character::Action suggestedAct
 			&& (_strategyMap[pointedPosition.y()][pointedPosition.x()].explosion() == true
 			|| _strategyMap[pointedPosition.y()][pointedPosition.x()].bomb() == true))
 		{
+			if (VERBOSE)
+			{
+				std::cout << " checkDestinationSafe() : action corrected from ";
+				displayAction(suggestedAction);
+				std::cout << " to WAIT" << std::endl;
+			}
 			return (Character::WAIT);
 		}
 	}
