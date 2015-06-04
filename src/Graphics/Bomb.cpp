@@ -42,6 +42,8 @@ void
 Graphics::Bomb::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	_texture.bind();
+	shader.bind();
+	shader.setUniform("color", glm::vec4(1, 1, 1, 1));
 	_model->draw(shader, getTransformation(), GL_QUADS);
 	(void)clock;
 }

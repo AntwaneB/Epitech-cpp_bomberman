@@ -3,7 +3,7 @@
 #include "global.hh"
 
 Graphics::Skybox::Skybox()
-	: Object(Position<double>(-1,-1, -1))
+	: Object(Position<double>(3, 10, -1))
 {
 	_width  = 45;
 	_height = 40;
@@ -83,5 +83,7 @@ void Graphics::Skybox::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	(void)clock;
 	_texture.bind();
+	shader.bind();
+	shader.setUniform("color", glm::vec4(1, 1, 1, 1));
 	_geometry.draw(shader, getTransformation(), GL_QUADS);
 }

@@ -83,5 +83,7 @@ void Graphics::Cube::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	(void)clock;
 	_texture->bind();
+	shader.bind();
+	shader.setUniform("color", glm::vec4(1, 1, 1, 1));
 	_geometry.draw(shader, getTransformation(), GL_QUADS);
 }

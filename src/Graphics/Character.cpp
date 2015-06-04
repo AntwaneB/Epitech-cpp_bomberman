@@ -6,6 +6,9 @@ Graphics::Character::Character(::Character const * character, gdl::Model* model)
 	_position.decX(0.5);
 	_position.decY(0.5);
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
+	_color.x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	_color.y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	_color.z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 }
 
 Graphics::Character::~Character()
@@ -129,9 +132,7 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 			_frame += 1;
 	}
 	shader.bind();
-	//shader.setUniform("color", glm::vec4(3, 3, 0, 1));
-	/*if (shader.setUniform("COLOR", glm::vec3(5, 5, 5)) == false)
-		std::cout << "Color false" << std::endl;*/
+	shader.setUniform("color", _color);
 	_model->draw(shader, getTransformation(), clock.getElapsed());
 }
 
