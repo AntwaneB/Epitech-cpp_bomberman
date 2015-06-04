@@ -114,6 +114,8 @@ namespace IA
 	template<>
 	Character::Action IA<EASY>::Move()
 	{
+		scanMap();
+		objects = _strategyMap;
 		lua_getglobal(_L, "move");
 		lua_pushnumber(_L, _level->map().width());
 		lua_pushnumber(_L, _level->map().height());
@@ -230,7 +232,7 @@ namespace IA
 				 counter++;
 				 //possibleDirections.push_back(searchActions[i]);
 				 _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
-				 _escapeNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
+				 _searchNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
 			}
 		}
 		if (VERBOSE)
@@ -244,7 +246,7 @@ namespace IA
 		{
 			if (VERBOSE)
 				std::cout << "MOVE(HARD) : no free path to enemy found. Now looking into destructible paths..." << std::endl;
-	 		_escapeNodes.clear();
+	 		_searchNodes.clear();
 	 		enemyDirectionFound = false;
 	 		scanMap();
 	 		_strategyMap[_myY][_myX].setDirection(Character::MOVE_UP);
@@ -263,7 +265,7 @@ namespace IA
 					}
 					 counter++;
 					 _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
-					 _escapeNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
+					 _searchNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
 				}
 	 		}
 	 		if (VERBOSE)
@@ -307,6 +309,8 @@ namespace IA
     template<>
     bool IA<EASY>::BombDetection()
     {
+		scanMap();
+		objects = _strategyMap;
 		lua_getglobal(_L, "BombDetection");
 		lua_pushnumber(_L, _level->map().width());
 		lua_pushnumber(_L, _level->map().height());
@@ -334,6 +338,8 @@ namespace IA
 	template<>
 	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
 	{
+		scanMap();
+		objects = _strategyMap;
 		lua_getglobal(_L, "BombOpportunity");
 		lua_pushnumber(_L, _level->map().width());
 		lua_pushnumber(_L, _level->map().height());

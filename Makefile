@@ -109,7 +109,7 @@ CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 GDLFLAGS	  += -L$(LGDL_DIR)/libs
 GDLFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-LUAFLAGS	  = -I./_Ressources/lua/ -L./_Ressources/ -llua -ldl
+LUAFLAGS	  = -I./lib/lua/ -L./lib/ -llua -ldl
 
 CXXFLAGS	  += -g
 

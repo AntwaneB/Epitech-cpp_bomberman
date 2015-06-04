@@ -55,7 +55,6 @@ int Lua::luaGetEnemy(lua_State *L)
 {
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
-    
 
     lua_pushnumber(L, objects[key - 1][key2 - 1].enemy());
 
