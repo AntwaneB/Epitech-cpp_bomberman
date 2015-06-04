@@ -37,7 +37,6 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, IA::Difficu
 				_iaEasy = new IA::IA<IA::EASY>(_level, this);
 		}
 	}
-
 	this->notify(this, CHARACTER_SPAWNED);
 }
 

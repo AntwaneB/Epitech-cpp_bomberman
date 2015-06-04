@@ -15,6 +15,7 @@
 #include "Position.hh"
 #include "Map.hh"
 #include "Block.hh"
+#include "Core/Lua.hh"
 
 class Bomb;
 class Item;
@@ -75,8 +76,8 @@ namespace IA
 			bool 	scanMapForEscape(Character::Action &);
 			bool	simulateEscape();
 			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
-        	void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
-        	void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
+         	void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
+         	void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
          	Character::Action 	checkDestinationSafe(Character::Action) const;
 			Character::Action 	checkAlignment(Character::Action) const;
 			Character::Action 	Move();
@@ -88,9 +89,10 @@ namespace IA
 		 	bool	 _xCentered;
 		 	bool 	 _yCentered;
 			std::vector<std::vector<Area> > 	_strategyMap;
-			std::list<Position<> >              _escapeNodes;
+			std::list<Position<> >              _searchNodes;
 			Character*							_self;
 			const Level*						_level;
+			lua_State* 						_L;
 	};
 }
 
@@ -115,7 +117,7 @@ IA::IA<T>::IA(Level const* level, Character* character):
 template<IA::Difficulty T>
 IA::IA<T>::~IA()
 {
-
+	lua_close(_L);
 }
 
 template<IA::Difficulty T>
@@ -198,7 +200,7 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
 
     if (VERBOSE)
         std::cout << "Starting scanMapForEnemy()" << std::endl;
-    if (_escapeNodes.size() == 0)
+    if (_searchNodes.size() == 0)
     {
         if (VERBOSE)
             std::cout << "  scanMapForEnemy() END : No possible path to enemy !" << std::endl;
@@ -207,9 +209,9 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
     }
     else
     {
-        currentX = _escapeNodes.front().x();
-        currentY = _escapeNodes.front().y();
-        _escapeNodes.pop_front();
+        currentX = _searchNodes.front().x();
+        currentY = _searchNodes.front().y();
+        _searchNodes.pop_front();
         currentDirection = (_strategyMap[currentY][currentX]).direction();
         while (i < 4)
         {
@@ -236,7 +238,7 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
                             std::cout << ". extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                          _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
-                         _escapeNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
+                         _searchNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
                     }
                 }
              i++;
@@ -251,8 +253,8 @@ template<IA::Difficulty T>
 void IA::IA<T>::scanMap()
 {
 	std::vector<std::vector<Block*> > map = _level->map().map();
-	std::vector<int> searchX = {0, 1, 0, -1, 0, 2, 0, -2};
-	std::vector<int> searchY = {1, 0, -1, 0, 2, 0, -2, 0};
+	std::vector<int> searchX = {0, 1, 0, -1, 0, 2, 0, -2, 0, 3, 0, -3, 0, 4, 0, -4};
+	std::vector<int> searchY = {1, 0, -1, 0, 2, 0, -2, 0, 3, 0, -3, 0, 4, 0, -4, 0};
 	unsigned int y = 0;
 	unsigned int x = 0;
 
@@ -296,13 +298,14 @@ void IA::IA<T>::scanMap()
 			Position<> p = (*i)->position();       //postion bombe
 			int 	bombX = p.x();
 			int 	bombY = p.y();
+			int 	bombRange = (*i)->range();
 			if (VERBOSE)
 			{
-				std::cout << "  scanMap() BMB : GRID position of bomb x/y : " << bombX << "/" << bombY << std::endl;
+				std::cout << "  scanMap() BMB : GRID position of bomb x/y : " << bombX << "/" << bombY << ". range:" << (*i)->range();
 			}
 			_strategyMap[bombY][bombX].setBomb(true);
 			_strategyMap[bombY][bombX].setExplosion(true);
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < (4 * bombRange); i++)
 			{
 				if ((bombX + searchX[i]) > 0 && (bombX + searchX[i]) < static_cast<int>(_level->map().width())
 					&& (bombY + searchY[i]) > 0 && (bombY + searchY[i]) < static_cast<int>(_level->map().height()))
@@ -360,7 +363,7 @@ void IA::IA<T>::playTurn()
         displayAction(action);
         std::cout << std::endl << std::endl;
     }
-    _escapeNodes.clear();
+    _searchNodes.clear();
 
 	/*
 	for (auto yt = _strategyMap.begin(); yt != _strategyMap.end(); ++yt)
@@ -411,7 +414,7 @@ Character::Action IA::IA<T>::escapeBomb()
             {
             counter++;
             _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
-            _escapeNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
+            _searchNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
             }
         }
         i++;
@@ -441,7 +444,7 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
 
     if (VERBOSE)
         std::cout << "Starting scanMapForEscape()" << std::endl;
-    if (_escapeNodes.size() == 0)
+    if (_searchNodes.size() == 0)
     {
         if (VERBOSE)
              std::cout << "  scanMapForEscape() END: No possible escape path !" << std::endl;
@@ -450,9 +453,9 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
     }
     else
     {
-        currentX = _escapeNodes.front().x();
-        currentY = _escapeNodes.front().y();
-        _escapeNodes.pop_front();
+        currentX = _searchNodes.front().x();
+        currentY = _searchNodes.front().y();
+        _searchNodes.pop_front();
         currentDirection = (_strategyMap[currentY][currentX]).direction();
         while (i < 4)
         {
@@ -483,7 +486,7 @@ bool    IA::IA<T>::scanMapForEscape(Character::Action & action)
                             std::cout << ". Extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                         _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
-                        _escapeNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
+                        _searchNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
                     }
                 }
              i++;
@@ -516,36 +519,33 @@ bool IA::IA<T>::BombDetection()
 template<IA::Difficulty T>
 void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOVE when finished
 {
-	if (VERBOSE)
+	if(action == Character::MOVE_UP)
 	{
-		if(action == Character::MOVE_UP)
-		{
-			std::cout << "MOVE_UP";
-		}
-		else if(action == Character::MOVE_RIGHT)
-		{
-			std::cout << "MOVE_RIGHT";
-		}
-		else if(action == Character::MOVE_DOWN)
-		{
-			std::cout << "MOVE_DOWN";
-		}
-		else if(action == Character::MOVE_LEFT)
-		{
-			std::cout << "MOVE_LEFT";
-		}
-		else if(action == Character::WAIT)
-		{
-			std::cout << "WAIT";
-		}
-		else if(action == Character::DROP_BOMB)
-		{
-			std::cout << "DROP_BOMB";
-		}
-		else
-		{
-			std::cout << "ERROR NOT AN ACTION***********" << std::endl;
-		}
+		std::cout << "MOVE_UP";
+	}
+	else if(action == Character::MOVE_RIGHT)
+	{
+		std::cout << "MOVE_RIGHT";
+	}
+	else if(action == Character::MOVE_DOWN)
+	{
+		std::cout << "MOVE_DOWN";
+	}
+	else if(action == Character::MOVE_LEFT)
+	{
+		std::cout << "MOVE_LEFT";
+	}
+	else if(action == Character::WAIT)
+	{
+		std::cout << "WAIT";
+	}
+	else if(action == Character::DROP_BOMB)
+	{
+		std::cout << "DROP_BOMB";
+	}
+	else
+	{
+		std::cout << "ERROR NOT AN ACTION***********" << std::endl;
 	}
 }
 
@@ -591,7 +591,7 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
 
     if (VERBOSE)
         std::cout << "Starting scanMapForEnemyThroughDestructible()" << std::endl;
-    if (_escapeNodes.size() == 0)
+    if (_searchNodes.size() == 0)
     {
         if (VERBOSE)
             std::cout << "  scanMapForEnemyThroughDestructible() END : No possible path to enemy !" << std::endl;
@@ -600,9 +600,9 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
     }
     else
     {
-        currentX = _escapeNodes.front().x();
-        currentY = _escapeNodes.front().y();
-        _escapeNodes.pop_front();
+        currentX = _searchNodes.front().x();
+        currentY = _searchNodes.front().y();
+        _searchNodes.pop_front();
         currentDirection = (_strategyMap[currentY][currentX]).direction();
         while (i < 4)
         {
@@ -635,7 +635,7 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
                             std::cout << ". Extending search zone to " << currentX + searchX[i] << "/" << currentY + searchY[i] << std::endl;
                         }
                          _strategyMap[currentY + searchY[i]][currentX + searchX[i]].setDirection(currentDirection);
-                         _escapeNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
+                         _searchNodes.push_back(Position<>(currentX + searchX[i], currentY + searchY[i]));
                     }
                 }
              i++;

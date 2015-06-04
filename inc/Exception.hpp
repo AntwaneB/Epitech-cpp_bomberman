@@ -93,4 +93,12 @@ public:
 	virtual ~FactoryException() throw() {}
 };
 
+class ScriptingException : public Exception
+{
+public:
+	ScriptingException(std::string const & s) : Exception("Scripting Error : " + s) {}
+
+	virtual ~ScriptingException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */

@@ -1,5 +1,7 @@
 #include "Core/IA.hpp"
 
+std::vector<std::vector<IA::Area> > objects;
+
 IA::Area::Area(bool destructible, bool solid)
 {
 	_destructible = destructible;
@@ -18,6 +20,7 @@ IA::Area::Area()
 
 IA::Area::~Area()
 {
+
 }
 
 bool IA::Area::explosion() const
@@ -83,42 +86,62 @@ void IA::Area::setDirection(Character::Action move)
 namespace IA
 {
 	template<>
+	IA<EASY>::IA(Level const* level, Character* character):
+			_level(level)
+	{
+		_self = character;
+		_xCentered = false;
+		_yCentered = false;
+		scanMap();
+		objects = _strategyMap;
+	    _L = luaL_newstate();
+	    luaL_openlibs(_L);
+	    Lua lua;
+
+	    lua_pushcfunction(_L, lua.luaGetObjects);
+	    lua_setglobal(_L, "getObjects");
+
+	    lua.registerObject(_L);
+
+	    int erred = luaL_dofile(_L, "scripts/easy.lua");
+	    if(erred)
+	    	throw ScriptingException(luaL_checkstring(_L, -1));
+	}
+}
+
+namespace IA
+{
+	template<>
 	Character::Action IA<EASY>::Move()
 	{
-		std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
-		std::vector<Character::Action>  possibleDirections;
-		std::vector<int>                searchX = {0, 1, 0, -1};
-		std::vector<int>                searchY = {-1, 0, 1, 0};
-		int                             mapHeight = _level->map().height();
-		int                             mapWidth = _level->map().width();
-		int                             i = 0;
-
-		if (VERBOSE)
-			std::cout << "Starting MOVE(EASY)" << std::endl;
-		while (i < 4)
+		scanMap();
+		objects = _strategyMap;
+		lua_getglobal(_L, "move");
+		lua_pushnumber(_L, _level->map().width());
+		lua_pushnumber(_L, _level->map().height());
+		lua_pushnumber(_L, _myX);
+		lua_pushnumber(_L, _myY);
+		lua_pcall(_L, 4, 1, 0);
+		Character::Action move =  static_cast<Character::Action>(lua_tonumber(_L, -1));
+		lua_pop(_L, 1);
+		switch (move)
 		{
-			if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight)
-			{
-				if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
-					&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == false)
-					possibleDirections.push_back(searchActions[i]);
-			}
-			i++;
+			case Character::MOVE_UP :
+				break;
+			case Character::MOVE_DOWN :
+				break;
+			case Character::MOVE_LEFT :
+				break;
+			case Character::MOVE_RIGHT :
+				break;
+			case Character::WAIT :
+				break;
+			case Character::DROP_BOMB :
+				break;
+			default :
+				throw ScriptingException("Script invalid return value is not a move");
 		}
-		if (VERBOSE)
-			std::cout << "[MOVE(EASY)] found : " << possibleDirections.size() << " possible directions" << std::endl;
-		if (possibleDirections.size() != 0)
-		{
-			if (VERBOSE)
-				std::cout << "MOVE(EASY) END" << std::endl;
-				return (possibleDirections[rand() % possibleDirections.size()]);
-		}
-		else
-		{
-			if (VERBOSE)
-				std::cout << "MOVE(EASY) END" << std::endl;
-				return (Character::WAIT);
-		}
+		return move;
 	}
 }
 
@@ -209,7 +232,7 @@ namespace IA
 				 counter++;
 				 //possibleDirections.push_back(searchActions[i]);
 				 _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
-				 _escapeNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
+				 _searchNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
 			}
 		}
 		if (VERBOSE)
@@ -223,7 +246,7 @@ namespace IA
 		{
 			if (VERBOSE)
 				std::cout << "MOVE(HARD) : no free path to enemy found. Now looking into destructible paths..." << std::endl;
-	 		_escapeNodes.clear();
+	 		_searchNodes.clear();
 	 		enemyDirectionFound = false;
 	 		scanMap();
 	 		_strategyMap[_myY][_myX].setDirection(Character::MOVE_UP);
@@ -242,7 +265,7 @@ namespace IA
 					}
 					 counter++;
 					 _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
-					 _escapeNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
+					 _searchNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
 				}
 	 		}
 	 		if (VERBOSE)
@@ -286,7 +309,26 @@ namespace IA
     template<>
     bool IA<EASY>::BombDetection()
     {
-        return (false);
+		scanMap();
+		objects = _strategyMap;
+		lua_getglobal(_L, "BombDetection");
+		lua_pushnumber(_L, _level->map().width());
+		lua_pushnumber(_L, _level->map().height());
+		lua_pushnumber(_L, _myX);
+		lua_pushnumber(_L, _myY);
+		lua_pcall(_L, 4, 1, 0);
+		bool danger = lua_toboolean(_L, -1);
+		lua_pop(_L, 1);
+		switch (danger)
+		{
+			case true :
+				break;
+			case false :
+				break;
+			default :
+				throw ScriptingException("Script invalid return must be boolean");
+		}
+		return danger;
     }
 }
 
@@ -296,27 +338,25 @@ namespace IA
 	template<>
 	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
 	{
-	std::vector<int>    searchX = {0, 2, 0, -2};
-	std::vector<int>    searchY = {-2, 0, 2, 0};
-	int                 mapHeight = _level->map().height();
-	int                 mapWidth = _level->map().width();
-	int                 i = 0;
-
-	if (VERBOSE)
-		std::cout << "Starting BombOpportunity()..." << std::endl;
-	while (i < 4)
-	{
-		if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight
-			&& _strategyMap[_myY + searchY[i]][_myX + searchX[i]].enemy() == true)
+		scanMap();
+		objects = _strategyMap;
+		lua_getglobal(_L, "BombOpportunity");
+		lua_pushnumber(_L, _level->map().width());
+		lua_pushnumber(_L, _level->map().height());
+		lua_pushnumber(_L, _myX);
+		lua_pushnumber(_L, _myY);
+		lua_pcall(_L, 4, 1, 0);
+		bool danger = lua_toboolean(_L, -1);
+		lua_pop(_L, 1);
+		switch (danger)
 		{
-			if (VERBOSE)
-				std::cout << "BombOpportunity() END : advise to DROP_BOMB!" << std::endl;
-			return (true);
+			case true :
+				break;
+			case false :
+				break;
+			default :
+				throw ScriptingException("Script invalid return must be boolean");
 		}
-		i++;
-	}
-	if (VERBOSE)
-		std::cout << "BombOpportunity() END : useless to drom bomb here" << std::endl;
-	return (false);
+		return danger;
 	}
 }
