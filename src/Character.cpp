@@ -37,6 +37,7 @@ Character::Character(const Level * level, size_t nth, bool isPlayer, IA::Difficu
 				_iaEasy = new IA::IA<IA::EASY>(_level, this);
 		}
 	}
+
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
@@ -243,6 +244,9 @@ Character::move(Character::Action action, const Clock & clock)
 		default:
 			break;
 	}
+	if (newPos.outOfBounds(_level->map().width() - 1, _level->map().height() - 1) || newPos.x() < 1 || newPos.y() < 1)
+		return;
+
 	Position<double> newPosRightDown(newPos);
 	newPosRightDown.incX(0.25);
 	newPosRightDown.incY(0.25);

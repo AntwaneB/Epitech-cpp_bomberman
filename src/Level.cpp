@@ -137,6 +137,7 @@ Level::end()
 	{
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
+	std::cout << std::endl;
 
 	this->notify(this, LEVEL_ENDED);
 }
