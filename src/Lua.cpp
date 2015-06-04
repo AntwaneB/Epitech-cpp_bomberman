@@ -25,7 +25,7 @@ int Lua::luaGetDestructible(lua_State *L)
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
 
-    lua_pushboolean(L, objects[key - 1][key2 - 1].destructible());
+    lua_pushboolean(L, objects[key][key2].destructible());
 
     return 1;
 }
@@ -35,7 +35,7 @@ int Lua::luaGetExplosion(lua_State *L)
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
 
-    lua_pushboolean(L, objects[key - 1][key2 - 1].explosion());
+    lua_pushboolean(L, objects[key][key2].explosion());
 
     return 1;
 }
@@ -45,8 +45,7 @@ int Lua::luaGetBomb(lua_State *L)
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
 
-
-    lua_pushboolean(L, objects[key - 1][key2 - 1].bomb());
+    lua_pushboolean(L, objects[key][key2].bomb());
 
     return 1;
 }
@@ -56,7 +55,7 @@ int Lua::luaGetEnemy(lua_State *L)
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
 
-    lua_pushnumber(L, objects[key - 1][key2 - 1].enemy());
+    lua_pushnumber(L, objects[key][key2].enemy());
 
     return 1;
 }
@@ -66,7 +65,7 @@ int Lua::luaGetHistory(lua_State *L)
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
 
-    lua_pushnumber(L, objects[key - 1][key2 - 1].history());
+    lua_pushnumber(L, objects[key][key2].history());
 
     return 1;
 }
@@ -76,7 +75,7 @@ int Lua::luaGetWall(lua_State *L)
     int key = luaL_checknumber(L, 2);
     int key2 = luaL_checknumber(L, 3);
     
-    lua_pushnumber(L, objects[key - 1][key2 - 1].wall());
+    lua_pushnumber(L, objects[key][key2].wall());
 
     return 1;
 }

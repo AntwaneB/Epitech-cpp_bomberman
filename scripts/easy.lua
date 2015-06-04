@@ -1,6 +1,6 @@
 -- move = {"MOVE_UP", "MOVE_DOWN", "MOVE_LEFT", "MOVE_RIGHT", "WAIT" }
-searchX = {0, 1, 0, -1}
-searchY = {-1, 0, 1, 0}
+searchX = {0, 1, 0, -1, 0, 2, 0, -2}
+searchY = {-1, 0, 1, 0, -2, 0, 2, 0}
 
 function move(width, height, x, y)
 	i = 1
@@ -27,18 +27,26 @@ function move(width, height, x, y)
 end
 
 function BombDetection(width, height, x, y)
-	return false
+	obj = getObjects()
+	explosion = obj:getExplosion(y, x)
+	bomb = obj:getBomb(y, x)
+	action = false
+	if explosion == true or bomb == true then
+		print ("Bomb at my position help me!!!!")
+		action = true
+	end
+	return action
 end
 
 function BombOpportunity(width, height, x, y)
-	-- body
 	local i = 1
-	action = false
+	local action = false
 	obj = getObjects()
-	while i < 5 do
-		if (x + searchX[i]) >= 0 and (x + searchX[i]) < width and (y + searchY[i] >= 0) and (y + searchY[i]) < height then
+	while i < 9 do
+		if (x + searchX[i]) >= 0 and (x + searchX[i]) < width and (y + searchY[i]) >= 0 and (y + searchY[i]) < height then
 			local enemy = obj:getEnemy(y + searchY[i], x + searchX[i])
 			if enemy > 0 and enemy <= 10 then
+				print (string.format("enemy near me %d / %d", x, y))
 				action = true
 			end
 		end
@@ -46,3 +54,10 @@ function BombOpportunity(width, height, x, y)
 	end
 	return action
 end
+
+-- if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
+-- && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
+-- {
+--     std::cout << "IA advise to DROP_BOMB!" << std::endl;
+--     return (true);
+-- }

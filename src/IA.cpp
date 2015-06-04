@@ -332,7 +332,6 @@ namespace IA
     }
 }
 
-
 namespace IA
 {
 	template<>
