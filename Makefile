@@ -34,6 +34,7 @@ SRCS		  =  main.cpp \
 		     RangeIncreaser.cpp \
 		     SpeedIncreaser.cpp \
 		     BombAmountIncreaser.cpp \
+		     Lua.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Split.cpp \
@@ -49,9 +50,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Explosion.cpp \
 		     Graphics/Audio.cpp \
 		     \
-		     misc/pugixml.cpp \
-		     \
-		     Lua.cpp
+		     misc/pugixml.cpp
 
 OBJS_DIR	  =  obj
 OBJS		  =  $(SRCS:%.cpp=$(OBJS_DIR)/%.o)
@@ -77,6 +76,7 @@ INCS		  =  global.hh \
 		     Core/Block.hh \
 		     Core/BonusItem.hh \
 		     Core/Input.hh \
+		     Core/Lua.hh \
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \
@@ -94,9 +94,7 @@ INCS		  =  global.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \
-		     misc/pugixml.hpp \
-		     \
-		     Core/Lua.hh
+		     misc/pugixml.hpp
 
 LGDL_DIR	  =  libgdl
 
@@ -109,7 +107,7 @@ CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 GDLFLAGS	  += -L$(LGDL_DIR)/libs
 GDLFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-LUAFLAGS	  = -I./lib/lua/ -L./lib/ -llua -ldl
+LUAFLAGS	  = -I./libs/lua/ -L./libs/ -llua -ldl
 
 CXXFLAGS	  += -g
 
