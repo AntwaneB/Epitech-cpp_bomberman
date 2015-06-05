@@ -112,24 +112,18 @@ Config::Param const & Config::Param::operator [](const char key[]) const
 Config::Param&
 Config::Param::operator=(Config const & o)
 {
-	if (!o._params.isEmpty())
-	{
-		_status = o._params._status;
-		_value = o._params._value;
-		_map = o._params._map;
-	}
+	_status = o._params._status;
+	_value = o._params._value;
+	_map = o._params._map;
 	return (*this);
 }
 
 Config::Param&
 Config::Param::operator=(Config::Param const & o)
 {
-	if (!o.isEmpty())
-	{
-		_status = o._status;
-		_value = o._value;
-		_map = o._map;
-	}
+	_status = o._status;
+	_value = o._value;
+	_map = o._map;
 	return (*this);
 }
 
