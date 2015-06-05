@@ -32,7 +32,6 @@ function BombDetection(width, height, x, y)
 	bomb = obj:getBomb(y, x)
 	action = false
 	if explosion == true or bomb == true then
-		print ("Bomb at my position help me!!!!")
 		action = true
 	end
 	return action
@@ -54,10 +53,3 @@ function BombOpportunity(width, height, x, y)
 	end
 	return action
 end
-
--- if ((myX + searchX[i]) >= 0 && (myX + searchX[i]) < mapWidth && (myY + searchY[i]) >= 0 && (myY + searchY[i]) < mapHeight
--- && _strategyMap[myX + searchX[i]][myY + searchY[i]].enemy() == true)
--- {
---     std::cout << "IA advise to DROP_BOMB!" << std::endl;
---     return (true);
--- }
