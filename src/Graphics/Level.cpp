@@ -49,7 +49,8 @@ Graphics::Level::initialize()
 	if (_models[_size]->load("./assets/models/bomb/a_bomb.fbx") == false
 		|| _models[_size + 1]->load("./assets/models/bonus/ball_01.fbx") == false
 		|| _models[_size + 2]->load("./assets/models/bonus/ball_02.fbx") == false
-		|| _models[_size + 3]->load("./assets/models/bonus/ball_03.fbx") == false)
+		|| _models[_size + 3]->load("./assets/models/bonus/ball_03.fbx") == false
+		|| _models[_size + 4]->load("./assets/models/dragon/dragon.fbx") == false)
 	{
 		std::cout << "Cannot load model" << std::endl;
 		return (false);

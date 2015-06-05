@@ -53,6 +53,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Skybox.cpp \
 		     Graphics/Explosion.cpp \
 		     Graphics/Audio.cpp \
+		     Graphics/Monster.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -99,6 +100,7 @@ INCS		  =  global.hh \
 		     Graphics/Skybox.hh \
 		     Graphics/Explosion.hh \
 		     Graphics/Audio.hh \
+		     Graphics/Monster.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \

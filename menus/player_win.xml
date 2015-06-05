@@ -116,7 +116,7 @@
 			<has_value>false</has_value>
 		</botarrow1>
 
-		<value1>
+		<letter_1>
 			<order>1</order>
 			<type>value_only</type>
 			<selectable>true</selectable>
@@ -129,7 +129,7 @@
 				<value>A</value>
 				<size>100</size>
 				<x>250</x>
-				<y>210</y>
+				<y>207</y>
 				<color>default</color>
 			</value>
 			<cursor>
@@ -141,7 +141,7 @@
 			<action>
 				<name>SAVE_SCORE</name>
 			</action>
-		</value1>
+		</letter_1>
 
 		<toparrow2>
 			<asset>
@@ -182,7 +182,7 @@
 			<has_value>false</has_value>
 		</botarrow2>
 
-		<value2>
+		<letter_2>
 			<order>2</order>
 			<type>value_only</type>
 			<selectable>true</selectable>
@@ -207,7 +207,7 @@
 			<action>
 				<name>SAVE_SCORE</name>
 			</action>
-		</value2>
+		</letter_2>
 
 		<toparrow3>
 			<asset>
@@ -248,7 +248,7 @@
 			<has_value>false</has_value>
 		</botarrow3>
 
-		<value3>
+		<letter_3>
 			<order>3</order>
 			<type>value_only</type>
 			<selectable>true</selectable>
@@ -273,7 +273,7 @@
 			<action>
 				<name>SAVE_SCORE</name>
 			</action>
-		</value3>
+		</letter_3>
 
 	</content>
 </config>

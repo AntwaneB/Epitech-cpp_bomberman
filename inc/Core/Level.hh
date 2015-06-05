@@ -35,7 +35,6 @@ public:
 
 	Map const &		map() const;
 	size_t			charactersCount() const;
-
 	std::map<Position<>, std::list<Character*> > const &
 	characters() const;
 	std::map<Position<>, std::list<Bomb*> > const &
@@ -50,6 +49,7 @@ public:
 	std::vector<BonusItem*>	const	itemsRaw() const;
 	std::vector<Monster*>	const	monstersRaw() const;
 	std::list<Bomb::Explosion>		explosions() const;
+	const Character*					winner() const;
 
 private:
 	Character*	pushCharacter();
@@ -72,7 +72,7 @@ private:
 	void	tick(Subject* entity);
 	void	pauseTick(Subject* entity);
 
-	private:
+private:
 	Map														_map;
 	std::map<Position<>, std::list<Character*> >	_characters;
 	std::list<Character*>								_players;
@@ -90,6 +90,8 @@ private:
 	size_t													_charactersKills;
 
 	IA::Difficulty											_difficulty;
+
+	Character*												_winner;
 };
 
 #endif	/* LEVEL_HPP */

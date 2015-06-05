@@ -44,6 +44,8 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+
+	this->pushMonster();
 }
 /*
 Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
@@ -150,6 +152,12 @@ Level::explosions() const
 	return (_explosions);
 }
 
+const Character*
+Level::winner() const
+{
+	return (_winner);
+}
+
 void
 Level::run()
 {
@@ -172,6 +180,13 @@ Level::end()
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
 	std::cout << std::endl;
+
+	_winner = NULL;
+	for (auto it = _scores.begin(); it != _scores.end(); ++it)
+	{
+		if ((*it)->alive() && (_winner == NULL || (*it)->score() > _winner->score()))
+			_winner = *it;
+	}
 
 	this->notify(this, LEVEL_ENDED);
 }
@@ -282,6 +297,18 @@ Level::pushCharacter()
 	this->addObserver(character);
 
 	return (character);
+}
+
+Monster*
+Level::pushMonster()
+{
+	Monster* monster = new Monster(this, Position<>(5, 5));
+
+	_clock.addObserver(monster);
+	monster->addObserver(this);
+	_monsters[monster->position()].push_back(monster);
+
+	return (monster);
 }
 
 void
