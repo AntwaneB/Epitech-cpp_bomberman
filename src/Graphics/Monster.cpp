@@ -16,6 +16,7 @@ Graphics::Monster::~Monster()
 bool
 Graphics::Monster::initialize()
 {
+	_model->setCurrentAnim(0);
 	/*_model->createSubAnim(0, "RESET", 0, 0);
   	_model->createSubAnim(0, "START", 20, 30);
   	_model->createSubAnim(0, "RUN", 37, 90);
