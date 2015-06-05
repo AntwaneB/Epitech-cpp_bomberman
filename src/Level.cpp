@@ -173,9 +173,6 @@ Level::end()
 	}
 	std::cout << std::endl;
 
-	Save	save(this, "./save.xml");
-	save.save();
-
 	this->notify(this, LEVEL_ENDED);
 }
 
@@ -508,7 +505,8 @@ Level::keyPressed(Subject* entity)
 			previousSave = _clock.seconds();
 			std::cout << "Saving level to file..." << std::endl;
 
-			// [SAVE HUGO] - Ici tu fais ce qu'il faut pour pouvoir save le niveau dans un fichier
+			Save	save(this, "./save.xml");
+			save.save();
 		}
 	}
 }

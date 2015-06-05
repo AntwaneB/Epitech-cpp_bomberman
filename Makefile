@@ -81,12 +81,9 @@ INCS		  =  global.hh \
 		     Core/Block.hh \
 		     Core/BonusItem.hh \
 		     Core/Input.hh \
-<<<<<<< HEAD
 		     Core/Save.hh \
 		     Core/Load.hh \
-=======
 		     Core/Lua.hh \
->>>>>>> 57047859a5c4d83474546b3fecae56ce1674105f
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \

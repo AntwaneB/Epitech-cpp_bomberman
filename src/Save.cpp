@@ -23,7 +23,6 @@ Save::save(const std::string filename) const
 {
 	Config	cfg;
 
-
 	cfg["save"]["map"] = saveMap(&_level->_map);
 	int	index;
 	index = 0;
@@ -31,15 +30,15 @@ Save::save(const std::string filename) const
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-			cfg["save"]["characters"][std::to_string(index)]["position"] = savePosition(&it->first);
-			cfg["save"]["characters"][std::to_string(index)]["character"] = saveCharacter(*subIt);
+			cfg["save"]["characters"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["save"]["characters"]["nb" + std::to_string(index)]["character"] = saveCharacter(*subIt);
 			++index;
 		}
 	}
 	index = 0;
 	for (auto it = _level->_players.begin(); it != _level->_players.end(); ++it)
 	{
-		cfg["save"]["players"][std::to_string(index)] = saveCharacter(*it);
+		cfg["save"]["players"]["nb" + std::to_string(index)] = saveCharacter(*it);
 		++index;
 	}
 	index = 0;
@@ -47,8 +46,8 @@ Save::save(const std::string filename) const
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-			cfg["save"]["bombs"][std::to_string(index)]["position"] = savePosition(&it->first);
-			cfg["save"]["bombs"][std::to_string(index)]["bomb"] = saveBomb(*subIt);
+			cfg["save"]["bombs"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["save"]["bombs"]["nb" + std::to_string(index)]["bomb"] = saveBomb(*subIt);
 			++index;
 		}
 	}
@@ -57,8 +56,8 @@ Save::save(const std::string filename) const
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-			cfg["save"]["items"][std::to_string(index)]["position"] = savePosition(&it->first);
-			cfg["save"]["items"][std::to_string(index)]["item"] = saveBonusItem(*subIt);
+			cfg["save"]["items"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["save"]["items"]["nb" + std::to_string(index)]["item"] = saveBonusItem(*subIt);
 			++index;
 		}
 	}
@@ -69,7 +68,7 @@ Save::save(const std::string filename) const
 	index = 0;
 	for (auto it = _level->_scores.begin(); it != _level->_scores.end(); ++it)
 	{
-		cfg["save"]["scores"][std::to_string(index)] = saveCharacter(*it);
+		cfg["save"]["scores"]["nb" + std::to_string(index)] = saveCharacter(*it);
 		++index;
 	}
 	cfg["save"]["charactersKills"] = _level->_charactersKills;
@@ -99,7 +98,7 @@ Save::saveCharacter(const Character* character) const
 		index = 0;
 		for (auto it = character->_bombs.begin(); it != character->_bombs.end(); ++it)
 		{
-			cfg["bombs"][std::to_string(index)] = saveBomb(*it);
+			cfg["bombs"]["nb" + std::to_string(index)] = saveBomb(*it);
 			++index;
 		}
 //queuedActions
@@ -127,7 +126,7 @@ Save::saveMap(const Map* map) const
 		{
 			for (auto subIt = it->begin(); subIt != it->end(); ++subIt)
 			{
-				cfg["map"][std::to_string(posY)][std::to_string(posX)] = saveBlock(*subIt);
+				cfg["map"]["nb" + std::to_string(posY)]["nb" + std::to_string(posX)] = saveBlock(*subIt);
 				++posX;
 			}
 			++posY;
@@ -188,9 +187,8 @@ Save::saveBomb(const Bomb* bomb) const
 		cfg["position"] = savePosition(&bomb->_position);
 		cfg["prevPosition"] = savePosition(&bomb->_prevPosition);
 		cfg["prevPosition"] = bomb->_type;
-		const Item* item = static_cast<const Item*>(bomb);
-		cfg["clockInit"] = item->_clockInit;
-		cfg["spawnTime"] = item->_spawnTime;
+		cfg["clockInit"] = bomb->_clockInit;
+		cfg["spawnTime"] = bomb->_spawnTime;
 	}
 	return (cfg);
 }

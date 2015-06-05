@@ -101,4 +101,12 @@ public:
 	virtual ~ScriptingException() throw() {}
 };
 
+class LoadException : public Exception
+{
+public:
+	LoadException(std::string const & s) : Exception("Load Error : " + s) {}
+
+	virtual ~LoadException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */
