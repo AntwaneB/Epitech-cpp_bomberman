@@ -81,6 +81,7 @@ Graphics::Level::update()
 		keys[SDLK_d] = ::Input::P2_RIGHT;
 		keys[SDLK_SPACE] = ::Input::P2_SPACE;
 
+		keys[SDLK_BACKSPACE] = ::Input::SAVE;
 		keys[SDLK_p] = ::Input::PAUSE;
 
 		for (auto key = keys.begin(); key != keys.end(); ++key)
@@ -111,6 +112,7 @@ Graphics::Level::updateInput()
 	{
 		std::map<int, Input::Key> keys;
 		keys[SDLK_p] = ::Input::PAUSE;
+		keys[SDLK_BACKSPACE] = ::Input::SAVE;
 
 		for (auto key = keys.begin(); key != keys.end(); ++key)
 		{

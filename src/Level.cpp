@@ -458,6 +458,7 @@ Level::blockDestroyed(Subject* entity)
 void
 Level::keyPressed(Subject* entity)
 {
+	static seconds_t previousSave = -1;
 	Input* input = safe_cast<Input*>(entity);
 
 	if (input->key() > Input::KEYS_P1_START && input->key() < Input::KEYS_P1_END && _players.size() >= 1)
@@ -479,6 +480,13 @@ Level::keyPressed(Subject* entity)
 		if (input->key() == Input::PAUSE)
 		{
 			_clock.togglePause();
+		}
+		else if (input->key() == Input::SAVE && _clock.seconds() - previousSave >= 5)
+		{
+			previousSave = _clock.seconds();
+			std::cout << "Saving level to file..." << std::endl;
+
+			// [SAVE HUGO] - Ici tu fais ce qu'il faut pour pouvoir save le niveau dans un fichier
 		}
 	}
 }
