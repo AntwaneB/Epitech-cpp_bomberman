@@ -85,7 +85,7 @@ Save::saveCharacter(const Character* character) const
 
 	if (character)
 	{
-		cfg["nth"] = character->_nth;
+		cfg["id"] = character->_id;
 		cfg["isPlayer"] = character->_isPlayer;
 		cfg["position"] = savePosition(&character->_position);
 		cfg["prevPosition"] = savePosition(&character->_prevPosition);
