@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <dirent.h>
 #include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
@@ -306,7 +307,12 @@ Menu::actionSaveScore(const std::string& param __attribute__((unused)))
 	namePlayer += static_cast<char>(_layout["content"]["letter_2"]["value"]["value"]);
 	namePlayer += static_cast<char>(_layout["content"]["letter_3"]["value"]["value"]);
 
-	std::cout << namePlayer << " won with " << _level->winner()->score() << " points !" << std::endl;
+	std::ofstream	file;
+	file.open("score.txt", std::ios::app);
+	file << namePlayer << " " << _level->winner()->score() << "\n";
+	file.close();
+
+	//std::cout << namePlayer << " won with " << _level->winner()->score() << " points !" << std::endl;
 }
 
 void
