@@ -40,10 +40,13 @@ namespace IA
 		 Character::Action direction() const;
 
 		 void    setDirection(Character::Action);
+		 void 	 setDestructible(bool);
+		 void 	 setWall(bool);
 		 void    setExplosion(bool);
 		 void    setBomb(bool);
 		 void    incEnemy();
 		 void    incHistory();
+		 void 	 reset();
 
 	private:
 		 bool    _destructible;
@@ -88,6 +91,8 @@ namespace IA
 		 	int 	 _myY;
 		 	bool	 _xCentered;
 		 	bool 	 _yCentered;
+		 	bool 	 _strategyMapInitialized;
+		 	Character::Action 	_lastAction;
 			std::vector<std::vector<Area> > 	_strategyMap;
 			std::list<Position<> >              _searchNodes;
 			Character*							_self;
@@ -107,7 +112,8 @@ IA::IA<T>::IA(Level const* level, Character* character):
 	_self = character;
 	_xCentered = false;
 	_yCentered = false;
-	scanMap();
+	_lastAction = Character::WAIT;
+	_strategyMapInitialized = false;
 	if (VERBOSE)
 	{
 		std::cout << "END IA constructor" << std::endl;
@@ -269,19 +275,30 @@ void IA::IA<T>::scanMap()
 	if (VERBOSE)
 	{
 		std::cout << "Starting scanMap()..." << std::endl;
+		debugStrategieMap();
 	}
-	_strategyMap.resize(_level->map().height());
+	if (_strategyMapInitialized == false)
+		_strategyMap.resize(_level->map().height());
 	while (y < _level->map().height())
 	{
-		_strategyMap[y].resize(_level->map().width());
+		if (_strategyMapInitialized == false)
+			_strategyMap[y].resize(_level->map().width());
 		x = 0;
 		while (x < _level->map().width())
 		{
-			_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid());
+			if (_strategyMapInitialized == false)
+				_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid());
+			else
+			{
+				_strategyMap[y][x].setDestructible(map[y][x]->destructible());
+				_strategyMap[y][x].setWall(map[y][x]->solid());
+				_strategyMap[y][x].reset();
+			}
 			x++;
 		}
 		y++;
 	}
+	_strategyMapInitialized = true;
 	y = 0;
 	std::map<Position<>, std::list<Character*> > players = _level->characters();
 	for (std::map<Position<>, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
@@ -365,10 +382,6 @@ void IA::IA<T>::playTurn()
 		action = checkDestinationSafe(action);
 	}
 	action = checkAlignment(action);
-	if (action != Character::WAIT && action != Character::DROP_BOMB && _yCentered && _xCentered)
-	{
-		_strategyMap[_myY][_myX].incHistory();
-	}
 	_self->pushAction(action);
     if (VERBOSE)
     {
