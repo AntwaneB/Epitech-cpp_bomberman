@@ -341,6 +341,8 @@ Level::monsterMoved(Subject* entity)
 {
 	Monster* monster = safe_cast<Monster*>(entity);
 
+	std::cout << monster->position() << std::endl;
+
 	_monsters[monster->prevPosition()].erase(std::find(_monsters[monster->prevPosition()].begin(), _monsters[monster->prevPosition()].end(), monster));
 	_monsters[monster->position()].push_back(monster);
 }

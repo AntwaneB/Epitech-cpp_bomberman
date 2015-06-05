@@ -73,11 +73,11 @@ private:
 private:
 	Map														_map;
 	std::map<Position<>, std::list<Character*> >	_characters;
+	std::map<Position<>, std::list<Monster*> >	_monsters;
 	std::list<Character*>								_players;
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
 	std::list<Bomb::Explosion>							_explosions;
-	std::map<Position<>, std::list<Monster*> >	_monsters;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;
