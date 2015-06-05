@@ -14,6 +14,7 @@
 #include "Core/App.hh"
 #include "Core/Level.hh"
 #include "Core/Config.hh"
+#include "Core/Save.hh"
 #include "Graphics/Display.hh"
 #include "Graphics/Map.hh"
 

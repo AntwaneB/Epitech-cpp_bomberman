@@ -35,6 +35,8 @@ SRCS		  =  main.cpp \
 		     RangeIncreaser.cpp \
 		     SpeedIncreaser.cpp \
 		     BombAmountIncreaser.cpp \
+		     Save.cpp \
+		     Load.cpp \
 		     Lua.cpp \
 		     \
 		     Graphics/Display.cpp \
@@ -80,6 +82,8 @@ INCS		  =  global.hh \
 		     Core/Block.hh \
 		     Core/BonusItem.hh \
 		     Core/Input.hh \
+		     Core/Save.hh \
+		     Core/Load.hh \
 		     Core/Lua.hh \
 		     \
 		     Graphics/Display.hh \

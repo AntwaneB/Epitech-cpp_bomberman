@@ -5,12 +5,14 @@
  * Created on May 4, 2015, 2:34 PM
  */
 
+#include <cmath>
 #include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
 #include "Core/Level.hh"
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
+#include "Core/Save.hh"
 #include "Core/Menu.hh"
 #include "Core/Monster.hh"
 
@@ -45,6 +47,23 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 
 	this->pushMonster();
 }
+/*
+Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
+{
+	_characters;
+	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
+		_players.push_back(new Character(it->second));
+	_bombs;
+	_items;
+	_explosions;
+	_charactersCount = cfg["charactersCount"];
+	_playersCount = cfg["playersCount"];
+	_secondsElapsed = cfg["secondsElapsed"];
+	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
+		_scores.push_back(new Character(it->second));
+	_charactersKills = cfg["charactersKills"];
+	_difficulty;
+}*/
 
 Level::~Level()
 {
@@ -515,7 +534,8 @@ Level::keyPressed(Subject* entity)
 			previousSave = _clock.seconds();
 			std::cout << "Saving level to file..." << std::endl;
 
-			// [SAVE HUGO] - Ici tu fais ce qu'il faut pour pouvoir save le niveau dans un fichier
+			Save	save(this, "./save.xml");
+			save.save();
 		}
 	}
 }

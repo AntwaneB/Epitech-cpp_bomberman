@@ -19,6 +19,7 @@ class Monster;
 #include "Core/Item.hh"
 #include "Core/BonusItem.hh"
 #include "Core/Bomb.hh"
+#include "Core/Config.hh"
 
 class Level : public EventHandler<Level>, public Subject
 {
@@ -26,6 +27,7 @@ class Level : public EventHandler<Level>, public Subject
 
 public:
 	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty);
+//	Level(Config);
 	virtual ~Level();
 
 	void				run();
