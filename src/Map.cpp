@@ -28,6 +28,20 @@ Map::Map(std::string const & mapFile)
 	this->loadFromFile(mapFile);
 }
 
+Map::Map(Config::Param cfg)
+{
+	_width = cfg["width"];
+	_height = cfg["height"];
+	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
+	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
+
+	this->initMap();
+	this->setBorders();
+	this->setSolid();
+	this->setDestructible();
+	this->bindBlocks();
+}
+
 Map::~Map()
 {
 	for (size_t y = 0; y < _map.size(); ++y)

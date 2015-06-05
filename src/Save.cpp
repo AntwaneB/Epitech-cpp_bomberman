@@ -169,8 +169,6 @@ Save::saveClock(const Clock* clck) const
 		cfg["run"] = clck->_run;
 		//cfg["pausedAt"]
 		cfg["paused"] = clck->_paused;
-		std::cout << "CLCK" << std::endl;
-		std::cout << cfg << std::endl;
 	}
 	return (cfg);
 }

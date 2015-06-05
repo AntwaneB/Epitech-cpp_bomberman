@@ -51,16 +51,16 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
 {
 //	_characters;
-	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
-		_players.push_back(new Character(it->second));
+//	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
+//		_players.push_back(new Character(it->second));
 //	_bombs;
 //	_items;
 //	_explosions;
 	_charactersCount = cfg["charactersCount"];
 	_playersCount = cfg["playersCount"];
 	_secondsElapsed = cfg["secondsElapsed"];
-	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
-		_scores.push_back(new Character(it->second));
+//	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
+//		_scores.push_back(new Character(it->second));
 	_charactersKills = cfg["charactersKills"];
 //	_difficulty;
 }
