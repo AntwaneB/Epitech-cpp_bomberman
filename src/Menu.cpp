@@ -11,6 +11,7 @@
 #include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
+#include "Core/Load.hh"
 
 Menu::Menu(const std::string & filename, const Level * level)
 	: _filename(filename), _level(level), _hasSelectable(false)
