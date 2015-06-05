@@ -86,7 +86,7 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 
 		if (!found)
 		{
-			Monster* monster = new Graphics::Monster(*it, _models[_size + 3]);
+			Monster* monster = new Graphics::Monster(*it, _models[_size + 4]);
 			monster->initialize();
 			_monsters.push_back(monster);
 		}

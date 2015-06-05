@@ -3,9 +3,9 @@
 Graphics::Monster::Monster(::Monster const * character, gdl::Model* model)
 	: Object(character->position()), _character(character), _model(model)
 {
-	_position.decX(0.5);
-	_position.decY(0.5);
-	scale(glm::vec3(0.02, 0.02, 0.02));
+	//_position.decX(0.5);
+	//_position.decY(0.5);
+	scale(glm::vec3(0.005, 0.005, 0.005));
 }
 
 Graphics::Monster::~Monster()
@@ -16,10 +16,10 @@ Graphics::Monster::~Monster()
 bool
 Graphics::Monster::initialize()
 {
-	_model->createSubAnim(0, "RESET", 0, 0);
+	/*_model->createSubAnim(0, "RESET", 0, 0);
   	_model->createSubAnim(0, "START", 20, 30);
-  	_model->createSubAnim(0, "RUN", 37, 53);
-  	_model->createSubAnim(0, "END", 54, 100);
+  	_model->createSubAnim(0, "RUN", 37, 90);
+  	_model->createSubAnim(0, "END", 90, 100);*/
   	return (true);
 }
 
@@ -83,9 +83,9 @@ Graphics::Monster::update(gdl::Clock const &clock, gdl::Input &input)
 	{
 		_position = _character->position();
 		irotate(getAngle(_character->direction()));
-		_position.decX(0.5);
-		_position.decY(0.5);
-		_position.incZ(0.5);
+		//_position.decX(0.5);
+		//_position.decY(0.5);
+		_position.incZ(1.8);
 	}
 	_anim = _character->moving();
 }
@@ -95,7 +95,7 @@ Graphics::Monster::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	//Couleur
 	_texture.bind();
-	if (_anim == true)
+	/*if (_anim == true)
 	{
 		if (_frame == 0 || _frame > 25)
 		{
@@ -125,7 +125,7 @@ Graphics::Monster::draw(gdl::AShader &shader, gdl::Clock const &clock)
 		}
 		if (_frame != 0)
 			_frame += 1;
-	}
+	}*/
 	shader.bind();
 	shader.setUniform("color", glm::vec4(1,1,1,1));
 	_model->draw(shader, getTransformation(), clock.getElapsed());
