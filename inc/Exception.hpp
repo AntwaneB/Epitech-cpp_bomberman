@@ -31,6 +31,14 @@ protected:
 	std::string	_message;
 };
 
+class AssetException : public Exception
+{
+public:
+	AssetException(std::string const & s) : Exception(s) {}
+
+	virtual ~AssetException() throw() {}
+};
+
 class ArgumentsException : public Exception
 {
 public:
@@ -85,12 +93,12 @@ public:
 	virtual ~FactoryException() throw() {}
 };
 
-class LoadException : public Exception
+class ScriptingException : public Exception
 {
 public:
-	LoadException(std::string const & s) : Exception(s) {}
+	ScriptingException(std::string const & s) : Exception("Scripting Error : " + s) {}
 
-	virtual ~LoadException() throw() {}
+	virtual ~ScriptingException() throw() {}
 };
 
 #endif	/* EXCEPTION_HPP */

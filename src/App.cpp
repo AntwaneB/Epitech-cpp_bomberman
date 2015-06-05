@@ -24,6 +24,7 @@ App::App(int ac, char** av)
 	: _ac(ac)
 {
 	_actions[LEVEL_GENERATED] = &App::runLevel;
+	_actions[LEVEL_ENDED] = &App::endLevel;
 	_actions[EXIT_TRIGGERED] = &App::exit;
 	_actions[MENU_STARTED] = &App::menuStarted;
 
@@ -64,6 +65,18 @@ App::runLevel(Subject* entity)
 	}
 
 	level->run();
+}
+
+void
+App::endLevel(Subject* entity)
+{
+	Level* level = safe_cast<Level*>(entity);
+
+	Menu* menu = new Menu("./menus/end_level.xml", level);
+	menu->addObserver(this);
+	menu->addObserver(_display);
+
+	this->notify(menu, MENU_STARTED);
 }
 
 void

@@ -109,7 +109,7 @@
 				<texture>
 					<start_x>1099</start_x>
 					<start_y>976</start_y>
-					<width>349</width>
+					<width>419</width>
 					<height>89</height>
 				</texture>
 				<position>
@@ -124,7 +124,7 @@
 			<has_value>false</has_value>
 			<action>
 				<name>NEW_MENU</name>
-				<param>./menus/settings.xml</param>
+				<param>./menus/player_win.xml</param>
 			</action>
 			<cursor>
 				<position>

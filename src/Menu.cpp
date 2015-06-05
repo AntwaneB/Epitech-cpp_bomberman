@@ -11,8 +11,8 @@
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
 
-Menu::Menu(const std::string & filename)
-	: _filename(filename)
+Menu::Menu(const std::string & filename, const Level * level)
+	: _filename(filename), _level(level), _hasSelectable(false)
 {
 	_actions[KEY_PRESSED] = &Menu::keyPressed;
 
@@ -32,6 +32,18 @@ Menu::~Menu()
 {
 }
 
+Config&
+Menu::layout(void)
+{
+	return _layout;
+}
+
+bool
+Menu::hasSelectable() const
+{
+	return (_hasSelectable);
+}
+
 void
 Menu::run()
 {
@@ -43,6 +55,7 @@ Menu::init()
 {
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
+		_hasSelectable = it->second["selectable"] || it->second["selected"] ? true : _hasSelectable;
 		if (it->second["is_collection"] == true)
 		{
 			Config::Param& collection = it->second;
@@ -110,13 +123,23 @@ Menu::keyPressed(Subject* entity)
 	Input*	input = safe_cast<Input*>(entity);
 
 	std::map<Input::Key, void (Menu::*)(Input::Key)> actions;
-	actions[Input::UP] = &Menu::changeLine;
-	actions[Input::DOWN] = &Menu::changeLine;
-	actions[Input::LEFT] = &Menu::changeValue;
-	actions[Input::RIGHT] = &Menu::changeValue;
 	actions[Input::SPACE] = &Menu::runLine;
 	actions[Input::ENTER] = &Menu::runLine;
 	actions[Input::ESC] = &Menu::quit;
+	if (_layout["controls_inverted"] != true)
+	{
+		actions[Input::UP] = &Menu::changeLine;
+		actions[Input::DOWN] = &Menu::changeLine;
+		actions[Input::LEFT] = &Menu::changeValue;
+		actions[Input::RIGHT] = &Menu::changeValue;
+	}
+	else
+	{
+		actions[Input::LEFT] = &Menu::changeLine;
+		actions[Input::RIGHT] = &Menu::changeLine;
+		actions[Input::UP] = &Menu::changeValue;
+		actions[Input::DOWN] = &Menu::changeValue;
+	}
 
 	if (actions.find(input->genericKey()) != actions.end())
 		(this->*(actions[input->genericKey()]))(input->genericKey());
@@ -124,15 +147,12 @@ Menu::keyPressed(Subject* entity)
 	this->notify(this, MENU_UPDATED);
 }
 
-Config&
-Menu::layout(void)
-{
-	return _layout;
-}
-
 void
 Menu::changeLine(Input::Key key)
 {
+	if (!_hasSelectable)
+		return;
+
 	size_t count = 0;
 
 	Config::Param* active;
@@ -146,7 +166,7 @@ Menu::changeLine(Input::Key key)
 
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
-		if (key == Input::UP)
+		if (key == Input::UP || (_layout["controls_inverted"] == true && key == Input::LEFT))
 		{
 			if (&(it->second) != active
 				&& it->second["selectable"] == true
@@ -155,7 +175,7 @@ Menu::changeLine(Input::Key key)
 				it->second["selected"] = true;
 			}
 		}
-		else if (key == Input::DOWN)
+		else if (key == Input::DOWN || (_layout["controls_inverted"] == true && key == Input::RIGHT))
 		{
 			if (&(it->second) != active
 					&& it->second["selectable"] == true
@@ -172,19 +192,36 @@ Menu::changeLine(Input::Key key)
 void
 Menu::changeValue(Input::Key key)
 {
-	Config::Param* active;
+	Config::Param* active = NULL;
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
 		if (it->second["selected"] == true)
 			active = &(it->second);
 	}
 
-	int newValue = (*active)["value"]["value"];
-	newValue = key == Input::LEFT ? newValue - 1 : newValue + 1;
-	newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
-	newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
+	if (active && (*active)["has_value"] == true)
+	{
+		if ((*active)["value"]["type"] == "ASCII")
+		{
+			char newValue = (*active)["value"]["value"];
+			newValue = key == Input::LEFT || (_layout["controls_inverted"] == true && key == Input::UP) ? newValue - 1 : newValue + 1;
+			newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
+			newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
 
-	(*active)["value"]["value"] = newValue;
+			std::string newValueStr;
+			newValueStr += newValue;
+			(*active)["value"]["value"] = newValueStr;
+		}
+		else
+		{
+			int newValue = (*active)["value"]["value"];
+			newValue = key == Input::LEFT || (_layout["controls_inverted"] == true && key == Input::UP) ? newValue - 1 : newValue + 1;
+			newValue = (*active)["value"]["min"] > newValue ? (*active)["value"]["max"] : newValue;
+			newValue = (*active)["value"]["max"] < newValue ? (*active)["value"]["min"] : newValue;
+
+			(*active)["value"]["value"] = newValue;
+		}
+	}
 }
 
 void

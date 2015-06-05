@@ -10,8 +10,16 @@
 			<param name="box">box</param>
 			<param name="void">void</param>
 		</param>
-		<param name="floor_texture">./libgdl/assets/sand.tga</param>
+		<param name="floor_texture">./assets/textures/sand.tga</param>
 	</maps>
+
+	<sounds>
+		<bomb_exploded>./assets/sounds/explosion.wav</bomb_exploded>
+		<level_started>./assets/sounds/plants_vs_zombies.wav</level_started>
+		<menu_started>./assets/sounds/acdc_tnt.ogg</menu_started>
+		<bonus_picked>./assets/sounds/bonus.ogg</bonus_picked>
+		<character_died>./assets/sounds/dead.ogg</character_died>
+	</sounds>
 
 	<scores>
 		<param name="first_blood">250</param>
@@ -36,6 +44,15 @@
 				<param name="range">2</param>
 				<param name="duration_modifier">1</param>
 			</param>
+		</entity>
+
+		<entity name="monster">
+			<param name="visible">true</param>
+			<param name="speed">100</param>
+			<param name="max_speed">1500</param>
+			<param name="can_move">true</param>
+			<param name="destructible">true</param>
+			<param name="collision">false</param>
 		</entity>
 
 		<entity name="bomb">
@@ -70,7 +87,7 @@
 				<param name="collision">true</param>
 				<param name="destructible">false</param>
 				<param name="block_bombs">true</param>
-				<param name="texture">./libgdl/assets/rock.tga</param>
+				<param name="texture">./assets/textures/rock.tga</param>
 			</block>
 
 			<block name="box">
@@ -78,7 +95,7 @@
 				<param name="collision">true</param>
 				<param name="destructible">true</param>
 				<param name="block_bombs">false</param>
-				<param name="texture">./libgdl/assets/wood.tga</param>
+				<param name="texture">./assets/textures/wood.tga</param>
 			</block>
 
 			<block name="void">
@@ -93,7 +110,7 @@
 				<param name="collision">false</param>
 				<param name="destructible">false</param>
 				<param name="block_bombs">false</param>
-				<param name="texture">./libgdl/assets/sand.tga</param>
+				<param name="texture">./assets/textures/sand.tga</param>
 			</block>
 		</category>
 

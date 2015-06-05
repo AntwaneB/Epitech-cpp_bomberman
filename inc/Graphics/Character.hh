@@ -33,6 +33,7 @@ namespace Graphics
       gdl::Texture            _texture;
       const ::Character*      _character;
       gdl::Model*             _model;
+      glm::vec4                  _color;
       int                     _frame = 0;
       bool                     _anim = false;
 	};

@@ -1,13 +1,16 @@
 #include "Graphics/Split.hh"
 
 Graphics::Split::Split(::Level const * level, int id, size_t splitsCount, size_t size)
-	: _level(level), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
+	: _level(level), _player(NULL), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
 {
 	_map = new Map(level->map());
-	if (id == 0)
-		_player = _level->players().front();
-	else
-		_player = _level->players().back();
+	if (_level->players().size() > 0)
+	{
+		if (id == 0)
+			_player = _level->players().front();
+		else
+			_player = _level->players().back();
+	}
 }
 
 Graphics::Split::~Split()
@@ -33,7 +36,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	_shader.bind();
 	moveCamera();
 	_shader.setUniform("projection", projection);
-
+	_shader.setUniform("color", glm::vec4(1, 1, 1, 1));
 	_map->initialize();
 
 	size_t i = 0;
@@ -48,8 +51,8 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	}
 
 	gdl::Texture* texture = new gdl::Texture;
-	if (texture->load("./libgdl/assets/fire.tga") == false)
-		std::cout << "LOL" << std::endl;
+	if (texture->load("./assets/textures/fire.tga") == false)
+		std::cout << "Error: fire texture not found." << std::endl;
 	_texture = texture;
 	return (true);
 }
@@ -57,7 +60,6 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 {
 	_map->update();
-
 	// Creating new bombs
 	auto bombs = _level->bombsRaw();
 	for (auto it = bombs.begin(); it != bombs.end(); ++it)
@@ -216,8 +218,16 @@ void Graphics::Split::draw(gdl::Clock clock)
 
 void Graphics::Split::moveCamera()
 {
-	_x = _player->position().x();
-	_y = _player->position().y();
+	if (_player)
+	{
+		_x = _player->position().x();
+		_y = _player->position().y();
+	}
+	else
+	{
+		_x = _level->map().width() / 2;
+		_y = _level->map().height() / 2;
+	}
 	glm::mat4 transformation = glm::lookAt(glm::vec3(_x, _height, _y), glm::vec3(_x, 0, _y), glm::vec3(0, 1, -180));
 	_shader.setUniform("view", transformation);
 }

@@ -25,6 +25,7 @@ SRCS		  =  main.cpp \
 		     Menu.cpp \
 		     Level.cpp \
 		     Character.cpp \
+		     Monster.cpp \
 		     Map.cpp \
 		     Item.cpp \
 		     Bomb.cpp \
@@ -36,6 +37,7 @@ SRCS		  =  main.cpp \
 		     BombAmountIncreaser.cpp \
 		     Save.cpp \
 		     Load.cpp \
+		     Lua.cpp \
 		     \
 		     Graphics/Display.cpp \
 		     Graphics/Split.cpp \
@@ -48,7 +50,9 @@ SRCS		  =  main.cpp \
 		     Graphics/Character.cpp \
 		     Graphics/Bomb.cpp \
 		     Graphics/Item.cpp \
+		     Graphics/Skybox.cpp \
 		     Graphics/Explosion.cpp \
+		     Graphics/Audio.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -68,6 +72,7 @@ INCS		  =  global.hh \
 		     Core/Menu.hh \
 		     Core/Level.hh \
 		     Core/Character.hh \
+		     Core/Monster.hh \
 		     Core/IA.hpp \
 		     Core/Map.hh \
 		     Core/Position.hh \
@@ -76,8 +81,12 @@ INCS		  =  global.hh \
 		     Core/Block.hh \
 		     Core/BonusItem.hh \
 		     Core/Input.hh \
+<<<<<<< HEAD
 		     Core/Save.hh \
 		     Core/Load.hh \
+=======
+		     Core/Lua.hh \
+>>>>>>> 57047859a5c4d83474546b3fecae56ce1674105f
 		     \
 		     Graphics/Display.hh \
 		     Graphics/Level.hh \
@@ -90,7 +99,9 @@ INCS		  =  global.hh \
 		     Graphics/Bomb.hh \
 		     Graphics/Split.hh \
 		     Graphics/Item.hh \
+		     Graphics/Skybox.hh \
 		     Graphics/Explosion.hh \
+		     Graphics/Audio.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \
@@ -107,6 +118,8 @@ CXXFLAGS	  += -std=c++11 -Wall -Wextra -W -Werror -fPIC
 GDLFLAGS	  += -L$(LGDL_DIR)/libs
 GDLFLAGS	  += -lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
+LUAFLAGS	  = -I./libs/lua/ -L./libs/ -llua -ldl
+
 CXXFLAGS	  += -g
 
 
@@ -115,7 +128,7 @@ CXXFLAGS	  += -g
 #######################
 
 $(NAME):		   $(OBJS)
-			   $(CXX) $(OBJS) $(CXXFLAGS) $(GDLFLAGS) -o $(NAME)
+			   $(CXX) $(OBJS) $(CXXFLAGS) $(GDLFLAGS) $(LUAFLAGS) -o $(NAME)
 
 all:			   $(NAME)
 
@@ -125,7 +138,7 @@ $(OBJS_DIR)/%.o:	   $(SRCS_DIR)/%.cpp $(DEPS)
 			   @$(MKDIR) $(OBJS_DIR)
 			   @$(MKDIR) $(OBJS_DIR)/Graphics
 			   @$(MKDIR) $(OBJS_DIR)/misc
-			   $(CXX) $(CXXFLAGS) -c -o $@ $<
+			   $(CXX) $(LUAFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 ################
 ## MISC RULES ##

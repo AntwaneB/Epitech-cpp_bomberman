@@ -18,6 +18,7 @@ public:
 		PAUSE = 0,
 		ESC,
 		ENTER,
+		SAVE,
 		KEYS_P1_START,
 		P1_UP,
 		P1_DOWN,

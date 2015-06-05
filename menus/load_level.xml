@@ -54,15 +54,6 @@
 				</scale>
 			</asset>
 			<has_value>false</has_value>
-			<action>
-				<name>RUN_LEVEL</name>
-			</action>
-			<cursor>
-				<position>
-					<x>565</x>
-					<y>338</y>
-				</position>
-			</cursor>
 		</title>
 
 		<saves>

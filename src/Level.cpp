@@ -13,6 +13,8 @@
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
 #include "Core/Save.hh"
+#include "Core/Menu.hh"
+#include "Core/Monster.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty difficulty)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
@@ -22,6 +24,8 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
 	_actions[CHARACTER_DIED] = &Level::characterDied;
+	_actions[MONSTER_MOVED] = &Level::monsterMoved;
+	_actions[MONSTER_DIED] = &Level::monsterDied;
 	_actions[ITEM_DROPPED] = &Level::itemDropped;
 	_actions[ITEM_MOVED] = &Level::itemMoved;
 	_actions[ITEM_DESTROYED] = &Level::itemDestroyed;
@@ -98,6 +102,12 @@ Level::characters() const
 	return (_characters);
 }
 
+std::map<Position<>, std::list<Monster*> > const &
+Level::monsters() const
+{
+	return (_monsters);
+}
+
 std::list<Character*> const &
 Level::players() const
 {
@@ -108,6 +118,12 @@ std::vector<Character*> const
 Level::charactersRaw() const
 {
 	return (StdHelper::flatten<Character*, Position<> >(_characters));
+}
+
+std::vector<Monster*> const
+Level::monstersRaw() const
+{
+	return (StdHelper::flatten<Monster*, Position<> >(_monsters));
 }
 
 std::vector<Bomb*> const
@@ -155,6 +171,7 @@ Level::end()
 	{
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
+	std::cout << std::endl;
 
 	Save	save(this, "./save.xml");
 	save.save();
@@ -188,8 +205,10 @@ Level::tick(Subject* entity)
 					(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
 		}
 
-		if (this->charactersRaw().size() <= 1)
-		{ // Ending game if their's only one character left
+		if (this->charactersRaw().size() <= 1
+			|| (std::count_if(_players.begin(), _players.end(), [](Character* ptr) { return (ptr == NULL); }) == static_cast<int>(_players.size())
+				&& _players.size() != 0))
+		{ // Ending game if their's only one character or no player left
 			_clock.stop();
 			this->end();
 		}
@@ -309,6 +328,34 @@ Level::characterDied(Subject* entity)
 				(*killer)->changeScore(g_settings["scores"]["self_kill"]);
 		}
 		_charactersKills++;
+	}
+}
+
+void
+Level::monsterMoved(Subject* entity)
+{
+	Monster* monster = safe_cast<Monster*>(entity);
+
+	_monsters[monster->prevPosition()].erase(std::find(_monsters[monster->prevPosition()].begin(), _monsters[monster->prevPosition()].end(), monster));
+	_monsters[monster->position()].push_back(monster);
+}
+
+void
+Level::monsterDied(Subject* entity)
+{
+	Monster* monster = safe_cast<Monster*>(entity);
+
+	_monsters[monster->position()].erase(std::find(_monsters[monster->position()].begin(), _monsters[monster->position()].end(), monster));
+	_clock.removeObserver(monster);
+	this->removeObserver(monster);
+
+	if (monster->killedBy())
+	{
+		auto killer = std::find(_scores.begin(), _scores.end(), monster->killedBy()->owner());
+		if (killer != _scores.end())
+		{
+			(*killer)->changeScore(g_settings["scores"]["monster_kill"]);
+		}
 	}
 }
 
@@ -433,6 +480,7 @@ Level::blockDestroyed(Subject* entity)
 void
 Level::keyPressed(Subject* entity)
 {
+	static seconds_t previousSave = -1;
 	Input* input = safe_cast<Input*>(entity);
 
 	if (input->key() > Input::KEYS_P1_START && input->key() < Input::KEYS_P1_END && _players.size() >= 1)
@@ -454,6 +502,13 @@ Level::keyPressed(Subject* entity)
 		if (input->key() == Input::PAUSE)
 		{
 			_clock.togglePause();
+		}
+		else if (input->key() == Input::SAVE && _clock.seconds() - previousSave >= 5)
+		{
+			previousSave = _clock.seconds();
+			std::cout << "Saving level to file..." << std::endl;
+
+			// [SAVE HUGO] - Ici tu fais ce qu'il faut pour pouvoir save le niveau dans un fichier
 		}
 	}
 }
