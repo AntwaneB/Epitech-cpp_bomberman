@@ -73,6 +73,7 @@ bool Graphics::Map::update()
 
 void Graphics::Map::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
+	_t +=1;
 	_ground->draw(shader, clock);
 	_skybox->draw(shader, clock);
 	for (unsigned int y = 0; y < _blocks.size(); y++)

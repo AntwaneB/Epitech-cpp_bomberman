@@ -5,6 +5,7 @@
 #include "Input.hh"
 #include "Graphics/Object.hh"
 #include "Graphics/Character.hh"
+#include "Graphics/Monster.hh"
 #include "Graphics/Bomb.hh"
 #include "Graphics/Item.hh"
 #include "Graphics/Map.hh"
@@ -38,6 +39,7 @@ namespace Graphics
 		gdl::BasicShader						_shader;
 		std::list<Graphics::Character*>			_characters;
 		std::list<Graphics::Bomb*>				_bombs;
+		std::list<Graphics::Monster*>			_monsters;
 		std::list<Graphics::Item*>				_items;
 		std::list<std::pair<size_t, std::list<Graphics::Object*> > >	_explosions;
 		Graphics::Map*							_map;
@@ -45,7 +47,7 @@ namespace Graphics
 		size_t									_size;
 		double									_x;
 		double									_y;
-		size_t									_height = 90;
+		size_t									_height = 60;
 		size_t									_splitsCount;
 		gdl::Texture* 							_texture;
 	};

@@ -76,6 +76,22 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		}
 	}
 
+	// Creating new monster
+	auto monsters = _level->monstersRaw();
+	for (auto it = monsters.begin(); it != monsters.end(); ++it)
+	{
+		bool found = false;
+		for (auto iit = _monsters.begin(); iit != _monsters.end() && !found; ++iit)
+			found = (*(*iit) == (*it));
+
+		if (!found)
+		{
+			Monster* monster = new Graphics::Monster(*it, _models[_size + 3]);
+			monster->initialize();
+			_monsters.push_back(monster);
+		}
+	}
+
 	//Creating explosion
 	auto explosions = _level->explosions();
 	for (auto it = explosions.begin(); it != explosions.end(); ++it)
@@ -131,6 +147,25 @@ void Graphics::Split::update(gdl::Clock clock, gdl::Input input)
 		{
 			delete (*it);
 			it = _bombs.erase(it);
+			--it;
+		}
+		else
+			(*it)->update(clock, input);
+	}
+
+	// Updating monsters
+	monsters = _level->monstersRaw();
+	for (auto it = _monsters.begin(); it != _monsters.end(); ++it)
+	{
+		bool exists = false;
+		for (auto iit = monsters.begin(); iit != monsters.end() && !exists; ++iit)
+		{
+			exists = *it && *(*it) == *iit;
+		}
+		if (!exists)
+		{
+			delete (*it);
+			it = _monsters.erase(it);
 			--it;
 		}
 		else
@@ -210,6 +245,8 @@ void Graphics::Split::draw(gdl::Clock clock)
 	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
 		(*it)->draw(_shader, clock);
 	for (auto it = _items.begin(); it != _items.end(); ++it)
+		(*it)->draw(_shader, clock);
+	for (auto it = _monsters.begin(); it != _monsters.end(); ++it)
 		(*it)->draw(_shader, clock);
 	for (auto it = _explosions.begin(); it != _explosions.end(); ++it)
 		for (auto itt = (*it).second.begin(); itt != (*it).second.end(); ++itt)

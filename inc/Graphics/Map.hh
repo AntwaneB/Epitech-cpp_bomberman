@@ -46,6 +46,7 @@ namespace Graphics
 		std::vector<std::vector<Graphics::Object*> > _blocks;
 		Graphics::Object* _ground;
 		Graphics::Object* _skybox;
+		size_t			_t = 0;
 		std::map<const std::string, gdl::Texture*>		_textures;
 	};
 
