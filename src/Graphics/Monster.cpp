@@ -58,19 +58,19 @@ Graphics::Monster::irotate(int angle)
 	if (angle == 90)
 		{
 			double position = _position.x();
-			_position.setX(_position.y() * -1);
+			_position.setX(_position.y() * -1 + 1);
 			_position.setY(position);
 		}
 	else if (angle == -90)
 		{
 			double position = _position.x();
 			_position.setX(_position.y());
-			_position.setY(position * -1);
+			_position.setY(position * -1 + 1);
 		}
 	else
 		{
-			_position.setX(_position.x() * -1);
-			_position.setY(_position.y() * -1);
+			_position.setX(_position.x() * -1 + 1);
+			_position.setY(_position.y() * -1 + 1);
 		}
 }
 
