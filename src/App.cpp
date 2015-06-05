@@ -71,7 +71,7 @@ App::endLevel(Subject* entity)
 {
 	Level* level = safe_cast<Level*>(entity);
 
-	Menu* menu = new Menu("./menus/end_level.xml", level);
+	Menu* menu = new Menu(level->winner()->isPlayer() ? "./menus/player_win.xml" : "./menus/player_loose.xml", level);
 	menu->addObserver(this);
 	menu->addObserver(_display);
 

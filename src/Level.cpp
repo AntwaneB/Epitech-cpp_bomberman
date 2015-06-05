@@ -131,6 +131,12 @@ Level::explosions() const
 	return (_explosions);
 }
 
+const Character*
+Level::winner() const
+{
+	return (_winner);
+}
+
 void
 Level::run()
 {
@@ -153,6 +159,13 @@ Level::end()
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
 	std::cout << std::endl;
+
+	_winner = NULL;
+	for (auto it = _scores.begin(); it != _scores.end(); ++it)
+	{
+		if ((*it)->alive() && (_winner == NULL || (*it)->score() > _winner->score()))
+			_winner = *it;
+	}
 
 	this->notify(this, LEVEL_ENDED);
 }
