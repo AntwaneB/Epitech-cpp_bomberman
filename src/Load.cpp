@@ -20,7 +20,6 @@ Load::load(void) const
 		Level	*level;
 
 		level = new Level(cfg);
-		level = NULL;
 		return (level);
 	}
 	catch (ConfigException const & e)
