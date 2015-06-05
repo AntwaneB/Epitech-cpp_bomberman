@@ -85,4 +85,12 @@ public:
 	virtual ~FactoryException() throw() {}
 };
 
+class LoadException : public Exception
+{
+public:
+	LoadException(std::string const & s) : Exception(s) {}
+
+	virtual ~LoadException() throw() {}
+};
+
 #endif	/* EXCEPTION_HPP */
