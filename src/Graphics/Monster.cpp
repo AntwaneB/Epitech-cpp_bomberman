@@ -3,8 +3,8 @@
 Graphics::Monster::Monster(::Monster const * monster, gdl::Model* model)
 	: Object(monster->position()), _monster(monster), _model(model)
 {
-	//_position.decX(0.5);
-	//_position.decY(0.5);
+	_position.decX(0.5);
+	_position.decY(0.5);
 	scale(glm::vec3(0.005, 0.005, 0.005));
 }
 
@@ -84,8 +84,8 @@ Graphics::Monster::update(gdl::Clock const &clock, gdl::Input &input)
 	{
 		_position = _monster->position();
 		irotate(getAngle(_monster->direction()));
-		//_position.decX(0.5);
-		//_position.decY(0.5);
+		_position.decX(0.5);
+		_position.decY(0.5);
 		_position.incZ(1.8);
 	}
 	_anim = _monster->moving();
