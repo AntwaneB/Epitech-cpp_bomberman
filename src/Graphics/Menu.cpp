@@ -89,6 +89,7 @@ Graphics::Menu::init(::Menu* menu)
 				_texts[&param] = text;
 			}
 		}
+		/*
 		else
 		{
 			for (auto value = param["collection"]["values"].begin(); value != param["collection"]["values"].end(); ++value)
@@ -102,6 +103,7 @@ Graphics::Menu::init(::Menu* menu)
 				_collections[&param].push_back(text);
 			}
 		}
+		*/
 	}
 
 	_run = true;
