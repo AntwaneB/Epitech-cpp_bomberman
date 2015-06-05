@@ -215,6 +215,12 @@ Level::tick(Subject* entity)
 			for (auto it = _scores.begin(); it != _scores.end(); ++it)
 				if ((*it)->alive())
 					(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
+
+			// Spawning monster
+			if (rand() % 1000 < static_cast<int>(g_settings["entities"]["monster"]["spawn_chance"]))
+			{
+				this->pushMonster();
+			}
 		}
 
 		if (this->charactersRaw().size() <= 1
@@ -302,7 +308,9 @@ Level::pushCharacter()
 Monster*
 Level::pushMonster()
 {
-	Monster* monster = new Monster(this, Position<>(5, 5));
+	int x = rand() % (_map.width() - 2) + 2;
+	int y = rand() % (_map.height() - 2) + 2;
+	Monster* monster = new Monster(this, Position<>(x, y));
 
 	_clock.addObserver(monster);
 	monster->addObserver(this);
