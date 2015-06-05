@@ -32,7 +32,7 @@ namespace Graphics
 
 	private:
       gdl::Texture            _texture;
-      const ::Monster*      _character;
+      const ::Monster*      _monster;
       gdl::Model*             _model;
       int                     _frame = 0;
       bool                     _anim = false;

@@ -1,7 +1,7 @@
 #include "Graphics/Monster.hh"
 
-Graphics::Monster::Monster(::Monster const * character, gdl::Model* model)
-	: Object(character->position()), _character(character), _model(model)
+Graphics::Monster::Monster(::Monster const * monster, gdl::Model* model)
+	: Object(monster->position()), _monster(monster), _model(model)
 {
 	//_position.decX(0.5);
 	//_position.decY(0.5);
@@ -27,7 +27,7 @@ Graphics::Monster::initialize()
 bool
 Graphics::Monster::operator==(const ::Monster* other) const
 {
-	return (other == _character);
+	return (other == _monster);
 }
 
 int
@@ -58,19 +58,19 @@ Graphics::Monster::irotate(int angle)
 	if (angle == 90)
 		{
 			double position = _position.x();
-			_position.setX(_position.y() * -1 + 1);
+			_position.setX(_position.y() * -1);
 			_position.setY(position);
 		}
 	else if (angle == -90)
 		{
 			double position = _position.x();
 			_position.setX(_position.y());
-			_position.setY(position * -1 + 1);
+			_position.setY(position * -1);
 		}
 	else
 		{
-			_position.setX(_position.x() * -1 + 1);
-			_position.setY(_position.y() * -1 + 1);
+			_position.setX(_position.x() * -1);
+			_position.setY(_position.y() * -1);
 		}
 }
 
@@ -80,15 +80,15 @@ Graphics::Monster::update(gdl::Clock const &clock, gdl::Input &input)
 	(void)clock;
 	(void)input;
 
-	if (_character->position().y() != _position.y() || _character->position().x() != _position.x())
+	if (_monster->position().y() != _position.y() || _monster->position().x() != _position.x())
 	{
-		_position = _character->position();
-		irotate(getAngle(_character->direction()));
+		_position = _monster->position();
+		irotate(getAngle(_monster->direction()));
 		//_position.decX(0.5);
 		//_position.decY(0.5);
 		_position.incZ(1.8);
 	}
-	_anim = _character->moving();
+	_anim = _monster->moving();
 }
 
 void
