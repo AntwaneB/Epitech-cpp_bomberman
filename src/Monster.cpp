@@ -170,7 +170,10 @@ Monster::move(Character::Action action, const Clock & clock)
 	}
 
 	if (newPos.outOfBounds(_level->map().width() - 1, _level->map().height() - 1) || newPos.x() < 1 || newPos.y() < 1)
-		return;
+	{
+		while (!_queuedActions.empty())
+			_queuedActions.pop();
+	}
 	else
 	{
 		_prevPosition = _position;
