@@ -11,6 +11,7 @@
 #include <time.h>
 #include <chrono>
 #include "Observer.hpp"
+#include "Config.hh"
 
 typedef long double	seconds_t;
 
@@ -20,6 +21,7 @@ class Clock : public Subject, public EventHandler<Clock>
 
 public:
 	Clock();
+	Clock(Config::Param);
 	virtual ~Clock();
 
 	seconds_t	run(void);

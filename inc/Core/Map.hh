@@ -26,6 +26,7 @@ class Map :  public EventHandler<Map>, public Subject
 public:
 	Map(size_t, size_t);
 	Map(std::string const & mapFile);
+	Map(Config::Param);
 	virtual ~Map();
 
 	void	pushCharacter(const Character*);

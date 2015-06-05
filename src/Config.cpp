@@ -112,18 +112,24 @@ Config::Param const & Config::Param::operator [](const char key[]) const
 Config::Param&
 Config::Param::operator=(Config const & o)
 {
-	_status = o._params._status;
-	_value = o._params._value;
-	_map = o._params._map;
+	if (!o._params.isEmpty())
+	{
+		_status = o._params._status;
+		_value = o._params._value;
+		_map = o._params._map;
+	}
 	return (*this);
 }
 
 Config::Param&
 Config::Param::operator=(Config::Param const & o)
 {
-	_status = o._status;
-	_value = o._value;
-	_map = o._map;
+	if (!o.isEmpty())
+	{
+		_status = o._status;
+		_value = o._value;
+		_map = o._map;
+	}
 	return (*this);
 }
 
@@ -437,7 +443,10 @@ bool Config::Param::operator > (float o) { return (static_cast<float>(*this) > o
 
 bool	Config::Param::isEmpty(void) const
 {
-	return (begin() == end());
+	if (_status == MAP && _map.size())
+		return (begin() == end());
+	else
+		return (true);
 }
 
 bool	Config::Param::hasChild(void) const
@@ -542,6 +551,7 @@ void	Config::exportFile(std::string const & filename) const
 	file.load_string(_params.toXML().c_str());
 	file.save_file(filename.c_str());
 }
+
 /*
 int	main()
 {

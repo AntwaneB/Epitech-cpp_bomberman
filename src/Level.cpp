@@ -5,12 +5,14 @@
  * Created on May 4, 2015, 2:34 PM
  */
 
+#include <cmath>
 #include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
 #include "Core/Level.hh"
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
+#include "Core/Save.hh"
 
 Level::Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty difficulty)
 	: _map(width, height), _charactersCount(charactersCount), _playersCount(playersCount),
@@ -39,6 +41,23 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 		_map.pushCharacter(this->pushCharacter());
 	}
 }
+/*
+Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
+{
+	_characters;
+	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
+		_players.push_back(new Character(it->second));
+	_bombs;
+	_items;
+	_explosions;
+	_charactersCount = cfg["charactersCount"];
+	_playersCount = cfg["playersCount"];
+	_secondsElapsed = cfg["secondsElapsed"];
+	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
+		_scores.push_back(new Character(it->second));
+	_charactersKills = cfg["charactersKills"];
+	_difficulty;
+}*/
 
 Level::~Level()
 {
@@ -136,6 +155,9 @@ Level::end()
 	{
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
+
+	Save	save(this, "./save.xml");
+	save.save();
 
 	this->notify(this, LEVEL_ENDED);
 }
