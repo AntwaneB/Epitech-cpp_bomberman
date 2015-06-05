@@ -130,7 +130,7 @@ Menu::buildFromLevelValue(Config::Param& value)
 {
 	std::string valueStr;
 
-	
+
 
 	value["value"] = valueStr;
 }

@@ -42,6 +42,8 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+
+	this->pushMonster();
 }
 
 Level::~Level()
@@ -276,6 +278,18 @@ Level::pushCharacter()
 	this->addObserver(character);
 
 	return (character);
+}
+
+Monster*
+Level::pushMonster()
+{
+	Monster* monster = new Monster(this, Position<>(5, 5));
+
+	_clock.addObserver(monster);
+	monster->addObserver(this);
+	_monsters[monster->position()].push_back(monster);
+
+	return (monster);
 }
 
 void

@@ -5,7 +5,7 @@ Graphics::Monster::Monster(::Monster const * character, gdl::Model* model)
 {
 	_position.decX(0.5);
 	_position.decY(0.5);
-	scale(glm::vec3(0.0025, 0.0025, 0.0025));
+	scale(glm::vec3(0.02, 0.02, 0.02));
 }
 
 Graphics::Monster::~Monster()
