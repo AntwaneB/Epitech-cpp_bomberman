@@ -53,7 +53,7 @@
 			<param name="can_move">true</param>
 			<param name="destructible">true</param>
 			<param name="collision">false</param>
-			<param name="spawn_chance">30</param>
+			<param name="spawn_chance">15</param>
 		</entity>
 
 		<entity name="bomb">

@@ -312,9 +312,11 @@ Level::pushMonster()
 	int y = rand() % (_map.height() - 2) + 2;
 	Monster* monster = new Monster(this, Position<>(x, y));
 
-	_clock.addObserver(monster);
-	monster->addObserver(this);
 	_monsters[monster->position()].push_back(monster);
+
+	_clock.addObserver(monster);
+	this->addObserver(monster);
+	monster->addObserver(this);
 
 	return (monster);
 }
