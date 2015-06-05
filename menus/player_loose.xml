@@ -55,6 +55,21 @@
 			</asset>
 			<has_value>false</has_value>
 		</ia>
+
+		<nth>
+			<type>value_only</type>
+			<value>
+				<type>FROM_LEVEL</type>
+				<key>WINNER_ID</key>
+				<value>4</value>
+				<size>98</size>
+				<color>default</color>
+				<x>390</x>
+				<y>196</y>
+			</value>
+			<has_value>true</has_value>
+		</nth>
+
 		<wins>
 			<asset>
 				<texture>
