@@ -111,6 +111,12 @@ Character::direction() const
 	return (_direction);
 }
 
+size_t
+Character::id() const
+{
+	return (_id);
+}
+
 void
 Character::tick(Subject* entity)
 {

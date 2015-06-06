@@ -47,6 +47,7 @@ public:
 	const Bomb*			killedBy() const;
 	bool					isPlayer() const;
 	bool					moving() const;
+	size_t				id() const;
 
 	void		clearActions();
 	void		pushAction(Character::Action);

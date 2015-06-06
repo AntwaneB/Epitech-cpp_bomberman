@@ -291,7 +291,8 @@ Level::pushCharacter()
 	}
 
 	// Creating new character
-	Character*	character = new Character(this, nth + 1, isPlayer, _difficulty, charX, charY);
+	size_t id = isPlayer ? _players.size() + 1 : _characters.size() - _players.size() + 1;
+	Character*	character = new Character(this, id, isPlayer, _difficulty, charX, charY);
 	character->addObserver(this);
 
 	_scores.push_back(character);

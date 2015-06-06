@@ -219,7 +219,8 @@ Menu::buildFromLevelValue(Config::Param& value)
 {
 	std::string valueStr;
 
-
+	if (value["key"] == "WINNER_ID")
+		valueStr = std::to_string(_level->winner()->id());
 
 	value["value"] = valueStr;
 }
