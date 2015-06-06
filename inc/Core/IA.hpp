@@ -40,10 +40,13 @@ namespace IA
 		 Character::Action direction() const;
 
 		 void    setDirection(Character::Action);
+		 void 	 setDestructible(bool);
+		 void 	 setWall(bool);
 		 void    setExplosion(bool);
 		 void    setBomb(bool);
 		 void    incEnemy();
 		 void    incHistory();
+		 void 	 reset();
 
 	private:
 		 bool    _destructible;
@@ -88,6 +91,8 @@ namespace IA
 		 	int 	 _myY;
 		 	bool	 _xCentered;
 		 	bool 	 _yCentered;
+		 	bool 	 _strategyMapInitialized;
+		 	Character::Action 	_lastAction;
 			std::vector<std::vector<Area> > 	_strategyMap;
 			std::list<Position<> >              _searchNodes;
 			Character*							_self;
@@ -107,7 +112,8 @@ IA::IA<T>::IA(Level const* level, Character* character):
 	_self = character;
 	_xCentered = false;
 	_yCentered = false;
-	scanMap();
+	_lastAction = Character::WAIT;
+	_strategyMapInitialized = false;
 	if (VERBOSE)
 	{
 		std::cout << "END IA constructor" << std::endl;
@@ -258,30 +264,42 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
 template<IA::Difficulty T>
 void IA::IA<T>::scanMap()
 {
-	std::vector<std::vector<Block*> > map = _level->map().map();
-	std::vector<int> searchX = {0, 1, 0, -1};
-	std::vector<int> searchY = {1, 0, -1, 0};
-	unsigned int 	y = 0;
-	unsigned int 	x = 0;
-	int 			iRange = 1;
-	int 			iSearch = 0;
+	std::vector<std::vector<Block*> > 	map = _level->map().map();
+	std::vector<int> 					searchX = {0, 1, 0, -1};
+	std::vector<int> 					searchY = {1, 0, -1, 0};
+	std::vector<bool> 					continueCheckingDirection = {true, true, true, true};
+	unsigned int 						y = 0;
+	unsigned int 						x = 0;
+	int 								iRange = 1;
+	int 								iSearch = 0;
 
 	if (VERBOSE)
 	{
 		std::cout << "Starting scanMap()..." << std::endl;
+		debugStrategieMap();
 	}
-	_strategyMap.resize(_level->map().height());
+	if (_strategyMapInitialized == false)
+		_strategyMap.resize(_level->map().height());
 	while (y < _level->map().height())
 	{
-		_strategyMap[y].resize(_level->map().width());
+		if (_strategyMapInitialized == false)
+			_strategyMap[y].resize(_level->map().width());
 		x = 0;
 		while (x < _level->map().width())
 		{
-			_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid());
+			if (_strategyMapInitialized == false)
+				_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid());
+			else
+			{
+				_strategyMap[y][x].setDestructible(map[y][x]->destructible());
+				_strategyMap[y][x].setWall(map[y][x]->solid());
+				_strategyMap[y][x].reset();
+			}
 			x++;
 		}
 		y++;
 	}
+	_strategyMapInitialized = true;
 	y = 0;
 	std::map<Position<>, std::list<Character*> > players = _level->characters();
 	for (std::map<Position<>, std::list<Character*> >::iterator i = players.begin(); i != players.end(); ++i)
@@ -303,7 +321,7 @@ void IA::IA<T>::scanMap()
 		x = 0;
 		for (std::list<Bomb*>::iterator i = it->second.begin(); i != it->second.end(); ++i)
 		{
-			Position<> p = (*i)->position();       //postion bombe
+			Position<> p = (*i)->position();
 			int 	bombX = p.x();
 			int 	bombY = p.y();
 			int 	bombRange = (*i)->range();
@@ -314,15 +332,20 @@ void IA::IA<T>::scanMap()
 			_strategyMap[bombY][bombX].setBomb(true);
 			_strategyMap[bombY][bombX].setExplosion(true);
 			iRange = 0;
+			continueCheckingDirection = {true, true, true, true};
 			while (iRange <= bombRange)
 			{
 				iSearch = 0;
 				while (iSearch < 4)
 				{
 					if ((bombX + (searchX[iSearch] * iRange)) > 0 && (bombX + (searchX[iSearch] * iRange)) < static_cast<int>(_level->map().width())
-					&& (bombY + (searchY[iSearch] * iRange)) > 0 && (bombY + (searchY[iSearch] * iRange)) < static_cast<int>(_level->map().height()))
+					&& (bombY + (searchY[iSearch] * iRange)) > 0 && (bombY + (searchY[iSearch] * iRange)) < static_cast<int>(_level->map().height())
+					&& continueCheckingDirection[iSearch] == true)
 					{
 						_strategyMap[bombY + (searchY[iSearch] * iRange)][bombX + (searchX[iSearch] * iRange)].setExplosion(true);
+						if (_strategyMap[bombY + (searchY[iSearch] * iRange)][bombX + (searchX[iSearch] * iRange)].destructible() == true
+							|| _strategyMap[bombY + (searchY[iSearch] * iRange)][bombX + (searchX[iSearch] * iRange)].wall() == true)
+							continueCheckingDirection[iSearch] = false;
 					}
 					iSearch++;
 				}
@@ -365,10 +388,6 @@ void IA::IA<T>::playTurn()
 		action = checkDestinationSafe(action);
 	}
 	action = checkAlignment(action);
-	if (action != Character::WAIT && action != Character::DROP_BOMB && _yCentered && _xCentered)
-	{
-		_strategyMap[_myY][_myX].incHistory();
-	}
 	_self->pushAction(action);
     if (VERBOSE)
     {
@@ -557,29 +576,34 @@ void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOV
 template<IA::Difficulty T>
 bool IA::IA<T>::BombOpportunity()
 {
-std::vector<int>   searchX = {0, 1, 0, -1, 0, 2, 0, -2};
-std::vector<int>   searchY = {-1, 0, 1, 0, -2, 0, 2, 0};
-int                mapHeight = _level->map().height();
-int                mapWidth = _level->map().width();
-int                i = 0;
+	std::vector<bool>  continueCheckingDirection = {true, true, true, true};
+	std::vector<int>   searchX = {0, 1, 0, -1, 0, 2, 0, -2};
+	std::vector<int>   searchY = {-1, 0, 1, 0, -2, 0, 2, 0};
+	int                mapHeight = _level->map().height();
+	int                mapWidth = _level->map().width();
+	int                i = 0;
 
-if (VERBOSE)
-    std::cout << "Starting BombOpportunity()..." << std::endl;
-i = 0;
-while (i < 8)
-{
-      if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0
-            && (_myY + searchY[i]) < mapHeight && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].enemy() == true)
-      {
-        if (VERBOSE)
-            std::cout << "  BombOpportunity() END: advise to DROP_BOMB! (enemy nearby)" << std::endl;
-        return (true);
-      }
-    i++;
-}
-if (VERBOSE)
-    std::cout << "  BombOpportunity() END: useless to drom bomb here (nobody around)" << std::endl;
-return (false);
+	if (VERBOSE)
+	    std::cout << "Starting BombOpportunity()..." << std::endl;
+	i = 0;
+	while (i < 8)
+	{
+	      if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0
+	            && (_myY + searchY[i]) < mapHeight && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].enemy() == true
+	            && continueCheckingDirection[i % 4] == true)
+	      {
+	      	if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true
+	      		|| _strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == true)
+	      		continueCheckingDirection[i % 4] = false;
+	        if (VERBOSE)
+	            std::cout << "  BombOpportunity() END: advise to DROP_BOMB! (enemy nearby)" << std::endl;
+	        return (true);
+	      }
+	    i++;
+	}
+	if (VERBOSE)
+	    std::cout << "  BombOpportunity() END: useless to drom bomb here (nobody around)" << std::endl;
+	return (false);
 }
 
 template<IA::Difficulty T>

@@ -83,6 +83,24 @@ void IA::Area::setDirection(Character::Action move)
 	_direction = move;
 }
 
+void IA::Area::setDestructible(bool value)
+{
+	_destructible = value;
+}
+
+void IA::Area::setWall(bool value)
+{
+	_wall = value;
+}
+
+void IA::Area::reset()
+{
+	_direction = Character::WAIT;
+	_bomb = false;
+	_enemy = 0;
+	_explosion = false;
+}
+
 namespace IA
 {
 	template<>
@@ -162,38 +180,67 @@ namespace IA
         int 							destructibleDirections = 0;
 
         if (VERBOSE)
-        	std::cout << "running MOVE(MEDIUM)" << std::endl;
-        while (i < 4)
         {
-            if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight
-                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
-                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == false
-                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
-            {
-                freePath++;
-                if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].history() < currentBestDirectionHistory)
-                {
-                        currentBestDirectionHistory = _strategyMap[_myY + searchY[i]][_myX + searchX[i]].history();
-                        currentBestAction = searchActions[i];
-                }
-            }
-            else if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight
-                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true
-                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
-            {
-            	destructibleDirections++;
-            }
-            i++;
+        	std::cout << "running MOVE(MEDIUM) with lastAction:";
+        	displayAction(_lastAction);
+        	std::cout << std::endl;
         }
-        if (freePath == 1 && destructibleDirections >= 1 && simulateEscape() != Character::WAIT) //pose un bombe si cest une impasse destructible
+        if (_lastAction == Character::WAIT || (_xCentered == true && _yCentered == true))
         {
         	if (VERBOSE)
-        		std::cout << "MOVE(MEDIUM) END: dropping BOMB to extend path to enemy" << std::endl;
-        	return (Character::DROP_BOMB);
-        }
-        if (VERBOSE)
-        	std::cout << "MOVE(MEDIUM) END : found " << freePath << " possible direction(s)" << std::endl;
-        return (currentBestAction);
+        		std::cout << " move: processing..." << std::endl;
+	        while (i < 4)
+	        {
+	            if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].wall() == false
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == false
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false)
+	            {
+	            	if (VERBOSE)
+	                			std::cout << "history :" << _strategyMap[_myY + searchY[i]][_myX + searchX[i]].history() << std::endl; 
+	                freePath++;
+	                if (_strategyMap[_myY + searchY[i]][_myX + searchX[i]].history() < currentBestDirectionHistory)
+	                {
+	                		if (VERBOSE)
+	                			std::cout << "history choosed:" << _strategyMap[_myY + searchY[i]][_myX + searchX[i]].history() << std::endl; 
+	                        currentBestDirectionHistory = _strategyMap[_myY + searchY[i]][_myX + searchX[i]].history();
+	                        currentBestAction = searchActions[i];
+	                }
+	            }
+	            else if ((_myX + searchX[i]) >= 0 && (_myX + searchX[i]) < mapWidth && (_myY + searchY[i]) >= 0 && (_myY + searchY[i]) < mapHeight
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].destructible() == true
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].bomb() == false
+	                    && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].explosion() == false)
+	            {
+	            	destructibleDirections++;
+	            }
+	            i++;
+	        }
+	        if (freePath == 1 && destructibleDirections >= 1 && simulateEscape() == true) //pose un bombe si cest une impasse destructible
+	        {
+	        	if (VERBOSE)
+	        		std::cout << "MOVE(MEDIUM) END: dropping BOMB to extend path to enemy" << std::endl;
+	        	return (Character::DROP_BOMB);
+	        }
+	        if (VERBOSE)
+	        	std::cout << "MOVE(MEDIUM) END : found " << freePath << " possible direction(s)" << std::endl;
+	        if (currentBestAction != Character::WAIT)
+	        {
+	        	_strategyMap[_myY][_myX].incHistory();
+	        	if (VERBOSE)
+	        		std::cout << "MOVE MEDIUM : incHistory(): now" << _strategyMap[_myY][_myX].history() << std::endl;
+	        	_strategyMap[_myY][_myX].incHistory();
+	        }
+	        _lastAction = currentBestAction;
+	        return (currentBestAction);
+    	}
+    	else
+    	{
+    		if (VERBOSE)
+    			std::cout << "MOVE(MEDIUM) : continue w/ last mvt" << std::endl;
+    		return (_lastAction);
+    	}
     }
 }
 
