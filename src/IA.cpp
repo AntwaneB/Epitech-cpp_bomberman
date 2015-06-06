@@ -114,8 +114,8 @@ namespace IA
 		objects = _strategyMap;
 	    _L = luaL_newstate();
 	    luaL_openlibs(_L);
-	    Lua lua;
 
+	    Lua lua;
 	    lua_pushcfunction(_L, lua.luaGetObjects);
 	    lua_setglobal(_L, "getObjects");
 
@@ -132,6 +132,9 @@ namespace IA
 	template<>
 	Character::Action IA<EASY>::Move()
 	{
+		static Character::Action move = Character::WAIT;
+
+		refreshPosition();
 		scanMap();
 		objects = _strategyMap;
 		lua_getglobal(_L, "move");
@@ -139,8 +142,9 @@ namespace IA
 		lua_pushnumber(_L, _level->map().height());
 		lua_pushnumber(_L, _myX);
 		lua_pushnumber(_L, _myY);
-		lua_pcall(_L, 4, 1, 0);
-		Character::Action move =  static_cast<Character::Action>(lua_tonumber(_L, -1));
+		lua_pushnumber(_L, move);
+		lua_pcall(_L, 5, 1, 0);
+		move = static_cast<Character::Action>(lua_tonumber(_L, -1));
 		lua_pop(_L, 1);
 		switch (move)
 		{
@@ -158,6 +162,10 @@ namespace IA
 				break;
 			default :
 				throw ScriptingException("Script invalid return value is not a move");
+		}
+		if (move != Character::WAIT && move != Character::DROP_BOMB && _yCentered && _xCentered)
+		{
+			_strategyMap[_myY][_myX].incHistory();
 		}
 		return move;
 	}
