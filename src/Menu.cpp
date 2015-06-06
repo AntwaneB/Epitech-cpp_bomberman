@@ -262,7 +262,7 @@ Menu::changeLine(Input::Key key)
 
 	size_t count = 0;
 
-	Config::Param* active;
+	Config::Param* active = NULL;
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
 		if (it->second["selected"] == true)
@@ -270,6 +270,8 @@ Menu::changeLine(Input::Key key)
 		if (it->second["selectable"] == true)
 			count++;
 	}
+	if (!active)
+		return;
 
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
