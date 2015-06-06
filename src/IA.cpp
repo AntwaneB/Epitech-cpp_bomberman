@@ -2,13 +2,13 @@
 
 std::vector<std::vector<IA::Area> > objects;
 
-IA::Area::Area(bool destructible, bool solid)
+IA::Area::Area(bool destructible, bool solid, int history)
 {
 	_destructible = destructible;
 	_wall = solid;
 	_direction = Character::WAIT;
 	_enemy = 0;
-	_history = 0;
+	_history = history;
 	_explosion = false;
 	_bomb = false;
 }
@@ -92,12 +92,13 @@ namespace IA
 		_self = character;
 		_xCentered = false;
 		_yCentered = false;
+		createMap();
 		scanMap();
 		objects = _strategyMap;
 	    _L = luaL_newstate();
 	    luaL_openlibs(_L);
-	    Lua lua;
 
+	    Lua lua;
 	    lua_pushcfunction(_L, lua.luaGetObjects);
 	    lua_setglobal(_L, "getObjects");
 
@@ -114,6 +115,8 @@ namespace IA
 	template<>
 	Character::Action IA<EASY>::Move()
 	{
+		static Character::Action move = Character::WAIT;
+
 		scanMap();
 		objects = _strategyMap;
 		lua_getglobal(_L, "move");
@@ -121,8 +124,9 @@ namespace IA
 		lua_pushnumber(_L, _level->map().height());
 		lua_pushnumber(_L, _myX);
 		lua_pushnumber(_L, _myY);
-		lua_pcall(_L, 4, 1, 0);
-		Character::Action move =  static_cast<Character::Action>(lua_tonumber(_L, -1));
+		lua_pushnumber(_L, move);
+		lua_pcall(_L, 5, 1, 0);
+		move = static_cast<Character::Action>(lua_tonumber(_L, -1));
 		lua_pop(_L, 1);
 		switch (move)
 		{

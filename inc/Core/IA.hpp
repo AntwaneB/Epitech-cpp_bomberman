@@ -27,7 +27,7 @@ namespace IA
 	class Area
 	{
 	public:
-		 Area(bool, bool);
+		 Area(bool, bool, int);
 		 Area();
 		 ~Area();
 
@@ -69,6 +69,7 @@ namespace IA
 			bool	scanMapForEnemy(Character::Action & action);
          	bool    scanMapForEnemyThroughDestructible(Character::Action &);
          	bool	isAroundSafe() const;
+         	void	createMap();
 			void	scanMap();
 			void 	refreshPosition();
 			bool	BombOpportunity();
@@ -107,6 +108,7 @@ IA::IA<T>::IA(Level const* level, Character* character):
 	_self = character;
 	_xCentered = false;
 	_yCentered = false;
+	createMap();
 	scanMap();
 	if (VERBOSE)
 	{
@@ -256,31 +258,72 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
 }
 
 template<IA::Difficulty T>
+void IA::IA<T>::createMap()
+{
+	unsigned int y = 0;
+	unsigned int x = 0;
+	std::vector<std::vector<Block*> > map = _level->map().map();
+	int 			height = _level->map().height();
+	int 			width = _level->map().width();
+
+	(void) y;
+	(void) x;
+	(void) map;
+
+	_strategyMap.resize(height);
+	while (y < height)
+	{
+		_strategyMap[y].resize(width);
+		x = 0;
+		while (x < width)
+		{
+			_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid(), 0);
+			x++;
+		}
+		y++;
+	}
+}
+
+template<IA::Difficulty T>
 void IA::IA<T>::scanMap()
 {
 	std::vector<std::vector<Block*> > map = _level->map().map();
 	std::vector<int> searchX = {0, 1, 0, -1};
 	std::vector<int> searchY = {1, 0, -1, 0};
+	std::vector<std::vector<int> > history_backup;
 	unsigned int 	y = 0;
 	unsigned int 	x = 0;
 	int 			iRange = 1;
 	int 			iSearch = 0;
+	int 			height = _level->map().height();
+	int 			width = _level->map().width();
 
-	if (VERBOSE)
+	history_backup.resize(height);
+	while (y < height)
 	{
-		std::cout << "Starting scanMap()..." << std::endl;
-	}
-	_strategyMap.resize(_level->map().height());
-	while (y < _level->map().height())
-	{
-		_strategyMap[y].resize(_level->map().width());
+		history_backup[y].resize(width);
 		x = 0;
-		while (x < _level->map().width())
+		while (x < width)
 		{
-			_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid());
+			history_backup[y][x] = _strategyMap[y][x].history();
 			x++;
 		}
 		y++;
+	}
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < height)
+		{
+			_strategyMap[y][x] = Area(map[y][x]->destructible(), map[y][x]->solid(), history_backup[y][x]);
+			x++;
+		}
+		y++;
+	}
+	if (VERBOSE)
+	{
+		std::cout << "Starting scanMap()..." << std::endl;
 	}
 	y = 0;
 	std::map<Position<>, std::list<Character*> > players = _level->characters();
@@ -367,7 +410,9 @@ void IA::IA<T>::playTurn()
 	action = checkAlignment(action);
 	if (action != Character::WAIT && action != Character::DROP_BOMB && _yCentered && _xCentered)
 	{
+		std::cout << "C++" << std::endl;
 		_strategyMap[_myY][_myX].incHistory();
+		std::cout << "Incrementing " << _myX << "/" << _myY << "Now history is " << _strategyMap[_myY][_myX].history() << std::endl;
 	}
 	_self->pushAction(action);
     if (VERBOSE)
@@ -379,12 +424,6 @@ void IA::IA<T>::playTurn()
         std::cout << std::endl << std::endl;
     }
     _searchNodes.clear();
-
-	/*
-	for (auto yt = _strategyMap.begin(); yt != _strategyMap.end(); ++yt)
-		(*yt).clear();
-	_strategyMap.clear();
-	*/
 }
 
 template<IA::Difficulty T>
