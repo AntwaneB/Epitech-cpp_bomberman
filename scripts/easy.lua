@@ -41,7 +41,7 @@ function move(width, height, x, y, last_move)
 	local action = 1
 	if movement > 0 then
 		movement = movement - 1
-		print (string.format("Continue to move on : %s", move[mmove + 1]))
+		-- print (string.format("Continue to move on : %s", move[mmove + 1]))
 		return mmove
 	else
 		local i = 1
