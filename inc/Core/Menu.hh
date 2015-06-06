@@ -29,6 +29,7 @@ private:
 private:
 	void		init();
 	void		buildFilesCollection(Config::Param&);
+	void		buildFromLevelValue(Config::Param&);
 
 	void		changeLine(Input::Key);
 	void		changeValue(Input::Key);
@@ -39,6 +40,7 @@ private:
 	void		actionRunLevel(std::string const &);
 	void		actionLoadLevel(std::string const &);
 	void		actionExit(std::string const &);
+	void		actionSaveScore(std::string const &);
 
 private:
 	Config			_layout;

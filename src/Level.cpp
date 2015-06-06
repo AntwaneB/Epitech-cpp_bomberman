@@ -5,12 +5,14 @@
  * Created on May 4, 2015, 2:34 PM
  */
 
+#include <cmath>
 #include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
 #include "Core/Level.hh"
 #include "Core/Input.hh"
 #include "Core/RangeIncreaser.hh"
+#include "Core/Save.hh"
 #include "Core/Menu.hh"
 #include "Core/Monster.hh"
 
@@ -42,7 +44,26 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	{
 		_map.pushCharacter(this->pushCharacter());
 	}
+
+	this->pushMonster();
 }
+/*
+Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
+{
+	_characters;
+	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
+		_players.push_back(new Character(it->second));
+	_bombs;
+	_items;
+	_explosions;
+	_charactersCount = cfg["charactersCount"];
+	_playersCount = cfg["playersCount"];
+	_secondsElapsed = cfg["secondsElapsed"];
+	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
+		_scores.push_back(new Character(it->second));
+	_charactersKills = cfg["charactersKills"];
+	_difficulty;
+}*/
 
 Level::~Level()
 {
@@ -131,6 +152,12 @@ Level::explosions() const
 	return (_explosions);
 }
 
+const Character*
+Level::winner() const
+{
+	return (_winner);
+}
+
 void
 Level::run()
 {
@@ -153,6 +180,13 @@ Level::end()
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
 	std::cout << std::endl;
+
+	_winner = NULL;
+	for (auto it = _scores.begin(); it != _scores.end(); ++it)
+	{
+		if ((*it)->alive() && (_winner == NULL || (*it)->score() > _winner->score()))
+			_winner = *it;
+	}
 
 	this->notify(this, LEVEL_ENDED);
 }
@@ -181,6 +215,12 @@ Level::tick(Subject* entity)
 			for (auto it = _scores.begin(); it != _scores.end(); ++it)
 				if ((*it)->alive())
 					(*it)->changeScore(g_settings["scores"]["second_elapsed"]);
+
+			// Spawning monster
+			if (rand() % 1000 < static_cast<int>(g_settings["entities"]["monster"]["spawn_chance"]))
+			{
+				this->pushMonster();
+			}
 		}
 
 		if (this->charactersRaw().size() <= 1
@@ -263,6 +303,22 @@ Level::pushCharacter()
 	this->addObserver(character);
 
 	return (character);
+}
+
+Monster*
+Level::pushMonster()
+{
+	int x = rand() % (_map.width() - 2) + 2;
+	int y = rand() % (_map.height() - 2) + 2;
+	Monster* monster = new Monster(this, Position<>(x, y));
+
+	_monsters[monster->position()].push_back(monster);
+
+	_clock.addObserver(monster);
+	this->addObserver(monster);
+	monster->addObserver(this);
+
+	return (monster);
 }
 
 void
@@ -458,6 +514,7 @@ Level::blockDestroyed(Subject* entity)
 void
 Level::keyPressed(Subject* entity)
 {
+	static seconds_t previousSave = -1;
 	Input* input = safe_cast<Input*>(entity);
 
 	if (input->key() > Input::KEYS_P1_START && input->key() < Input::KEYS_P1_END && _players.size() >= 1)
@@ -479,6 +536,14 @@ Level::keyPressed(Subject* entity)
 		if (input->key() == Input::PAUSE)
 		{
 			_clock.togglePause();
+		}
+		else if (input->key() == Input::SAVE && _clock.seconds() - previousSave >= 5)
+		{
+			previousSave = _clock.seconds();
+			std::cout << "Saving level to file..." << std::endl;
+
+			Save	save(this, "./save.xml");
+			save.save();
 		}
 	}
 }

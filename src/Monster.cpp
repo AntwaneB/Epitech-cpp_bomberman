@@ -120,7 +120,7 @@ Monster::bombExploded(Subject* entity)
 {
 	Bomb* bomb = safe_cast<Bomb*>(entity);
 
-	if (bomb->hasHit(_position))
+	if (bomb->hasHit(_position.asInt()))
 	{ // The character got hit by the bomb
 		_alive = false;
 		_killedBy = bomb;
@@ -147,7 +147,7 @@ Monster::move(Character::Action action, const Clock & clock)
 {
 	Position<double> newPos = _position;
 
-	double step = 0.001 * static_cast<int>(_attributes["speed"]);
+	double step = 0.001 * static_cast<int>(_attributes["speed"]) + 0.01;
 
 	double duration = 0.0 / 1000.0;
 
@@ -170,7 +170,10 @@ Monster::move(Character::Action action, const Clock & clock)
 	}
 
 	if (newPos.outOfBounds(_level->map().width() - 1, _level->map().height() - 1) || newPos.x() < 1 || newPos.y() < 1)
-		return;
+	{
+		while (!_queuedActions.empty())
+			_queuedActions.pop();
+	}
 	else
 	{
 		_prevPosition = _position;

@@ -14,6 +14,7 @@
 	</maps>
 
 	<sounds>
+		<enabled>false</enabled>
 		<bomb_exploded>./assets/sounds/explosion.wav</bomb_exploded>
 		<level_started>./assets/sounds/plants_vs_zombies.wav</level_started>
 		<menu_started>./assets/sounds/acdc_tnt.ogg</menu_started>
@@ -53,6 +54,7 @@
 			<param name="can_move">true</param>
 			<param name="destructible">true</param>
 			<param name="collision">false</param>
+			<param name="spawn_chance">15</param>
 		</entity>
 
 		<entity name="bomb">

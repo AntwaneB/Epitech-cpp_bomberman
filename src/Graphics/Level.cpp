@@ -49,7 +49,8 @@ Graphics::Level::initialize()
 	if (_models[_size]->load("./assets/models/bomb/a_bomb.fbx") == false
 		|| _models[_size + 1]->load("./assets/models/bonus/ball_01.fbx") == false
 		|| _models[_size + 2]->load("./assets/models/bonus/ball_02.fbx") == false
-		|| _models[_size + 3]->load("./assets/models/bonus/ball_03.fbx") == false)
+		|| _models[_size + 3]->load("./assets/models/bonus/ball_03.fbx") == false
+		|| _models[_size + 4]->load("./assets/models/dragon/dragon.fbx") == false)
 	{
 		std::cout << "Cannot load model" << std::endl;
 		return (false);
@@ -81,6 +82,7 @@ Graphics::Level::update()
 		keys[SDLK_d] = ::Input::P2_RIGHT;
 		keys[SDLK_SPACE] = ::Input::P2_SPACE;
 
+		keys[SDLK_BACKSPACE] = ::Input::SAVE;
 		keys[SDLK_p] = ::Input::PAUSE;
 
 		for (auto key = keys.begin(); key != keys.end(); ++key)
@@ -111,6 +113,7 @@ Graphics::Level::updateInput()
 	{
 		std::map<int, Input::Key> keys;
 		keys[SDLK_p] = ::Input::PAUSE;
+		keys[SDLK_BACKSPACE] = ::Input::SAVE;
 
 		for (auto key = keys.begin(); key != keys.end(); ++key)
 		{

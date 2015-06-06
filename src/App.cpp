@@ -14,6 +14,7 @@
 #include "Core/App.hh"
 #include "Core/Level.hh"
 #include "Core/Config.hh"
+#include "Core/Save.hh"
 #include "Graphics/Display.hh"
 #include "Graphics/Map.hh"
 
@@ -71,7 +72,7 @@ App::endLevel(Subject* entity)
 {
 	Level* level = safe_cast<Level*>(entity);
 
-	Menu* menu = new Menu("./menus/end_level.xml", level);
+	Menu* menu = new Menu(level->winner()->isPlayer() ? "./menus/player_win.xml" : "./menus/player_loose.xml", level);
 	menu->addObserver(this);
 	menu->addObserver(_display);
 

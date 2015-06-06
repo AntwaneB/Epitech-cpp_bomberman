@@ -14,8 +14,8 @@
 #include "Core/IA.hpp"
 #include "Core/Input.hh"
 
-Character::Character(const Level * level, size_t nth, bool isPlayer, IA::Difficulty difficulty, size_t x, size_t y, size_t z)
-	: _level(level), _nth(nth), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
+Character::Character(const Level * level, size_t id, bool isPlayer, IA::Difficulty difficulty, size_t x, size_t y, size_t z)
+	: _level(level), _id(id), _isPlayer(isPlayer), _position(x + 0.5, y + 0.5, z), _solid(true), _alive(true),
 	  _killedBy(NULL), _iaHard(NULL), _iaMedium(NULL), _iaEasy(NULL), _previousBomb(-1), _elapsedTime(-1),
 	  _elapsedCentiseconds(-1), _prevMovement(-1), _moving(false), _direction(MOVE_DOWN), _score(0)
 {

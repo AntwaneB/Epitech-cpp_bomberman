@@ -33,7 +33,8 @@ public:
 	enum Action { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, end_move, DROP_BOMB, WAIT };
 
 public:
-	Character(const Level * level, size_t nth, bool isPlayer, IA::Difficulty, size_t x, size_t y, size_t z = 0);
+	Character(const Level * level, size_t id, bool isPlayer, IA::Difficulty, size_t x, size_t y, size_t z = 0);
+	Character(Config::Param);
 	virtual ~Character();
 
 	Position<double>	position() const;
@@ -60,7 +61,7 @@ private:
 
 private:
 	const Level*			_level;
-	size_t					_nth;
+	size_t					_id;
 	bool						_isPlayer;
 	Position<double>		_position;
 	Position<double>		_prevPosition;

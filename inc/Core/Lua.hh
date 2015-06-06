@@ -20,14 +20,14 @@ public:
 	Lua();
 	~Lua();
 
-	static int luaGetObjects(lua_State *L);
-	static int luaGetExplosion(lua_State *L);
-	static int luaGetBomb(lua_State *L);
-	static int luaGetEnemy(lua_State *L);
-	static int luaGetHistory(lua_State *L);
-	static int luaGetWall(lua_State *L);
-	static int luaGetDestructible(lua_State *L);
-	void registerObject(lua_State *L);
+	static int luaGetObjects(lua_State *);
+	static int luaGetExplosion(lua_State *);
+	static int luaGetBomb(lua_State *);
+	static int luaGetEnemy(lua_State *);
+	static int luaGetHistory(lua_State *);
+	static int luaGetWall(lua_State *);
+	static int luaGetDestructible(lua_State *);
+	void registerObject(lua_State *);
 
 	/* data */
 };

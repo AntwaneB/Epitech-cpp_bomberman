@@ -19,6 +19,7 @@ class Monster;
 #include "Core/Item.hh"
 #include "Core/BonusItem.hh"
 #include "Core/Bomb.hh"
+#include "Core/Config.hh"
 
 class Level : public EventHandler<Level>, public Subject
 {
@@ -26,6 +27,7 @@ class Level : public EventHandler<Level>, public Subject
 
 public:
 	Level(size_t width, size_t height, size_t charactersCount, size_t playersCount, IA::Difficulty);
+//	Level(Config);
 	virtual ~Level();
 
 	void				run();
@@ -33,7 +35,6 @@ public:
 
 	Map const &		map() const;
 	size_t			charactersCount() const;
-
 	std::map<Position<>, std::list<Character*> > const &
 	characters() const;
 	std::map<Position<>, std::list<Bomb*> > const &
@@ -48,6 +49,7 @@ public:
 	std::vector<BonusItem*>	const	itemsRaw() const;
 	std::vector<Monster*>	const	monstersRaw() const;
 	std::list<Bomb::Explosion>		explosions() const;
+	const Character*					winner() const;
 
 private:
 	Character*	pushCharacter();
@@ -70,14 +72,14 @@ private:
 	void	tick(Subject* entity);
 	void	pauseTick(Subject* entity);
 
-	private:
+private:
 	Map														_map;
 	std::map<Position<>, std::list<Character*> >	_characters;
+	std::map<Position<>, std::list<Monster*> >	_monsters;
 	std::list<Character*>								_players;
 	std::map<Position<>, std::list<Bomb*> >		_bombs;
 	std::map<Position<>, std::list<BonusItem*> >	_items;
 	std::list<Bomb::Explosion>							_explosions;
-	std::map<Position<>, std::list<Monster*> >	_monsters;
 
 	size_t													_charactersCount;
 	size_t													_playersCount;
@@ -88,6 +90,8 @@ private:
 	size_t													_charactersKills;
 
 	IA::Difficulty											_difficulty;
+
+	Character*												_winner;
 };
 
 #endif	/* LEVEL_HPP */

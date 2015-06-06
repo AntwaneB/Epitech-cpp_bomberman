@@ -440,7 +440,10 @@ bool Config::Param::operator > (float o) { return (static_cast<float>(*this) > o
 
 bool	Config::Param::isEmpty(void) const
 {
-	return (begin() == end());
+	if (_status == MAP && _map.size())
+		return (begin() == end());
+	else
+		return (true);
 }
 
 bool	Config::Param::hasChild(void) const
@@ -542,9 +545,15 @@ void	Config::exportFile(std::string const & filename) const
 {
 	pugi::xml_document	file;
 
+	std::cout << "Save" << std::endl;
+	std::cout << _params.toXML().c_str() << std::endl;
+	std::cout << "File" << std::endl;
+	std::cout << filename << std::endl;
+
 	file.load_string(_params.toXML().c_str());
 	file.save_file(filename.c_str());
 }
+
 /*
 int	main()
 {

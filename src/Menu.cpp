@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <dirent.h>
 #include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
@@ -19,6 +20,7 @@ Menu::Menu(const std::string & filename, const Level * level)
 	_menuActions["NEW_MENU"] = &Menu::actionNewMenu;
 	_menuActions["RUN_LEVEL"] = &Menu::actionRunLevel;
 	_menuActions["LOAD_LEVEL"] = &Menu::actionLoadLevel;
+	_menuActions["SAVE_SCORE"] = &Menu::actionSaveScore;
 	_menuActions["EXIT"] = &Menu::actionExit;
 
 	_layout.importFile(_filename);
@@ -62,6 +64,12 @@ Menu::init()
 
 			if (collection["collection"]["type"] == "files")
 				this->buildFilesCollection(collection);
+		}
+		else if (it->second["type"] == "value_only" && it->second["value"]["type"] == "FROM_LEVEL")
+		{
+			Config::Param& value = it->second["value"];
+
+			this->buildFromLevelValue(value);
 		}
 	}
 }
@@ -115,6 +123,16 @@ Menu::buildFilesCollection(Config::Param& collection)
 		closedir(dir);
 	}
 	collection["selected"] = false;
+}
+
+void
+Menu::buildFromLevelValue(Config::Param& value)
+{
+	std::string valueStr;
+
+
+
+	value["value"] = valueStr;
 }
 
 void
@@ -276,6 +294,25 @@ Menu::actionRunLevel(const std::string& param __attribute__((unused)))
 
 	this->notify(this, MENU_EXITED);
 	this->notify(new Level(width, height, iaCount + playerCount, playerCount, static_cast<IA::Difficulty>(difficulty)), LEVEL_GENERATED);
+}
+
+void
+Menu::actionSaveScore(const std::string& param __attribute__((unused)))
+{
+	if (_level == NULL)
+		throw ConfigException("Invalid menu");
+
+	std::string namePlayer;
+	namePlayer += static_cast<char>(_layout["content"]["letter_1"]["value"]["value"]);
+	namePlayer += static_cast<char>(_layout["content"]["letter_2"]["value"]["value"]);
+	namePlayer += static_cast<char>(_layout["content"]["letter_3"]["value"]["value"]);
+
+	std::ofstream	file;
+	file.open("score.txt", std::ios::app);
+	file << namePlayer << " " << _level->winner()->score() << "\n";
+	file.close();
+
+	//std::cout << namePlayer << " won with " << _level->winner()->score() << " points !" << std::endl;
 }
 
 void

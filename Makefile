@@ -35,6 +35,8 @@ SRCS		  =  main.cpp \
 		     RangeIncreaser.cpp \
 		     SpeedIncreaser.cpp \
 		     BombAmountIncreaser.cpp \
+		     Save.cpp \
+		     Load.cpp \
 		     Lua.cpp \
 		     \
 		     Graphics/Display.cpp \
@@ -51,6 +53,7 @@ SRCS		  =  main.cpp \
 		     Graphics/Skybox.cpp \
 		     Graphics/Explosion.cpp \
 		     Graphics/Audio.cpp \
+		     Graphics/Monster.cpp \
 		     \
 		     misc/pugixml.cpp
 
@@ -79,6 +82,8 @@ INCS		  =  global.hh \
 		     Core/Block.hh \
 		     Core/BonusItem.hh \
 		     Core/Input.hh \
+		     Core/Save.hh \
+		     Core/Load.hh \
 		     Core/Lua.hh \
 		     \
 		     Graphics/Display.hh \
@@ -95,6 +100,7 @@ INCS		  =  global.hh \
 		     Graphics/Skybox.hh \
 		     Graphics/Explosion.hh \
 		     Graphics/Audio.hh \
+		     Graphics/Monster.hh \
 		     \
 		     misc/StdHelper.hpp \
 		     misc/pugiconfig.hpp \
