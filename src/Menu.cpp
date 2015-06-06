@@ -64,6 +64,8 @@ Menu::init()
 
 			if (collection["collection"]["type"] == "files")
 				this->buildFilesCollection(collection);
+			else if (collection["collection"]["type"] == "file_content")
+				this->buildFileContentCollection(collection);
 		}
 		else if (it->second["type"] == "value_only" && it->second["value"]["type"] == "FROM_LEVEL")
 		{
@@ -122,6 +124,51 @@ Menu::buildFilesCollection(Config::Param& collection)
 		}
 		closedir(dir);
 	}
+	collection["selected"] = false;
+}
+
+void
+Menu::buildFileContentCollection(Config::Param& collection)
+{
+	std::ifstream file;
+
+	file.open(collection["collection"]["file"]);
+	if (!file.is_open())
+		throw ConfigException("Couldn't open file, cannot build menu content.");
+
+	int y = collection["position"]["min_y"];
+	int x = collection["position"]["min_x"];
+	int i = 0;
+
+	std::string col1; std::string col2;
+	while (file >> col1 >> col2)
+	{
+		Config::Param element;
+		element["type"] = "value_only";
+		element["order"] = i + 1;
+		element["selectable"] = true;
+		element["selected"] = collection["selected"] == true && i == 0 ? true : false;
+		element["has_value"] = true;
+		element["value"]["value"] = col1 + " " + col2;
+		element["value"]["size"] = collection["collection"]["font_size"];
+		element["value"]["y"] = y;
+		element["value"]["x"] = x;
+		element["cursor"]["position"]["x"] = static_cast<int>(element["value"]["x"]) - 35;
+		element["cursor"]["position"]["y"] = static_cast<int>(element["value"]["y"]) + 35;
+
+		std::string key = collection["id"];
+		key += std::to_string(++i);
+		_layout["content"].insert(std::map<std::string, Config::Param>::value_type(key, element));
+
+		y = y + static_cast<int>(collection["collection"]["font_size"]);
+		if (y >= static_cast<int>(collection["position"]["max_y"]))
+		{
+			x = static_cast<int>(collection["position"]["min_x"])
+				+ (static_cast<int>(collection["position"]["max_x"]) - static_cast<int>(collection["position"]["min_x"])) / static_cast<int>(collection["cols"]);
+			y = collection["position"]["min_y"];
+		}
+	}
+
 	collection["selected"] = false;
 }
 
@@ -217,7 +264,9 @@ Menu::changeValue(Input::Key key)
 			active = &(it->second);
 	}
 
-	if (active && (*active)["has_value"] == true)
+	if (active && (*active)["has_value"] == true
+		&& (static_cast<std::string>((*active)["value"]["min"]).empty() == false
+			|| static_cast<std::string>((*active)["value"]["max"]).empty() == false))
 	{
 		if ((*active)["value"]["type"] == "ASCII")
 		{
@@ -245,14 +294,14 @@ Menu::changeValue(Input::Key key)
 void
 Menu::runLine(Input::Key key __attribute__((unused)))
 {
-	Config::Param* active;
+	Config::Param* active = NULL;
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
 		if (it->second["selected"] == true)
 			active = &(it->second);
 	}
 
-	if (_menuActions.find((*active)["action"]["name"]) != _menuActions.end())
+	if (active && _menuActions.find((*active)["action"]["name"]) != _menuActions.end())
 		(this->*(_menuActions[(*active)["action"]["name"]]))((*active)["action"]["param"]);
 }
 
@@ -307,12 +356,15 @@ Menu::actionSaveScore(const std::string& param __attribute__((unused)))
 	namePlayer += static_cast<char>(_layout["content"]["letter_2"]["value"]["value"]);
 	namePlayer += static_cast<char>(_layout["content"]["letter_3"]["value"]["value"]);
 
-	std::ofstream	file;
-	file.open("score.txt", std::ios::app);
-	file << namePlayer << " " << _level->winner()->score() << "\n";
-	file.close();
-
-	//std::cout << namePlayer << " won with " << _level->winner()->score() << " points !" << std::endl;
+	std::ofstream file;
+	file.open("config/scores", std::ios::app);
+	if (file.is_open())
+	{
+		file << namePlayer << " " << _level->winner()->score() << "\n";
+		file.close();
+	}
+	else
+		std::cerr << "Error while saving score :(" << std::endl;
 }
 
 void

@@ -29,6 +29,7 @@ private:
 private:
 	void		init();
 	void		buildFilesCollection(Config::Param&);
+	void		buildFileContentCollection(Config::Param&);
 	void		buildFromLevelValue(Config::Param&);
 
 	void		changeLine(Input::Key);
