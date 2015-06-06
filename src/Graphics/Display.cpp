@@ -52,8 +52,11 @@ Graphics::Display::runMenu(Subject* entity)
 		_menu->addObserver(this);
 	}
 
-	_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
-	_audioManager.playMusic(g_settings["sounds"]["menu_started"], true);
+	if (g_settings["sounds"]["enabled"] == true)
+	{
+		_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
+		_audioManager.playMusic(g_settings["sounds"]["menu_started"], true);
+	}
 
 	_menu->addObserver(menu);
 	_menu->init(menu);
@@ -96,8 +99,11 @@ Graphics::Display::runLevel(Subject* entity)
 		_level = NULL;
 	}
 
-	_audioManager.stopMusic(g_settings["sounds"]["menu_started"]);
-	_audioManager.playMusic(g_settings["sounds"]["level_started"], true);
+	if (g_settings["sounds"]["enabled"] == true)
+	{
+		_audioManager.stopMusic(g_settings["sounds"]["menu_started"]);
+		_audioManager.playMusic(g_settings["sounds"]["level_started"], true);
+	}
 
 	::Level*	level = safe_cast<::Level*>(entity);
 
@@ -115,7 +121,8 @@ Graphics::Display::endLevel(Subject* entity __attribute__((unused)))
 		_level = NULL;
 	}
 
-	_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
+	if (g_settings["sounds"]["enabled"] == true)
+		_audioManager.stopMusic(g_settings["sounds"]["level_started"]);
 }
 
 void
@@ -134,5 +141,6 @@ Graphics::Display::updateLevelPaused(Subject* entity __attribute__((unused)))
 void
 Graphics::Display::bombExploded(Subject* entity __attribute__((unused)))
 {
-	_audioManager.playSound(g_settings["sounds"]["bomb_exploded"]);
+	if (g_settings["sounds"]["enabled"] == true)
+		_audioManager.playSound(g_settings["sounds"]["bomb_exploded"]);
 }
