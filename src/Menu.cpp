@@ -294,14 +294,14 @@ Menu::changeValue(Input::Key key)
 void
 Menu::runLine(Input::Key key __attribute__((unused)))
 {
-	Config::Param* active;
+	Config::Param* active = NULL;
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
 		if (it->second["selected"] == true)
 			active = &(it->second);
 	}
 
-	if (_menuActions.find((*active)["action"]["name"]) != _menuActions.end())
+	if (active && _menuActions.find((*active)["action"]["name"]) != _menuActions.end())
 		(this->*(_menuActions[(*active)["action"]["name"]]))((*active)["action"]["param"]);
 }
 

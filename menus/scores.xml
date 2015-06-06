@@ -40,17 +40,17 @@
 			<asset>
 				<texture>
 					<start_x>1099</start_x>
-					<start_y>857</start_y>
-					<width>705</width>
+					<start_y>738</start_y>
+					<width>505</width>
 					<height>87</height>
 				</texture>
 				<position>
-					<x>338</x>
-					<y>10</y>
+					<x>350</x>
+					<y>20</y>
 				</position>
 				<scale>
-					<x>0.5f</x>
-					<y>0.5f</y>
+					<x>0.6f</x>
+					<y>0.6f</y>
 				</scale>
 			</asset>
 			<has_value>false</has_value>
