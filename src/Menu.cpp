@@ -140,32 +140,76 @@ Menu::buildFileContentCollection(Config::Param& collection)
 	int x = collection["position"]["min_x"];
 	int i = 0;
 
-	std::string col1; std::string col2;
-	while (file >> col1 >> col2)
+	if (collection["collection"]["sorted"] != true)
 	{
-		Config::Param element;
-		element["type"] = "value_only";
-		element["order"] = i + 1;
-		element["selectable"] = true;
-		element["selected"] = collection["selected"] == true && i == 0 ? true : false;
-		element["has_value"] = true;
-		element["value"]["value"] = col1 + " " + col2;
-		element["value"]["size"] = collection["collection"]["font_size"];
-		element["value"]["y"] = y;
-		element["value"]["x"] = x;
-		element["cursor"]["position"]["x"] = static_cast<int>(element["value"]["x"]) - 35;
-		element["cursor"]["position"]["y"] = static_cast<int>(element["value"]["y"]) + 35;
-
-		std::string key = collection["id"];
-		key += std::to_string(++i);
-		_layout["content"].insert(std::map<std::string, Config::Param>::value_type(key, element));
-
-		y = y + static_cast<int>(collection["collection"]["font_size"]);
-		if (y >= static_cast<int>(collection["position"]["max_y"]))
+		std::string col1; std::string col2;
+		while (file >> col1 >> col2)
 		{
-			x = static_cast<int>(collection["position"]["min_x"])
-				+ (static_cast<int>(collection["position"]["max_x"]) - static_cast<int>(collection["position"]["min_x"])) / static_cast<int>(collection["cols"]);
-			y = collection["position"]["min_y"];
+			Config::Param element;
+			element["type"] = "value_only";
+			element["order"] = i + 1;
+			element["selectable"] = true;
+			element["selected"] = collection["selected"] == true && i == 0 ? true : false;
+			element["has_value"] = true;
+			element["value"]["value"] = col1 + " " + col2;
+			element["value"]["size"] = collection["collection"]["font_size"];
+			element["value"]["y"] = y;
+			element["value"]["x"] = x;
+			element["cursor"]["position"]["x"] = static_cast<int>(element["value"]["x"]) - 35;
+			element["cursor"]["position"]["y"] = static_cast<int>(element["value"]["y"]) + 35;
+
+			std::string key = collection["id"];
+			key += std::to_string(++i);
+			_layout["content"].insert(std::map<std::string, Config::Param>::value_type(key, element));
+
+			y = y + static_cast<int>(collection["collection"]["font_size"]);
+			if (y >= static_cast<int>(collection["position"]["max_y"]))
+			{
+				x = static_cast<int>(collection["position"]["min_x"])
+					+ (static_cast<int>(collection["position"]["max_x"]) - static_cast<int>(collection["position"]["min_x"])) / static_cast<int>(collection["cols"]);
+				y = collection["position"]["min_y"];
+			}
+		}
+	}
+	else
+	{
+		std::vector<std::pair<int, std::string> > values;
+
+		std::string value; int key;
+		while (file >> value >> key)
+			values.push_back(std::make_pair(key, value));
+		std::sort(values.begin(), values.end(), [](const std::pair<int, std::string>& p1, const std::pair<int, std::string>& p2) -> bool {
+			return (p1.first > p2.first);
+		});
+
+		int limit = 0;
+		for (auto it = values.begin(); limit < static_cast<int>(collection["collection"]["limit"]) && it != values.end(); ++it)
+		{
+			Config::Param element;
+			element["type"] = "value_only";
+			element["order"] = i + 1;
+			element["selectable"] = true;
+			element["selected"] = collection["selected"] == true && i == 0 ? true : false;
+			element["has_value"] = true;
+			element["value"]["value"] = it->second + " " + std::to_string(it->first);
+			element["value"]["size"] = collection["collection"]["font_size"];
+			element["value"]["y"] = y;
+			element["value"]["x"] = x;
+			element["cursor"]["position"]["x"] = static_cast<int>(element["value"]["x"]) - 35;
+			element["cursor"]["position"]["y"] = static_cast<int>(element["value"]["y"]) + 35;
+
+			std::string key = collection["id"];
+			key += std::to_string(++i);
+			_layout["content"].insert(std::map<std::string, Config::Param>::value_type(key, element));
+
+			y = y + static_cast<int>(collection["collection"]["font_size"]);
+			if (y >= static_cast<int>(collection["position"]["max_y"]))
+			{
+				x = static_cast<int>(collection["position"]["min_x"])
+					+ (static_cast<int>(collection["position"]["max_x"]) - static_cast<int>(collection["position"]["min_x"])) / static_cast<int>(collection["cols"]);
+				y = collection["position"]["min_y"];
+			}
+			limit++;
 		}
 	}
 
@@ -365,6 +409,9 @@ Menu::actionSaveScore(const std::string& param __attribute__((unused)))
 	}
 	else
 		std::cerr << "Error while saving score :(" << std::endl;
+
+	this->notify(this, MENU_EXITED);
+	this->notify(new Menu("./menus/scores.xml"), MENU_STARTED);
 }
 
 void
