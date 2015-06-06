@@ -143,7 +143,7 @@ Menu::buildFileContentCollection(Config::Param& collection)
 	if (collection["collection"]["sorted"] != true)
 	{
 		std::string col1; std::string col2;
-		while (file >> col1 >> col2)
+		while (i < static_cast<int>(collection["collection"]["limit"]) && file >> col1 >> col2)
 		{
 			Config::Param element;
 			element["type"] = "value_only";
@@ -182,8 +182,7 @@ Menu::buildFileContentCollection(Config::Param& collection)
 			return (p1.first > p2.first);
 		});
 
-		int limit = 0;
-		for (auto it = values.begin(); limit < static_cast<int>(collection["collection"]["limit"]) && it != values.end(); ++it)
+		for (auto it = values.begin(); i < static_cast<int>(collection["collection"]["limit"]) && it != values.end(); ++it)
 		{
 			Config::Param element;
 			element["type"] = "value_only";
@@ -209,7 +208,6 @@ Menu::buildFileContentCollection(Config::Param& collection)
 					+ (static_cast<int>(collection["position"]["max_x"]) - static_cast<int>(collection["position"]["min_x"])) / static_cast<int>(collection["cols"]);
 				y = collection["position"]["min_y"];
 			}
-			limit++;
 		}
 	}
 
