@@ -21,7 +21,7 @@ Clock::Clock(Config::Param cfg)
 {
 	_run = cfg["run"];
 	_paused = cfg["paused"];
-	_seconds = cfg["seconds"];
+	_seconds = static_cast<double>(cfg["seconds"]);
 	std::cout << "Clock OK" << std::endl;
 }
 
