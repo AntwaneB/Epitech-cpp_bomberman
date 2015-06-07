@@ -48,7 +48,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	this->pushMonster();
 }
 
-Level::Level(Config cfg) : _map(10, 10), _clock(cfg["clock"])
+Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
 {
 //	_characters;
 //	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)

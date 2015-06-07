@@ -31,10 +31,8 @@ Map::Map(std::string const & mapFile)
 Map::Map(Config::Param cfg)
 {
 	(void)cfg;
-//	_width = static_cast<unsigned int>(cfg["width"]);
-//	_height = static_cast<unsigned int>(cfg["height"]);
-	_width = 10;
-	_height = 10;
+	_width = static_cast<unsigned int>(cfg["width"]);
+	_height = static_cast<unsigned int>(cfg["height"]);
 	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
 	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
 
