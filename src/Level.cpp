@@ -51,9 +51,8 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 Level::Level(Config cfg)
 	: _map(cfg["map"]), _clock(cfg["clock"])
 {
-<<<<<<< HEAD
 	Character*	test = new Character(cfg["characters"]["nb0"]["character"]);
-=======
+
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
@@ -69,7 +68,6 @@ Level::Level(Config cfg)
 	_actions[KEY_PRESSED] = &Level::keyPressed;
 	_actions[EXIT_TRIGGERED] = &Level::quitLevel;
 
->>>>>>> 5276979749f63039b3db4932fed108c8bb6d4fb3
 //	_characters;
 //	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
 //		_players.push_back(new Character(it->second));

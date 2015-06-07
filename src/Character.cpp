@@ -49,8 +49,12 @@ Character::Character(const Level * level, Config::Param cfg) : _level(level), _p
 
 	_id = cfg["id"];
 	_isPlayer = cfg["isPlayer"];
-	_position = cfg["position"];
-	_isPlayer = cfg["isPlayer"];
+	_attributes = cfg["attributes"];
+	_solid = cfg["solid"];
+	_alive = cfg["alive"];
+	_previousBomb = cfg["previousBomb"];
+	_elapsedTime = cfg["elapsedTime"];
+	_score = cfg["score"];
 }
 
 Character::~Character()
