@@ -34,7 +34,7 @@ public:
 
 public:
 	Character(const Level * level, size_t id, bool isPlayer, IA::Difficulty, size_t x, size_t y, size_t z = 0);
-	Character(Config::Param);
+	Character(const Level *, Config::Param);
 	virtual ~Character();
 
 	Position<double>	position() const;
