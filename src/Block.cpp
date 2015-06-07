@@ -32,7 +32,7 @@ Block::Block(Config::Param cfg) : _position(cfg["position"])
 	_destructible = cfg["destructible"];
 	_solid = cfg["solid"];
 	_blockBombs = cfg["blockBombs"];
-	_texture = cfg["texture"];
+	_texture = static_cast<std::string>(cfg["texture"]);
 }
 
 Block::~Block()
