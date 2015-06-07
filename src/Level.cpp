@@ -79,7 +79,7 @@ Level::Level(Config cfg)
 	for (auto it = cfg["bombs"].begin(); it != cfg["bombs"].end(); ++it)
 	{
 		Position<>	pos(it->second["position"]);
-		Bomb*		bomb = new Bomb(this, it->second["bomb"]);
+		Bomb*		bomb = new Bomb(it->second["bomb"]);
 		_bombs[pos].push_back(bomb);
 	}
 //	_items;
