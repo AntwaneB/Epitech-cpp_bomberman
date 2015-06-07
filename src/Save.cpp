@@ -24,7 +24,8 @@ Save::save(const std::string filename) const
 	Config	cfg;
 
 	cfg["config"]["map"] = saveMap(&_level->_map);
-	int	index;
+
+	int index;
 	index = 0;
 	for (auto it = _level->_characters.begin(); it != _level->_characters.end(); ++it)
 	{
@@ -116,12 +117,10 @@ Save::saveMap(const Map* map) const
 		cfg["width"] = map->_width;
 		cfg["height"] = map->_height;
 
-		int	posX;
-		int	posY;
-		posX = 0;
-		posY = 0;
+		int posY = 0;
 		for (auto it = map->_map.begin(); it != map->_map.end(); ++it)
 		{
+			int posX = 0;
 			for (auto subIt = it->begin(); subIt != it->end(); ++subIt)
 			{
 				cfg["map"]["nb" + std::to_string(posY)]["nb" + std::to_string(posX)] = saveBlock(*subIt);
@@ -142,6 +141,7 @@ Save::saveBlock(const Block* block) const
 	{
 		Config tmp;
 		tmp = savePosition(&block->_position);
+		std::cout << "Saved block at " << block->_position << std::endl;
 		cfg["position"] = tmp;
 		cfg["type"] = block->_type;
 		cfg["attributes"] = block->_attributes;

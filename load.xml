@@ -1,229 +1,5 @@
 <?xml version="1.0"?>
 <config>
-	<bombs>
-		<nb0>
-			<bomb>
-				<attributes>
-					<collision>false</collision>
-					<destructible>false</destructible>
-					<duration>4</duration>
-					<range>2</range>
-					<visible>true</visible>
-				</attributes>
-				<clockInit>true</clockInit>
-				<position>
-					<isSet>true</isSet>
-					<x>3</x>
-					<y>2</y>
-					<z>0</z>
-				</position>
-				<prevPosition>3</prevPosition>
-				<range>2</range>
-				<spawnTime>6.111261</spawnTime>
-			</bomb>
-			<position>
-				<isSet>true</isSet>
-				<x>3</x>
-				<y>2</y>
-				<z>0</z>
-			</position>
-		</nb0>
-	</bombs>
-	<characters>
-		<nb0>
-			<character>
-				<alive>true</alive>
-				<atributes>
-					<bombs>
-						<amount>1</amount>
-						<available>true</available>
-						<duration_modifier>1</duration_modifier>
-						<range>2</range>
-					</bombs>
-					<can_move>true</can_move>
-					<collision>true</collision>
-					<destructible>true</destructible>
-					<max_speed>1500</max_speed>
-					<speed>200</speed>
-					<visible>true</visible>
-				</atributes>
-				<elapsedTime>61</elapsedTime>
-				<id>2</id>
-				<isPlayer>false</isPlayer>
-				<killedBy />
-				<position>
-					<isSet>true</isSet>
-					<x>8.500000</x>
-					<y>1.900000</y>
-					<z>0.000000</z>
-				</position>
-				<prevPosition>
-					<isSet>true</isSet>
-					<x>8.500000</x>
-					<y>2.100000</y>
-					<z>0.000000</z>
-				</prevPosition>
-				<score>6</score>
-				<solid>true</solid>
-			</character>
-			<position>
-				<isSet>true</isSet>
-				<x>8</x>
-				<y>1</y>
-				<z>0</z>
-			</position>
-		</nb0>
-		<nb1>
-			<character>
-				<alive>true</alive>
-				<atributes>
-					<bombs>
-						<amount>1</amount>
-						<available>true</available>
-						<duration_modifier>1</duration_modifier>
-						<range>2</range>
-					</bombs>
-					<can_move>true</can_move>
-					<collision>true</collision>
-					<destructible>true</destructible>
-					<max_speed>1500</max_speed>
-					<speed>200</speed>
-					<visible>true</visible>
-				</atributes>
-				<bombs>
-					<nb0>
-						<attributes>
-							<collision>false</collision>
-							<destructible>false</destructible>
-							<duration>4</duration>
-							<range>2</range>
-							<visible>true</visible>
-						</attributes>
-						<clockInit>true</clockInit>
-						<position>
-							<isSet>true</isSet>
-							<x>3</x>
-							<y>2</y>
-							<z>0</z>
-						</position>
-						<prevPosition>3</prevPosition>
-						<range>2</range>
-						<spawnTime>6.111261</spawnTime>
-					</nb0>
-				</bombs>
-				<elapsedTime>61</elapsedTime>
-				<id>1</id>
-				<isPlayer>false</isPlayer>
-				<killedBy />
-				<position>
-					<isSet>true</isSet>
-					<x>3.500000</x>
-					<y>2.100000</y>
-					<z>0.000000</z>
-				</position>
-				<prevPosition>
-					<isSet>true</isSet>
-					<x>3.500000</x>
-					<y>1.900000</y>
-					<z>0.000000</z>
-				</prevPosition>
-				<score>6</score>
-				<solid>true</solid>
-			</character>
-			<position>
-				<isSet>true</isSet>
-				<x>3</x>
-				<y>2</y>
-				<z>0</z>
-			</position>
-		</nb1>
-		<nb2>
-			<character>
-				<alive>true</alive>
-				<atributes>
-					<bombs>
-						<amount>1</amount>
-						<available>true</available>
-						<duration_modifier>1</duration_modifier>
-						<range>2</range>
-					</bombs>
-					<can_move>true</can_move>
-					<collision>true</collision>
-					<destructible>true</destructible>
-					<max_speed>1500</max_speed>
-					<speed>220</speed>
-					<visible>true</visible>
-				</atributes>
-				<elapsedTime>61</elapsedTime>
-				<id>4</id>
-				<isPlayer>false</isPlayer>
-				<killedBy />
-				<position>
-					<isSet>true</isSet>
-					<x>8.380000</x>
-					<y>7.900000</y>
-					<z>0.000000</z>
-				</position>
-				<prevPosition>
-					<isSet>true</isSet>
-					<x>8.380000</x>
-					<y>8.120000</y>
-					<z>0.000000</z>
-				</prevPosition>
-				<score>59</score>
-				<solid>true</solid>
-			</character>
-			<position>
-				<isSet>true</isSet>
-				<x>8</x>
-				<y>7</y>
-				<z>0</z>
-			</position>
-		</nb2>
-		<nb3>
-			<character>
-				<alive>true</alive>
-				<atributes>
-					<bombs>
-						<amount>1</amount>
-						<available>true</available>
-						<duration_modifier>1</duration_modifier>
-						<range>2</range>
-					</bombs>
-					<can_move>true</can_move>
-					<collision>true</collision>
-					<destructible>true</destructible>
-					<max_speed>1500</max_speed>
-					<speed>200</speed>
-					<visible>true</visible>
-				</atributes>
-				<elapsedTime>61</elapsedTime>
-				<id>3</id>
-				<isPlayer>true</isPlayer>
-				<killedBy />
-				<position>
-					<isSet>true</isSet>
-					<x>1.500000</x>
-					<y>8.500000</y>
-					<z>0.000000</z>
-				</position>
-				<prevPosition>
-					<isSet>false</isSet>
-					<x>0.000000</x>
-					<y>0.000000</y>
-					<z>0.000000</z>
-				</prevPosition>
-				<score>6</score>
-				<solid>true</solid>
-			</character>
-			<position>
-				<isSet>true</isSet>
-				<x>1</x>
-				<y>8</y>
-				<z>0</z>
-			</position>
-		</nb3>
-	</characters>
 	<charactersCount>4</charactersCount>
 	<charactersKills>0</charactersKills>
 	<clock>
@@ -231,30 +7,6 @@
 		<run>true</run>
 		<seconds>6.205951</seconds>
 	</clock>
-	<items>
-		<nb0>
-			<item>
-				<attributes>
-					<speed_modifier>20</speed_modifier>
-				</attributes>
-				<clockInit>false</clockInit>
-				<position>
-					<isSet>true</isSet>
-					<x>8</x>
-					<y>3</y>
-					<z>0</z>
-				</position>
-				<prevPosition>1</prevPosition>
-				<spawnTime>0.000000</spawnTime>
-			</item>
-			<position>
-				<isSet>true</isSet>
-				<x>8</x>
-				<y>3</y>
-				<z>0</z>
-			</position>
-		</nb0>
-	</items>
 	<map>
 		<height>10</height>
 		<map>
@@ -508,7 +260,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -530,7 +281,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -552,7 +302,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -640,7 +389,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -662,7 +410,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -730,7 +477,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -861,7 +607,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -883,7 +628,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -951,7 +695,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1039,7 +782,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1083,7 +825,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1105,7 +846,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1173,7 +913,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1217,7 +956,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1261,7 +999,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1505,7 +1242,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1839,7 +1575,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1861,7 +1596,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1905,7 +1639,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1971,7 +1704,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1993,7 +1725,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2061,7 +1792,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2083,7 +1813,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2149,7 +1878,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2193,7 +1921,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2215,7 +1942,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2480,206 +2206,6 @@
 		</map>
 		<width>10</width>
 	</map>
-	<players>
-		<nb0>
-			<alive>true</alive>
-			<atributes>
-				<bombs>
-					<amount>1</amount>
-					<available>true</available>
-					<duration_modifier>1</duration_modifier>
-					<range>2</range>
-				</bombs>
-				<can_move>true</can_move>
-				<collision>true</collision>
-				<destructible>true</destructible>
-				<max_speed>1500</max_speed>
-				<speed>200</speed>
-				<visible>true</visible>
-			</atributes>
-			<elapsedTime>61</elapsedTime>
-			<id>3</id>
-			<isPlayer>true</isPlayer>
-			<killedBy />
-			<position>
-				<isSet>true</isSet>
-				<x>1.500000</x>
-				<y>8.500000</y>
-				<z>0.000000</z>
-			</position>
-			<prevPosition>
-				<isSet>false</isSet>
-				<x>0.000000</x>
-				<y>0.000000</y>
-				<z>0.000000</z>
-			</prevPosition>
-			<score>6</score>
-			<solid>true</solid>
-		</nb0>
-	</players>
 	<playersCount>1</playersCount>
-	<scores>
-		<nb0>
-			<alive>true</alive>
-			<atributes>
-				<bombs>
-					<amount>1</amount>
-					<available>true</available>
-					<duration_modifier>1</duration_modifier>
-					<range>2</range>
-				</bombs>
-				<can_move>true</can_move>
-				<collision>true</collision>
-				<destructible>true</destructible>
-				<max_speed>1500</max_speed>
-				<speed>200</speed>
-				<visible>true</visible>
-			</atributes>
-			<bombs>
-				<nb0>
-					<attributes>
-						<collision>false</collision>
-						<destructible>false</destructible>
-						<duration>4</duration>
-						<range>2</range>
-						<visible>true</visible>
-					</attributes>
-					<clockInit>true</clockInit>
-					<position>
-						<isSet>true</isSet>
-						<x>3</x>
-						<y>2</y>
-						<z>0</z>
-					</position>
-					<prevPosition>3</prevPosition>
-					<range>2</range>
-					<spawnTime>6.111261</spawnTime>
-				</nb0>
-			</bombs>
-			<elapsedTime>61</elapsedTime>
-			<id>1</id>
-			<isPlayer>false</isPlayer>
-			<killedBy />
-			<position>
-				<isSet>true</isSet>
-				<x>3.500000</x>
-				<y>2.100000</y>
-				<z>0.000000</z>
-			</position>
-			<prevPosition>
-				<isSet>true</isSet>
-				<x>3.500000</x>
-				<y>1.900000</y>
-				<z>0.000000</z>
-			</prevPosition>
-			<score>6</score>
-			<solid>true</solid>
-		</nb0>
-		<nb1>
-			<alive>true</alive>
-			<atributes>
-				<bombs>
-					<amount>1</amount>
-					<available>true</available>
-					<duration_modifier>1</duration_modifier>
-					<range>2</range>
-				</bombs>
-				<can_move>true</can_move>
-				<collision>true</collision>
-				<destructible>true</destructible>
-				<max_speed>1500</max_speed>
-				<speed>200</speed>
-				<visible>true</visible>
-			</atributes>
-			<elapsedTime>61</elapsedTime>
-			<id>2</id>
-			<isPlayer>false</isPlayer>
-			<killedBy />
-			<position>
-				<isSet>true</isSet>
-				<x>8.500000</x>
-				<y>1.900000</y>
-				<z>0.000000</z>
-			</position>
-			<prevPosition>
-				<isSet>true</isSet>
-				<x>8.500000</x>
-				<y>2.100000</y>
-				<z>0.000000</z>
-			</prevPosition>
-			<score>6</score>
-			<solid>true</solid>
-		</nb1>
-		<nb2>
-			<alive>true</alive>
-			<atributes>
-				<bombs>
-					<amount>1</amount>
-					<available>true</available>
-					<duration_modifier>1</duration_modifier>
-					<range>2</range>
-				</bombs>
-				<can_move>true</can_move>
-				<collision>true</collision>
-				<destructible>true</destructible>
-				<max_speed>1500</max_speed>
-				<speed>200</speed>
-				<visible>true</visible>
-			</atributes>
-			<elapsedTime>61</elapsedTime>
-			<id>3</id>
-			<isPlayer>true</isPlayer>
-			<killedBy />
-			<position>
-				<isSet>true</isSet>
-				<x>1.500000</x>
-				<y>8.500000</y>
-				<z>0.000000</z>
-			</position>
-			<prevPosition>
-				<isSet>false</isSet>
-				<x>0.000000</x>
-				<y>0.000000</y>
-				<z>0.000000</z>
-			</prevPosition>
-			<score>6</score>
-			<solid>true</solid>
-		</nb2>
-		<nb3>
-			<alive>true</alive>
-			<atributes>
-				<bombs>
-					<amount>1</amount>
-					<available>true</available>
-					<duration_modifier>1</duration_modifier>
-					<range>2</range>
-				</bombs>
-				<can_move>true</can_move>
-				<collision>true</collision>
-				<destructible>true</destructible>
-				<max_speed>1500</max_speed>
-				<speed>220</speed>
-				<visible>true</visible>
-			</atributes>
-			<elapsedTime>61</elapsedTime>
-			<id>4</id>
-			<isPlayer>false</isPlayer>
-			<killedBy />
-			<position>
-				<isSet>true</isSet>
-				<x>8.380000</x>
-				<y>7.900000</y>
-				<z>0.000000</z>
-			</position>
-			<prevPosition>
-				<isSet>true</isSet>
-				<x>8.380000</x>
-				<y>8.120000</y>
-				<z>0.000000</z>
-			</prevPosition>
-			<score>59</score>
-			<solid>true</solid>
-		</nb3>
-	</scores>
 	<secondsElapsed>6</secondsElapsed>
 </config>

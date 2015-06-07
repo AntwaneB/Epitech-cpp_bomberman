@@ -30,18 +30,19 @@ Map::Map(std::string const & mapFile)
 
 Map::Map(Config::Param cfg)
 {
-	_width = static_cast<unsigned int>(cfg["width"]);
-	_height = static_cast<unsigned int>(cfg["height"]);
 	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
 	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
+
+	_width = static_cast<unsigned int>(cfg["width"]);
+	_height = static_cast<unsigned int>(cfg["height"]);
 
 	this->initMap();
 	for (auto itY = cfg["map"].begin(); itY != cfg["map"].end(); ++itY)
 	{
 		for (auto itX = itY->second.begin(); itX != itY->second.end(); ++itX)
 		{
-			unsigned int	indexX;
-			unsigned int	indexY;
+			size_t indexX;
+			size_t indexY;
 			indexX = (itX->second)["position"]["x"];
 			indexY = (itX->second)["position"]["y"];
 			_map[indexY][indexX] = new Block(itX->second);
@@ -170,8 +171,8 @@ Map::pushCharacter(const Character* character)
 		Position<> first = (*(freePath.begin())).first.first;
 		Position<> second = (*(freePath.begin())).first.second;
 
-		this->replaceAt(first, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
-		this->replaceAt(second, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
+		this->replaceAt(first, new Block(first, g_settings["maps"]["default_blocks"]["void"]));
+		this->replaceAt(second, new Block(second, g_settings["maps"]["default_blocks"]["void"]));
 	}
 }
 
@@ -236,13 +237,17 @@ Map::setDestructible()
 void
 Map::bindBlocks()
 {
+	int y = 0;
 	for (auto row = _map.begin(); row != _map.end(); ++row)
 	{
+		int x = 0;
 		for (auto block = row->begin(); block != row->end(); ++block)
 		{
 			this->addObserver(*block);
 			(*block)->addObserver(this);
+			x++;
 		}
+		y++;
 	}
 }
 

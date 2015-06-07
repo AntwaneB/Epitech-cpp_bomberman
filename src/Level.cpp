@@ -542,7 +542,7 @@ Level::keyPressed(Subject* entity)
 			previousSave = _clock.seconds();
 			std::cout << "Saving level to file..." << std::endl;
 
-			Save	save(this, "./save.xml");
+			Save	save(this, "./saves/save.xml");
 			save.save();
 		}
 	}
