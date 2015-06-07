@@ -25,7 +25,7 @@ Block::Block(Position<> const & position, std::string const & type)
 
 Block::Block(Config::Param cfg) : _position(cfg["position"])
 {
-	_type = cfg["type"];
+	_type = static_cast<std::string>(cfg["type"]);
 	_attributes = cfg["attributes"];
 	_elapsedTime = cfg["elapsedTime"];
 	_visible = cfg["visible"];
