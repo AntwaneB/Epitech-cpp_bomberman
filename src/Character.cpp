@@ -52,7 +52,6 @@ Character::Character(const Level * level, Config::Param cfg) : _level(level), _p
 	_attributes = cfg["attributes"];
 	_solid = cfg["solid"];
 	_alive = cfg["alive"];
-	_previousBomb = static_cast<unsigned double>(cfg["previousBomb"]);
 	_elapsedTime = cfg["elapsedTime"];
 	_score = cfg["score"];
 }
