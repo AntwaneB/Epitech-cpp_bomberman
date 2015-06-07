@@ -35,6 +35,13 @@ Map::Map(Config::Param cfg)
 	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
 	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
 
+	for (auto itY = cfg["map"].begin(); itY != cfg["map"].end(); ++itY)
+	{
+		for (auto itX = itY->second.begin(); itX != itY->second.end(); ++itX)
+		{
+			std::cout << itX->second << std::endl;
+		}
+	}
 	this->initMap();
 	this->setBorders();
 	this->setSolid();
