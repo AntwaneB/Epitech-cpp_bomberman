@@ -88,7 +88,7 @@ Save::saveCharacter(const Character* character) const
 		cfg["isPlayer"] = character->_isPlayer;
 		cfg["position"] = savePosition(&character->_position);
 		cfg["prevPosition"] = savePosition(&character->_prevPosition);
-		cfg["atributes"] = character->_attributes;
+		cfg["attributes"] = character->_attributes;
 		cfg["solid"] = character->_solid;
 		cfg["alive"] = character->_alive;
 		cfg["killedBy"] = saveBomb(character->_killedBy);
