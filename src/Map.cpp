@@ -148,8 +148,8 @@ Map::pushCharacter(const Character* character)
 		Position<> first = (*(freePath.begin())).first.first;
 		Position<> second = (*(freePath.begin())).first.second;
 
-		this->replaceAt(first, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
-		this->replaceAt(second, new Block(character->position(), g_settings["maps"]["default_blocks"]["void"]));
+		this->replaceAt(first, new Block(first, g_settings["maps"]["default_blocks"]["void"]));
+		this->replaceAt(second, new Block(second, g_settings["maps"]["default_blocks"]["void"]));
 	}
 }
 
