@@ -19,11 +19,10 @@ Clock::Clock()
 
 Clock::Clock(Config::Param cfg)
 {
-	std::cout << "Clock start" << std::endl;
+	std::cout << cfg << std::endl;
 	_run = cfg["run"];
 	_paused = cfg["paused"];
-	_seconds = 0;
-	std::cout << "Clock OK" << std::endl;
+//	_seconds = cfg["seconds"];
 }
 
 Clock::~Clock()
