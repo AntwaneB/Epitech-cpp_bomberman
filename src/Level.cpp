@@ -52,7 +52,7 @@ Level::Level(Config cfg)
 	: _map(cfg["map"]), _clock(cfg["clock"])
 {
 	Character*	test = new Character(this, cfg["characters"]["nb0"]["character"]);
-
+(void)test;
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
