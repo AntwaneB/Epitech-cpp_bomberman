@@ -89,6 +89,7 @@ Level::Level(Config cfg)
 		if (character->isPlayer())
 			_players.push_back(character);
 
+		character->addObserver(this);
 		_clock.addObserver(character);
 		this->addObserver(character);
 	}
