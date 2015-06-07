@@ -23,22 +23,22 @@ Save::save(const std::string filename) const
 {
 	Config	cfg;
 
-	cfg["save"]["map"] = saveMap(&_level->_map);
+	cfg["config"]["map"] = saveMap(&_level->_map);
 	int	index;
 	index = 0;
 	for (auto it = _level->_characters.begin(); it != _level->_characters.end(); ++it)
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-			cfg["save"]["characters"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
-			cfg["save"]["characters"]["nb" + std::to_string(index)]["character"] = saveCharacter(*subIt);
+			cfg["config"]["characters"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["config"]["characters"]["nb" + std::to_string(index)]["character"] = saveCharacter(*subIt);
 			++index;
 		}
 	}
 	index = 0;
 	for (auto it = _level->_players.begin(); it != _level->_players.end(); ++it)
 	{
-		cfg["save"]["players"]["nb" + std::to_string(index)] = saveCharacter(*it);
+		cfg["config"]["players"]["nb" + std::to_string(index)] = saveCharacter(*it);
 		++index;
 	}
 	index = 0;
@@ -46,8 +46,8 @@ Save::save(const std::string filename) const
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-			cfg["save"]["bombs"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
-			cfg["save"]["bombs"]["nb" + std::to_string(index)]["bomb"] = saveBomb(*subIt);
+			cfg["config"]["bombs"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["config"]["bombs"]["nb" + std::to_string(index)]["bomb"] = saveBomb(*subIt);
 			++index;
 		}
 	}
@@ -56,25 +56,23 @@ Save::save(const std::string filename) const
 	{
 		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
 		{
-			cfg["save"]["items"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
-			cfg["save"]["items"]["nb" + std::to_string(index)]["item"] = saveBonusItem(*subIt);
+			cfg["config"]["items"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["config"]["items"]["nb" + std::to_string(index)]["item"] = saveBonusItem(*subIt);
 			++index;
 		}
 	}
-	cfg["save"]["charactersCount"] = _level->_charactersCount;
-	cfg["save"]["playersCount"] = _level->_playersCount;
-	cfg["save"]["clock"] = saveClock(&_level->_clock);
-	cfg["save"]["secondsElapsed"] = _level->_secondsElapsed;
+	cfg["config"]["charactersCount"] = _level->_charactersCount;
+	cfg["config"]["playersCount"] = _level->_playersCount;
+	cfg["config"]["clock"] = saveClock(&_level->_clock);
+	cfg["config"]["secondsElapsed"] = _level->_secondsElapsed;
 	index = 0;
 	for (auto it = _level->_scores.begin(); it != _level->_scores.end(); ++it)
 	{
-		cfg["save"]["scores"]["nb" + std::to_string(index)] = saveCharacter(*it);
+		cfg["config"]["scores"]["nb" + std::to_string(index)] = saveCharacter(*it);
 		++index;
 	}
-	cfg["save"]["charactersKills"] = _level->_charactersKills;
+	cfg["config"]["charactersKills"] = _level->_charactersKills;
 	//_difficulty
-	std::cout << "Save" << std::endl;
-	std::cout << cfg << std::endl;
 	cfg.exportFile(filename);
 }
 
