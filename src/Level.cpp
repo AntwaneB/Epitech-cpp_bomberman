@@ -69,10 +69,10 @@ Level::Level(Config cfg)
 
 	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)
 	{
-		Position	pos(it->second["position"]);
+		Position<>	pos(it->second["position"]);
 		Character*	character = new Character(this, it->second["character"]);
 		_characters[pos] = character;
-		if (character.isPlayer())
+		if (character->isPlayer())
 			_players.push_back(character);
 	}
 //	_characters;
