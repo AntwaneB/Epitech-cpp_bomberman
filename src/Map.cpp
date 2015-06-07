@@ -40,7 +40,6 @@ Map::Map(Config::Param cfg)
 	{
 		for (auto itX = itY->second.begin(); itX != itY->second.end(); ++itX)
 		{
-			std::cout << itX->second << std::endl;
 			unsigned int	indexX;
 			unsigned int	indexY;
 			indexX = (itX->second)["position"]["x"];

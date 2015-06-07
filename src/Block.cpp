@@ -25,7 +25,8 @@ Block::Block(Position<> const & position, std::string const & type)
 
 Block::Block(Config::Param cfg)
 {
-	(void) cfg;
+	std::cout << "Block" << std::endl;
+	std::cout << cfg << std::endl;
 }
 
 Block::~Block()
