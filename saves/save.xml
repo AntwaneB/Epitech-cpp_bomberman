@@ -20,6 +20,7 @@
 				</attributes>
 				<elapsedTime>44</elapsedTime>
 				<id>2</id>
+				<ia>hard</ia>
 				<isPlayer>false</isPlayer>
 				<killedBy />
 				<position>
@@ -63,6 +64,7 @@
 				</attributes>
 				<elapsedTime>44</elapsedTime>
 				<id>1</id>
+				<ia>hard</ia>
 				<isPlayer>false</isPlayer>
 				<killedBy />
 				<position>
@@ -149,6 +151,7 @@
 				</attributes>
 				<elapsedTime>44</elapsedTime>
 				<id>4</id>
+				<ia>hard</ia>
 				<isPlayer>false</isPlayer>
 				<killedBy />
 				<position>
