@@ -35,6 +35,7 @@ Map::Map(Config::Param cfg)
 	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
 	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
 
+	this->initMap();
 	for (auto itY = cfg["map"].begin(); itY != cfg["map"].end(); ++itY)
 	{
 		for (auto itX = itY->second.begin(); itX != itY->second.end(); ++itX)
@@ -47,11 +48,10 @@ Map::Map(Config::Param cfg)
 			_map[indexY][indexX] = new Block(itX->second);
 		}
 	}
-	this->initMap();
-	this->setBorders();
-	this->setSolid();
-	this->setDestructible();
-	this->bindBlocks();
+//	this->setBorders();
+//	this->setSolid();
+//	this->setDestructible();
+//	this->bindBlocks();
 }
 
 Map::~Map()
