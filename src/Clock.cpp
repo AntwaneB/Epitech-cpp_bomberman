@@ -19,8 +19,8 @@ Clock::Clock()
 
 Clock::Clock(Config::Param cfg)
 {
-	_run = cfg["run"];
-	_paused = cfg["paused"];
+	_run = false;
+	_paused = false;
 	_seconds = static_cast<double>(cfg["seconds"]);
 }
 
