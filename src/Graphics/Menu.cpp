@@ -89,21 +89,6 @@ Graphics::Menu::init(::Menu* menu)
 				_texts[&param] = text;
 			}
 		}
-		/*
-		else
-		{
-			for (auto value = param["collection"]["values"].begin(); value != param["collection"]["values"].end(); ++value)
-			{
-				sf::Text text;
-				text.setFont(_font);
-				text.setString(static_cast<std::string>(value->second));
-				text.setCharacterSize(param["collection"]["font_size"]);
-				text.setColor(sf::Color(254, 221, 0));
-				text.setPosition(param["position"]["min_x"], static_cast<int>(param["position"]["min_y"]) + std::stoi(value->first) * (5 + static_cast<int>(param["collection"]["font_size"])));
-				_collections[&param].push_back(text);
-			}
-		}
-		*/
 	}
 
 	_run = true;
