@@ -47,10 +47,7 @@ Map::Map(Config::Param cfg)
 			_map[indexY][indexX] = new Block(itX->second);
 		}
 	}
-//	this->setBorders();
-//	this->setSolid();
-//	this->setDestructible();
-//	this->bindBlocks();
+	this->bindBlocks();
 }
 
 Map::~Map()
