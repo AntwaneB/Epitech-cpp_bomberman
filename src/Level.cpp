@@ -51,7 +51,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 Level::Level(Config cfg)
 	: _map(cfg["map"]), _clock(cfg["clock"])
 {
-	Character*	test = new Character(cfg["characters"]["nb0"]["character"]);
+	Character*	test = new Character(this, cfg["characters"]["nb0"]["character"]);
 
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
