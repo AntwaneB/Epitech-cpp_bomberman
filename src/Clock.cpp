@@ -21,6 +21,7 @@ Clock::Clock(Config::Param cfg)
 {
 //	_run = cfg["run"];
 //	_paused = cfg["paused"];
+	(void)cfg;
 	_run = false;
 	_paused = false;
 	this->restart();
