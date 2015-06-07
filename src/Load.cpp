@@ -17,9 +17,6 @@ Load::load(void) const
 	try
 	{
 		cfg.importFile(_filename);
-		std::cout << "Import " << _filename << std::endl;
-		std::cout << cfg << std::endl;
-		std::cout << "DONE" << std::endl;
 		Level	*level;
 
 		level = new Level(cfg);
