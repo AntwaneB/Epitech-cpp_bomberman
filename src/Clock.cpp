@@ -19,8 +19,12 @@ Clock::Clock()
 
 Clock::Clock(Config::Param cfg)
 {
-	_run = cfg["run"];
-	_paused = cfg["paused"];
+//	_run = cfg["run"];
+//	_paused = cfg["paused"];
+	_run = false;
+	_paused = false;
+	this->restart();
+	_seconds = 0;
 }
 
 Clock::~Clock()
