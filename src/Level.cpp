@@ -48,8 +48,24 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	this->pushMonster();
 }
 
-Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
+Level::Level(Config cfg)
+	: _map(cfg["map"]), _clock(cfg["clock"])
 {
+	_actions[CLOCK_TICK] = &Level::tick;
+	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
+	_actions[CHARACTER_MOVED] = &Level::characterMoved;
+	_actions[CHARACTER_DIED] = &Level::characterDied;
+	_actions[MONSTER_MOVED] = &Level::monsterMoved;
+	_actions[MONSTER_DIED] = &Level::monsterDied;
+	_actions[ITEM_DROPPED] = &Level::itemDropped;
+	_actions[ITEM_MOVED] = &Level::itemMoved;
+	_actions[ITEM_DESTROYED] = &Level::itemDestroyed;
+	_actions[BOMB_DROPPED] = &Level::bombDropped;
+	_actions[BOMB_EXPLODED] = &Level::bombExploded;
+	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
+	_actions[KEY_PRESSED] = &Level::keyPressed;
+	_actions[EXIT_TRIGGERED] = &Level::quitLevel;
+
 //	_characters;
 //	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
 //		_players.push_back(new Character(it->second));
@@ -62,6 +78,10 @@ Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
 //	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
 //		_scores.push_back(new Character(it->second));
 	_charactersKills = cfg["charactersKills"];
+
+	_clock.addObserver(this);
+	this->addObserver(&_map);
+	_map.addObserver(this);
 //	_difficulty;
 }
 
@@ -195,6 +215,7 @@ void
 Level::tick(Subject* entity)
 {
 	Clock* clock = safe_cast<Clock*>(entity);
+
 	if (clock == &_clock)
 	{
 		for (auto it = _explosions.begin(); it != _explosions.end(); ++it)

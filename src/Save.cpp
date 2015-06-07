@@ -141,7 +141,6 @@ Save::saveBlock(const Block* block) const
 	{
 		Config tmp;
 		tmp = savePosition(&block->_position);
-		std::cout << "Saved block at " << block->_position << std::endl;
 		cfg["position"] = tmp;
 		cfg["type"] = block->_type;
 		cfg["attributes"] = block->_attributes;
