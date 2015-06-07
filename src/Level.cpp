@@ -51,7 +51,6 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 Level::Level(Config cfg)
 	: _map(cfg["map"]), _clock(cfg["clock"])
 {
-//	Character*	test = new Character(this, cfg["characters"]["nb0"]["character"]);
 	_actions[CLOCK_TICK] = &Level::tick;
 	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
 	_actions[CHARACTER_MOVED] = &Level::characterMoved;
@@ -67,21 +66,6 @@ Level::Level(Config cfg)
 	_actions[KEY_PRESSED] = &Level::keyPressed;
 	_actions[EXIT_TRIGGERED] = &Level::quitLevel;
 
-	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)
-	{
-		Position<>	pos(it->second["position"]);
-		Character*	character = new Character(this, it->second["character"]);
-		_characters[pos].push_back(character);
-		_scores.push_back(character);
-		if (character->isPlayer())
-			_players.push_back(character);
-	}
-	for (auto it = cfg["bombs"].begin(); it != cfg["bombs"].end(); ++it)
-	{
-		Position<>	pos(it->second["position"]);
-		Bomb*		bomb = new Bomb(it->second["bomb"]);
-		_bombs[pos].push_back(bomb);
-	}
 //	_items;
 //	_explosions;
 	_charactersCount = cfg["charactersCount"];
@@ -95,6 +79,28 @@ Level::Level(Config cfg)
 	this->addObserver(&_map);
 	_map.addObserver(this);
 //	_difficulty;
+
+	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)
+	{
+		Position<>	pos(it->second["position"]);
+		Character*	character = new Character(this, it->second["character"]);
+		_scores.push_back(character);
+		_characters[character->position()].push_back(character);
+		if (character->isPlayer())
+			_players.push_back(character);
+
+		character->addObserver(this);
+		_clock.addObserver(character);
+		this->addObserver(character);
+	}
+
+	for (auto it = cfg["bombs"].begin(); it != cfg["bombs"].end(); ++it)
+	{
+		Position<> pos(it->second["position"]);
+		Bomb* bomb = new Bomb(it->second["bomb"]);
+		this->bombDropped(bomb);
+//		_bombs[pos].push_back(bomb);
+	}
 }
 
 Level::~Level()

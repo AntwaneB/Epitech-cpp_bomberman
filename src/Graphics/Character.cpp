@@ -1,7 +1,7 @@
 #include "Graphics/Character.hh"
 
 Graphics::Character::Character(::Character const * character, gdl::Model* model)
-	: Object(character->position()), _character(character), _model(model)
+	: Object(character->position()), _character(character), _model(model), _anim(false)
 {
 	_position.decX(0.5);
 	_position.decY(0.5);
@@ -33,7 +33,7 @@ Graphics::Character::operator==(const ::Character* other) const
 }
 
 int
-Graphics::Character::getAngle(const::Character::Action key)
+Graphics::Character::getAngle(const ::Character::Action key)
 {
 	switch(key)
 		{
@@ -112,7 +112,7 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 			_frame = 15;
 		_frame += 1;
 	}
-	if (_anim == false)
+	else
 	{
 		if (_frame > 0 && _frame < 8)
 		{
