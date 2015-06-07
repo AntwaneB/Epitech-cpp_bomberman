@@ -50,6 +50,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 
 Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
 {
+	Character*	test = new Character(cfg["characters"]["nb0"]["character"]);
 //	_characters;
 //	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
 //		_players.push_back(new Character(it->second));
