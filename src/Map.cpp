@@ -39,6 +39,11 @@ Map::Map(Config::Param cfg)
 	{
 		for (auto itX = itY->second.begin(); itX != itY->second.end(); ++itX)
 		{
+			unsigned int	indexX;
+			unsigned int	indexY;
+			indexX = (itY->second)["position"]["x"];
+			indexY = (itY->second)["position"]["y"];
+			_map[indexY][indexX] = NULL;
 			std::cout << itX->second << std::endl;
 		}
 	}
