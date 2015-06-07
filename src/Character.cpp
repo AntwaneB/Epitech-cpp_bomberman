@@ -55,6 +55,19 @@ Character::Character(const Level * level, Config::Param cfg)
 	_alive = cfg["alive"];
 	_elapsedTime = cfg["elapsedTime"];
 	_score = cfg["score"];
+	if (!_isPlayer)
+	{
+		switch (cfg["ia"])
+		{
+			case "hard":
+				_iaHard = new IA::IA<IA::HARD>(_level, this);
+			case "medium":
+				_iaMedium = new IA::IA<IA::MEDIUM>(_level, this);
+			case "easy":
+				_iaEasy = new IA::IA<IA::EASY>(_level, this);
+		}
+	}
+
 }
 
 Character::~Character()

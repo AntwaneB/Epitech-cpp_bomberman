@@ -92,7 +92,7 @@ Save::saveCharacter(const Character* character) const
 		cfg["solid"] = character->_solid;
 		cfg["alive"] = character->_alive;
 		cfg["killedBy"] = saveBomb(character->_killedBy);
-//	cfg["ia"] = saveIA(character->_ia);
+		cfg["ia"] = (character->_iaEasy ? "easy" : (character->_iaMedium ? "medium" : (character->_iaHard ? "hard" : "null")));
 		int	index;
 		index = 0;
 		for (auto it = character->_bombs.begin(); it != character->_bombs.end(); ++it)
