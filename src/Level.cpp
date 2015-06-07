@@ -71,7 +71,7 @@ Level::Level(Config cfg)
 	{
 		Position<>	pos(it->second["position"]);
 		Character*	character = new Character(this, it->second["character"]);
-		_characters[pos] = character;
+		_characters[pos].push_back(character);
 		if (character->isPlayer())
 			_players.push_back(character);
 	}
