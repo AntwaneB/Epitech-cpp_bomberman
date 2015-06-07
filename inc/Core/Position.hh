@@ -23,6 +23,7 @@ public:
 	Position();
 	Position(T x, T y, T z = 0);
 	Position(const Position& orig);
+	Position(Config::Param);
 	Position& operator=(const Position& orig);
 	virtual ~Position();
 
@@ -80,6 +81,12 @@ Position<T>::Position()
 template <typename T>
 Position<T>::Position(const Position& orig)
 	: _x(orig._x), _y(orig._y), _z(orig._z), _isSet(orig._isSet)
+{
+}
+
+template <typename T>
+Position<T>::Position(Config::Param cfg)
+	: _x(cfg["x"]), _y(cfg["y"]), _z(cfg["z"]), _isSet(cfg["isSet"])
 {
 }
 
