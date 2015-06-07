@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<save>
+<config>
 	<bombs>
 		<nb0>
 			<bomb>
@@ -2682,4 +2682,4 @@
 		</nb3>
 	</scores>
 	<secondsElapsed>5</secondsElapsed>
-</save>
+</config>
