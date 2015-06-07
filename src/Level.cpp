@@ -72,13 +72,16 @@ Level::Level(Config cfg)
 		Position<>	pos(it->second["position"]);
 		Character*	character = new Character(this, it->second["character"]);
 		_characters[pos].push_back(character);
+		_scores.push_back(character);
 		if (character->isPlayer())
 			_players.push_back(character);
 	}
-//	_characters;
-//	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
-//		_players.push_back(new Character(it->second));
-//	_bombs;
+	for (auto it = cfg["bombs"].begin(); it != cfg["bombs"].end(); ++it)
+	{
+		Position<>	pos(it->second["position"]);
+		Bomb*		bomb = new Bomb(this, it->second["bomb"]);
+		_bombs[pos].push_back(bomb);
+	}
 //	_items;
 //	_explosions;
 	_charactersCount = cfg["charactersCount"];
