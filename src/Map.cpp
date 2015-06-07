@@ -44,8 +44,7 @@ Map::Map(Config::Param cfg)
 			unsigned int	indexY;
 			indexX = (itX->second)["position"]["x"];
 			indexY = (itX->second)["position"]["y"];
-			std::cout << indexX << ";" << indexY << std::endl;
-//			_map[indexY][indexX] = NULL;
+			_map[indexY][indexX] = new Block(itX->second);
 		}
 	}
 	this->initMap();
