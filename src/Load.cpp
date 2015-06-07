@@ -20,8 +20,8 @@ Load::load(void) const
 		Level	*level;
 
 		level = new Level(cfg);
-		Save	save(level, "load.xml");
-		save.save();
+//		Save	save(level, "load.xml");
+//		save.save();
 		return (level);
 	}
 	catch (ConfigException const & e)
