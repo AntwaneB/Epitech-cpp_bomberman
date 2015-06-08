@@ -82,11 +82,11 @@ Level::Level(Config cfg)
 
 	for (auto it = cfg["items"].begin(); it != cfg["items"].end(); ++it)
 	{
-		Item*	item = new Item(it->second["item"]);
-		_items[item->position()].push_back(item);
-		item->addObserver(this);
-		_clock.addObserver(item);
-		this->addObserver(item);
+		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
+
+		Position<>	pos(it->second["position"]);
+		BonusItem* item = BonusItem::factory(type, pos);
+		this->itemDropped(item);
 	}
 
 	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)

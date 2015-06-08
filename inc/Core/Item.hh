@@ -12,6 +12,7 @@
 #include "Position.hh"
 #include "Clock.hh"
 #include "Character.hh"
+#include "Config.hh"
 
 class Item
 {
@@ -22,7 +23,6 @@ public:
 
 public:
 	Item(Position<> const &, Type type = last);
-	Item(Config::Param);
 	virtual ~Item() = 0;
 
 	Type		type() const;

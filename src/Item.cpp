@@ -16,11 +16,6 @@ Item::Item(Position<> const & position, Type type)
 {
 }
 
-Item::Item(Config::Param cfg)
-	: _position(cfg["position"]), _prevPosition(cfg["prevPosition"]), _type(), _clockInit(cfg["clockInit"]), _spawnTime(cfg["spawnTime"]), _type(cfg["type"])
-{
-}
-
 Item::~Item()
 {
 }

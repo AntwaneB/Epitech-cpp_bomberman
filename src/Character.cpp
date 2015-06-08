@@ -227,7 +227,6 @@ Character::bombExploded(Subject* entity)
 		_alive = false;
 		_killedBy = bomb;
 		this->notify(this, CHARACTER_DIED);
-//		delete this;
 	}
 }
 

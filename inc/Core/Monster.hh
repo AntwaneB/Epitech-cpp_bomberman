@@ -12,6 +12,7 @@
 #include "Core/Position.hh"
 #include "Core/Character.hh"
 #include "Core/Bomb.hh"
+#include "Core/Config.hh"
 
 class Monster : public EventHandler<Monster>, public Subject
 {
@@ -21,7 +22,7 @@ class Monster : public EventHandler<Monster>, public Subject
 
 public:
 	Monster(const Level * level, Position<double> const & position);
-	Monster(const Level * level,Config::Param)
+	Monster(const Level * level, Config::Param);
 	virtual ~Monster();
 
 	Position<double>	position() const;
