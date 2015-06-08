@@ -32,13 +32,6 @@ Graphics::Item::initialize()
 }
 
 void
-Graphics::Item::update(gdl::Clock const &clock, gdl::Input &input)
-{
-	(void)clock;
-	(void)input;
-}
-
-void
 Graphics::Item::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	_texture.bind();

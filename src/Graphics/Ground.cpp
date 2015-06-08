@@ -15,7 +15,7 @@ Graphics::Ground::~Ground()
 bool Graphics::Ground::initialize()
 {
 	_speed = 50.0f;
-	std::string path = g_settings["maps"]["floor_texture"];// "./assets/textures/sand.tga";
+	std::string path = g_settings["maps"]["floor_texture"];
 	if(_texture.load(path) == false)
 	{
 		std::cout << "false texture" << std::endl;
@@ -71,12 +71,6 @@ bool Graphics::Ground::initialize()
 	_geometry.pushUv(glm::vec2(0.0f, 1.0f));
 	_geometry.build();
 	return (true);
-}
-
-void Graphics::Ground::update(gdl::Clock const &clock, gdl::Input &input)
-{
-	(void)input;
-	(void)clock;
 }
 
 void Graphics::Ground::draw(gdl::AShader &shader, gdl::Clock const &clock)
