@@ -44,7 +44,7 @@ bool Graphics::Split::initialize(std::vector<gdl::Model*> models)
 	{
 		for (auto iit = it->second.begin(); iit != it->second.end(); ++iit)
 		{
-			Character* character = new Graphics::Character(*iit, _models[i]);
+			Character* character = new Graphics::Character(*iit, _models[i], i, _level->charactersCount());
 			character->initialize();
 			_characters.push_back(character);
 		}

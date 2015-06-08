@@ -1,14 +1,14 @@
 #include "Graphics/Character.hh"
 
-Graphics::Character::Character(::Character const * character, gdl::Model* model)
-	: Object(character->position()), _character(character), _model(model)
+Graphics::Character::Character(::Character const * character, gdl::Model* model, const size_t id, const size_t charactersCount)
+	: Object(character->position()), _character(character), _model(model), _frame(0), _anim(false), _id(id), _charactersCount(charactersCount)
 {
 	_position.decX(0.5);
 	_position.decY(0.5);
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
-	_color.x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	_color.y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	_color.z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	_color.x = (1.0 / _charactersCount) * _id;
+	_color.y = 1.0 - (1.0 / _charactersCount) * _id;
+	_color.z = (1.0 / _charactersCount) * _id;
 }
 
 Graphics::Character::~Character()
