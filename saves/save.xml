@@ -1,12 +1,95 @@
 <?xml version="1.0"?>
 <config>
+	<bombs>
+		<nb0>
+			<bomb>
+				<attributes>
+					<collision>false</collision>
+					<destructible>false</destructible>
+					<duration>4</duration>
+					<range>2</range>
+					<visible>true</visible>
+				</attributes>
+				<clockInit>false</clockInit>
+				<position>
+					<isSet>true</isSet>
+					<x>3</x>
+					<y>1</y>
+					<z>0</z>
+				</position>
+				<prevPosition>3</prevPosition>
+				<range>2</range>
+				<spawnTime>0.000000</spawnTime>
+			</bomb>
+			<position>
+				<isSet>true</isSet>
+				<x>3</x>
+				<y>1</y>
+				<z>0</z>
+			</position>
+		</nb0>
+		<nb1>
+			<bomb>
+				<attributes>
+					<collision>false</collision>
+					<destructible>false</destructible>
+					<duration>4</duration>
+					<range>2</range>
+					<visible>true</visible>
+				</attributes>
+				<clockInit>false</clockInit>
+				<position>
+					<isSet>true</isSet>
+					<x>6</x>
+					<y>1</y>
+					<z>0</z>
+				</position>
+				<prevPosition>3</prevPosition>
+				<range>3</range>
+				<spawnTime>0.000000</spawnTime>
+			</bomb>
+			<position>
+				<isSet>true</isSet>
+				<x>6</x>
+				<y>1</y>
+				<z>0</z>
+			</position>
+		</nb1>
+		<nb2>
+			<bomb>
+				<attributes>
+					<collision>false</collision>
+					<destructible>false</destructible>
+					<duration>4</duration>
+					<range>2</range>
+					<visible>true</visible>
+				</attributes>
+				<clockInit>true</clockInit>
+				<position>
+					<isSet>true</isSet>
+					<x>1</x>
+					<y>8</y>
+					<z>0</z>
+				</position>
+				<prevPosition>3</prevPosition>
+				<range>2</range>
+				<spawnTime>15.371903</spawnTime>
+			</bomb>
+			<position>
+				<isSet>true</isSet>
+				<x>1</x>
+				<y>8</y>
+				<z>0</z>
+			</position>
+		</nb2>
+	</bombs>
 	<characters>
 		<nb0>
 			<character>
 				<alive>true</alive>
 				<attributes>
 					<bombs>
-						<amount>1</amount>
+						<amount>2</amount>
 						<available>true</available>
 						<duration_modifier>1</duration_modifier>
 						<range>2</range>
@@ -18,53 +101,9 @@
 					<speed>200</speed>
 					<visible>true</visible>
 				</attributes>
-				<elapsedTime>44</elapsedTime>
-				<id>2</id>
-				<ia>hard</ia>
-				<isPlayer>false</isPlayer>
-				<killedBy />
-				<position>
-					<isSet>true</isSet>
-					<x>7.900000</x>
-					<y>1.500000</y>
-					<z>0.000000</z>
-				</position>
-				<prevPosition>
-					<isSet>true</isSet>
-					<x>8.100000</x>
-					<y>1.500000</y>
-					<z>0.000000</z>
-				</prevPosition>
-				<score>4</score>
-				<solid>true</solid>
-			</character>
-			<position>
-				<isSet>true</isSet>
-				<x>7</x>
-				<y>1</y>
-				<z>0</z>
-			</position>
-		</nb0>
-		<nb1>
-			<character>
-				<alive>true</alive>
-				<attributes>
-					<bombs>
-						<amount>1</amount>
-						<available>true</available>
-						<duration_modifier>1</duration_modifier>
-						<range>2</range>
-					</bombs>
-					<can_move>true</can_move>
-					<collision>true</collision>
-					<destructible>true</destructible>
-					<max_speed>1500</max_speed>
-					<speed>200</speed>
-					<visible>true</visible>
-				</attributes>
-				<elapsedTime>44</elapsedTime>
+				<elapsedTime>179</elapsedTime>
+				<ia>easy</ia>
 				<id>1</id>
-				<ia>hard</ia>
 				<isPlayer>false</isPlayer>
 				<killedBy />
 				<position>
@@ -79,12 +118,56 @@
 					<y>1.900000</y>
 					<z>0.000000</z>
 				</prevPosition>
-				<score>4</score>
+				<score>20</score>
 				<solid>true</solid>
 			</character>
 			<position>
 				<isSet>true</isSet>
 				<x>1</x>
+				<y>2</y>
+				<z>0</z>
+			</position>
+		</nb0>
+		<nb1>
+			<character>
+				<alive>true</alive>
+				<attributes>
+					<bombs>
+						<amount>2</amount>
+						<available>true</available>
+						<duration_modifier>1</duration_modifier>
+						<range>3</range>
+					</bombs>
+					<can_move>true</can_move>
+					<collision>true</collision>
+					<destructible>true</destructible>
+					<max_speed>1500</max_speed>
+					<speed>200</speed>
+					<visible>true</visible>
+				</attributes>
+				<elapsedTime>179</elapsedTime>
+				<ia>easy</ia>
+				<id>2</id>
+				<isPlayer>false</isPlayer>
+				<killedBy />
+				<position>
+					<isSet>true</isSet>
+					<x>7.500000</x>
+					<y>2.100000</y>
+					<z>0.000000</z>
+				</position>
+				<prevPosition>
+					<isSet>true</isSet>
+					<x>7.500000</x>
+					<y>1.900000</y>
+					<z>0.000000</z>
+				</prevPosition>
+				<score>23</score>
+				<solid>true</solid>
+			</character>
+			<position>
+				<isSet>true</isSet>
+				<x>7</x>
 				<y>2</y>
 				<z>0</z>
 			</position>
@@ -106,28 +189,29 @@
 					<speed>200</speed>
 					<visible>true</visible>
 				</attributes>
-				<elapsedTime>44</elapsedTime>
+				<elapsedTime>179</elapsedTime>
+				<ia>easy</ia>
 				<id>3</id>
-				<isPlayer>true</isPlayer>
+				<isPlayer>false</isPlayer>
 				<killedBy />
 				<position>
 					<isSet>true</isSet>
-					<x>1.500000</x>
-					<y>7.300000</y>
+					<x>7.500000</x>
+					<y>7.900000</y>
 					<z>0.000000</z>
 				</position>
 				<prevPosition>
 					<isSet>true</isSet>
-					<x>1.500000</x>
-					<y>7.500000</y>
+					<x>7.500000</x>
+					<y>7.700000</y>
 					<z>0.000000</z>
 				</prevPosition>
-				<score>4</score>
+				<score>17</score>
 				<solid>true</solid>
 			</character>
 			<position>
 				<isSet>true</isSet>
-				<x>1</x>
+				<x>7</x>
 				<y>7</y>
 				<z>0</z>
 			</position>
@@ -149,29 +233,50 @@
 					<speed>200</speed>
 					<visible>true</visible>
 				</attributes>
-				<elapsedTime>44</elapsedTime>
-				<id>4</id>
-				<ia>hard</ia>
-				<isPlayer>false</isPlayer>
+				<bombs>
+					<nb0>
+						<attributes>
+							<collision>false</collision>
+							<destructible>false</destructible>
+							<duration>4</duration>
+							<range>2</range>
+							<visible>true</visible>
+						</attributes>
+						<clockInit>true</clockInit>
+						<position>
+							<isSet>true</isSet>
+							<x>1</x>
+							<y>8</y>
+							<z>0</z>
+						</position>
+						<prevPosition>3</prevPosition>
+						<range>2</range>
+						<spawnTime>15.371903</spawnTime>
+					</nb0>
+				</bombs>
+				<elapsedTime>179</elapsedTime>
+				<ia>null</ia>
+				<id>1</id>
+				<isPlayer>true</isPlayer>
 				<killedBy />
 				<position>
 					<isSet>true</isSet>
-					<x>7.900000</x>
-					<y>8.500000</y>
+					<x>2.700000</x>
+					<y>8.300000</y>
 					<z>0.000000</z>
 				</position>
 				<prevPosition>
 					<isSet>true</isSet>
-					<x>8.100000</x>
-					<y>8.500000</y>
+					<x>2.500000</x>
+					<y>8.300000</y>
 					<z>0.000000</z>
 				</prevPosition>
-				<score>4</score>
+				<score>17</score>
 				<solid>true</solid>
 			</character>
 			<position>
 				<isSet>true</isSet>
-				<x>7</x>
+				<x>2</x>
 				<y>8</y>
 				<z>0</z>
 			</position>
@@ -182,54 +287,8 @@
 	<clock>
 		<paused>false</paused>
 		<run>true</run>
-		<seconds>4.494405</seconds>
+		<seconds>18.003685</seconds>
 	</clock>
-	<items>
-		<nb0>
-			<item>
-				<attributes>
-					<range_modifier>1</range_modifier>
-				</attributes>
-				<clockInit>false</clockInit>
-				<position>
-					<isSet>true</isSet>
-					<x>3</x>
-					<y>1</y>
-					<z>0</z>
-				</position>
-				<prevPosition>0</prevPosition>
-				<spawnTime>1750917343913612743614365025034404592234456290411205079210574124063450602224856108293452724325221757254105998492698071104248992533057693388818266224828372612597422890939632488239967996708838265300945951105300070035390668537177953098775463742530931399938810357507634067274386155670188971789669259143478952040837885929639053237857972987368742504076437046192152625619818505318146557649930339319912167624481018169933110741920695746104392538110486328301188170157916926191855952193166064573760865160681309910369976709469032970836935866216543051130402456833783032976740953155988931477923346628782156607818953209324845323786216112055052996060591672908866563245047768996350972805298905704351401641097686489574873473649368051295905294898841037556061980651463065335180478250035093240733773794356629924867190602527109237372541672137217616239755862478702003810438749067243999112632396111762828842397549989887149454049289694305571552353036918786748729914344258510210760051806877958690978097268535407109874720083971977670880496986880744985142910066536537000058735546100423969377420887301372347477954446226490780926310277915154515898380777056714289521387605133575053769208838221251915790442896990051878295828112474189478782122955459205217961543375250206203703245007322040938659713472185727077526570882014115936489781561614259779954853388393160692874793761965771535408752874456597771838085932299854286239024857760792885404085372759289181392439712102101460606347838663750030049100137434051126616370704159229700814557059468609768556765758382429532170900164671070450777005097787115813783999704055628341010930748641529406257362132153241218195505464668917192473720183027654150434550873263576322343944434289268436052415810767365628734272404304217904509221933062382157649429583882116419617641249731787521715139861375671921751822302601606268926259585235594375910377011479875877806263451668812739170323982154494317676546834247775727410228006497125897706283353269179793586131125315634601747027522280160610714659378260544619359876567837737481009524682714647148408778410919508943642815582809138853438623976783070802019654209515121204699854805821590953498984189146935895989322996528419858416307294818636167573374604297957366574806285822093738669932048986022392878883056474870092175392200862811340831640192344617683065536530369635854599426074652441184702308181895113682585427396789676600396440608988986107499333161388444342230545697012449675742167080617627242502988434065646363919546853537330546290297354471294625167564281845178855735574054313408492823729675472816252209657865669132732407656118255398586587435642776051056754419554958532272350163906744094773910743434801374099024399825308930301620186445236468747313950014918965752032221140366443788507015704482129978609974725365431247409783824885218755132583947248787379256063561884058281196126838211819345659106799248805817679432527120424190661684979812709263266048474296708123237715949318060818911406548963707127438655683439890185183533573405426744299020070226162501249413748787039888927274619357166085352506165162847817814627445006412417267000523950132984848919026932309625477725973435086063681889017057920452324850930355830937968167461604044248123308884727042277226065914890607014076121621904623562797687834104540385831242682963819255654867100833863992496012183231129207495898645169343526076416.000000</spawnTime>
-			</item>
-			<position>
-				<isSet>true</isSet>
-				<x>3</x>
-				<y>1</y>
-				<z>0</z>
-			</position>
-		</nb0>
-		<nb1>
-			<item>
-				<attributes>
-					<speed_modifier>20</speed_modifier>
-				</attributes>
-				<clockInit>false</clockInit>
-				<position>
-					<isSet>true</isSet>
-					<x>7</x>
-					<y>7</y>
-					<z>0</z>
-				</position>
-				<prevPosition>1</prevPosition>
-				<spawnTime>-0.Ñ25000</spawnTime>
-			</item>
-			<position>
-				<isSet>true</isSet>
-				<x>7</x>
-				<y>7</y>
-				<z>0</z>
-			</position>
-		</nb1>
-	</items>
 	<map>
 		<height>10</height>
 		<map>
@@ -504,7 +563,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -526,7 +584,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -590,13 +647,12 @@
 				<nb6>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -604,17 +660,16 @@
 						<y>1</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb6>
 				<nb7>
 					<attributes>
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -636,7 +691,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -704,7 +758,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -790,13 +843,12 @@
 				<nb5>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -804,10 +856,10 @@
 						<y>2</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb5>
 				<nb6>
 					<attributes>
@@ -836,7 +888,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -858,7 +909,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -924,13 +974,12 @@
 				<nb1>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -938,12 +987,33 @@
 						<y>3</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb1>
 				<nb2>
+					<attributes>
+						<block_bombs>false</block_bombs>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
+					</attributes>
+					<blockBombs>false</blockBombs>
+					<destructible>false</destructible>
+					<elapsedTime>0</elapsedTime>
+					<position>
+						<isSet>true</isSet>
+						<x>2</x>
+						<y>3</y>
+						<z>0</z>
+					</position>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
+				</nb2>
+				<nb3>
 					<attributes>
 						<block_bombs>false</block_bombs>
 						<collision>true</collision>
@@ -956,7 +1026,7 @@
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
-						<x>2</x>
+						<x>3</x>
 						<y>3</y>
 						<z>0</z>
 					</position>
@@ -964,39 +1034,17 @@
 					<texture>./assets/textures/wood.tga</texture>
 					<type>box</type>
 					<visible>true</visible>
-				</nb2>
-				<nb3>
-					<attributes>
-						<block_bombs>false</block_bombs>
-						<collision>false</collision>
-						<destructible>false</destructible>
-						<texture />
-						<visible>false</visible>
-					</attributes>
-					<blockBombs>false</blockBombs>
-					<destructible>false</destructible>
-					<elapsedTime>0</elapsedTime>
-					<position>
-						<isSet>true</isSet>
-						<x>3</x>
-						<y>3</y>
-						<z>0</z>
-					</position>
-					<solid>false</solid>
-					<texture />
-					<type>void</type>
-					<visible>false</visible>
 				</nb3>
 				<nb4>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>false</collision>
-						<destructible>false</destructible>
-						<texture />
-						<visible>false</visible>
+						<collision>true</collision>
+						<destructible>true</destructible>
+						<texture>./assets/textures/wood.tga</texture>
+						<visible>true</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>false</destructible>
+					<destructible>true</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1004,10 +1052,10 @@
 						<y>3</y>
 						<z>0</z>
 					</position>
-					<solid>false</solid>
-					<texture />
-					<type>void</type>
-					<visible>false</visible>
+					<solid>true</solid>
+					<texture>./assets/textures/wood.tga</texture>
+					<type>box</type>
+					<visible>true</visible>
 				</nb4>
 				<nb5>
 					<attributes>
@@ -1056,13 +1104,12 @@
 				<nb7>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1070,17 +1117,16 @@
 						<y>3</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb7>
 				<nb8>
 					<attributes>
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1368,13 +1414,13 @@
 				<nb1>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>false</collision>
-						<destructible>false</destructible>
-						<texture />
-						<visible>false</visible>
+						<collision>true</collision>
+						<destructible>true</destructible>
+						<texture>./assets/textures/wood.tga</texture>
+						<visible>true</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>false</destructible>
+					<destructible>true</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1382,10 +1428,10 @@
 						<y>5</y>
 						<z>0</z>
 					</position>
-					<solid>false</solid>
-					<texture />
-					<type>void</type>
-					<visible>false</visible>
+					<solid>true</solid>
+					<texture>./assets/textures/wood.tga</texture>
+					<type>box</type>
+					<visible>true</visible>
 				</nb1>
 				<nb2>
 					<attributes>
@@ -1412,13 +1458,12 @@
 				<nb3>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1426,10 +1471,10 @@
 						<y>5</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb3>
 				<nb4>
 					<attributes>
@@ -1456,13 +1501,13 @@
 				<nb5>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>false</collision>
-						<destructible>false</destructible>
-						<texture />
-						<visible>false</visible>
+						<collision>true</collision>
+						<destructible>true</destructible>
+						<texture>./assets/textures/wood.tga</texture>
+						<visible>true</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>false</destructible>
+					<destructible>true</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1470,10 +1515,10 @@
 						<y>5</y>
 						<z>0</z>
 					</position>
-					<solid>false</solid>
-					<texture />
-					<type>void</type>
-					<visible>false</visible>
+					<solid>true</solid>
+					<texture>./assets/textures/wood.tga</texture>
+					<type>box</type>
+					<visible>true</visible>
 				</nb5>
 				<nb6>
 					<attributes>
@@ -1678,13 +1723,12 @@
 				<nb5>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1692,10 +1736,10 @@
 						<y>6</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb5>
 				<nb6>
 					<attributes>
@@ -1722,13 +1766,13 @@
 				<nb7>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>false</collision>
-						<destructible>false</destructible>
-						<texture />
-						<visible>false</visible>
+						<collision>true</collision>
+						<destructible>true</destructible>
+						<texture>./assets/textures/wood.tga</texture>
+						<visible>true</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>false</destructible>
+					<destructible>true</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1736,10 +1780,10 @@
 						<y>6</y>
 						<z>0</z>
 					</position>
-					<solid>false</solid>
-					<texture />
-					<type>void</type>
-					<visible>false</visible>
+					<solid>true</solid>
+					<texture>./assets/textures/wood.tga</texture>
+					<type>box</type>
+					<visible>true</visible>
 				</nb7>
 				<nb8>
 					<attributes>
@@ -1814,7 +1858,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1856,13 +1899,12 @@
 				<nb3>
 					<attributes>
 						<block_bombs>false</block_bombs>
-						<collision>true</collision>
-						<destructible>true</destructible>
-						<texture>./assets/textures/wood.tga</texture>
-						<visible>true</visible>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
-					<destructible>true</destructible>
+					<destructible>false</destructible>
 					<elapsedTime>0</elapsedTime>
 					<position>
 						<isSet>true</isSet>
@@ -1870,10 +1912,10 @@
 						<y>7</y>
 						<z>0</z>
 					</position>
-					<solid>true</solid>
-					<texture>./assets/textures/wood.tga</texture>
-					<type>box</type>
-					<visible>true</visible>
+					<solid>false</solid>
+					<texture />
+					<type>void</type>
+					<visible>false</visible>
 				</nb3>
 				<nb4>
 					<attributes>
@@ -1946,7 +1988,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -1968,7 +2009,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2036,7 +2076,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2058,7 +2097,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2168,7 +2206,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2190,7 +2227,6 @@
 						<block_bombs>false</block_bombs>
 						<collision>false</collision>
 						<destructible>false</destructible>
-						<texture />
 						<visible>false</visible>
 					</attributes>
 					<blockBombs>false</blockBombs>
@@ -2472,23 +2508,45 @@
 				<speed>200</speed>
 				<visible>true</visible>
 			</attributes>
-			<elapsedTime>44</elapsedTime>
-			<id>3</id>
+			<bombs>
+				<nb0>
+					<attributes>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<duration>4</duration>
+						<range>2</range>
+						<visible>true</visible>
+					</attributes>
+					<clockInit>true</clockInit>
+					<position>
+						<isSet>true</isSet>
+						<x>1</x>
+						<y>8</y>
+						<z>0</z>
+					</position>
+					<prevPosition>3</prevPosition>
+					<range>2</range>
+					<spawnTime>15.371903</spawnTime>
+				</nb0>
+			</bombs>
+			<elapsedTime>179</elapsedTime>
+			<ia>null</ia>
+			<id>1</id>
 			<isPlayer>true</isPlayer>
 			<killedBy />
 			<position>
 				<isSet>true</isSet>
-				<x>1.500000</x>
-				<y>7.300000</y>
+				<x>2.700000</x>
+				<y>8.300000</y>
 				<z>0.000000</z>
 			</position>
 			<prevPosition>
 				<isSet>true</isSet>
-				<x>1.500000</x>
-				<y>7.500000</y>
+				<x>2.500000</x>
+				<y>8.300000</y>
 				<z>0.000000</z>
 			</prevPosition>
-			<score>4</score>
+			<score>17</score>
 			<solid>true</solid>
 		</nb0>
 	</players>
@@ -2498,7 +2556,7 @@
 			<alive>true</alive>
 			<attributes>
 				<bombs>
-					<amount>1</amount>
+					<amount>2</amount>
 					<available>true</available>
 					<duration_modifier>1</duration_modifier>
 					<range>2</range>
@@ -2510,7 +2568,8 @@
 				<speed>200</speed>
 				<visible>true</visible>
 			</attributes>
-			<elapsedTime>44</elapsedTime>
+			<elapsedTime>179</elapsedTime>
+			<ia>easy</ia>
 			<id>1</id>
 			<isPlayer>false</isPlayer>
 			<killedBy />
@@ -2526,17 +2585,17 @@
 				<y>1.900000</y>
 				<z>0.000000</z>
 			</prevPosition>
-			<score>4</score>
+			<score>20</score>
 			<solid>true</solid>
 		</nb0>
 		<nb1>
 			<alive>true</alive>
 			<attributes>
 				<bombs>
-					<amount>1</amount>
+					<amount>2</amount>
 					<available>true</available>
 					<duration_modifier>1</duration_modifier>
-					<range>2</range>
+					<range>3</range>
 				</bombs>
 				<can_move>true</can_move>
 				<collision>true</collision>
@@ -2545,23 +2604,24 @@
 				<speed>200</speed>
 				<visible>true</visible>
 			</attributes>
-			<elapsedTime>44</elapsedTime>
+			<elapsedTime>179</elapsedTime>
+			<ia>easy</ia>
 			<id>2</id>
 			<isPlayer>false</isPlayer>
 			<killedBy />
 			<position>
 				<isSet>true</isSet>
-				<x>7.900000</x>
-				<y>1.500000</y>
+				<x>7.500000</x>
+				<y>2.100000</y>
 				<z>0.000000</z>
 			</position>
 			<prevPosition>
 				<isSet>true</isSet>
-				<x>8.100000</x>
-				<y>1.500000</y>
+				<x>7.500000</x>
+				<y>1.900000</y>
 				<z>0.000000</z>
 			</prevPosition>
-			<score>4</score>
+			<score>23</score>
 			<solid>true</solid>
 		</nb1>
 		<nb2>
@@ -2580,23 +2640,45 @@
 				<speed>200</speed>
 				<visible>true</visible>
 			</attributes>
-			<elapsedTime>44</elapsedTime>
-			<id>3</id>
+			<bombs>
+				<nb0>
+					<attributes>
+						<collision>false</collision>
+						<destructible>false</destructible>
+						<duration>4</duration>
+						<range>2</range>
+						<visible>true</visible>
+					</attributes>
+					<clockInit>true</clockInit>
+					<position>
+						<isSet>true</isSet>
+						<x>1</x>
+						<y>8</y>
+						<z>0</z>
+					</position>
+					<prevPosition>3</prevPosition>
+					<range>2</range>
+					<spawnTime>15.371903</spawnTime>
+				</nb0>
+			</bombs>
+			<elapsedTime>179</elapsedTime>
+			<ia>null</ia>
+			<id>1</id>
 			<isPlayer>true</isPlayer>
 			<killedBy />
 			<position>
 				<isSet>true</isSet>
-				<x>1.500000</x>
-				<y>7.300000</y>
+				<x>2.700000</x>
+				<y>8.300000</y>
 				<z>0.000000</z>
 			</position>
 			<prevPosition>
 				<isSet>true</isSet>
-				<x>1.500000</x>
-				<y>7.500000</y>
+				<x>2.500000</x>
+				<y>8.300000</y>
 				<z>0.000000</z>
 			</prevPosition>
-			<score>4</score>
+			<score>17</score>
 			<solid>true</solid>
 		</nb2>
 		<nb3>
@@ -2615,25 +2697,26 @@
 				<speed>200</speed>
 				<visible>true</visible>
 			</attributes>
-			<elapsedTime>44</elapsedTime>
-			<id>4</id>
+			<elapsedTime>179</elapsedTime>
+			<ia>easy</ia>
+			<id>3</id>
 			<isPlayer>false</isPlayer>
 			<killedBy />
 			<position>
 				<isSet>true</isSet>
-				<x>7.900000</x>
-				<y>8.500000</y>
+				<x>7.500000</x>
+				<y>7.900000</y>
 				<z>0.000000</z>
 			</position>
 			<prevPosition>
 				<isSet>true</isSet>
-				<x>8.100000</x>
-				<y>8.500000</y>
+				<x>7.500000</x>
+				<y>7.700000</y>
 				<z>0.000000</z>
 			</prevPosition>
-			<score>4</score>
+			<score>17</score>
 			<solid>true</solid>
 		</nb3>
 	</scores>
-	<secondsElapsed>4</secondsElapsed>
+	<secondsElapsed>17</secondsElapsed>
 </config>

@@ -11,6 +11,7 @@
 #include "Graphics/Menu.hh"
 #include "Core/Menu.hh"
 #include "Core/Input.hh"
+#include "Core/Load.hh"
 
 Menu::Menu(const std::string & filename, const Level * level)
 	: _filename(filename), _level(level), _hasSelectable(false)
@@ -365,8 +366,11 @@ Menu::actionNewMenu(const std::string& param)
 void
 Menu::actionLoadLevel(const std::string& param)
 {
-	std::cout << "Loading level " << param << std::endl;
-	(void)param;
+	this->notify(this, MENU_EXITED);
+
+	Load	load(param);
+	Level* level = load.load();
+	this->notify(level, LEVEL_GENERATED);
 }
 
 void
