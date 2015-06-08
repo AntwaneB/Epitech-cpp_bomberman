@@ -272,14 +272,11 @@ Menu::actionNewMenu(const std::string& param)
 void
 Menu::actionLoadLevel(const std::string& param)
 {
-	std::cout << "Loading level " << param << std::endl;
-
 	this->notify(this, MENU_EXITED);
 
 	Load	load(param);
 	Level* level = load.load();
 	this->notify(level, LEVEL_GENERATED);
-
 }
 
 void
