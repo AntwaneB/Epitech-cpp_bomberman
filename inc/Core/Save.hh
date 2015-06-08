@@ -9,6 +9,7 @@
 #include "Core/Item.hh"
 #include "Core/BonusItem.hh"
 #include "Core/Position.hh"
+#include "Core/Monster.hh"
 
 class	Save
 {
@@ -19,6 +20,7 @@ public:
 
 private:
 	Config::Param			saveCharacter(const Character*) const;
+	Config::Param			saveMonster(const Monster*) const;
 	Config::Param			saveMap(const Map*) const;
 	Config::Param			saveBlock(const Block*) const;
 	Config::Param			saveClock(const Clock*) const;

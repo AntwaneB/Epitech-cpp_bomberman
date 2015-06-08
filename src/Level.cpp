@@ -80,9 +80,17 @@ Level::Level(Config cfg)
 	_map.addObserver(this);
 //	_difficulty;
 
+	for (auto it = cfg["items"].begin(); it != cfg["items"].end(); ++it)
+	{
+		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
+
+		Position<>	pos(it->second["position"]);
+		BonusItem* item = BonusItem::factory(type, pos);
+		this->itemDropped(item);
+	}
+
 	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)
 	{
-		Position<>	pos(it->second["position"]);
 		Character*	character = new Character(this, it->second["character"]);
 		_scores.push_back(character);
 		_characters[character->position()].push_back(character);
@@ -94,12 +102,20 @@ Level::Level(Config cfg)
 		this->addObserver(character);
 	}
 
+	for (auto it = cfg["monsters"].begin(); it != cfg["monsters"].end(); ++it)
+	{
+		Monster*	monster = new Monster(this, it->second["monster"]);
+		_monsters[monster->position()].push_back(monster);
+		monster->addObserver(this);
+		_clock.addObserver(monster);
+		this->addObserver(monster);
+	}
+
 	for (auto it = cfg["bombs"].begin(); it != cfg["bombs"].end(); ++it)
 	{
 		Position<> pos(it->second["position"]);
 		Bomb* bomb = new Bomb(it->second["bomb"]);
 		this->bombDropped(bomb);
-//		_bombs[pos].push_back(bomb);
 	}
 }
 

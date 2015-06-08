@@ -46,24 +46,24 @@ Character::Character(const Level * level, Config::Param cfg)
 	  _iaHard(NULL), _iaMedium(NULL), _iaEasy(NULL), _previousBomb(0), _prevMovement(-1), _moving(false),
 	  _direction(MOVE_DOWN)
 {
-        _actions[CLOCK_TICK] = &Character::tick;
-        _actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
-        _actions[KEY_PRESSED] = &Character::keyPressed;
+	_actions[CLOCK_TICK] = &Character::tick;
+	_actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
+	_actions[KEY_PRESSED] = &Character::keyPressed;
 
-        _id = cfg["id"];
-        _isPlayer = cfg["isPlayer"];
-        _attributes = cfg["attributes"];
-        _solid = true;
-        _alive = cfg["alive"];
-        _elapsedTime = cfg["elapsedTime"];
-        _elapsedCentiseconds = _elapsedTime * 10;
-        _score = cfg["score"];
-        if (!_isPlayer && cfg["ia"] == "easy")
-                _iaEasy = new IA::IA<IA::EASY>(_level, this);
-        else if (!_isPlayer && cfg["ia"] == "medium")
-                _iaMedium = new IA::IA<IA::MEDIUM>(_level, this);
-        else if (!_isPlayer && cfg["ia"] == "hard")
-                _iaHard = new IA::IA<IA::HARD>(_level, this);
+	_id = cfg["id"];
+	_isPlayer = cfg["isPlayer"];
+	_attributes = cfg["attributes"];
+	_solid = true;
+	_alive = cfg["alive"];
+	_elapsedTime = -1;
+	_elapsedCentiseconds = -1;
+	_score = cfg["score"];
+	if (!_isPlayer && cfg["ia"] == "easy")
+		_iaEasy = new IA::IA<IA::EASY>(_level, this);
+	else if (!_isPlayer && cfg["ia"] == "medium")
+		_iaMedium = new IA::IA<IA::MEDIUM>(_level, this);
+	else if (!_isPlayer && cfg["ia"] == "hard")
+		_iaHard = new IA::IA<IA::HARD>(_level, this);
 
 }
 
@@ -191,6 +191,7 @@ Character::tick(Subject* entity)
 		&& _attributes["speed"] != 0
 		&& _elapsedCentiseconds / (static_cast<int>(_attributes["max_speed"]) / static_cast<int>(_attributes["speed"])) > _prevMovement)
 	{ // Triggering movement
+	if (_isPlayer)
 		_prevMovement = _elapsedCentiseconds / (static_cast<int>(_attributes["max_speed"]) / static_cast<int>(_attributes["speed"]));
 		Character::Action movement = _queuedActions.front();
 		_queuedActions.pop();
@@ -227,7 +228,6 @@ Character::bombExploded(Subject* entity)
 		_alive = false;
 		_killedBy = bomb;
 		this->notify(this, CHARACTER_DIED);
-//		delete this;
 	}
 }
 

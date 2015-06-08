@@ -37,10 +37,14 @@ Save::save(const std::string filename) const
 		}
 	}
 	index = 0;
-	for (auto it = _level->_players.begin(); it != _level->_players.end(); ++it)
+	for (auto it = _level->_monsters.begin(); it != _level->_monsters.end(); ++it)
 	{
-		cfg["config"]["players"]["nb" + std::to_string(index)] = saveCharacter(*it);
-		++index;
+		for (auto subIt = it->second.begin(); subIt != it->second.end(); ++subIt)
+		{
+			cfg["config"]["monsters"]["nb" + std::to_string(index)]["position"] = savePosition(&it->first);
+			cfg["config"]["monsters"]["nb" + std::to_string(index)]["monster"] = saveMonster(*subIt);
+			++index;
+		}
 	}
 	index = 0;
 	for (auto it = _level->_bombs.begin(); it != _level->_bombs.end(); ++it)
@@ -103,6 +107,23 @@ Save::saveCharacter(const Character* character) const
 //queuedActions
 		cfg["elapsedTime"] = character->_elapsedTime;
 		cfg["score"] = character->_score;
+	}
+	return (cfg);
+}
+
+Config::Param
+Save::saveMonster(const Monster* monster) const
+{
+	Config::Param	cfg;
+
+	if (monster)
+	{
+		cfg["position"] = savePosition(&monster->_position);
+		cfg["prevPosition"] = savePosition(&monster->_prevPosition);
+		cfg["attributes"] = monster->_attributes;
+		cfg["alive"] = monster->_alive;
+		cfg["killedBy"] = saveBomb(monster->_killedBy);
+		cfg["elapsedTime"] = monster->_elapsedTime;
 	}
 	return (cfg);
 }
@@ -201,6 +222,7 @@ Save::saveBonusItem(const BonusItem* bonus) const
 		cfg["prevPosition"] = bonus->_type;
 		cfg["clockInit"] = bonus->_clockInit;
 		cfg["spawnTime"] = bonus->_spawnTime;
+		cfg["type"] = bonus->_type;
 	}
 	return (cfg);
 }

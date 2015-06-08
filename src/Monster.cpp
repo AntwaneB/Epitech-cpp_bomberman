@@ -20,6 +20,20 @@ Monster::Monster(const Level * level, Position<double> const & position)
 	this->notify(this, MONSTER_SPAWNED);
 }
 
+Monster::Monster(const Level * level, Config::Param cfg)
+	: _level(level), _position(cfg["position"]),  _prevPosition(cfg["prevPosition"]), _alive(cfg["alive"]), _killedBy(NULL), _elapsedTime(cfg["elapsedTime"]),
+	_elapsedCentiseconds(-1), _prevMovement(-1), _moving(false), _direction(Character::MOVE_DOWN)
+{
+	_actions[CLOCK_TICK] = &Monster::tick;
+	_actions[LEVEL_BOMB_EXPLODED] = &Monster::bombExploded;
+
+	_attributes = cfg["attributes"];
+	_elapsedCentiseconds = -1;
+	_elapsedTime = -1;
+
+	this->notify(this, MONSTER_SPAWNED);
+}
+
 Monster::~Monster()
 {
 }

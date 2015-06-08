@@ -12,6 +12,7 @@
 #include "Position.hh"
 #include "Clock.hh"
 #include "Character.hh"
+#include "Config.hh"
 
 class Item
 {
