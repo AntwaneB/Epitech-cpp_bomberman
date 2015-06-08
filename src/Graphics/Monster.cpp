@@ -10,17 +10,12 @@ Graphics::Monster::Monster(::Monster const * monster, gdl::Model* model)
 
 Graphics::Monster::~Monster()
 {
-
 }
 
 bool
 Graphics::Monster::initialize()
 {
 	_model->setCurrentAnim(0);
-	/*_model->createSubAnim(0, "RESET", 0, 0);
-  	_model->createSubAnim(0, "START", 20, 30);
-  	_model->createSubAnim(0, "RUN", 37, 90);
-  	_model->createSubAnim(0, "END", 90, 100);*/
   	return (true);
 }
 
@@ -94,39 +89,7 @@ Graphics::Monster::update(gdl::Clock const &clock, gdl::Input &input)
 void
 Graphics::Monster::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
-	//Couleur
 	_texture.bind();
-	/*if (_anim == true)
-	{
-		if (_frame == 0 || _frame > 25)
-		{
-			if (_frame > 25)
-				_frame = 1;
-			_model->setCurrentSubAnim("START");
-		}
-		if (_frame == 10)
-			_model->setCurrentSubAnim("RUN");
-		if (_frame == 25)
-			_frame = 15;
-		_frame += 1;
-	}
-	if (_anim == false)
-	{
-		if (_frame > 0 && _frame < 8)
-		{
-			_model->setCurrentSubAnim("END");
-			_frame = 8;
-		}
-		if (_frame >= 8 && _frame <= 20)
-			_frame += 1;
-		if (_frame >= 20)
-		{
-			_model->setCurrentSubAnim("RESET");
-			_frame = 0;
-		}
-		if (_frame != 0)
-			_frame += 1;
-	}*/
 	shader.bind();
 	shader.setUniform("color", glm::vec4(1,1,1,1));
 	_model->draw(shader, getTransformation(), clock.getElapsed());

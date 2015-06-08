@@ -65,20 +65,6 @@ bool Graphics::Cube::initialize()
 	return (true);
 }
 
-void Graphics::Cube::update(gdl::Clock const &clock, gdl::Input &input)
-{
-	(void)input;
-	(void)clock;
-	/*if (input.getKey(SDLK_UP))
-		translate(glm::vec3(0, 0, -1) * static_cast<float>(clock.getElapsed()) * _speed);
-	if (input.getKey(SDLK_DOWN))
-		translate(glm::vec3(0, 0, 1) * static_cast<float>(clock.getElapsed()) * _speed);
-	if (input.getKey(SDLK_LEFT))
-		translate(glm::vec3(-1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);
-	if (input.getKey(SDLK_RIGHT))
-		translate(glm::vec3(1, 0, 0) * static_cast<float>(clock.getElapsed()) * _speed);*/
-}
-
 void Graphics::Cube::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	(void)clock;

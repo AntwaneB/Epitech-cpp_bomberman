@@ -65,12 +65,6 @@ bool Graphics::Explosion::initialize()
 	return (true);
 }
 
-void Graphics::Explosion::update(gdl::Clock const &clock, gdl::Input &input)
-{
-	(void)input;
-	(void)clock;
-}
-
 void Graphics::Explosion::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	(void)clock;

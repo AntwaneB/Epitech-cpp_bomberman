@@ -73,12 +73,6 @@ bool Graphics::Skybox::initialize()
 	return (true);
 }
 
-void Graphics::Skybox::update(gdl::Clock const &clock, gdl::Input &input)
-{
-	(void)input;
-	(void)clock;
-}
-
 void Graphics::Skybox::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
 	(void)clock;
