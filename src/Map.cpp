@@ -28,6 +28,29 @@ Map::Map(std::string const & mapFile)
 	this->loadFromFile(mapFile);
 }
 
+Map::Map(Config::Param cfg)
+{
+	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
+	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
+
+	_width = static_cast<unsigned int>(cfg["width"]);
+	_height = static_cast<unsigned int>(cfg["height"]);
+
+	this->initMap();
+	for (auto itY = cfg["map"].begin(); itY != cfg["map"].end(); ++itY)
+	{
+		for (auto itX = itY->second.begin(); itX != itY->second.end(); ++itX)
+		{
+			size_t indexX;
+			size_t indexY;
+			indexX = (itX->second)["position"]["x"];
+			indexY = (itX->second)["position"]["y"];
+			_map[indexY][indexX] = new Block(itX->second);
+		}
+	}
+	this->bindBlocks();
+}
+
 Map::~Map()
 {
 	for (size_t y = 0; y < _map.size(); ++y)
@@ -214,13 +237,17 @@ Map::setDestructible()
 void
 Map::bindBlocks()
 {
+	int y = 0;
 	for (auto row = _map.begin(); row != _map.end(); ++row)
 	{
+		int x = 0;
 		for (auto block = row->begin(); block != row->end(); ++block)
 		{
 			this->addObserver(*block);
 			(*block)->addObserver(this);
+			x++;
 		}
+		y++;
 	}
 }
 

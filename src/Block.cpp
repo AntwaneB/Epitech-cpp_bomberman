@@ -23,6 +23,22 @@ Block::Block(Position<> const & position, std::string const & type)
 	_texture = static_cast<std::string>(g_settings["entities"]["blocks"][_type]["texture"]);
 }
 
+Block::Block(Config::Param cfg)
+	: _position(cfg["position"])
+{
+	_actions[CLOCK_TICK] = &Block::tick;
+	_actions[MAP_BOMB_EXPLODED] = &Block::bombExploded;
+
+	_type = static_cast<std::string>(cfg["type"]);
+	_attributes = cfg["attributes"];
+	_elapsedTime = cfg["elapsedTime"];
+	_visible = cfg["visible"];
+	_destructible = cfg["destructible"];
+	_solid = cfg["solid"];
+	_blockBombs = cfg["blockBombs"];
+	_texture = static_cast<std::string>(cfg["texture"]);
+}
+
 Block::~Block()
 {
 }

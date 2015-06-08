@@ -17,6 +17,13 @@ Clock::Clock()
 	_seconds = 0;
 }
 
+Clock::Clock(Config::Param cfg)
+{
+	_run = false;
+	_paused = false;
+	_seconds = static_cast<double>(cfg["seconds"]);
+}
+
 Clock::~Clock()
 {
 }

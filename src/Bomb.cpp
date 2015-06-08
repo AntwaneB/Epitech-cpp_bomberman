@@ -16,6 +16,13 @@ Bomb::Bomb(Position<> const & position, size_t range, double duration, const Cha
 	_attributes = g_settings["entities"]["bomb"];
 }
 
+Bomb::Bomb(Config::Param cfg)
+	: Item(Position<>(cfg["position"])), _owner(NULL), _progress(0)
+{
+	_range = cfg["range"];
+	_attributes = cfg["attributes"];
+}
+
 Bomb::~Bomb()
 {
 }

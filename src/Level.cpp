@@ -47,23 +47,61 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 
 	this->pushMonster();
 }
-/*
-Level::Level(Config cfg) : _map(cfg["map"]), _clock(cfg["clock"])
+
+Level::Level(Config cfg)
+	: _map(cfg["map"]), _clock(cfg["clock"])
 {
-	_characters;
-	for (auto it = cfg["players"].begin(); it != cfg["players"].end(); ++it)
-		_players.push_back(new Character(it->second));
-	_bombs;
-	_items;
-	_explosions;
+	_actions[CLOCK_TICK] = &Level::tick;
+	_actions[CLOCK_PAUSE_TICK] = &Level::pauseTick;
+	_actions[CHARACTER_MOVED] = &Level::characterMoved;
+	_actions[CHARACTER_DIED] = &Level::characterDied;
+	_actions[MONSTER_MOVED] = &Level::monsterMoved;
+	_actions[MONSTER_DIED] = &Level::monsterDied;
+	_actions[ITEM_DROPPED] = &Level::itemDropped;
+	_actions[ITEM_MOVED] = &Level::itemMoved;
+	_actions[ITEM_DESTROYED] = &Level::itemDestroyed;
+	_actions[BOMB_DROPPED] = &Level::bombDropped;
+	_actions[BOMB_EXPLODED] = &Level::bombExploded;
+	_actions[MAP_BLOCK_DESTROYED] = &Level::blockDestroyed;
+	_actions[KEY_PRESSED] = &Level::keyPressed;
+	_actions[EXIT_TRIGGERED] = &Level::quitLevel;
+
+//	_items;
+//	_explosions;
 	_charactersCount = cfg["charactersCount"];
 	_playersCount = cfg["playersCount"];
 	_secondsElapsed = cfg["secondsElapsed"];
-	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
-		_scores.push_back(new Character(it->second));
+//	for (auto it = cfg["scores"].begin(); it != cfg["scores"].end(); ++it)
+//		_scores.push_back(new Character(it->second));
 	_charactersKills = cfg["charactersKills"];
-	_difficulty;
-}*/
+
+	_clock.addObserver(this);
+	this->addObserver(&_map);
+	_map.addObserver(this);
+//	_difficulty;
+
+	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)
+	{
+		Position<>	pos(it->second["position"]);
+		Character*	character = new Character(this, it->second["character"]);
+		_scores.push_back(character);
+		_characters[character->position()].push_back(character);
+		if (character->isPlayer())
+			_players.push_back(character);
+
+		character->addObserver(this);
+		_clock.addObserver(character);
+		this->addObserver(character);
+	}
+
+	for (auto it = cfg["bombs"].begin(); it != cfg["bombs"].end(); ++it)
+	{
+		Position<> pos(it->second["position"]);
+		Bomb* bomb = new Bomb(it->second["bomb"]);
+		this->bombDropped(bomb);
+//		_bombs[pos].push_back(bomb);
+	}
+}
 
 Level::~Level()
 {
@@ -543,7 +581,7 @@ Level::keyPressed(Subject* entity)
 			previousSave = _clock.seconds();
 			std::cout << "Saving level to file..." << std::endl;
 
-			Save	save(this, "./save.xml");
+			Save	save(this, "./saves/save.xml");
 			save.save();
 		}
 	}

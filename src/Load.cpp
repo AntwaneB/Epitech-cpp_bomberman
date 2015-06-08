@@ -1,4 +1,5 @@
 #include "Core/Load.hh"
+#include "Core/Save.hh"
 
 Load::Load(const std::string filename) : _filename(filename)
 {
@@ -16,11 +17,11 @@ Load::load(void) const
 	try
 	{
 		cfg.importFile(_filename);
-
 		Level	*level;
 
-//		level = new Level(cfg);
-		level = NULL;
+		level = new Level(cfg);
+//		Save	save(level, "load.xml");
+//		save.save();
 		return (level);
 	}
 	catch (ConfigException const & e)

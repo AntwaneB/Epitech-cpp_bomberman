@@ -12,7 +12,7 @@
 #include "Core/BombAmountIncreaser.hh"
 
 Item::Item(Position<> const & position, Type type)
-	: _position(position), _prevPosition(position), _type(type), _clockInit(false)
+	: _position(position), _prevPosition(position), _type(type), _clockInit(false), _spawnTime(0)
 {
 }
 

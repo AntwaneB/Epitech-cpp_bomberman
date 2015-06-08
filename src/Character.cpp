@@ -41,6 +41,32 @@ Character::Character(const Level * level, size_t id, bool isPlayer, IA::Difficul
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
+Character::Character(const Level * level, Config::Param cfg)
+        : _level(level), _position(cfg["position"]), _prevPosition(cfg["prevP$
+          _iaHard(NULL), _iaMedium(NULL), _iaEasy(NULL), _previousBomb(0), _p$
+          _direction(MOVE_DOWN)
+{
+        _actions[CLOCK_TICK] = &Character::tick;
+        _actions[LEVEL_BOMB_EXPLODED] = &Character::bombExploded;
+        _actions[KEY_PRESSED] = &Character::keyPressed;
+
+        _id = cfg["id"];
+        _isPlayer = cfg["isPlayer"];
+        _attributes = cfg["attributes"];
+        _solid = true;
+        _alive = cfg["alive"];
+        _elapsedTime = cfg["elapsedTime"];
+        _elapsedCentiseconds = _elapsedTime * 10;
+        _score = cfg["score"];
+        if (!_isPlayer && cfg["ia"] == "easy")
+                _iaEasy = new IA::IA<IA::EASY>(_level, this);
+        else if (!_isPlayer && cfg["ia"] == "medium")
+                _iaMedium = new IA::IA<IA::MEDIUM>(_level, this);
+        else if (!_isPlayer && cfg["ia"] == "hard")
+                _iaHard = new IA::IA<IA::HARD>(_level, this);
+
+}
+
 Character::~Character()
 {
 	if (_iaHard)
