@@ -6,9 +6,14 @@ Graphics::Character::Character(::Character const * character, gdl::Model* model,
 	_position.decX(0.5);
 	_position.decY(0.5);
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
-	_color.x = (1.0 / _charactersCount) * _id;
-	_color.y = 1.0 - (1.0 / _charactersCount) * _id;
-	_color.z = (1.0 / _charactersCount) * _id;
+	_color.x = (pow(256, 3) / _charactersCount) * _id;
+	_color.y = _color.x / pow(256, 2);
+	_color.z = _color.y / pow(256, 2);
+	_color.x = static_cast<double>(static_cast<int>(_color.x) % 256) / 255;
+	_color.y = static_cast<double>(static_cast<int>(_color.y) % 256) / 255;
+	std::cout << _color.x << std::endl;
+	std::cout << _color.y << std::endl;
+	std::cout << _color.z << std::endl;
 }
 
 Graphics::Character::~Character()
