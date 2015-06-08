@@ -116,7 +116,6 @@ Level::Level(Config cfg)
 		Position<> pos(it->second["position"]);
 		Bomb* bomb = new Bomb(it->second["bomb"]);
 		this->bombDropped(bomb);
-//		_bombs[pos].push_back(bomb);
 	}
 }
 

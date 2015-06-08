@@ -28,6 +28,10 @@ Monster::Monster(const Level * level, Config::Param cfg)
 	_actions[LEVEL_BOMB_EXPLODED] = &Monster::bombExploded;
 
 	_attributes = cfg["attributes"];
+	_elapsedCentiseconds = -1;
+	_elapsedTime = -1;
+
+	this->notify(this, MONSTER_SPAWNED);
 }
 
 Monster::~Monster()
