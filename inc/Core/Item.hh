@@ -22,6 +22,7 @@ public:
 
 public:
 	Item(Position<> const &, Type type = last);
+	Item(Config::Param);
 	virtual ~Item() = 0;
 
 	Type		type() const;

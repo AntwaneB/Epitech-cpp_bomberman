@@ -15,10 +15,13 @@
 
 class Monster : public EventHandler<Monster>, public Subject
 {
+	friend class	Save;
+
 	typedef Character::Action	Action;
 
 public:
 	Monster(const Level * level, Position<double> const & position);
+	Monster(const Level * level,Config::Param)
 	virtual ~Monster();
 
 	Position<double>	position() const;
