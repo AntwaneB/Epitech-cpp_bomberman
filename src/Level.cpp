@@ -225,6 +225,7 @@ Level::run()
 void
 Level::end()
 {
+	/*
 	std::cout << std::endl << "#### Scores ####" << std::endl;
 
 	int y;
@@ -234,6 +235,7 @@ Level::end()
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
 	std::cout << std::endl;
+	*/
 
 	_winner = NULL;
 	for (auto it = _scores.begin(); it != _scores.end(); ++it)
