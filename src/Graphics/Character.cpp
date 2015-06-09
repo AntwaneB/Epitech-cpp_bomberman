@@ -1,19 +1,20 @@
 #include "Graphics/Character.hh"
 
 Graphics::Character::Character(::Character const * character, gdl::Model* model, const size_t id, const size_t charactersCount)
-	: Object(character->position()), _character(character), _model(model), _frame(0), _anim(false), _id(id), _charactersCount(charactersCount)
+	: Object(character->position()), _character(character), _model(model), _frame(0), _anim(false), _id(id + 1), _charactersCount(charactersCount)
 {
 	_position.decX(0.5);
 	_position.decY(0.5);
 	scale(glm::vec3(0.0025, 0.0025, 0.0025));
-	_color.x = (pow(256, 3) / _charactersCount) * _id;
-	_color.y = _color.x / pow(256, 2);
-	_color.z = _color.y / pow(256, 2);
-	_color.x = static_cast<double>(static_cast<int>(_color.x) % 256) / 255;
-	_color.y = static_cast<double>(static_cast<int>(_color.y) % 256) / 255;
-	std::cout << _color.x << std::endl;
-	std::cout << _color.y << std::endl;
-	std::cout << _color.z << std::endl;
+	_color.x = 1.0;
+	_color.y = 1.0;
+	_color.z = 1.0;
+	if (_id <= _charactersCount / 3.0)
+		_color.x = (1.0 / (_charactersCount / 3.0)) * _id;
+	else if (_id <= _charactersCount / 3.0 * 2.0)
+		_color.y = (1.0 / (_charactersCount / 3.0)) * (_id - (_charactersCount / 3.0));
+	else
+		_color.z = (1.0 / (_charactersCount / 3.0)) * (_id - (_charactersCount / 3.0) * 2);
 }
 
 Graphics::Character::~Character()
