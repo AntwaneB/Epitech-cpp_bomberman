@@ -11,9 +11,11 @@ Graphics::Character::Character(::Character const * character, gdl::Model* model,
 	_color.z = _color.y / pow(256, 2);
 	_color.x = static_cast<double>(static_cast<int>(_color.x) % 256) / 255;
 	_color.y = static_cast<double>(static_cast<int>(_color.y) % 256) / 255;
+	/*
 	std::cout << _color.x << std::endl;
 	std::cout << _color.y << std::endl;
 	std::cout << _color.z << std::endl;
+	*/
 }
 
 Graphics::Character::~Character()
