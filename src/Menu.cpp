@@ -58,7 +58,6 @@ Menu::init()
 {
 	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
 	{
-		_hasSelectable = it->second["selectable"] || it->second["selected"] ? true : _hasSelectable;
 		if (it->second["is_collection"] == true)
 		{
 			Config::Param& collection = it->second;
@@ -74,6 +73,10 @@ Menu::init()
 
 			this->buildFromLevelValue(value);
 		}
+	}
+	for (auto it = _layout["content"].begin(); it != _layout["content"].end(); ++it)
+	{
+		_hasSelectable = it->second["selectable"] == true || it->second["selected"] == true ? true : _hasSelectable;
 	}
 }
 
@@ -149,7 +152,7 @@ Menu::buildFileContentCollection(Config::Param& collection)
 			Config::Param element;
 			element["type"] = "value_only";
 			element["order"] = i + 1;
-			element["selectable"] = true;
+			element["selectable"] = collection["selectable"] == true ? true : false;
 			element["selected"] = collection["selected"] == true && i == 0 ? true : false;
 			element["has_value"] = true;
 			element["value"]["value"] = col1 + " " + col2;
@@ -188,7 +191,7 @@ Menu::buildFileContentCollection(Config::Param& collection)
 			Config::Param element;
 			element["type"] = "value_only";
 			element["order"] = i + 1;
-			element["selectable"] = true;
+			element["selectable"] = collection["selectable"] == true ? true : false;
 			element["selected"] = collection["selected"] == true && i == 0 ? true : false;
 			element["has_value"] = true;
 			element["value"]["value"] = it->second + " " + std::to_string(it->first);

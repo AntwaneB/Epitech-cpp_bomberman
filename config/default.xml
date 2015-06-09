@@ -14,7 +14,7 @@
 	</maps>
 
 	<sounds>
-		<enabled>false</enabled>
+		<enabled>true</enabled>
 		<bomb_exploded>./assets/sounds/explosion.wav</bomb_exploded>
 		<level_started>./assets/sounds/plants_vs_zombies.wav</level_started>
 		<menu_started>./assets/sounds/acdc_tnt.ogg</menu_started>

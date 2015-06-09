@@ -242,6 +242,15 @@ Level::end()
 			_winner = *it;
 	}
 
+	if (_winner == NULL)
+	{
+		for (auto it = _scores.begin(); it != _scores.end(); ++it)
+		{
+			if (_winner == NULL || (*it)->score() > _winner->score())
+				_winner = *it;
+		}
+	}
+
 	this->notify(this, LEVEL_ENDED);
 }
 
@@ -310,7 +319,7 @@ Level::pushCharacter()
 	size_t blockWidth = _map.width() / blocksPerLine;
 	size_t blockHeight = _map.height() / lines;
 
-	size_t nth = _characters.size();
+	size_t nth = this->charactersRaw().size();
 
 	size_t blockX = nth % blocksPerLine;
 	size_t blockY = nth / blocksPerLine;
