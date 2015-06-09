@@ -57,12 +57,9 @@ App::runLevel(Subject* entity)
 
 	level->addObserver(this);
 
-	if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
-	{
-		level->addObserver(_display);
-		_display->addObserver(level);
-		this->addObserver(level);
-	}
+	level->addObserver(_display);
+	_display->addObserver(level);
+	this->addObserver(level);
 
 	level->run();
 }
@@ -100,17 +97,13 @@ App::run()
 {
 	try
 	{
-		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
-		{
-			_display = new Graphics::Display;
-			this->addObserver(_display);
-			_display->addObserver(this);
-		}
+		_display = new Graphics::Display;
+		this->addObserver(_display);
+		_display->addObserver(this);
 
 		Menu* mainMenu = new Menu("menus/main.xml");
 		mainMenu->addObserver(this);
-		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
-			mainMenu->addObserver(_display);
+		mainMenu->addObserver(_display);
 
 		try
 		{
@@ -124,8 +117,7 @@ App::run()
 	}
 	catch (ExitException const & e)
 	{
-		if (std::find(_av.begin(), _av.end(), "--gui") != _av.end())
-			delete _display;
+		delete _display;
 		return (EXIT_SUCCESS);
 	}
 	catch (std::exception const & e)
