@@ -6,6 +6,7 @@
  */
 
 #include <cmath>
+#include <unistd.h>
 #include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
@@ -608,7 +609,10 @@ Level::keyPressed(Subject* entity)
 			previousSave = _clock.seconds();
 			std::cout << "Saving level to file..." << std::endl;
 
-			Save	save(this, "./saves/save.xml");
+			std::string saveName = "./saves/save";
+			saveName += std::to_string(time(NULL));
+			saveName += ".xml";
+			Save save(this, saveName);
 			save.save();
 		}
 	}
