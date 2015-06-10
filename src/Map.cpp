@@ -243,6 +243,8 @@ Map::bindBlocks()
 		int x = 0;
 		for (auto block = row->begin(); block != row->end(); ++block)
 		{
+			if (!(*block))
+				throw MapException("Invalid map");
 			this->addObserver(*block);
 			(*block)->addObserver(this);
 			x++;
