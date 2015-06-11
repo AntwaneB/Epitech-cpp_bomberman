@@ -104,7 +104,7 @@ App::run()
 		this->addObserver(_display);
 		_display->addObserver(this);
 
-		Menu* mainMenu = new Menu("menus/main.xml");
+		Menu* mainMenu = new Menu("menus/intro.xml");
 		mainMenu->addObserver(this);
 		mainMenu->addObserver(_display);
 
