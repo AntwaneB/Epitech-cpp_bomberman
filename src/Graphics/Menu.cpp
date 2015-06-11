@@ -155,7 +155,8 @@ Graphics::Menu::draw()
 {
 	_window.clear();
 
-	_window.draw(*_background);
+	if (_background)
+		_window.draw(*_background);
 	if (_menu->hasSelectable())
 		_window.draw(_cursor);
 
