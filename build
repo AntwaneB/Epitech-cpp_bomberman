@@ -17,13 +17,13 @@ echo "";
 
 if [ "$1" == "--gui" ]||[ "$2" == "--gui" ]; then
 	if [ "$1" == "-d" ]||[ "$2" == "-d" ]; then
-		valgrind ./bomberman --gui
+		valgrind ./bomberman
 	else
-		./bomberman --gui
+		./bomberman
 	fi
 else
 	if [ "$1" == "-d" ]||[ "$2" == "-d" ]; then
-		valgrind --leak-check=full ./bomberman
+		valgrind ./bomberman
 	else
 		./bomberman
 	fi

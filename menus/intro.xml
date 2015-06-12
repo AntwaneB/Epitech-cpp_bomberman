@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<config>
+	<assets>
+		<location>./assets/asset.png</location>
+	</assets>
+	<cursor>
+		<asset>
+			<texture>
+				<start_x>1100</start_x>
+				<start_y>503</start_y>
+				<width>780</width>
+				<height>100</height>
+			</texture>
+			<scale>
+				<x>0.5f</x>
+				<y>0.5f</y>
+			</scale>
+			<position>
+				<x>565</x>
+				<y>338</y>
+			</position>
+		</asset>
+	</cursor>
+	<title>Bomberman !</title>
+	<size>
+		<x>960</x>
+		<y>540</y>
+	</size>
+	<sound>./assets/bomberman.wav</sound>
+	<background>
+		<location>./assets/intro.png</location>
+		<scale>
+			<x>1f</x>
+			<y>1f</y>
+		</scale>
+	</background>
+	<content>
+
+		<next>
+			<selected>true</selected>
+			<selectable>true</selectable>
+			<type>value_only</type>
+			<value>
+				<type>ASCII</type>
+				<value>next</value>
+				<size>70</size>
+				<color>default</color>
+				<x>770</x>
+				<y>450</y>
+			</value>
+			<has_value>true</has_value>
+			<cursor>
+				<position>
+					<x>725</x>
+					<y>488</y>
+				</position>
+			</cursor>
+			<action>
+				<name>NEW_MENU</name>
+				<param>./menus/main.xml</param>
+			</action>
+		</next>
+
+	</content>
+</config>

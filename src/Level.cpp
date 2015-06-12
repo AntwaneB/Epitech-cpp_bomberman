@@ -6,6 +6,7 @@
  */
 
 #include <cmath>
+#include <unistd.h>
 #include "global.hh"
 #include "Exception.hpp"
 #include "misc/StdHelper.hpp"
@@ -82,11 +83,11 @@ Level::Level(Config cfg)
 
 	for (auto it = cfg["items"].begin(); it != cfg["items"].end(); ++it)
 	{
-		Item*	item = new Item(it->second["item"]);
-		_items[item->position()].push_back(item);
-		item->addObserver(this);
-		_clock.addObserver(item);
-		this->addObserver(item);
+		Item::Type type = static_cast<Item::Type>(rand() % Item::last);
+
+		Position<>	pos(it->second["position"]);
+		BonusItem* item = BonusItem::factory(type, pos);
+		this->itemDropped(item);
 	}
 
 	for (auto it = cfg["characters"].begin(); it != cfg["characters"].end(); ++it)
@@ -116,7 +117,6 @@ Level::Level(Config cfg)
 		Position<> pos(it->second["position"]);
 		Bomb* bomb = new Bomb(it->second["bomb"]);
 		this->bombDropped(bomb);
-//		_bombs[pos].push_back(bomb);
 	}
 }
 
@@ -226,6 +226,7 @@ Level::run()
 void
 Level::end()
 {
+	/*
 	std::cout << std::endl << "#### Scores ####" << std::endl;
 
 	int y;
@@ -235,12 +236,22 @@ Level::end()
 		std::cout << ((*it)->isPlayer() ? "Player " : "IA ") << ((*it)->isPlayer() ? ++i : ++y) << " : " << (*it)->score() << " points" << std::endl;
 	}
 	std::cout << std::endl;
+	*/
 
 	_winner = NULL;
 	for (auto it = _scores.begin(); it != _scores.end(); ++it)
 	{
 		if ((*it)->alive() && (_winner == NULL || (*it)->score() > _winner->score()))
 			_winner = *it;
+	}
+
+	if (_winner == NULL)
+	{
+		for (auto it = _scores.begin(); it != _scores.end(); ++it)
+		{
+			if (_winner == NULL || (*it)->score() > _winner->score())
+				_winner = *it;
+		}
 	}
 
 	this->notify(this, LEVEL_ENDED);
@@ -311,7 +322,7 @@ Level::pushCharacter()
 	size_t blockWidth = _map.width() / blocksPerLine;
 	size_t blockHeight = _map.height() / lines;
 
-	size_t nth = _characters.size();
+	size_t nth = this->charactersRaw().size();
 
 	size_t blockX = nth % blocksPerLine;
 	size_t blockY = nth / blocksPerLine;
@@ -598,7 +609,10 @@ Level::keyPressed(Subject* entity)
 			previousSave = _clock.seconds();
 			std::cout << "Saving level to file..." << std::endl;
 
-			Save	save(this, "./saves/save.xml");
+			std::string saveName = "./saves/save";
+			saveName += std::to_string(time(NULL));
+			saveName += ".xml";
+			Save save(this, saveName);
 			save.save();
 		}
 	}

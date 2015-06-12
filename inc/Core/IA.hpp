@@ -102,8 +102,8 @@ namespace IA
 }
 
 template<IA::Difficulty T>
-IA::IA<T>::IA(Level const* level, Character* character):
-		_level(level)
+IA::IA<T>::IA(Level const* level, Character* character)
+	: _strategyMapInitialized(false), _level(level)
 {
 	if (VERBOSE)
 	{

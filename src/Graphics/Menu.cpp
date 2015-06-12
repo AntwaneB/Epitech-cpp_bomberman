@@ -21,6 +21,8 @@ Graphics::Menu::~Menu()
 {
 	_sprites.clear();
 	_window.close();
+	if (_background)
+		delete _background;
 }
 
 void
@@ -42,8 +44,11 @@ Graphics::Menu::init(::Menu* menu)
 
 	// Screen background
 	_backgroundTexture.loadFromFile(_menu->layout()["background"]["location"]);
-	_background.setTexture(_backgroundTexture);
-	_background.setScale(_menu->layout()["background"]["scale"]["x"], _menu->layout()["background"]["scale"]["y"]);
+	if (_background != NULL)
+		delete _background;
+	_background = new sf::Sprite;
+	_background->setTexture(_backgroundTexture);
+	_background->setScale(_menu->layout()["background"]["scale"]["x"], _menu->layout()["background"]["scale"]["y"]);
 
 	// Text and buttons assets
 	_assetsTexture.loadFromFile(_menu->layout()["assets"]["location"]);
@@ -150,7 +155,8 @@ Graphics::Menu::draw()
 {
 	_window.clear();
 
-	_window.draw(_background);
+	if (_background)
+		_window.draw(*_background);
 	if (_menu->hasSelectable())
 		_window.draw(_cursor);
 

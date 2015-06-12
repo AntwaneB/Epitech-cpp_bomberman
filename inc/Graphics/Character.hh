@@ -17,7 +17,7 @@ namespace Graphics
 	class Character : public Object
 	{
 	public:
-      Character(::Character const *, gdl::Model*);
+      Character(::Character const *, gdl::Model*, const size_t, const size_t);
       virtual ~Character();
 
       virtual bool  initialize();
@@ -33,9 +33,11 @@ namespace Graphics
       gdl::Texture            _texture;
       const ::Character*      _character;
       gdl::Model*             _model;
-      glm::vec4                  _color;
-      int                     _frame = 0;
-      bool                     _anim = false;
+      glm::vec4               _color;
+      int                     _frame;
+      bool                    _anim;
+      size_t                  _id;
+      size_t                  _charactersCount;
 	};
 };
 

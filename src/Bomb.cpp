@@ -19,8 +19,11 @@ Bomb::Bomb(Position<> const & position, size_t range, double duration, const Cha
 Bomb::Bomb(Config::Param cfg)
 	: Item(Position<>(cfg["position"])), _owner(NULL), _progress(0)
 {
-	_range = cfg["range"];
+	_actions[CLOCK_TICK] = &Bomb::tick;
+
 	_attributes = cfg["attributes"];
+	_duration = _attributes["duration"];
+	_range = _attributes["range"];
 }
 
 Bomb::~Bomb()

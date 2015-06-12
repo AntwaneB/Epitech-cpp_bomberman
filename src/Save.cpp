@@ -1,10 +1,12 @@
 #include "Core/Save.hh"
 
-Save::Save(Level* level) : _level(level), _filename("default.xml")
+Save::Save(Level* level)
+	: _level(level), _filename("default.xml")
 {
 }
 
-Save::Save(Level* level, const std::string filename) : _level(level), _filename(filename)
+Save::Save(Level* level, const std::string filename)
+	: _level(level), _filename(filename)
 {
 }
 

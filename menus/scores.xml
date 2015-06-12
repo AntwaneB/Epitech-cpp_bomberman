@@ -57,7 +57,7 @@
 		</title>
 
 		<scores>
-			<selected>true</selected>
+			<selected>false</selected>
 			<selectable>false</selectable>
 			<id>scores</id>
 			<is_collection>true</is_collection>
