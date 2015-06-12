@@ -1,0 +1,50 @@
+inc/
+├── Core
+│   ├── App.hh
+##│   ├── Block.hh
+##│   ├── Bomb.hh
+##│   ├── BombAmountIncreaser.hh
+##│   ├── BonusItem.hh
+##│   ├── Character.hh
+│   ├── Clock.hh
+│   ├── Config.hh
+│   ├── IA.hpp
+│   ├── Input.hh
+##│   ├── Item.hh
+##│   ├── Level.hh
+│   ├── Load.hh
+│   ├── Lua.hh
+##│   ├── Map.hh
+│   ├── Menu.hh
+##│   ├── Monster.hh
+##│   ├── Observer.hpp
+##│   ├── Position.hh
+##│   ├── RangeIncreaser.hh
+│   ├── Save.hh
+#│   ├── SpeedIncreaser.hh
+│   ├── Thread.hh
+│   └── ThreadPool.hpp
+├── Exception.hpp
+├── Graphics
+│   ├── Audio.hh
+│   ├── Bomb.hh
+│   ├── Character.hh
+│   ├── Cube.hh
+│   ├── Display.hh
+│   ├── Explosion.hh
+│   ├── Ground.hh
+│   ├── Item.hh
+│   ├── Level.hh
+│   ├── Map.hh
+│   ├── Menu.hh
+│   ├── Monster.hh
+│   ├── Object.hh
+│   ├── Skybox.hh
+│   └── Split.hh
+├── global.hh
+└── misc
+    ├── StdHelper.hpp
+    ├── pugiconfig.hpp
+    └── pugixml.hpp
+
+3 directories, 44 files
