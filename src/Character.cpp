@@ -41,7 +41,7 @@ Character::Character(const Level * level, size_t id, bool isPlayer, IA::Difficul
 	this->notify(this, CHARACTER_SPAWNED);
 }
 
-Character::Character(const Level * level, Config::Param cfg)
+Character::Character(const Level * level, Config::Param & cfg)
 	: _level(level), _position(cfg["position"]), _prevPosition(cfg["prevPosition"]), _killedBy(NULL),
 	  _iaHard(NULL), _iaMedium(NULL), _iaEasy(NULL), _previousBomb(0), _prevMovement(-1), _moving(false),
 	  _direction(MOVE_DOWN)

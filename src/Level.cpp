@@ -49,7 +49,7 @@ Level::Level(size_t width, size_t height, size_t charactersCount, size_t players
 	this->pushMonster();
 }
 
-Level::Level(Config cfg)
+Level::Level(Config & cfg)
 	: _map(cfg["map"]), _clock(cfg["clock"])
 {
 	_actions[CLOCK_TICK] = &Level::tick;

@@ -16,7 +16,7 @@ Bomb::Bomb(Position<> const & position, size_t range, double duration, const Cha
 	_attributes = g_settings["entities"]["bomb"];
 }
 
-Bomb::Bomb(Config::Param cfg)
+Bomb::Bomb(Config::Param & cfg)
 	: Item(Position<>(cfg["position"])), _owner(NULL), _progress(0)
 {
 	_actions[CLOCK_TICK] = &Bomb::tick;

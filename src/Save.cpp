@@ -1,11 +1,11 @@
 #include "Core/Save.hh"
 
-Save::Save(Level* level)
+Save::Save(const Level* level)
 	: _level(level), _filename("default.xml")
 {
 }
 
-Save::Save(Level* level, const std::string filename)
+Save::Save(const Level* level, const std::string filename)
 	: _level(level), _filename(filename)
 {
 }
@@ -79,7 +79,6 @@ Save::save(const std::string filename) const
 		++index;
 	}
 	cfg["config"]["charactersKills"] = _level->_charactersKills;
-	//_difficulty
 	cfg.exportFile(filename);
 }
 
@@ -106,7 +105,6 @@ Save::saveCharacter(const Character* character) const
 			cfg["bombs"]["nb" + std::to_string(index)] = saveBomb(*it);
 			++index;
 		}
-//queuedActions
 		cfg["elapsedTime"] = character->_elapsedTime;
 		cfg["score"] = character->_score;
 	}

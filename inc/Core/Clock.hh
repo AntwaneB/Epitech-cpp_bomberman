@@ -21,7 +21,7 @@ class Clock : public Subject, public EventHandler<Clock>
 
 public:
 	Clock();
-	Clock(Config::Param);
+	Clock(Config::Param &);
 	virtual ~Clock();
 
 	seconds_t	run(void);

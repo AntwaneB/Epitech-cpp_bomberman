@@ -14,8 +14,8 @@
 class	Save
 {
 public:
-	Save(Level*);
-	Save(Level*, const std::string);
+	Save(const Level*);
+	Save(const Level*, const std::string);
 	~Save();
 
 private:
@@ -28,14 +28,13 @@ private:
 	Config::Param			saveBonusItem(const BonusItem*) const;
 	Config::Param			savePosition(const Position<int>*) const;
 	Config::Param			savePosition(const Position<double>*) const;
-//	Config::Param			saveIA(const IA::IA*) const;
 
 public:
 	void			save(void) const;
 	void			save(const std::string) const;
 
 private:
-	Level*			_level;
+	const Level*	_level;
 	std::string		_filename;
 };
 

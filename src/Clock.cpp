@@ -17,7 +17,7 @@ Clock::Clock()
 	_seconds = 0;
 }
 
-Clock::Clock(Config::Param cfg)
+Clock::Clock(Config::Param & cfg)
 {
 	_run = false;
 	_paused = false;

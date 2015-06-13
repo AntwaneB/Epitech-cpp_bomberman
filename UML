@@ -1,27 +1,27 @@
 inc/
 ├── Core
 │   ├── App.hh
-##│   ├── Block.hh
-##│   ├── Bomb.hh
-##│   ├── BombAmountIncreaser.hh
-##│   ├── BonusItem.hh
-##│   ├── Character.hh
+##  ├── Block.hh
+##  ├── Bomb.hh
+##  ├── BombAmountIncreaser.hh
+##  ├── BonusItem.hh
+##  ├── Character.hh
 │   ├── Clock.hh
 │   ├── Config.hh
-│   ├── IA.hpp
+##  ├── IA.hpp
 │   ├── Input.hh
-##│   ├── Item.hh
-##│   ├── Level.hh
-│   ├── Load.hh
+##  ├── Item.hh
+##  ├── Level.hh
+│   ├── Load.hh
 │   ├── Lua.hh
-##│   ├── Map.hh
+##  ├── Map.hh
 │   ├── Menu.hh
-##│   ├── Monster.hh
-##│   ├── Observer.hpp
-##│   ├── Position.hh
-##│   ├── RangeIncreaser.hh
+##  ├── Monster.hh
+##  ├── Observer.hpp
+##  ├── Position.hh
+##  ├── RangeIncreaser.hh
 │   ├── Save.hh
-#│   ├── SpeedIncreaser.hh
+##  ├── SpeedIncreaser.hh
 │   ├── Thread.hh
 │   └── ThreadPool.hpp
 ├── Exception.hpp

@@ -18,7 +18,7 @@ class Block : public EventHandler<Block>, public Subject
 
 public:
 	Block(Position<> const & position, std::string const & type);
-	Block(Config::Param);
+	Block(Config::Param &);
 	virtual ~Block();
 
 	Position<>	position() const;

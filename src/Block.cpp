@@ -23,7 +23,7 @@ Block::Block(Position<> const & position, std::string const & type)
 	_texture = static_cast<std::string>(g_settings["entities"]["blocks"][_type]["texture"]);
 }
 
-Block::Block(Config::Param cfg)
+Block::Block(Config::Param & cfg)
 	: _position(cfg["position"])
 {
 	_actions[CLOCK_TICK] = &Block::tick;

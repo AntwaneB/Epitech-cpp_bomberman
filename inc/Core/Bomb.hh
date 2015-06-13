@@ -36,7 +36,7 @@ public:
 
 public:
 	Bomb(Position<> const &, size_t, double, const Character*);
-	Bomb(Config::Param);
+	Bomb(Config::Param &);
 	virtual ~Bomb();
 
 	void	setHitbox(std::vector<Position<> > const &);

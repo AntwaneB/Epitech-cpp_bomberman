@@ -28,7 +28,7 @@ Map::Map(std::string const & mapFile)
 	this->loadFromFile(mapFile);
 }
 
-Map::Map(Config::Param cfg)
+Map::Map(Config::Param & cfg)
 {
 	_actions[LEVEL_BOMB_EXPLODED] = &Map::bombExploded;
 	_actions[BLOCK_DESTROYED] = &Map::blockDestroyed;
