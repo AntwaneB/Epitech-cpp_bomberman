@@ -11,6 +11,7 @@
 			<param name="void">void</param>
 		</param>
 		<param name="floor_texture">./assets/textures/sand.tga</param>
+		<angle>25</angle>
 	</maps>
 
 	<sounds>

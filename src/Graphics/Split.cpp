@@ -1,4 +1,5 @@
 #include "Graphics/Split.hh"
+#include "global.hh"
 
 Graphics::Split::Split(::Level const * level, int id, size_t splitsCount, size_t size)
 	: _level(level), _player(NULL), _size(size), _x(0), _y(0), _splitsCount(splitsCount)
@@ -265,6 +266,7 @@ void Graphics::Split::moveCamera()
 		_x = _level->map().width() / 2;
 		_y = _level->map().height() / 2;
 	}
-	glm::mat4 transformation = glm::lookAt(glm::vec3(_x, _height, _y), glm::vec3(_x, 0, _y), glm::vec3(0, 1, -180));
+	int angle = static_cast<int>(g_settings["maps"]["angle"]);
+	glm::mat4 transformation = glm::lookAt(glm::vec3(_x, _height, angle + _y), glm::vec3(_x, 0, _y), glm::vec3(1, 1, -180));
 	_shader.setUniform("view", transformation);
 }

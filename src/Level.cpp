@@ -559,7 +559,7 @@ Level::bombExploded(Subject* entity)
 		_bombs[bomb->position()].erase(std::find(_bombs[bomb->position()].begin(), _bombs[bomb->position()].end(), bomb));
 
 	//Bomb::Explosion explosion(_clock.seconds() + 1, hitbox);
-	_explosions.push_back(Bomb::Explosion(_clock.seconds() + 1, hitbox));
+	_explosions.push_back(Bomb::Explosion(_clock.seconds() + 0.5, hitbox));
 
 	this->notify(bomb, LEVEL_BOMB_EXPLODED);
 }
