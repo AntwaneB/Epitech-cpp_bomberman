@@ -102,7 +102,6 @@ Graphics::Character::update(gdl::Clock const &clock, gdl::Input &input)
 void
 Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 {
-	//Couleur
 	_texture.bind();
 	if (_anim == true)
 	{
@@ -112,28 +111,24 @@ Graphics::Character::draw(gdl::AShader &shader, gdl::Clock const &clock)
 				_frame = 1;
 			_model->setCurrentSubAnim("START");
 		}
-		if (_frame == 10)
+		else if (_frame == 15)
 			_model->setCurrentSubAnim("RUN");
-		if (_frame == 25)
-			_frame = 15;
 		_frame += 1;
 	}
-	if (_anim == false)
+	else
 	{
 		if (_frame > 0 && _frame < 8)
 		{
 			_model->setCurrentSubAnim("END");
 			_frame = 8;
 		}
-		if (_frame >= 8 && _frame <= 20)
-			_frame += 1;
-		if (_frame >= 20)
+		else if (_frame > 20)
 		{
 			_model->setCurrentSubAnim("RESET");
 			_frame = 0;
 		}
 		if (_frame != 0)
-			_frame += 1;
+			_frame += 2;
 	}
 	shader.bind();
 	shader.setUniform("color", _color);

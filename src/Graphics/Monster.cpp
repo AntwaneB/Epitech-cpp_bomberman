@@ -83,7 +83,6 @@ Graphics::Monster::update(gdl::Clock const &clock, gdl::Input &input)
 		_position.decY(0.5);
 		_position.incZ(1.8);
 	}
-	_anim = _monster->moving();
 }
 
 void
@@ -93,9 +92,4 @@ Graphics::Monster::draw(gdl::AShader &shader, gdl::Clock const &clock)
 	shader.bind();
 	shader.setUniform("color", glm::vec4(1,1,1,1));
 	_model->draw(shader, getTransformation(), clock.getElapsed());
-}
-
-void Graphics::Monster::setAnim(bool anim)
-{
-	_anim = anim;
 }
