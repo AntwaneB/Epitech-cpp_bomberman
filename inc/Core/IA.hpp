@@ -37,8 +37,6 @@ namespace IA
 		 int     history() const;
 		 bool    wall() const;
 		 bool    destructible() const;
-		 Character::Action direction() const;
-
 		 void    setDirection(Character::Action);
 		 void 	 setDestructible(bool);
 		 void 	 setWall(bool);
@@ -47,6 +45,7 @@ namespace IA
 		 void    incEnemy();
 		 void    incHistory();
 		 void 	 reset();
+		 Character::Action 		direction() const;
 
 	private:
 		 bool    _destructible;
@@ -78,9 +77,9 @@ namespace IA
 			bool	BombDetection();
 			bool 	scanMapForEscape(Character::Action &);
 			bool	simulateEscape();
-			void 	debugStrategieMap();                        //Debug ONLY REMOVE when finished
-         	void    displayAction(Character::Action) const;     //Debug ONLY REMOVE when finished
-         	void    debugStrategieMapDirections();              //Debug ONLY REMOVE when finished
+			void 	debugStrategieMap() const;
+         	void    displayAction(Character::Action) const;
+         	void    debugStrategieMapDirections() const;
          	Character::Action 	checkDestinationSafe(Character::Action) const;
 			Character::Action 	checkAlignment(Character::Action) const;
 			Character::Action 	Move();
@@ -127,13 +126,13 @@ IA::IA<T>::~IA()
 }
 
 template<IA::Difficulty T>
-void IA::IA<T>::debugStrategieMap()
+void IA::IA<T>::debugStrategieMap() const
 {
 	if (VERBOSE)
 	{
-		for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
+		for (std::vector<std::vector<Area> >::const_iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
 		{
-			for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
+			for (std::vector<Area>::const_iterator i = it->begin(); i != it->end(); ++i)
 			{
 				Area a = *i;
 					if (a.explosion())
@@ -155,7 +154,7 @@ void IA::IA<T>::debugStrategieMap()
 }
 
 template<IA::Difficulty T>
-void IA::IA<T>::debugStrategieMapDirections()
+void IA::IA<T>::debugStrategieMapDirections() const
 {
 	if (VERBOSE)
 	{
@@ -163,10 +162,10 @@ void IA::IA<T>::debugStrategieMapDirections()
 		 int         x = 0;
 		 int         y = 0;
 
-		 for (std::vector<std::vector<Area> >::iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
+		 for (std::vector<std::vector<Area> >::const_iterator it = _strategyMap.begin(); it != _strategyMap.end(); ++it)
 		 {
 			  y = 0;
-			  for (std::vector<Area>::iterator i = it->begin(); i != it->end(); ++i)
+			  for (std::vector<Area>::const_iterator i = it->begin(); i != it->end(); ++i)
 			  {
 					Area a = *i;
 					currentDirection = a.direction();
@@ -197,7 +196,7 @@ bool    IA::IA<T>::scanMapForEnemy(Character::Action & action)
 {
     std::vector<int>        searchX = {0, 1, 0, -1};
     std::vector<int>        searchY = {-1, 0, 1, 0};
-    Character::Action   currentDirection;
+    Character::Action   	currentDirection;
     int                     currentX;
     int                     currentY;
     int                     mapHeight = _level->map().height();
@@ -398,12 +397,6 @@ void IA::IA<T>::playTurn()
         std::cout << std::endl << std::endl;
     }
     _searchNodes.clear();
-
-	/*
-	for (auto yt = _strategyMap.begin(); yt != _strategyMap.end(); ++yt)
-		(*yt).clear();
-	_strategyMap.clear();
-	*/
 }
 
 template<IA::Difficulty T>
@@ -417,7 +410,7 @@ Character::Action IA::IA<T>::escapeBomb()
     int                             mapHeight = _level->map().height();
     int                             mapWidth = _level->map().width();
     int                             i = 0;
-    int                             counter = 0; //debug purpose only
+    int                             counter = 0;
 
     if (VERBOSE)
     {
@@ -552,7 +545,7 @@ bool IA::IA<T>::BombDetection()
 }
 
 template<IA::Difficulty T>
-void IA::IA<T>::displayAction(Character::Action action) const //Debug ONLY REMOVE when finished
+void IA::IA<T>::displayAction(Character::Action action) const
 {
 	if (VERBOSE)
 	{
@@ -624,7 +617,7 @@ bool    IA::IA<T>::scanMapForEnemyThroughDestructible(Character::Action & action
     {
         if (VERBOSE)
             std::cout << "  scanMapForEnemyThroughDestructible() END : No possible path to enemy !" << std::endl;
-        if (_strategyMap[_myY][_myX].enemy() > 1) // le dernier ennemi est sur la meme case!
+        if (_strategyMap[_myY][_myX].enemy() > 1)
         	action = Character::DROP_BOMB;
         else
         	action = Character::WAIT;
@@ -702,11 +695,11 @@ void IA::IA<T>::refreshPosition()
 	}
 	_myX = static_cast<int>(std::round(_self->position().x() - 0.5));
 	_myY = static_cast<int>(std::round(_self->position().y() - 0.5));
-if (VERBOSE)
-{
-	std::cout << "Character ACTUAL position x/y : " << _self->position().x() << "/" << _self->position().y() << std::endl;
-	std::cout << "Corrected GRID   position x/y : " << _myX << "/" << _myY << std::endl;
-}
+	if (VERBOSE)
+	{
+		std::cout << "Character ACTUAL position x/y : " << _self->position().x() << "/" << _self->position().y() << std::endl;
+		std::cout << "Corrected GRID   position x/y : " << _myX << "/" << _myY << std::endl;
+	}
 }
 
 template<IA::Difficulty T>
@@ -720,7 +713,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 	}
 	if (suggestedAction == Character::MOVE_UP || suggestedAction == Character::MOVE_DOWN)
 	{
-		if (_xCentered == true) //si l IA est centree alors l action est validee
+		if (_xCentered == true)
 		{
 			if (VERBOSE)
 			{
@@ -732,7 +725,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 			}
 			return(suggestedAction);
 		}
-		else if ((_self->position().x() - static_cast<long>(_self->position().x())) < 0.5) // si l IA est trop a gauche ou a droite pour se depl sur laxe x
+		else if ((_self->position().x() - static_cast<long>(_self->position().x())) < 0.5)
 		{
 			if (VERBOSE)
 			{
@@ -751,7 +744,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 	}
 		else if (suggestedAction == Character::MOVE_LEFT || suggestedAction == Character::MOVE_RIGHT)
 	{
-		if (_yCentered == true) //si l IA est centree alors l action est validee (x = ?.5)
+		if (_yCentered == true)
 		{
 			if (VERBOSE)
 			{
@@ -763,7 +756,7 @@ Character::Action IA::IA<T>::checkAlignment(Character::Action suggestedAction) c
 			}
 			return (suggestedAction);
 		}
-		else if ((_self->position().y() - static_cast<long>(_self->position().y())) < 0.5) // si l IA est trop a haut ou bas pour se depl sur laxe y
+		else if ((_self->position().y() - static_cast<long>(_self->position().y())) < 0.5)
 		{
 			if (VERBOSE)
 			{

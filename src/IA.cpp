@@ -225,7 +225,7 @@ namespace IA
 	            }
 	            i++;
 	        }
-	        if (freePath == 1 && destructibleDirections >= 1 && simulateEscape() == true) //pose un bombe si cest une impasse destructible
+	        if (freePath == 1 && destructibleDirections >= 1 && simulateEscape() == true)
 	        {
 	        	if (VERBOSE)
 	        		std::cout << "MOVE(MEDIUM) END: dropping BOMB to extend path to enemy" << std::endl;
@@ -258,7 +258,6 @@ namespace IA
 	Character::Action IA<HARD>::Move()
 	{
 		std::list<Character::Action>::iterator	it;
-		//std::vector<Character::Action> 	possibleDirections;
 		std::list<Character::Action>	destructibleDirections;
 		std::vector<Character::Action>  searchActions = { Character::MOVE_UP, Character::MOVE_RIGHT, Character::MOVE_DOWN, Character::MOVE_LEFT};
 		std::vector<int>                searchX = {0, 1, 0, -1};
@@ -285,19 +284,18 @@ namespace IA
 					  && _strategyMap[_myY + searchY[i]][_myX + searchX[i]].direction() == Character::WAIT)
 			{
 				 counter++;
-				 //possibleDirections.push_back(searchActions[i]);
 				 _strategyMap[_myY + searchY[i]][_myX + searchX[i]].setDirection(searchActions[i]);
 				 _searchNodes.push_back(Position<>(_myX + searchX[i], _myY + searchY[i]));
 			}
 		}
 		if (VERBOSE)
-			std::cout << "MOVE(HARD) : found " << counter << " possible FREE direction(s)" << std::endl; // debug
-		counter = 0; //debug
+			std::cout << "MOVE(HARD) : found " << counter << " possible FREE direction(s)" << std::endl;
+		counter = 0;
 		while (enemyDirectionFound == false && _level->characters().size() > 1)
 		{
 			enemyDirectionFound = scanMapForEnemy(finalAction);
 		}
-		if (finalAction == Character::WAIT) // si la recherche d ennemi par les paths libres est sans succes, on recherche avec les destruct.
+		if (finalAction == Character::WAIT)
 		{
 			if (VERBOSE)
 				std::cout << "MOVE(HARD) : no free path to enemy found. Now looking into destructible paths..." << std::endl;
@@ -324,12 +322,12 @@ namespace IA
 				}
 	 		}
 	 		if (VERBOSE)
-	 			std::cout << "MOVE(HARD) : found " << counter << " possible FREE/DESTR direction(s)" << std::endl; // debug
+	 			std::cout << "MOVE(HARD) : found " << counter << " possible FREE/DESTR direction(s)" << std::endl;
 	 		while (enemyDirectionFound == false && _level->characters().size() > 1)
 	 		{
 				enemyDirectionFound = scanMapForEnemyThroughDestructible(finalAction);
 			}
-			if (destructibleDirections.size() > 0 && simulateEscape() == true)//verif si le prochain path est destr. et si on peut s'echapp.
+			if (destructibleDirections.size() > 0 && simulateEscape() == true)
 			{
 				if (VERBOSE)
 					std::cout << "Now comparing with destructibleDirections..." << std::endl;
@@ -340,7 +338,7 @@ namespace IA
 					{
 						if (VERBOSE)
 						{
-							std::cout << "MOVE(HARD) : this destructible block next to this player must be exploded to reach enemy!*********************" << std::endl;
+							std::cout << "MOVE(HARD) : this destructible block next to this player must be exploded to reach enemy!" << std::endl;
 							std::cout << "MOVE(HARD) now finished with DROP_BOMB (in order to access enemy)" << std::endl;
 						}
 						return (Character::DROP_BOMB);
@@ -390,7 +388,7 @@ namespace IA
 namespace IA
 {
 	template<>
-	bool IA<EASY>::BombOpportunity() // pose une bombe a +1 minimum de l ennemi
+	bool IA<EASY>::BombOpportunity()
 	{
 		scanMap();
 		objects = _strategyMap;
