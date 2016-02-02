@@ -22,7 +22,7 @@ Fonctionnalités
 > - Fichier de configuration en XML
 > - Et plein d'autres trucs !
 
-![Visuel du 42sh](http://antoine.buchser.fr/uploads/projects/thumbnails/bomberman.jpg)
+![Visuel du bomberman](http://antoine.buchser.fr/uploads/projects/thumbnails/bomberman.jpg)
 
 Points intéressants à étudier !
 -------------
