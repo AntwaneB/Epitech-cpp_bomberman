@@ -31,7 +31,7 @@ Points intéressants à étudier !
 > - L'implémentation du design pattern "Observer" est très intéressante car développée pour être extrêmement simple d'utilisation (héritage d'une classe et remplissage d'un tableau évènement <--> action).
 > - La factory de menu est évoluée et permet de créer dynamiquement tous les menus que l'on veut et de gérer des workflows entre les différents menus simplement avec des fichiers XML sans toucher au code.
 > - L'intelligence artificielle dans sa difficulté la plus simple est développée en LUA.
-> - Les fichiers de configuration sont chargés par une classe permettant de stocker simplement les données et de conserver leur type (voir [ici](https://bitbucket.org/AntwaneB/awesome-c-configuration-class))
+> - Les fichiers de configuration sont chargés par une classe permettant de stocker simplement les données et de conserver leur type (voir [ici](https://bitbucket.org/AntwaneB/awesome-c-configuration-class)).
 
 Disclaimer
 -------------
